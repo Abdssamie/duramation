@@ -1,0 +1,30 @@
+{
+  "name": "@duramation/db",
+  "version": "1.0.0",
+  "description": "the database package for project duramation",
+  "author": "abdessamie.elmoubarki@gmail.com",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "pnpm db:generate && rimraf dist && tsc && cp -R src/generated dist",
+    "dev": "tsc --watch",
+    "db:generate": "prisma generate --no-engine",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "6.16.2",
+    "@prisma/extension-accelerate": "^2.0.2",
+    "prisma-field-encryption": "^1.6.0"
+  },
+  "devDependencies": {
+    "@duramation/typescript-config": "workspace:*",
+    "@types/node": "^24.5.2",
+    "prisma": "6.16.2",
+    "typescript": "^5.9.2"
+  }
+}
