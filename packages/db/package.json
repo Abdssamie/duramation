@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "pnpm db:generate && rimraf dist && tsc && cp -R src/generated dist",
+    "build": "yarn db:generate && rimraf dist && tsc && cp -R src/generated dist",
     "dev": "tsc --watch",
     "db:generate": "prisma generate --no-engine",
     "db:migrate": "prisma migrate dev",
@@ -14,7 +14,8 @@
     "db:studio": "prisma studio"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./types": "./dist/types.d.ts"
   },
   "dependencies": {
     "@prisma/client": "6.16.2",
@@ -22,7 +23,7 @@
     "prisma-field-encryption": "^1.6.0"
   },
   "devDependencies": {
-    "@duramation/typescript-config": "workspace:*",
+    "@duramation/typescript-config": "*",
     "@types/node": "^24.5.2",
     "prisma": "6.16.2",
     "typescript": "^5.9.2"

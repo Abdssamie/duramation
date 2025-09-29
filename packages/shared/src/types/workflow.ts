@@ -1,49 +1,11 @@
 import z from "zod";
-import { Prisma } from "@duramation/db";
-import { Provider as PrismaProvider } from "@duramation/db";
 
-type JsonValue = Prisma.JsonValue;
+export { type WorkflowTemplate } from "@duramation/db/types"
 
-// Base workflow input type - can be any object structure depending on the workflow
+export { type Workflow }  from "@duramation/db/types";
+
 export type WorkflowInput = Record<string, any>;
 
-export type WorkflowTemplate = {
-      id: string
-      name: string
-      description: string
-      eventName: string
-      canBeScheduled: boolean
-      requiredProviders: PrismaProvider[]
-      requiredScopes: JsonValue | null
-      fields: JsonValue | null
-      restrictedToUsers: string[]
-      tags: string[]
-      version: string
-    };
-
-// Context provided to workflow execution functions
-export interface WorkflowExecutionContext {
-  workflowId: string;
-  userId: string;
-  scheduledRun: boolean;
-  cronExpression?: string;
-  timezone?: string;
-  metadata?: Record<string, any>;
-}
-
-
-// Result returned from workflow execution
-export interface WorkflowResult {
-  success: boolean;
-  message?: string;
-  data?: any;
-  error?: string;
-  executionTime?: number;
-  nextRunAt?: Date;
-}
-
-
-// Workflow input field definition with typed validation
 export interface WorkflowInputFieldDefinition {
   key: string;
   label: string;
@@ -59,8 +21,6 @@ export interface WorkflowInputFieldDefinition {
   };
 }
 
-
-// Schema for validating workflow input fields
 export const WorkflowInputFieldSchema = z.object({
   key: z.string().min(1, "Field key is required"),
   label: z.string().min(1, "Field label is required"),
@@ -78,7 +38,6 @@ export const WorkflowInputFieldSchema = z.object({
 
 export type WorkflowInputField = z.infer<typeof WorkflowInputFieldSchema>;
 
-// Base schema for workflow execution requests
 export const WorkflowExecutionRequestSchema = z.object({
   input: WorkflowInputFieldSchema,
   scheduledRun: z.boolean().default(false),
@@ -88,24 +47,3 @@ export const WorkflowExecutionRequestSchema = z.object({
 });
 
 export type WorkflowExecutionRequest = z.infer<typeof WorkflowExecutionRequestSchema>;
-
-
-// Workflow interface for frontend consumption
-export interface Workflow {
-  id: string;
-  name: string;
-  templateId: string;
-  description?: string;
-  status: string;
-  available: boolean;
-  canBeScheduled: boolean;
-  eventName?: string;
-  cronExpressions: string[];
-  timezone?: string;
-  nextRunAt?: string;
-  lastRunAt?: string;
-  credentials: any[];
-  input?: Record<string, any>; // Input values, not field definitions
-}
-
-export const Provider = PrismaProvider;

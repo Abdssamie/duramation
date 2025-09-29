@@ -165,6 +165,8 @@ exports.Prisma.WorkflowScalarFieldEnum = {
   updatedAt: 'updatedAt',
   userId: 'userId',
   requiredProviders: 'requiredProviders',
+  requiredScopes: 'requiredScopes',
+  version: 'version',
   config: 'config'
 };
 
@@ -184,6 +186,7 @@ exports.Prisma.WorkflowRunScalarFieldEnum = {
   output: 'output',
   error: 'error',
   realtimeData: 'realtimeData',
+  version: 'version',
   workflowId: 'workflowId',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -202,6 +205,51 @@ exports.Prisma.WorkflowTemplateScalarFieldEnum = {
   restrictedToUsers: 'restrictedToUsers',
   tags: 'tags',
   version: 'version'
+};
+
+exports.Prisma.ClientBrandingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  companyName: 'companyName',
+  logoUrl: 'logoUrl',
+  primaryColor: 'primaryColor',
+  secondaryColor: 'secondaryColor',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ServiceRequestScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  businessProcess: 'businessProcess',
+  desiredOutcome: 'desiredOutcome',
+  priority: 'priority',
+  status: 'status',
+  meetingScheduled: 'meetingScheduled',
+  meetingUrl: 'meetingUrl',
+  meetingDate: 'meetingDate',
+  proposalSent: 'proposalSent',
+  proposalAccepted: 'proposalAccepted',
+  estimatedHours: 'estimatedHours',
+  quotedPrice: 'quotedPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AutomationMetricsScalarFieldEnum = {
+  id: 'id',
+  workflowId: 'workflowId',
+  date: 'date',
+  runsCount: 'runsCount',
+  successCount: 'successCount',
+  failureCount: 'failureCount',
+  avgDuration: 'avgDuration',
+  timeSavedMinutes: 'timeSavedMinutes',
+  errorsPrevented: 'errorsPrevented',
+  costSavings: 'costSavings',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -258,13 +306,34 @@ exports.RunStatus = exports.$Enums.RunStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.RequestPriority = exports.$Enums.RequestPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+};
+
+exports.RequestStatus = exports.$Enums.RequestStatus = {
+  SUBMITTED: 'SUBMITTED',
+  REVIEWED: 'REVIEWED',
+  MEETING_SCHEDULED: 'MEETING_SCHEDULED',
+  PROPOSAL_SENT: 'PROPOSAL_SENT',
+  APPROVED: 'APPROVED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Credential: 'Credential',
   Workflow: 'Workflow',
   WorkflowCredential: 'WorkflowCredential',
   WorkflowRun: 'WorkflowRun',
-  WorkflowTemplate: 'WorkflowTemplate'
+  WorkflowTemplate: 'WorkflowTemplate',
+  ClientBranding: 'ClientBranding',
+  ServiceRequest: 'ServiceRequest',
+  AutomationMetrics: 'AutomationMetrics'
 };
 
 /**

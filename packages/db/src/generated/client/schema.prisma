@@ -40,6 +40,12 @@ model User {
   // Workflow run history
   workflowRuns WorkflowRun[]
 
+  // Client branding configuration
+  clientBranding ClientBranding?
+
+  // Service requests from this user
+  serviceRequests ServiceRequest[]
+
   @@map("users")
 }
 
@@ -79,7 +85,7 @@ model Credential {
   type     CredentialType
   provider Provider
 
-  secret String /// @encrypted
+  secret Json?
   config Json? // optional extra data (endpoint, token expiry)
 
   userId String
@@ -136,6 +142,9 @@ model Workflow {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   requiredProviders Provider[] @default([])
+  requiredScopes    Json?
+
+  version String? // Version of the workflow template used
 
   config Json?
 
@@ -144,6 +153,9 @@ model Workflow {
 
   // Workflow run history
   workflowRuns WorkflowRun[]
+
+  // Automation metrics for this workflow
+  automationMetrics AutomationMetrics[]
 
   @@index([userId])
   @@map("workflows")
@@ -188,6 +200,8 @@ model WorkflowRun {
   // Realtime data storage
   realtimeData Json[] @default([]) // Array of realtime messages/updates
 
+  version String? // Version of the workflow template used
+
   // Foreign key to workflow
   workflowId String
   workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
@@ -220,4 +234,96 @@ model WorkflowTemplate {
   version           String
 
   @@map("workflow_templates")
+}
+
+// Client branding configuration for white-labeled dashboard
+model ClientBranding {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyName    String
+  logoUrl        String?
+  primaryColor   String?
+  secondaryColor String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("client_branding")
+}
+
+enum RequestPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum RequestStatus {
+  SUBMITTED
+  REVIEWED
+  MEETING_SCHEDULED
+  PROPOSAL_SENT
+  APPROVED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// Service request tracking for new automation requests
+model ServiceRequest {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title           String
+  description     String
+  businessProcess String // Current manual process
+  desiredOutcome  String // What they want to achieve
+  priority        RequestPriority @default(MEDIUM)
+  status          RequestStatus   @default(SUBMITTED)
+
+  // Meeting scheduling
+  meetingScheduled Boolean   @default(false)
+  meetingUrl       String?
+  meetingDate      DateTime?
+
+  // Proposal tracking
+  proposalSent     Boolean  @default(false)
+  proposalAccepted Boolean?
+  estimatedHours   Int?
+  quotedPrice      Decimal?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@map("service_requests")
+}
+
+// Performance metrics storage for ROI calculations
+model AutomationMetrics {
+  id         String   @id @default(cuid())
+  workflowId String
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  date         DateTime @db.Date
+  runsCount    Int      @default(0)
+  successCount Int      @default(0)
+  failureCount Int      @default(0)
+  avgDuration  Int? // milliseconds
+
+  // ROI metrics
+  timeSavedMinutes Int? // estimated time saved
+  errorsPrevented  Int? // estimated errors prevented
+  costSavings      Decimal? // calculated cost savings
+
+  createdAt DateTime @default(now())
+
+  @@unique([workflowId, date])
+  @@index([workflowId])
+  @@index([date])
+  @@map("automation_metrics")
 }

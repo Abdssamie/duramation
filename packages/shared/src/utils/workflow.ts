@@ -1,5 +1,5 @@
 import { WorkflowInputFieldDefinition } from "../types/index.js";
-import { WorkflowTemplate, Prisma } from "@duramation/db";
+import { WorkflowTemplate, Prisma } from "@duramation/db/types";
 import { type ExtendedPrismaClient as PrismaClient } from "../lib/prisma.js"; // Import the type
 
 type InputJsonValue = Prisma.InputJsonValue;
@@ -23,7 +23,7 @@ export async function getAvailableTemplatesForUser(prisma: PrismaClient, userId:
 
 
   return Object.values(allWorkflowTemplates).filter(template => {
-    // chech if there is a * in the restrictedToUsers array
+    // check if there is a * in the restrictedToUsers array
     if (template.restrictedToUsers?.includes("*")) {
       return true;
     }
