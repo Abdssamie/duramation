@@ -1,0 +1,46 @@
+{
+  "name": "inngest-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "yarn update-templates && next dev --turbopack -p 3001",
+    "build": "yarn update-templates && next build --turbopack",
+    "start": "next start",
+    "lint": "next lint --max-warnings 0",
+    "update-schemas": "tsx scripts/update-metadata-schemas.ts",
+    "update-templates": "tsx scripts/addWorkflowTemplates.ts"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^6.31.6",
+    "@duramation/db": "*",
+    "@duramation/shared": "*",
+    "@inngest/agent-kit": "^0.9.0",
+    "@inngest/realtime": "^0.3.1",
+    "@prisma/client": "^6.16.2",
+    "aes256": "^1.1.0",
+    "cron-parser": "^5.3.1",
+    "googleapis": "^159.0.0",
+    "inngest": "^3.42.3",
+    "next": "15.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "uuid": "^13.0.0",
+    "winston": "^3.17.0",
+    "zod": "^4.1.3"
+  },
+  "devDependencies": {
+    "@duramation/typescript-config": "*",
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^24.5.2",
+    "@types/react": "19.1.12",
+    "depcheck": "^1.4.7",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.0",
+    "glob": "^11.0.3",
+    "prettier": "^3.6.2",
+    "ts-morph": "^27.0.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}

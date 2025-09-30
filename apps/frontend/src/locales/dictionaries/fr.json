@@ -1,0 +1,328 @@
+{
+  "automations": {
+    "title": "Automations",
+    "description": "Create and manage automations to streamline your workflows.",
+    "run_button": "Exécuter",
+    "export": "Exporter",
+    "importAutomation": {
+      "button": "Importer l'automatisation",
+      "title": "Importer une automatisation personnalisée",
+      "description": "Entrez votre clé secrète pour importer une automatisation personnalisée conçue pour votre entreprise de voyage",
+      "secretKeyLabel": "Clé secrète",
+      "secretKeyPlaceholder": "Entrez votre clé secrète d'automatisation",
+      "secretKeyHint": "Cette clé vous a été fournie lors de la création de votre automatisation personnalisée",
+      "cancelButton": "Annuler",
+      "importButton": "Importer l'automatisation"
+    },
+    "stats": {
+      "activeAutomations": "Automatisations actives",
+      "clientsServed": "Clients servis",
+      "bookingsProcessed": "Réservations traitées",
+      "needsAttention": "Nécessite une attention"
+    },
+    "tabs": {
+      "myAutomations": "Mes automatisations",
+      "recentActivity": "Activité récente",
+      "actionRequired": "Action requise",
+      "schedule": "Calendrier"
+    },
+    "searchPlaceholder": "Rechercher des automatisations...",
+    "filter": {
+      "allStatus": "Tous les statuts",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "error": "Erreur",
+      "running": "En cours"
+    },
+    "timesUsed": "fois utilisé",
+    "successRate": "taux de réussite",
+    "lastUsed": "Dernière utilisation",
+    "runAutomation": {
+      "title": "Exécuter l'automatisation",
+      "description": "Déclencher manuellement \"{workflowName}\" pour une exécution immédiate",
+      "whatWillHappen": "Ce qui va se passer :",
+      "runForSpecificClient": "Exécuter pour un client spécifique (facultatif)",
+      "clientPlaceholder": "Entrez le nom du client ou la référence de réservation",
+      "cancelButton": "Annuler",
+      "runNowButton": "Exécuter maintenant"
+    },
+    "automationSettings": {
+      "title": "Paramètres d'automatisation",
+      "description": "Configurer les paramètres de \"{workflowName}\"",
+      "generalTab": "Général",
+      "scheduleTab": "Calendrier",
+      "notificationsTab": "Notifications",
+      "statusLabel": "Statut",
+      "activeStatus": "Actif",
+      "pausedStatus": "En pause",
+      "aboutAutomation": "À propos de cette automatisation :",
+      "enableScheduling": "Activer la planification automatique",
+      "frequencyLabel": "Fréquence",
+      "frequencyPlaceholder": "Fréquence d'exécution",
+      "daily": "Quotidien",
+      "weekly": "Hebdomadaire",
+      "monthly": "Mensuel",
+      "timeZoneLabel": "Fuseau horaire",
+      "timeZonePlaceholder": "Sélectionner le fuseau horaire",
+      "easternTime": "Heure de l'Est",
+      "centralTime": "Heure centrale",
+      "pacificTime": "Heure du Pacifique",
+      "emailAutomationRuns": "M'envoyer un e-mail lorsque cette automatisation s'exécute",
+      "emailIssues": "M'envoyer un e-mail en cas de problèmes",
+      "cancelButton": "Annuler",
+      "saveChangesButton": "Enregistrer les modifications"
+    },
+    "execution": {
+      "id": "ID",
+      "started": "Démarré",
+      "duration": "Durée",
+      "trigger": "Déclencheur",
+      "issue": "Problème",
+      "viewDetails": "Voir les détails",
+      "stop": "Arrêter"
+    },
+    "humanTask": {
+      "automation": "Automatisation",
+      "client": "Client",
+      "booking": "Réservation",
+      "created": "Créé",
+      "due": "Échéance",
+      "priority": "priorité",
+      "approveButton": "Approuver",
+      "completeTask": {
+        "title": "Terminer la tâche",
+        "description": "Marquer \"{taskTitle}\" comme terminée et continuer l'automatisation",
+        "taskSummary": "Résumé de la tâche",
+        "client": "Client",
+        "booking": "Réservation",
+        "descriptionLabel": "Description",
+        "notesLabel": "Notes (facultatif)",
+        "notesPlaceholder": "Ajouter des notes sur cette tâche...",
+        "cancelButton": "Annuler",
+        "completeTaskButton": "Terminer la tâche"
+      },
+      "rejectButton": "Rejeter"
+    },
+    "scheduledAutomations": {
+      "title": "Automatisations planifiées",
+      "nextRun": "Prochaine exécution",
+      "notScheduled": "Non planifié"
+    }
+  },
+  "dashboard": {
+    "overview": {
+      "title": "Bonjour, bon retour",
+      "totalRevenue": {
+        "title": "Revenu total",
+        "footer": {
+          "title": "Tendance à la hausse ce mois-ci",
+          "description": "Visiteurs des 6 derniers mois"
+        }
+      },
+      "newCustomers": {
+        "title": "Nouveaux clients",
+        "footer": {
+          "title": "Baisse de 20% sur cette période",
+          "description": "L'acquisition nécessite une attention particulière"
+        }
+      },
+      "activeAccounts": {
+        "title": "Comptes actifs",
+        "footer": {
+          "title": "Forte rétention des utilisateurs",
+          "description": "L'engagement dépasse les objectifs"
+        }
+      },
+      "growthRate": {
+        "title": "Taux de croissance",
+        "footer": {
+          "title": "Augmentation constante des performances",
+          "description": "Répond aux projections de croissance"
+        }
+      }
+    }
+  },
+  "breadcrumbs": {
+    "dashboard": "Tableau de bord",
+    "employee": "Employé",
+    "product": "Produit",
+    "overview": "Aperçu",
+    "automations": "Automatisations",
+    "kanban": "Kanban",
+    "profile": "Profil"
+  },
+  "fileUploader": {
+    "errors": {
+      "maxFiles": "Impossible de télécharger plus de {maxFiles} fichiers",
+      "rejected": "Le fichier {fileName} a été rejeté"
+    },
+    "uploading": "Téléchargement de {target}...",
+    "uploaded": "{target} téléchargé",
+    "uploadFailed": "Échec du téléchargement de {target}",
+    "dropFiles": "Déposez les fichiers ici",
+    "dragAndDrop": "Glissez-déposez les fichiers ici, ou cliquez pour sélectionner les fichiers",
+    "uploadLimit": "Vous pouvez télécharger {maxFiles} fichiers (jusqu'à {maxSize} chacun)",
+    "removeFile": "Supprimer le fichier"
+  },
+  "sidebar": {
+    "overview": "Aperçu",
+    "dashboard": "Tableau de bord",
+    "automations": "Automatisations",
+    "product": "Produit",
+    "account": "Compte",
+    "profile": "Profil",
+    "login": "Connexion",
+    "kanban": "Kanban",
+    "billing": "Facturation",
+    "notifications": "Notifications"
+  },
+  "navProjects": {
+    "projects": "Projets",
+    "more": "Plus",
+    "viewProject": "Voir le projet",
+    "shareProject": "Partager le projet",
+    "deleteProject": "Supprimer le projet"
+  },
+  "navUser": {
+    "upgradeToPro": "Mettre à niveau vers Pro",
+    "account": "Compte",
+    "billing": "Facturation",
+    "notifications": "Notifications",
+    "logout": "Se déconnecter"
+  },
+  "orgSwitcher": {
+    "nextStarter": "Next Starter"
+  },
+  "searchInput": {
+    "search": "Rechercher..."
+  },
+  "themeSelector": {
+    "theme": "Thème",
+    "selectTheme": "Sélectionner un thème",
+    "default": "Défaut",
+    "scaled": "Échelonné",
+    "monospaced": "Monospace"
+  },
+  "notFound": {
+    "somethingMissing": "Quelque chose manque",
+    "pageNotFound": "Désolé, la page que vous recherchez n'existe pas ou a été déplacée.",
+    "goBack": "Retourner",
+    "backToHome": "Retour à l'accueil"
+  },
+  "cellAction": {
+    "openMenu": "Ouvrir le menu",
+    "actions": "Actions",
+    "update": "Mettre à jour",
+    "delete": "Supprimer"
+  },
+  "auth": {
+    "continueWithGithub": "Continuer avec Github",
+    "signIn": {
+      "login": "Connexion",
+      "logo": "Logo",
+      "quote": "Ce modèle de démarrage m'a fait gagner d'innombrables heures de travail et m'a aidé à livrer des projets à mes clients plus rapidement que jamais auparavant.",
+      "quoteAuthor": "Quelqu'un au hasard",
+      "starOnGithub": "Étoile sur GitHub",
+      "agreementPart1": "En cliquant sur continuer, vous acceptez nos",
+      "termsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "privacyPolicy": "Politique de confidentialité",
+      "agreementPart2": "."
+    },
+    "signUp": {
+      "signUp": "S'inscrire",
+      "logo": "Logo",
+      "quote": "Ce modèle de démarrage m'a fait gagner d'innombrables heures de travail et m'a aidé à livrer des projets à mes clients plus rapidement que jamais auparavant.",
+      "quoteAuthor": "Quelqu'un au hasard",
+      "starOnGithub": "Étoile sur GitHub",
+      "agreementPart1": "En cliquant sur continuer, vous acceptez nos",
+      "termsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "privacyPolicy": "Politique de confidentialité",
+      "agreementPart2": "."
+    },
+    "userAuthForm": {
+      "emailValidation": "Entrez une adresse e-mail valide",
+      "signedInSuccessfully": "Connecté avec succès !",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Entrez votre e-mail...",
+      "continueWithEmail": "Continuer avec l'e-mail",
+      "orContinueWith": "Ou continuer avec"
+    }
+  },
+  "kanban": {
+    "moveColumn": "Déplacer la colonne",
+    "pickedUpColumn": "Colonne {columnTitle} sélectionnée à la position : {position} sur {totalColumns}",
+    "pickedUpTask": "Tâche {taskTitle} sélectionnée à la position : {position} sur {totalTasks} dans la colonne {columnTitle}",
+    "columnMovedOver": "La colonne {activeColumnTitle} a été déplacée sur {overColumnTitle} à la position {position} sur {totalColumns}",
+    "taskMovedOverColumn": "La tâche {taskTitle} a été déplacée sur la colonne {columnTitle} à la position {position} sur {totalTasks}",
+    "taskMovedOverPosition": "La tâche a été déplacée à la position {position} sur {totalTasks} dans la colonne {columnTitle}",
+    "columnDropped": "La colonne {columnTitle} a été déposée à la position {position} sur {totalColumns}",
+    "taskDroppedColumn": "La tâche a été déposée dans la colonne {columnTitle} à la position {position} sur {totalTasks}",
+    "taskDroppedPosition": "La tâche a été déposée à la position {position} sur {totalTasks} dans la colonne {columnTitle}",
+    "draggingCancelled": "Glisser-déposer {type} annulé."
+  },
+  "taskCard": {
+    "taskRoleDescription": "Tâche",
+    "moveTask": "Déplacer la tâche",
+    "taskBadge": "Tâche"
+  },
+  "kanbanPage": {
+    "title": "Kanban",
+    "description": "Gérer les tâches par glisser-déposer"
+  },
+  "newSectionDialog": {
+    "addNewSection": "Ajouter une nouvelle section",
+    "whatSectionToAdd": "Quelle section souhaitez-vous ajouter aujourd'hui ?",
+    "sectionTitlePlaceholder": "Titre de la section...",
+    "addSectionButton": "Ajouter une section"
+  },
+  "newTaskDialog": {
+    "addNewTodo": "Ajouter une nouvelle tâche",
+    "whatToDoToday": "Que voulez-vous faire aujourd'hui ?",
+    "todoTitlePlaceholder": "Titre de la tâche...",
+    "descriptionPlaceholder": "Description...",
+    "addTodoButton": "Ajouter une tâche"
+  },
+  "areaGraph": {
+    "months": {
+      "january": "janvier",
+      "february": "fevrier",
+      "march": "mars",
+      "april": "avril",
+      "may": "mai",
+      "june": "juin"
+    },
+    "chartConfig": {
+      "visitorsLabel": "Visitants",
+      "desktopLabel": "Ordinateur",
+      "mobileLabel": "Téléphone"
+    },
+    "cardTitle": "Graphe de zone - Stacked",
+    "cardDescription": "Showing total visitors for the last 6 months",
+    "footer": {
+      "trendingUp": "Trending up by 5.2% this month",
+      "dateRange": "January - June 2024"
+    }
+  },
+  "recentSales":{
+    "cardTitle": "Card Title Placeholder",
+    "cardDescription": "Card Description Placeholder"
+  },
+  "pieGraph": {
+    "chartConfig": {
+      "visitorsLabel": "Visiteurs",
+      "chromeLabel": "Chrome",
+      "safariLabel": "Safari",
+      "firefoxLabel": "Firefox",
+      "edgeLabel": "Edge",
+      "otherLabel": "Autre"
+    },
+    "cardTitle": "Visiteurs par navigateur",
+    "cardDescriptionLong": "Affichage du nombre total de visiteurs pour la période actuelle, classés par navigateur.",
+    "cardDescriptionShort": "Visiteurs par navigateur.",
+    "footerLeadingBrowser": "Chrome est en tête avec {{percentage}}% ",
+    "footerTimePeriod": "Basé sur les données de Janvier à Juin 2024",
+    "totalVisitorsLabel": "Total des Visiteurs"
+  }
+}

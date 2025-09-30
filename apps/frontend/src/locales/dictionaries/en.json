@@ -1,0 +1,339 @@
+{
+  "automations": {
+    "title": "Automations",
+    "description": "Create and manage automations to streamline your workflows.",
+    "run_button": "Run",
+    "export": "Export",
+    "importAutomation": {
+      "button": "Import Automation",
+      "title": "Import Custom Automation",
+      "description": "Enter your secret key to import a custom automation designed for your travel business",
+      "secretKeyLabel": "Secret Key",
+      "secretKeyPlaceholder": "Enter your automation secret key",
+      "secretKeyHint": "This key was provided to you when your custom automation was created",
+      "cancelButton": "Cancel",
+      "importButton": "Import Automation"
+    },
+    "stats": {
+      "activeAutomations": "Active Automations",
+      "clientsServed": "Clients Served",
+      "bookingsProcessed": "Bookings Processed",
+      "needsAttention": "Needs Attention"
+    },
+    "tabs": {
+      "myAutomations": "My Automations",
+      "recentActivity": "Recent Activity",
+      "actionRequired": "Action Required",
+      "schedule": "Schedule"
+    },
+    "searchPlaceholder": "Search automations...",
+    "filter": {
+      "allStatus": "All Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "error": "Error",
+      "running": "Running"
+    },
+    "timesUsed": "times used",
+    "successRate": "success rate",
+    "lastUsed": "Last used",
+    "runAutomation": {
+      "title": "Run Automation",
+      "description": "Manually trigger \"{workflowName}\" for immediate execution",
+      "whatWillHappen": "What will happen:",
+      "runForSpecificClient": "Run for specific client (optional)",
+      "clientPlaceholder": "Enter client name or booking reference",
+      "cancelButton": "Cancel",
+      "runNowButton": "Run Now"
+    },
+    "automationSettings": {
+      "title": "Automation Settings",
+      "description": "Configure settings for \"{workflowName}\"",
+      "generalTab": "General",
+      "scheduleTab": "Schedule",
+      "notificationsTab": "Notifications",
+      "statusLabel": "Status",
+      "activeStatus": "Active",
+      "pausedStatus": "Paused",
+      "aboutAutomation": "About this automation:",
+      "enableScheduling": "Enable automatic scheduling",
+      "frequencyLabel": "Frequency",
+      "frequencyPlaceholder": "How often to run",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "timeZoneLabel": "Time Zone",
+      "timeZonePlaceholder": "Select timezone",
+      "easternTime": "Eastern Time",
+      "centralTime": "Central Time",
+      "pacificTime": "Pacific Time",
+      "emailAutomationRuns": "Email me when this automation runs",
+      "emailIssues": "Email me if there are any issues",
+      "cancelButton": "Cancel",
+      "saveChangesButton": "Save Changes"
+    },
+    "execution": {
+      "id": "ID",
+      "started": "Started",
+      "duration": "Duration",
+      "trigger": "Trigger",
+      "issue": "Issue",
+      "viewDetails": "View Details",
+      "stop": "Stop"
+    },
+    "humanTask": {
+      "automation": "Automation",
+      "client": "Client",
+      "booking": "Booking",
+      "created": "Created",
+      "due": "Due",
+      "priority": "priority",
+      "approveButton": "Approve",
+      "completeTask": {
+        "title": "Complete Task",
+        "description": "Mark \"{taskTitle}\" as completed and continue the automation",
+        "taskSummary": "Task Summary",
+        "client": "Client",
+        "booking": "Booking",
+        "descriptionLabel": "Description",
+        "notesLabel": "Notes (optional)",
+        "notesPlaceholder": "Add any notes about this task...",
+        "cancelButton": "Cancel",
+        "completeTaskButton": "Complete Task"
+      },
+      "rejectButton": "Reject"
+    },
+    "scheduledAutomations": {
+      "title": "Scheduled Automations",
+      "nextRun": "Next run",
+      "notScheduled": "Not scheduled"
+    },
+    "requestAutomation": {
+      "title": "Request New Automation",
+      "description": "Describe your desired automation. Our team will review your request and get back to you.",
+      "nameLabel": "Automation Name",
+      "namePlaceholder": "e.g., Automated Client Onboarding",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Briefly explain what this automation should do.",
+      "useCaseLabel": "Use Case",
+      "useCasePlaceholder": "Describe the specific scenario or problem this automation will solve.",
+      "submitButton": "Submit Request"
+    }
+  },
+  "dashboard": {
+    "overview": {
+      "title": "Hi, Welcome back",
+      "totalRevenue": {
+        "title": "Total Revenue",
+        "footer": {
+          "title": "Trending up this month",
+          "description": "Visitors for the last 6 months"
+        }
+      },
+      "newCustomers": {
+        "title": "New Customers",
+        "footer": {
+          "title": "Down 20% this period",
+          "description": "Acquisition needs attention"
+        }
+      },
+      "activeAccounts": {
+        "title": "Active Accounts",
+        "footer": {
+          "title": "Strong user retention",
+          "description": "Engagement exceed targets"
+        }
+      },
+      "growthRate": {
+        "title": "Growth Rate",
+        "footer": {
+          "title": "Steady performance increase",
+          "description": "Meets growth projections"
+        }
+      }
+    }
+  },
+  "breadcrumbs": {
+    "dashboard": "Dashboard",
+    "employee": "Employee",
+    "product": "Product",
+    "overview": "Overview",
+    "automations": "Automations",
+    "kanban": "Kanban",
+    "profile": "Profile"
+  },
+  "fileUploader": {
+    "errors": {
+      "maxFiles": "Cannot upload more than {maxFiles} files",
+      "rejected": "File {fileName} was rejected"
+    },
+    "uploading": "Uploading {target}...",
+    "uploaded": "{target} uploaded",
+    "uploadFailed": "Failed to upload {target}",
+    "dropFiles": "Drop the files here",
+    "dragAndDrop": "Drag 'n' drop files here, or click to select files",
+    "uploadLimit": "You can upload {maxFiles} files (up to {maxSize} each)",
+    "removeFile": "Remove file"
+  },
+  "sidebar": {
+    "overview": "Overview",
+    "dashboard": "Dashboard",
+    "automations": "Automations",
+    "product": "Product",
+    "account": "Account",
+    "profile": "Profile",
+    "login": "Login",
+    "kanban": "Kanban",
+    "billing": "Billing",
+    "notifications": "Notifications"
+  },
+  "navProjects": {
+    "projects": "Projects",
+    "more": "More",
+    "viewProject": "View Project",
+    "shareProject": "Share Project",
+    "deleteProject": "Delete Project"
+  },
+  "navUser": {
+    "upgradeToPro": "Upgrade to Pro",
+    "account": "Account",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "logout": "Log out"
+  },
+  "orgSwitcher": {
+    "nextStarter": "Next Starter"
+  },
+  "searchInput": {
+    "search": "Search..."
+  },
+  "themeSelector": {
+    "theme": "Theme",
+    "selectTheme": "Select a theme",
+    "default": "Default",
+    "scaled": "Scaled",
+    "monospaced": "Monospaced"
+  },
+  "notFound": {
+    "somethingMissing": "Something's missing",
+    "pageNotFound": "Sorry, the page you are looking for doesn't exist or has been moved.",
+    "goBack": "Go back",
+    "backToHome": "Back to Home"
+  },
+  "cellAction": {
+    "openMenu": "Open menu",
+    "actions": "Actions",
+    "update": "Update",
+    "delete": "Delete"
+  },
+  "auth": {
+    "continueWithGithub": "Continue with Github",
+    "signIn": {
+      "login": "Login",
+      "logo": "Logo",
+      "quote": "This starter template has saved me countless hours of work and helped me deliver projects to my clients faster than ever before.",
+      "quoteAuthor": "Random Dude",
+      "starOnGithub": "Star on GitHub",
+      "agreementPart1": "By clicking continue, you agree to our",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy",
+      "agreementPart2": "."
+    },
+    "signUp": {
+      "signUp": "Sign Up",
+      "logo": "Logo",
+      "quote": "This starter template has saved me countless hours of work and helped me deliver projects to my clients faster than ever before.",
+      "quoteAuthor": "Random Dude",
+      "starOnGithub": "Star on GitHub",
+      "agreementPart1": "By clicking continue, you agree to our",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy",
+      "agreementPart2": "."
+    },
+    "userAuthForm": {
+      "emailValidation": "Enter a valid email address",
+      "signedInSuccessfully": "Signed In Successfully!",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email...",
+      "continueWithEmail": "Continue With Email",
+      "orContinueWith": "Or continue with"
+    }
+  },
+  "kanban": {
+    "moveColumn": "Move column",
+    "pickedUpColumn": "Picked up Column {columnTitle} at position: {position} of {totalColumns}",
+    "pickedUpTask": "Picked up Task {taskTitle} at position: {position} of {totalTasks} in column {columnTitle}",
+    "columnMovedOver": "Column {activeColumnTitle} was moved over {overColumnTitle} at position {position} of {totalColumns}",
+    "taskMovedOverColumn": "Task {taskTitle} was moved over column {columnTitle} in position {position} of {totalTasks}",
+    "taskMovedOverPosition": "Task was moved over position {position} of {totalTasks} in column {columnTitle}",
+    "columnDropped": "Column {columnTitle} was dropped into position {position} of {totalColumns}",
+    "taskDroppedColumn": "Task was dropped into column {columnTitle} in position {position} of {totalTasks}",
+    "taskDroppedPosition": "Task was dropped into position {position} of {totalTasks} in column {columnTitle}",
+    "draggingCancelled": "Dragging {type} cancelled."
+  },
+  "taskCard": {
+    "taskRoleDescription": "Task",
+    "moveTask": "Move task",
+    "taskBadge": "Task"
+  },
+  "kanbanPage": {
+    "title": "Kanban",
+    "description": "Manage tasks by dnd"
+  },
+  "newSectionDialog": {
+    "addNewSection": "Add New Section",
+    "whatSectionToAdd": "What section you want to add today?",
+    "sectionTitlePlaceholder": "Section title...",
+    "addSectionButton": "Add Section"
+  },
+  "newTaskDialog": {
+    "addNewTodo": "Add New Todo",
+    "whatToDoToday": "What do you want to get done today?",
+    "todoTitlePlaceholder": "Todo title...",
+    "descriptionPlaceholder": "Description...",
+    "addTodoButton": "Add Todo"
+  },
+  "areaGraph": {
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June"
+    },
+    "chartConfig": {
+      "visitorsLabel": "Visitors",
+      "desktopLabel": "Desktop",
+      "mobileLabel": "Mobile"
+    },
+    "cardTitle": "Area Chart - Stacked",
+    "cardDescription": "Showing total visitors for the last 6 months",
+    "footer": {
+      "trendingUp": "Trending up by 5.2% this month",
+      "dateRange": "January - June 2024"
+    }
+  },
+  "recentSales":{
+    "cardTitle": "Card Title Placeholder",
+    "cardDescription": "Card Description Placeholder"
+  },
+  "pieGraph": {
+    "chartConfig": {
+      "visitorsLabel": "Visitors",
+      "chromeLabel": "Chrome",
+      "safariLabel": "Safari",
+      "firefoxLabel": "Firefox",
+      "edgeLabel": "Edge",
+      "otherLabel": "Other"
+    },
+    "cardTitle": "Visitors by Browser",
+    "cardDescriptionLong": "Showing total visitors for the current period, categorized by browser.",
+    "cardDescriptionShort": "Visitors by browser.",
+    "footerLeadingBrowser": "Chrome leads with {{percentage}}% ",
+    "footerTimePeriod": "Based on data from January - June 2024",
+    "totalVisitorsLabel": "Total Visitors"
+  }
+}

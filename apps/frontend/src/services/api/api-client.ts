@@ -1,0 +1,252 @@
+import {
+  WorkflowInputFieldDefinition,
+  CredentialCreateRequest
+} from '@duramation/shared';
+import { WorkflowWithCredentials } from '@/types/workflow';
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  process.env.NEXT_BACKEND_API_URL ||
+  'http://localhost:3001';
+
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+function authHeaders(token: string) {
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`
+  } as Record<string, string>;
+}
+
+async function request<T>(
+  path: string,
+  options: { token: string; method?: HttpMethod; body?: unknown }
+): Promise<T> {
+  const { token, method = 'GET', body } = options;
+  console.log('API Request:', {
+    url: `${BASE_URL}${path}`,
+    method,
+    body
+  });
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method,
+    headers: authHeaders(token),
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+    cache: 'no-store'
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    let errorMessage = `Request failed ${method} ${path}: ${res.status} ${text}`;
+
+    try {
+      const errorBody = JSON.parse(text);
+      if (errorBody.error && Array.isArray(errorBody.details)) {
+        errorMessage = `${errorBody.error}: ${errorBody.details.join(', ')}`;
+      } else if (errorBody.error) {
+        errorMessage = errorBody.error;
+      }
+    } catch (e) {
+      // If parsing fails, use the original text
+    }
+    throw new Error(errorMessage);
+  }
+  const contentType = res.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) {
+    return (await res.json()) as Promise<T>;
+  }
+  return undefined as unknown as T;
+}
+
+// Workflows
+export interface WorkflowListResponse {
+  success?: boolean;
+  data?: WorkflowWithCredentials[];
+  message?: string;
+}
+
+export interface WorkflowUpdateInput {
+  name?: string;
+  description?: string;
+  available?: boolean;
+  input?: Record<string, unknown>;
+  credentials?: { credentialId: string }[];
+}
+
+export const workflowsApi = {
+  list: (token: string) =>
+    request<WorkflowListResponse>(`/api/workflows`, { token }),
+  listTemplates: (token: string, query: MarketplaceQuery = {}) =>
+    request<MarketplaceResponse>(
+      `/api/marketplace/workflows${toQuery(query as Record<string, unknown>)}`,
+      { token }
+    ),
+  get: (token: string, id: string) =>
+    request<any>(`/api/workflows/${id}`, { token }),
+  update: (token: string, id: string, data: WorkflowUpdateInput) =>
+    request<any>(`/api/workflows/${id}`, { token, method: 'PUT', body: data }),
+  remove: (token: string, id: string) =>
+    request<any>(`/api/workflows/${id}`, { token, method: 'DELETE' }),
+  fields: (token: string, templateId: string) =>
+    request<{ fields: WorkflowInputFieldDefinition[] }>(
+      `/api/workflows/templates/fields/${templateId}`,
+      {
+        token,
+        method: 'GET'
+      }
+    ),
+  run: (
+    token: string,
+    id: string,
+    data?: {
+      input?: Record<string, unknown>;
+      metadata?: Record<string, unknown>;
+    }
+  ) =>
+    request<any>(`/api/workflows/run/${id}`, {
+      token,
+      method: 'POST',
+      body: data || {}
+    }),
+  stop: (token: string, id: string) =>
+    request<any>(`/api/workflows/run/${id}`, { token, method: 'DELETE' }),
+  schedule: (
+    token: string,
+    id: string,
+    data?: {
+      input?: Record<string, unknown>;
+      cronExpression?: string;
+      timezone?: string;
+      metadata?: Record<string, unknown>;
+    }
+  ) =>
+    request<any>(`/api/workflows/schedule/${id}`, {
+      token,
+      method: 'POST',
+      body: data || {}
+    }),
+  unschedule: (token: string, id: string) =>
+    request<any>(`/api/workflows/schedule/${id}`, { token, method: 'DELETE' }),
+  install: (
+    token: string,
+    templateId: string,
+    name?: string,
+    update?: boolean
+  ) =>
+    request<any>(`/api/workflows/install/${templateId}`, {
+      token,
+      method: 'POST',
+      body: { name, update }
+    })
+};
+
+// Marketplace
+export interface MarketplaceQuery {
+  page?: number;
+  limit?: number;
+  search?: string;
+  provider?: string;
+  pricing?: 'free' | 'paid';
+  category?: string;
+  featured?: boolean;
+}
+
+export interface MarketplaceResponse {
+  success?: boolean;
+  data?: {
+    items: any[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+      hasNext: boolean;
+      hasPrev: boolean;
+    };
+  };
+  message?: string;
+}
+
+function toQuery(params: Record<string, unknown>) {
+  const sp = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v === undefined || v === null || v === '') return;
+    sp.set(k, String(v));
+  });
+  const s = sp.toString();
+  return s ? `?${s}` : '';
+}
+
+export const marketplaceApi = {
+  list: (token: string, query: MarketplaceQuery = {}) =>
+    request<MarketplaceResponse>(
+      `/api/marketplace/workflows${toQuery(query as Record<string, unknown>)}`,
+      { token }
+    )
+};
+
+// Using shared CredentialCreateRequest type
+
+export interface CredentialUpdateRequest {
+  name?: string;
+  secret?: unknown;
+  config?: unknown;
+}
+
+export const credentialsApi = {
+  list: (token: string) => request<any[]>(`/api/credentials`, { token }),
+  get: (token: string, id: string) =>
+    request<any>(`/api/credentials/${id}`, { token }),
+  create: (token: string, data: CredentialCreateRequest) =>
+    request<any>(`/api/credentials`, { token, method: 'POST', body: data }),
+  update: (token: string, id: string, data: CredentialUpdateRequest) =>
+    request<any>(`/api/credentials/${id}`, {
+      token,
+      method: 'PUT',
+      body: data
+    }),
+  remove: (token: string, id: string) =>
+    request<any>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
+  getGoogleAuthUrl: (token: string, scopes: string[], workflowId: string) =>
+    request<{ url: string }>(
+      `/api/credentials/google/auth-url${toQuery({
+        scopes: scopes.join(','),
+        ...(workflowId && { workflowId })
+      })}`,
+      { token }
+    )
+};
+
+// Realtime
+export interface SubscriptionTokenRequest {
+  workflowId: string;
+}
+
+export interface SubscriptionTokenResponse {
+  token: any;
+}
+
+export const realtimeApi = {
+  getSubscriptionToken: (authToken: string, data: SubscriptionTokenRequest) =>
+    request<SubscriptionTokenResponse>(`/api/realtime/subscription-token`, {
+      token: authToken,
+      method: 'POST',
+      body: data
+    })
+};
+
+export const dashboardApi = {
+  getMetrics: (token: string) =>
+    request<any>(`/api/client-dashboard/metrics`, { token }),
+  getWorkflowRoi: (token: string) =>
+    request<any>(`/api/client-dashboard/workflow-roi`, { token }),
+  getTopWorkflows: (token: string) =>
+    request<any>(`/api/client-dashboard/top-workflows`, { token }),
+};
+
+export default {
+  workflows: workflowsApi,
+  marketplace: marketplaceApi,
+  credentials: credentialsApi,
+  realtime: realtimeApi,
+  dashboard: dashboardApi,
+};
