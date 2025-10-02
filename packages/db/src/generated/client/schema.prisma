@@ -61,6 +61,7 @@ enum Provider {
   HUBSPOT
   FIRECRAWL
   CUSTOM
+  INSTAGRAM
 }
 
 enum WorkflowStatus {

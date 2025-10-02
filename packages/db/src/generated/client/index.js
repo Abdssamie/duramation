@@ -319,7 +319,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/abdssamie/Projects/duramation/packages/db/src/generated/client",
+      "value": "C:\\Users\\abdss\\Projects\\duramation\\packages\\db\\src\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -328,17 +328,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/abdssamie/Projects/duramation/packages/db/schema.prisma",
+    "sourceFilePath": "C:\\Users\\abdss\\Projects\\duramation\\packages\\db\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../..",
   "clientVersion": "6.16.2",

@@ -1,0 +1,28 @@
+{
+    "name": "@duramation/integrations",
+    "version": "1.0.0",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "type": "module",
+    "author": "abdessamie",
+    "license": "MIT",
+    "scripts": {
+        "build": "rimraf dist && tsc",
+        "dev": "tsc --watch"
+    },
+    "dependencies": {
+        "@duramation/db": "*",
+        "zod": "^4.1.11"
+    },
+    "devDependencies": {
+        "@duramation/typescript-config": "*",
+        "@types/node": "^24.5.2",
+        "typescript": "^5.9.2"
+    }
+}
