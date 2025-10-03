@@ -1,177 +1,162 @@
 # @duramation/integrations
 
-A modular, type-safe integration system for connecting to third-party services.
+Centralized integration package for managing third-party service connections.
 
-## Overview
+## Structure
 
-This package provides a clean, extensible architecture for managing integrations with various third-party services. It includes:
+```
+src/
+├── providers/              # Provider-specific implementations
+│   ├── google/
+│   │   ├── config.ts      # Metadata, scopes, UI configuration
+│   │   ├── auth.ts        # OAuth flow handlers
+│   │   ├── services/      # Runtime service classes
+│   │   │   ├── base.ts    # Base Google service with token refresh
+│   │   │   └── sheets.ts  # Google Sheets specific methods
+│   │   └── index.ts       # Public exports
+│   ├── slack/
+│   │   ├── config.ts
+│   │   ├── auth.ts
+│   │   ├── services/
+│   │   │   └── slack.ts
+│   │   └── index.ts
+│   ├── firecrawl/
+│   │   ├── config.ts
+│   │   ├── auth.ts
+│   │   ├── services/
+│   │   │   └── firecrawl.ts
+│   │   └── index.ts
+│   └── registry.ts        # Central provider registry
+├── middleware/            # Inngest middleware
+│   └── inngest-middleware.ts
+├── services/              # Core services
+│   └── credential-store.ts
+├── types/                 # Shared types
+│   └── providers.ts
+└── index.ts              # Public API
 
-1. **Provider Configuration Registry** - Centralized configuration for all supported providers
-2. **Integration Service Registry** - Standardized service interfaces for consistent API interactions
-3. **Credential Management** - Secure storage and retrieval of API credentials
-4. **OAuth Handling** - Built-in support for OAuth authentication flows
-5. **Generic UI Renderer** - Auto-generated forms based on provider configurations
-6. **Inngest Middleware** - Easy injection of integration services into workflow runs
+```
 
-## Installation
+## Architecture
 
-```bash
-yarn add @duramation/integrations
+### Two-Layer Design
+
+**Layer 1: Frontend (UI)**
+- Workflow shows required credentials
+- UI renders provider-specific setup forms
+- Credentials registered to database
+
+**Layer 2: Runtime (Inngest)**
+- Middleware automatically retrieves credentials
+- Functions use credentials to initialize services
+- Services handle token refresh automatically
+
+### Adding a New Provider
+
+1. **Create provider directory**: `src/providers/your-provider/`
+
+2. **Define configuration** (`config.ts`):
+```typescript
+export const YOUR_PROVIDER_CONFIG = {
+  provider: 'YOUR_PROVIDER',
+  name: 'Your Provider',
+  description: '...',
+  authType: 'oauth' | 'API_KEY',
+  oauth: { ... } // or apiKey: { ... }
+  ui: { ... }
+};
+```
+
+3. **Implement auth handler** (`auth.ts`):
+```typescript
+export class YourProviderAuthHandler {
+  static generateAuthUrl(scopes: string[], state: string): string { ... }
+  static async handleCallback(code: string): Promise<YourProviderSecret> { ... }
+}
+```
+
+4. **Create service classes** (`services/your-service.ts`):
+```typescript
+export class YourProviderService {
+  constructor(credentialPayload: YourProviderSecret) { ... }
+  async someMethod() { ... }
+}
+```
+
+5. **Register in registry** (`providers/registry.ts`):
+```typescript
+export const PROVIDER_REGISTRY: Record<Provider, ProviderRegistryEntry> = {
+  YOUR_PROVIDER: {
+    config: YourProvider.YOUR_PROVIDER_CONFIG,
+    authHandler: YourProvider.YourProviderAuthHandler,
+    serviceClasses: {
+      main: YourProvider.YourProviderService,
+    },
+  },
+  // ...
+};
 ```
 
 ## Usage
 
-### 1. Provider Configuration
-
-All providers are defined in the `PROVIDER_CONFIGS` registry:
+### Frontend: Setup Credentials
 
 ```typescript
-import { PROVIDER_CONFIGS, getProviderConfig } from '@duramation/integrations';
+import { getProviderRegistryConfig, getAuthHandler } from '@duramation/integrations';
 
-// Get configuration for a specific provider
-const config = getProviderConfig('INSTAGRAM');
-console.log(config.displayName); // "Instagram Business"
-```
+// Get provider metadata for UI
+const config = getProviderRegistryConfig('GOOGLE');
 
-### 2. Adding New Providers
-
-To add a new provider, simply add it to the `PROVIDER_CONFIGS` object in `src/types/providers.ts`:
-
-```typescript
-['MY_SERVICE']: {
-  id: 'my-service',
-  name: 'my-service',
-  displayName: 'My Service',
-  description: 'Connect to My Service API',
-  type: 'OAUTH',
-  icon: 'my-service',
-  color: 'text-blue-600',
-  bgColor: 'bg-blue-50',
-  authType: 'oauth',
-  category: 'development',
-  requiresScopes: true,
-  scopes: ['read', 'write'],
-  endpoints: {
-    authUrl: 'https://myservice.com/oauth/authorize',
-    tokenUrl: 'https://myservice.com/oauth/token',
-    callbackUrl: '/api/auth/my-service/callback',
-    apiBaseUrl: 'https://api.myservice.com'
-  }
-}
-```
-
-### 3. Integration Service Registry
-
-Register and use integration services:
-
-```typescript
-import { integrationServiceRegistry, GoogleService } from '@duramation/integrations';
-
-// Create and register a service
-const googleService = new GoogleService(userId, credentialId, credentialPayload);
-integrationServiceRegistry.registerService('GOOGLE', googleService);
-
-// Use the service
-const service = integrationServiceRegistry.getService('GOOGLE');
-```
-
-### 4. Credential Management
-
-Store and retrieve credentials securely:
-
-```typescript
-import { credentialStore } from '@duramation/integrations';
-
-// Store a credential
-const credential = await credentialStore.store({
-  userId: 'user123',
-  provider: 'GOOGLE',
-  type: 'OAUTH',
-  data: {
-    accessToken: 'access-token',
-    refreshToken: 'refresh-token',
-    expiresIn: 3600,
-    scopes: ['read', 'write']
-  }
-});
-
-// Retrieve a credential
-const retrieved = await credentialStore.retrieve(credential.id, 'user123');
-```
-
-### 5. OAuth Handling
-
-Generate OAuth URLs and handle callbacks:
-
-```typescript
-import { OAuthHandler } from '@duramation/integrations';
-
-// Generate auth URL
-const state = { provider: 'GOOGLE', userId: 'user123' };
-const authUrl = OAuthHandler.generateAuthUrl('GOOGLE', state, 'https://yourapp.com/callback');
+// Generate OAuth URL
+const authHandler = getAuthHandler('GOOGLE');
+const authUrl = authHandler.generateAuthUrl(config.oauth.defaultScopes, state);
 
 // Handle callback
-const tokenData = await OAuthHandler.handleCallback('GOOGLE', code, state);
+const secret = await authHandler.handleCallback(code);
+// Save to database...
 ```
 
-### 6. Inngest Middleware
-
-Inject integration services into workflows:
+### Runtime: Use in Inngest Functions
 
 ```typescript
-import { integrationMiddleware } from '@duramation/integrations';
+import { integrationMiddleware, Google } from '@duramation/integrations';
 
 export const myWorkflow = inngest.createFunction(
   { id: "my-workflow" },
   { event: "my/event" },
-  [integrationMiddleware],
-  async ({ event, step, integrations, credentials }) => {
-    if (integrations.hasIntegration('GOOGLE')) {
-      const gmail = integrations.getIntegration('GOOGLE');
-      const email = await gmail.sendMail('user@example.com', 'Hello', 'This is a test email');
-      // Process email...
-    }
+  async ({ event, credentials }) => {
+    // Find the credential you need
+    const googleCred = credentials.find(c => c.provider === 'GOOGLE');
     
-    // Access raw credentials
-    const googleCreds = credentials.find(cred => cred.provider === 'GOOGLE');
+    // Initialize service
+    const sheets = new Google.GoogleSheetsService(
+      event.user.id,
+      googleCred.id,
+      googleCred.secret
+    );
     
-    return { success: true };
+    // Use service (token refresh handled automatically)
+    const data = await sheets.getSheetData(spreadsheetId, 'Sheet1!A1:Z100');
+    
+    return { data };
   }
 );
 ```
 
-## Extensibility
+## Available Providers
 
-Adding a new integration requires only two steps:
+- **Google**: OAuth, Gmail, Sheets, Calendar, Drive
+- **Slack**: OAuth, messaging, channels, users
+- **Firecrawl**: API Key, web scraping, crawling
+- **HubSpot**: Coming soon
+- **Custom**: API Key, custom integrations
 
-1. Add the provider configuration to `PROVIDER_CONFIGS`
-2. Create a service implementation that extends `BaseIntegrationService`
+## Key Features
 
-No UI or route changes are needed - everything is automatically handled by the generic components.
-
-## Development
-
-### Building
-
-```bash
-yarn build
-```
-
-### Development Mode
-
-```bash
-yarn dev
-```
-
-## Supported Providers
-
-- Google (Gmail, Sheets, Drive)
-- Slack
-- HubSpot
-- Firecrawl
-- Custom APIs
-- Instagram Business (example implementation)
-
-## License
-
-MIT
+- ✅ Automatic OAuth token refresh
+- ✅ Type-safe service classes
+- ✅ Centralized provider registry
+- ✅ UI metadata for frontend rendering
+- ✅ Database-backed credential storage
+- ✅ Inngest middleware integration
+- ✅ Extensible architecture

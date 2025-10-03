@@ -23,6 +23,9 @@ export const GoogleOAuthSecretSchema = BaseOAuthSecretSchema.extend({
 
 export const SlackOAuthSecretSchema = BaseOAuthSecretSchema.extend({
     teamId: z.string(),
+    teamName: z.string().optional(),
+    tokenType: z.string().optional(),
+    botUserId: z.string().optional(),
 });
 
 export const HubspotOAuthSecretSchema = BaseOAuthSecretSchema.extend({

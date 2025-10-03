@@ -13,6 +13,8 @@ import type { Prisma, Provider, CredentialType } from "@duramation/db/types";
 // Legacy type aliases for backward compatibility
 export type SafeCredentialResponse = SafeCredential;
 
+// Note: Secret data is stored as JSON in the database and encrypted at rest.
+// The encryption/decryption is handled by the database layer.
 
 interface CredentialStore {
   /**
@@ -67,14 +69,14 @@ export async function storeCredential(
         },
       },
       update: {
-        secret: credentialData.secret,
+        secret: JSON.stringify(credentialData.secret),
         config: credentialData.config as unknown as Prisma.InputJsonValue,
       },
       create: {
         name: credentialData.name,
         type: credentialData.type,
         provider: credentialData.provider,
-        secret: credentialData.secret,
+        secret: JSON.stringify(credentialData.secret),
         userId: userId as string,
         config: credentialData.config as unknown as Prisma.InputJsonValue,
       },
@@ -126,14 +128,14 @@ export async function storeCredentialForWorkflow(
         },
       },
       update: {
-        secret: credentialData.secret,
+        secret: JSON.stringify(credentialData.secret),
         config: credentialData.config as unknown as Prisma.InputJsonValue,
       },
       create: {
         name: credentialData.name,
         type: credentialData.type,
         provider: credentialData.provider,
-        secret: credentialData.secret,
+        secret: JSON.stringify(credentialData.secret),
         userId: userId as string,
         config: credentialData.config as unknown as Prisma.InputJsonValue,
       },
@@ -235,7 +237,7 @@ export async function updateCredential(
         userId: userId,
       },
       data: {
-        secret: credentialSecret,
+        secret: JSON.stringify(credentialSecret),
       },
     });
     return {
@@ -353,7 +355,7 @@ export const credentialStore: CredentialStore = {
           name: `${credential.provider} Integration`,
           type: credential.type,
           provider: credential.provider,
-          secret: credential.data,
+          secret: JSON.stringify(credential.data),
           userId: credential.userId,
           config: {},
         },
@@ -392,7 +394,7 @@ export const credentialStore: CredentialStore = {
         userId: credential.userId,
         createdAt: credential.createdAt.toISOString(),
         updatedAt: credential.updatedAt.toISOString(),
-        secret: credential.secret,
+        secret: credential.secret ? JSON.parse(credential.secret as string) : null,
       };
     } catch (error: any) {
       console.error("Error retrieving credential:", error);
@@ -408,7 +410,7 @@ export const credentialStore: CredentialStore = {
       await prisma.credential.update({
         where: { id: credentialId },
         data: {
-          secret: data,
+          secret: JSON.stringify(data),
           updatedAt: new Date(),
         },
       });

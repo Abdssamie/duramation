@@ -1,4 +1,7 @@
-import { Provider } from '@duramation/db/types';
+import { 
+  Provider,
+  getProviderDisplayName as getProviderName
+} from '@duramation/integrations';
 import {
   WorkflowWithCredentials,
   CredentialStatusCalculation,
@@ -116,18 +119,10 @@ export function hasAllRequiredCredentials(
 }
 
 /**
- * Get provider display name
+ * Get provider display name (re-export from shared package)
  */
 export function getProviderDisplayName(provider: Provider): string {
-  const displayNames: Record<Provider, string> = {
-    GOOGLE: 'Google',
-    SLACK: 'Slack',
-    HUBSPOT: 'HUBSPOT',
-    FIRECRAWL: 'FIRECRAWL',
-    CUSTOM: 'Other'
-  };
-
-  return displayNames[provider] || provider;
+  return getProviderName(provider);
 }
 
 /**

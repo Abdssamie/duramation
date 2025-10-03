@@ -9,7 +9,6 @@ import { WorkflowWithCredentials } from '@/types/workflow';
 import WorkflowDetailWidget from './WorkflowDetailWidget';
 import {
   MarketplaceResponse,
-  MarketplaceQuery
 } from '@/services/api/api-client';
 
 import {

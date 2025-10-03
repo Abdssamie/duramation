@@ -140,6 +140,7 @@ exports.Prisma.CredentialScalarFieldEnum = {
   provider: 'provider',
   secret: 'secret',
   config: 'config',
+  expiresIn: 'expiresIn',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -287,6 +288,7 @@ exports.Provider = exports.$Enums.Provider = {
   SLACK: 'SLACK',
   HUBSPOT: 'HUBSPOT',
   FIRECRAWL: 'FIRECRAWL',
+  INSTAGRAM: 'INSTAGRAM',
   CUSTOM: 'CUSTOM'
 };
 

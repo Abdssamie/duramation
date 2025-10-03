@@ -118,7 +118,7 @@ export function PerformanceCharts({
     }
 
     fetchChartData();
-  }, [userId, timeRange]);
+  }, [userId, timeRange, getToken]);
 
   if (loading) {
     return <PerformanceChartsSkeleton className={className} />;

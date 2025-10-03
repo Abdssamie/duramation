@@ -20,7 +20,7 @@ import {
   WorkflowWithCredentials
 } from '@/types/workflow';
 import { WorkflowInputForm } from '@/utils/input-transformer';
-import { Provider } from '@duramation/db/types';
+import { Provider } from '@duramation/integrations';
 
 type Props = {
   workflow: WorkflowWithCredentials;

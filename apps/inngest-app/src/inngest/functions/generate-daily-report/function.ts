@@ -14,8 +14,8 @@ export const generateReportSchedule = inngest.createFunction(
         }],
     },
     { event: "workflow/report.requested" },
-    async ({ step, event, logger, runId, publish }) => {
-        const { workflowId, user_id, cronExpression, scheduledRun, tz, input } = event.data;
+    async ({ step, event, logger, publish, credentials }) => {
+        const { workflowId, user_id, input } = event.data;
 
 
         logger.info(`Generating daily report for user ${user_id}`);
@@ -24,16 +24,43 @@ export const generateReportSchedule = inngest.createFunction(
             throw new NonRetriableError("Daily report input is required");
         }
 
-        const { reportTitle, sheetName, emailRecipients, reportFormat, includeCharts } = input;
+        const { reportTitle, sheetName, emailRecipients, reportFormat } = input;
+
+        // Check for Google credentials
+        const googleCredential = credentials.find((cred: any) => cred.provider === 'GOOGLE');
+
+        if (!googleCredential) {
+            await publish(
+                workflowChannel(user_id, workflowId).updates(
+                    createWorkflowUpdate("log", "Error: Google credentials not found. Please connect your Google account.")
+                )
+            );
+            throw new NonRetriableError("Google credentials required for this workflow");
+        }
+
+        await publish(
+            workflowChannel(user_id, workflowId).updates(
+                createWorkflowUpdate("log", `Using Google credential: ${googleCredential.name}`)
+            )
+        );
 
         // Fetch sheet data with realtime updates
         const reportSheetId = await step.run("fetch-sheet", async () => {
             await publish(
                 workflowChannel(user_id, workflowId).updates(
-                    createWorkflowUpdate("progress", `Looking for sheet "${sheetName}"`)
+                    createWorkflowUpdate("progress", `Looking for sheet "${sheetName}" using Google Sheets API`)
                 )
             );
-            // TODO: Implement sheet lookup
+
+            // Log credential info (without exposing secrets)
+            logger.info({
+                credentialId: googleCredential.id,
+                credentialName: googleCredential.name,
+                hasSecret: !!googleCredential.secret
+            }, "Using Google credential for Sheets access");
+
+            // TODO: Implement actual Google Sheets lookup using googleCredential.secret
+            // For now, return mock data to test credential flow
             return "mock-sheet-id";
         });
 
@@ -54,9 +81,15 @@ export const generateReportSchedule = inngest.createFunction(
                 )
             );
 
-            // TODO: Implement actual report generation
-            logger.info(`Would generate "${reportTitle}" report from sheet "${sheetName}"`);
-            logger.info(`Format: ${reportFormat}, Include charts: ${includeCharts}`);
+            logger.info({
+                reportTitle,
+                sheetName,
+                reportFormat,
+                credentialUsed: googleCredential.name
+            }, "Generating report with Google credentials");
+
+            // TODO: Implement actual report generation using Google Sheets API
+            // The credential secret contains: { accessToken, refreshToken, expiresIn, scopes }
 
             return { reportUrl: "mock-report-url", fileName: `${reportTitle}.${reportFormat.toLowerCase()}` };
         });
@@ -66,11 +99,17 @@ export const generateReportSchedule = inngest.createFunction(
             for (const recipient of emailRecipients) {
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
-                        createWorkflowUpdate("log", `Sent report to ${recipient}`)
+                        createWorkflowUpdate("log", `Sending report to ${recipient} via Gmail API`)
                     )
                 );
-                // TODO: Implement email sending
-                logger.info(`Would send report to ${recipient}`);
+
+                logger.info({
+                    recipient,
+                    credentialUsed: googleCredential.name
+                }, "Sending email with Google credentials");
+
+                // TODO: Implement actual Gmail API email sending using googleCredential.secret
+                // The credential secret contains the OAuth tokens needed for Gmail API
             }
         });
 

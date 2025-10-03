@@ -1,7 +1,6 @@
 'use client';
 
-import { getProviderDisplayName } from '@duramation/shared';
-import { Provider } from '@duramation/db/types';
+import { Provider, getProviderDisplayName } from '@duramation/integrations';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, AlertCircle, Plus } from 'lucide-react';

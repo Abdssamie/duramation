@@ -1,25 +1,19 @@
-// Export all types
-export * from './types/providers';
-
-// Export services
-export * from './services/registry';
-export * from './services/base-service';
-export * from './services/credential-store';
-export * from './services/google-service';
-
-// Export middleware
-export * from './middleware/inngest-middleware';
-
-// Export utilities
-export { 
-  FormField,
+// Types (frontend-safe)
+export * from './types/providers.js';
+export type {
   ProviderUIConfig,
-  getProviderUIConfig,
-  validateProviderFormData,
-  generateDefaultFormValues,
-  getProvidersByCategory as getUIProvidersByCategory,
-  getAvailableCategories
-} from './utils/ui-renderer';
+  OAuthProviderConfig,
+  ApiKeyProviderConfig,
+  ApiKeyField,
+  ProviderFullConfig,
+  OAuthProviderFullConfig,
+  ApiKeyProviderFullConfig,
+} from './providers/types.js';
 
-// Export routes
-export * from './routes/oauth';
+// Frontend-safe provider registry and utilities
+export * from './providers/registry.js';
+export * from './utils/provider-helpers.js';
+
+// Frontend OAuth helpers (no Node.js dependencies)
+export * from './utils/frontend-oauth.js';
+

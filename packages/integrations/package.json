@@ -5,6 +5,10 @@
         ".": {
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
+        },
+        "./server": {
+            "types": "./dist/server.d.ts",
+            "default": "./dist/server.js"
         }
     },
     "main": "./dist/index.js",
@@ -18,7 +22,10 @@
     },
     "dependencies": {
         "@duramation/db": "*",
-        "zod": "^4.1.11"
+        "@duramation/shared": "*",
+        "zod": "^4.1.11",
+        "inngest": "^3.42.3",
+        "googleapis": "^159.0.0"
     },
     "devDependencies": {
         "@duramation/typescript-config": "*",

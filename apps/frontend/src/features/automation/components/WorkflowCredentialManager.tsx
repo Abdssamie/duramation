@@ -6,16 +6,28 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-  CredentialCreateRequest,
-  CredentialSecret,
+  Provider,
   getProviderDisplayName,
   isOAuthProvider,
   getProviderConfig,
   getProviderFields,
-  ProviderField
+} from '@duramation/integrations';
+import {
+  CredentialCreateRequest,
+  CredentialSecret,
 } from '@duramation/shared';
 
-import { type Provider } from '@duramation/db/types';
+// Extended field type for frontend forms
+interface ProviderField {
+  key: string;
+  name: string;
+  label: string;
+  type: 'text' | 'password' | 'url' | 'textarea' | 'select';
+  required: boolean;
+  placeholder?: string;
+  description?: string;
+  options?: string[];
+}
 
 import {
   Dialog,
@@ -105,7 +117,7 @@ export default function WorkflowCredentialManager({
 
   // Initialize form with dynamic schema
   const providerFields = selectedProvider
-    ? getProviderFields(selectedProvider)
+    ? (getProviderFields(selectedProvider) as ProviderField[])
     : [];
   const schema = createCredentialSchema(providerFields);
 
@@ -121,7 +133,7 @@ export default function WorkflowCredentialManager({
   useEffect(() => {
     if (selectedProvider) {
       const providerDisplayName = getProviderDisplayName(selectedProvider);
-      const fields = getProviderFields(selectedProvider);
+      const fields = getProviderFields(selectedProvider) as ProviderField[];
       const defaultFields: Record<string, any> = {};
       fields.forEach((field) => {
         defaultFields[field.key] = '';
@@ -134,7 +146,7 @@ export default function WorkflowCredentialManager({
     }
   }, [selectedProvider, form]);
 
-  // Load OAuth URLs when component mounts
+  // Load OAuth URLs when component mounts - dynamically for all OAuth providers
   useEffect(() => {
     if (!isLoaded || !isSignedIn) {
       setAuthUrlsLoading(false);
@@ -154,16 +166,23 @@ export default function WorkflowCredentialManager({
         const urls: Record<string, string> = {};
 
         for (const provider of oauthProviders) {
-          const scopes = requiredScopes?.[provider] || [];
-          if (provider === 'GOOGLE') {
-            const response = await api.credentials.getGoogleAuthUrl(
+          const config = getProviderConfig(provider);
+          if (config.authType !== 'OAUTH') continue;
+
+          const scopes = requiredScopes?.[provider] || config.oauth.defaultScopes;
+          
+          // Use generic OAuth URL method from API client
+          try {
+            const response = await api.credentials.getOAuthUrl(
               token,
-              scopes.length > 0 ? scopes : ['email', 'profile', 'openid'],
+              provider,
+              scopes,
               workflowId
             );
             urls[provider] = response.url;
+          } catch (error) {
+            console.error(`Failed to get ${provider} OAuth URL:`, error);
           }
-          // Add other OAuth providers here, e.g., SLACK, HUBSPOT
         }
         setOauthUrls(urls);
       } catch (error) {
@@ -223,29 +242,19 @@ export default function WorkflowCredentialManager({
 
       const providerConfig = getProviderConfig(selectedProvider);
 
-      // Create the appropriate secret structure based on provider type
-      let secret: CredentialSecret;
-
-      // For API key providers, use the form fields as the secret
-      const fields = getProviderFields(selectedProvider);
-      if (fields.length > 0) {
-        secret = data.fields as CredentialSecret;
-      } else {
-        // Fallback for simple API key
-        secret = {
-          apiKey: data.fields.apiKey || Object.values(data.fields)[0]
-        } as CredentialSecret;
-      }
+      // Create the appropriate secret structure based on provider type from integrations package
+      const secret: CredentialSecret = data.fields as CredentialSecret;
 
       const credentialData: CredentialCreateRequest = {
         name: data.name,
-        type: providerConfig.type,
+        type: providerConfig.authType === 'OAUTH' ? 'OAUTH' : 'API_KEY',
         provider: selectedProvider,
         secret,
         config: {
           source: 'workflow' as const,
           workflowId,
-          requiredScopes: requiredScopes?.[selectedProvider] || [],
+          requiredScopes: requiredScopes?.[selectedProvider] || 
+            (providerConfig.authType === 'OAUTH' ? providerConfig.oauth.defaultScopes : []),
           autoAssociate: !!workflowId
         }
       };
@@ -305,7 +314,7 @@ export default function WorkflowCredentialManager({
   const renderCredentialForm = () => {
     if (!selectedProvider) return null;
 
-    const providerFields = getProviderFields(selectedProvider);
+    const providerFields = getProviderFields(selectedProvider) as ProviderField[];
     const providerName = getProviderDisplayName(selectedProvider);
 
     // For OAuth providers, show sign-in button

@@ -60,8 +60,8 @@ enum Provider {
   SLACK
   HUBSPOT
   FIRECRAWL
-  CUSTOM
   INSTAGRAM
+  CUSTOM
 }
 
 enum WorkflowStatus {
@@ -86,8 +86,9 @@ model Credential {
   type     CredentialType
   provider Provider
 
-  secret Json?
-  config Json? // optional extra data (endpoint, token expiry)
+  secret    String? /// @encrypted - Stored as encrypted JSON string
+  config    Json? // optional extra data (endpoint, token expiry)
+  expiresIn DateTime?
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -143,7 +144,7 @@ model Workflow {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   requiredProviders Provider[] @default([])
-  requiredScopes    Json?
+  requiredScopes    Json? // Stores scopes per provider as Record<Provider, string[]>
 
   version String? // Version of the workflow template used
 

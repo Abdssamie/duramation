@@ -1,4 +1,4 @@
-import { Provider, CredentialType } from '../types/providers';
+import { prisma } from '@duramation/db';
 
 // Types for credential management
 export interface CredentialSecret {
@@ -18,199 +18,89 @@ export interface ApiKeyCredential {
   [key: string]: any;
 }
 
-export interface SafeCredential {
+export interface WorkflowCredential {
   id: string;
   name: string;
-  type: CredentialType;
-  provider: Provider;
+  type: string;
+  provider: string;
   userId: string;
-  createdAt: string;
-  updatedAt: string;
-  config?: Record<string, any>;
+  secret: any;
+  config: any;
+  expiresIn: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface CredentialWithSecret extends SafeCredential {
-  secret: CredentialSecret;
-}
+// Credential store using Prisma
+export class CredentialStore {
+  async getWorkflowCredentials(workflowId: string, userId: string): Promise<WorkflowCredential[]> {
+    const workflow = await prisma.workflow.findUnique({
+      where: { id: workflowId, userId: userId },
+      include: {
+        workflowCredentials: {
+          include: {
+            credential: true
+          }
+        }
+      }
+    });
 
-export interface CredentialCreateRequest {
-  name: string;
-  type: CredentialType;
-  provider: Provider;
-  secret: CredentialSecret;
-  config?: Record<string, any>;
-}
+    return workflow?.workflowCredentials.map(wc => ({
+      id: wc.credential.id,
+      name: wc.credential.name,
+      type: wc.credential.type,
+      provider: wc.credential.provider,
+      userId: wc.credential.userId,
+      secret: wc.credential.secret ? JSON.parse(wc.credential.secret as string) : null,
+      config: wc.credential.config,
+      expiresIn: wc.credential.expiresIn,
+      createdAt: wc.credential.createdAt,
+      updatedAt: wc.credential.updatedAt
+    })) || [];
+  }
 
-export interface CredentialUpdateRequest {
-  secret: CredentialSecret;
-}
+  async getCredential(credentialId: string, userId: string): Promise<WorkflowCredential | null> {
+    const credential = await prisma.credential.findFirst({
+      where: {
+        id: credentialId,
+        userId: userId
+      }
+    });
 
-// Interface for credential store
-export interface CredentialStore {
-  store(credential: {
-    userId: string;
-    provider: Provider;
-    type: CredentialType;
-    data: OAuthCredential | ApiKeyCredential;
-  }): Promise<SafeCredential>;
+    if (!credential) return null;
 
-  retrieve(credentialId: string, userId: string): Promise<CredentialWithSecret | null>;
-
-  update(
-    credentialId: string,
-    userId: string,
-    data: CredentialSecret,
-  ): Promise<SafeCredential>;
-
-  listByUserAndProvider(
-    userId: string,
-    provider: Provider,
-  ): Promise<SafeCredential[]>;
-
-  delete(credentialId: string, userId: string): Promise<void>;
-}
-
-// Mock implementation - in a real app, this would connect to a database
-export class InMemoryCredentialStore implements CredentialStore {
-  private credentials: Map<string, CredentialWithSecret> = new Map();
-  private workflowCredentials: Map<string, Set<string>> = new Map(); // workflowId -> credentialIds
-
-  async store(credential: {
-    userId: string;
-    provider: Provider;
-    type: CredentialType;
-    data: OAuthCredential | ApiKeyCredential;
-  }): Promise<SafeCredential> {
-    const id = `cred_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const now = new Date().toISOString();
-    
-    const credentialWithSecret: CredentialWithSecret = {
-      id,
-      name: `${credential.provider} Integration`,
+    return {
+      id: credential.id,
+      name: credential.name,
       type: credential.type,
       provider: credential.provider,
       userId: credential.userId,
-      createdAt: now,
-      updatedAt: now,
-      secret: credential.data,
-    };
-    
-    this.credentials.set(id, credentialWithSecret);
-    
-    return {
-      id,
-      name: credentialWithSecret.name,
-      type: credentialWithSecret.type,
-      provider: credentialWithSecret.provider,
-      userId: credentialWithSecret.userId,
-      createdAt: credentialWithSecret.createdAt,
-      updatedAt: credentialWithSecret.updatedAt,
+      secret: credential.secret ? JSON.parse(credential.secret as string) : null,
+      config: credential.config,
+      expiresIn: credential.expiresIn,
+      createdAt: credential.createdAt,
+      updatedAt: credential.updatedAt
     };
   }
 
-  async retrieve(credentialId: string, userId: string): Promise<CredentialWithSecret | null> {
-    const credential = this.credentials.get(credentialId);
-    if (!credential || credential.userId !== userId) {
-      return null;
-    }
-    return credential;
-  }
-
-  async update(
+  async updateCredentialSecret(
     credentialId: string,
     userId: string,
-    data: CredentialSecret,
-  ): Promise<SafeCredential> {
-    const credential = await this.retrieve(credentialId, userId);
-    if (!credential) {
-      throw new Error('Credential not found');
-    }
-    
-    const updatedCredential: CredentialWithSecret = {
-      ...credential,
-      secret: data,
-      updatedAt: new Date().toISOString(),
-    };
-    
-    this.credentials.set(credentialId, updatedCredential);
-    
-    return {
-      id: updatedCredential.id,
-      name: updatedCredential.name,
-      type: updatedCredential.type,
-      provider: updatedCredential.provider,
-      userId: updatedCredential.userId,
-      createdAt: updatedCredential.createdAt,
-      updatedAt: updatedCredential.updatedAt,
-    };
-  }
-
-  async listByUserAndProvider(
-    userId: string,
-    provider: Provider,
-  ): Promise<SafeCredential[]> {
-    const result: SafeCredential[] = [];
-    
-    for (const credential of this.credentials.values()) {
-      if (credential.userId === userId && credential.provider === provider) {
-        result.push({
-          id: credential.id,
-          name: credential.name,
-          type: credential.type,
-          provider: credential.provider,
-          userId: credential.userId,
-          createdAt: credential.createdAt,
-          updatedAt: credential.updatedAt,
-        });
-      }
-    }
-    
-    return result;
-  }
-
-  async delete(credentialId: string, userId: string): Promise<void> {
-    const credential = await this.retrieve(credentialId, userId);
-    if (!credential) {
-      throw new Error('Credential not found');
-    }
-    
-    this.credentials.delete(credentialId);
-  }
-
-  // Workflow credential association methods
-  async associateCredentialWithWorkflow(
-    credentialId: string,
-    workflowId: string,
+    secret: CredentialSecret,
+    expiresIn?: Date
   ): Promise<void> {
-    if (!this.workflowCredentials.has(workflowId)) {
-      this.workflowCredentials.set(workflowId, new Set());
-    }
-    
-    this.workflowCredentials.get(workflowId)!.add(credentialId);
-  }
-
-  async getWorkflowCredentials(workflowId: string): Promise<SafeCredential[]> {
-    const credentialIds = this.workflowCredentials.get(workflowId) || new Set();
-    const credentials: SafeCredential[] = [];
-    
-    for (const id of credentialIds) {
-      const credential = this.credentials.get(id);
-      if (credential) {
-        credentials.push({
-          id: credential.id,
-          name: credential.name,
-          type: credential.type,
-          provider: credential.provider,
-          userId: credential.userId,
-          createdAt: credential.createdAt,
-          updatedAt: credential.updatedAt,
-        });
+    await prisma.credential.update({
+      where: {
+        id: credentialId,
+        userId: userId
+      },
+      data: {
+        secret: JSON.stringify(secret),
+        ...(expiresIn && { expiresIn })
       }
-    }
-    
-    return credentials;
+    });
   }
 }
 
 // Export singleton instance
-export const credentialStore = new InMemoryCredentialStore();
+export const credentialStore = new CredentialStore();

@@ -33,6 +33,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@duramation/db": "*",
     "@duramation/shared": "*",
+    "@duramation/integrations": "*",
     "@formatjs/intl-localematcher": "^0.6.1",
     "@hookform/resolvers": "^3.9.1",
     "@inngest/realtime": "^0.4.1",

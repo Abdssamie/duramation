@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { WorkflowWithCredentials } from '@/types/workflow';
-import { Provider } from '@duramation/db/types';
+import { Provider } from '@duramation/integrations';
 import {
   Card,
   CardContent,

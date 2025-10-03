@@ -1,7 +1,10 @@
 // Frontend workflow types - browser-safe without Prisma imports
 
-import { WorkflowStatus, Provider } from '@duramation/db/types';
+import { WorkflowStatus } from '@duramation/db/types';
+import { Provider } from '@duramation/integrations';
 
+
+// Note: requiredScopes is now stored as Json in the database schema (Record<Provider, string[]>)
 export type {
   Workflow,
   WorkflowInputFieldDefinition,
@@ -36,13 +39,13 @@ export interface WorkflowWithCredentials {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
-  fields: any;
-  input: any;
-  config: any;
+  fields: Record<string, unknown>;
+  input: Record<string, unknown>;
+  config: object;
   idempotencyKey: string | null;
   // Database schema fields for credential requirements
   requiredProviders: Provider[];
-  requiredScopes: any;
+  requiredScopes: Record<string, string[]> | null;
   // Credential relationships from database
   workflowCredentials: Array<{
     workflowId: string;
@@ -54,7 +57,7 @@ export interface WorkflowWithCredentials {
       provider: Provider;
       userId: string;
       secret: any;
-      config: any;
+      config: object;
       createdAt: Date;
       updatedAt: Date;
     };
@@ -67,8 +70,8 @@ export interface WorkflowWithCredentials {
     type: string;
     provider: Provider;
     userId: string;
-    secret: string;
-    config: any;
+    secret: any;
+    config: object;
     createdAt: Date;
     updatedAt: Date;
   }>;

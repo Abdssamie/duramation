@@ -1,5 +1,8 @@
 import { Provider, CredentialType } from '@duramation/db/types';
-import { CredentialSecret } from './credential-secrets.js'
+import { CredentialSecret } from './credential-secrets.js';
+
+// Note: Secret data is stored as JSON in the database and encrypted.
+// The CredentialSecret type represents the decrypted structure.
 
 export interface BaseCredential {
     id: string;

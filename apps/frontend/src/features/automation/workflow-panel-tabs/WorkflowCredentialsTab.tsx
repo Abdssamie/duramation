@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Plus, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
 import { WorkflowWithCredentials } from '@/types/workflow';
-import { Provider } from '@duramation/db/types';
+import { Provider } from '@duramation/integrations';
 import {
   mapCredentialRequirements,
   getProviderDisplayName,
@@ -184,7 +184,7 @@ export default function WorkflowCredentialsTab({
           open={showCredentialManager}
           workflowId={workflow.id}
           requiredProviders={missingCredentials.map((req) => req.provider)}
-          requiredScopes={workflow.requiredScopes}
+          requiredScopes={workflow.requiredScopes as Record<string, string[]> | null}
           onCredentialAdded={() => {
             // Refresh workflow data - this would typically trigger a refetch
             setShowCredentialManager(false);

@@ -206,6 +206,17 @@ export const credentialsApi = {
     }),
   remove: (token: string, id: string) =>
     request<any>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
+  // Generic OAuth URL getter for any provider
+  getOAuthUrl: (token: string, provider: string, scopes: string[], workflowId?: string) =>
+    request<{ url: string }>(
+      `/api/credentials/oauth/auth-url${toQuery({
+        provider: provider.toUpperCase(),
+        scopes: scopes.join(','),
+        ...(workflowId && { workflowId })
+      })}`,
+      { token }
+    ),
+  // Backwards compatibility
   getGoogleAuthUrl: (token: string, scopes: string[], workflowId: string) =>
     request<{ url: string }>(
       `/api/credentials/google/auth-url${toQuery({

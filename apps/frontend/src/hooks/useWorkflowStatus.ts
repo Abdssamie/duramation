@@ -20,6 +20,8 @@ export function useWorkflowStatus(
   // Use a ref to hold the eventSource instance so it can be accessed in cleanup functions
   // without causing re-renders or being stale.
   const eventSourceRef = useRef<EventSource | null>(null);
+  const retryCountRef = useRef<number>(0);
+  const maxRetries = 5;
 
   // Memoize the onUpdate callback to ensure the effect dependency is stable.
   const memoizedOnUpdate = useCallback(onUpdate, [onUpdate]);
@@ -31,12 +33,23 @@ export function useWorkflowStatus(
         eventSourceRef.current.close();
       }
 
+      // Check if max retries exceeded
+      if (retryCountRef.current >= maxRetries) {
+        console.error(
+          `SSE connection failed after ${maxRetries} attempts. Stopping reconnection.`
+        );
+        setIsConnected(false);
+        return;
+      }
+
       const eventSource = new EventSource('/api/realtime/events');
       eventSourceRef.current = eventSource;
 
       eventSource.onopen = () => {
         console.log('SSE connection established.');
         setIsConnected(true);
+        // Reset retry count on successful connection
+        retryCountRef.current = 0;
       };
 
       eventSource.addEventListener('connection-established', (event) => {
@@ -55,13 +68,26 @@ export function useWorkflowStatus(
         }
       });
 
-      // Your requested error handling and reconnection logic.
+      // Error handling with retry limit
       eventSource.onerror = () => {
-        console.error('SSE connection error. Attempting to reconnect...');
+        retryCountRef.current += 1;
+        console.error(
+          `SSE connection error. Retry attempt ${retryCountRef.current}/${maxRetries}...`
+        );
         setIsConnected(false);
         eventSource.close();
-        // Use a small delay before attempting to reconnect.
-        setTimeout(connectToStream, 1);
+
+        // Only attempt to reconnect if under max retries
+        if (retryCountRef.current < maxRetries) {
+          // Exponential backoff: 1s, 2s, 4s, 8s, 16s
+          const delay = Math.min(1000 * Math.pow(2, retryCountRef.current - 1), 16000);
+          console.log(`Reconnecting in ${delay}ms...`);
+          setTimeout(connectToStream, delay);
+        } else {
+          console.error(
+            'Max retry attempts reached. Please refresh the page to reconnect.'
+          );
+        }
       };
     };
 
@@ -73,6 +99,8 @@ export function useWorkflowStatus(
       if (eventSourceRef.current) {
         eventSourceRef.current.close();
       }
+      // Reset retry count on unmount
+      retryCountRef.current = 0;
     };
   }, [memoizedOnUpdate]); // The effect re-runs only if the callback function changes.
 

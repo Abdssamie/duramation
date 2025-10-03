@@ -1,13 +1,12 @@
 import { EventSchemas, Inngest  } from 'inngest';
 import { realtimeMiddleware } from '@inngest/realtime';
-import { gmailMiddleware } from '@/inngest/middleware/gmail';
 import { User } from '@duramation/db';
 import logger from '@/services/logging';
-import { sheetsMiddleware } from '@/inngest/middleware/sheets';
 import { WorkflowDailyReportInput } from '@/inngest/functions/generate-daily-report/metadata';
 import { WorkflowRandomTextLoopInput } from '@/inngest/functions/random-text-loop/metadata';
 import { InternalUserId } from '@/types/user';
 import { credentialMiddleware } from '@/inngest/middleware/credential';
+import { workflowStatusMiddleware } from '@/inngest/middleware/workflow-status-middleware';
 
 // Basic scheduler input schema (defined inline in templates)
 export type BasicSchedulerInput = {
@@ -90,9 +89,8 @@ export const inngest = new Inngest({
   id: 'duramation',
   middleware: [
     realtimeMiddleware(),
-    gmailMiddleware,
-    sheetsMiddleware,
-    credentialMiddleware
+    credentialMiddleware,
+    workflowStatusMiddleware
   ],
   logger: logger,
   schemas: new EventSchemas().fromRecord<Events>(),

@@ -19,6 +19,7 @@ import {
   SelectValue
 } from '@/components/ui/select';
 
+
 function formatPrice(pricing: any) {
   if (!pricing || pricing.type === 'free') return 'Free';
   const amount = typeof pricing.price === 'number' ? pricing.price / 100 : 0;

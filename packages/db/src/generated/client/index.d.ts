@@ -76,6 +76,7 @@ export const Provider: {
   SLACK: 'SLACK',
   HUBSPOT: 'HUBSPOT',
   FIRECRAWL: 'FIRECRAWL',
+  INSTAGRAM: 'INSTAGRAM',
   CUSTOM: 'CUSTOM'
 };
 
@@ -3079,6 +3080,8 @@ export namespace Prisma {
     name: string | null
     type: $Enums.CredentialType | null
     provider: $Enums.Provider | null
+    secret: string | null
+    expiresIn: Date | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3089,6 +3092,8 @@ export namespace Prisma {
     name: string | null
     type: $Enums.CredentialType | null
     provider: $Enums.Provider | null
+    secret: string | null
+    expiresIn: Date | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3101,6 +3106,7 @@ export namespace Prisma {
     provider: number
     secret: number
     config: number
+    expiresIn: number
     userId: number
     createdAt: number
     updatedAt: number
@@ -3113,6 +3119,8 @@ export namespace Prisma {
     name?: true
     type?: true
     provider?: true
+    secret?: true
+    expiresIn?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -3123,6 +3131,8 @@ export namespace Prisma {
     name?: true
     type?: true
     provider?: true
+    secret?: true
+    expiresIn?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -3135,6 +3145,7 @@ export namespace Prisma {
     provider?: true
     secret?: true
     config?: true
+    expiresIn?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -3218,8 +3229,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret: JsonValue | null
+    secret: string | null
     config: JsonValue | null
+    expiresIn: Date | null
     userId: string
     createdAt: Date
     updatedAt: Date
@@ -3249,6 +3261,7 @@ export namespace Prisma {
     provider?: boolean
     secret?: boolean
     config?: boolean
+    expiresIn?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3264,6 +3277,7 @@ export namespace Prisma {
     provider?: boolean
     secret?: boolean
     config?: boolean
+    expiresIn?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3277,6 +3291,7 @@ export namespace Prisma {
     provider?: boolean
     secret?: boolean
     config?: boolean
+    expiresIn?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3290,12 +3305,13 @@ export namespace Prisma {
     provider?: boolean
     secret?: boolean
     config?: boolean
+    expiresIn?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CredentialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "secret" | "config" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
+  export type CredentialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "secret" | "config" | "expiresIn" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
   export type CredentialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     workflowCredentials?: boolean | Credential$workflowCredentialsArgs<ExtArgs>
@@ -3319,8 +3335,12 @@ export namespace Prisma {
       name: string
       type: $Enums.CredentialType
       provider: $Enums.Provider
-      secret: Prisma.JsonValue | null
+      /**
+       * @encrypted - Stored as encrypted JSON string
+       */
+      secret: string | null
       config: Prisma.JsonValue | null
+      expiresIn: Date | null
       userId: string
       createdAt: Date
       updatedAt: Date
@@ -3753,8 +3773,9 @@ export namespace Prisma {
     readonly name: FieldRef<"Credential", 'String'>
     readonly type: FieldRef<"Credential", 'CredentialType'>
     readonly provider: FieldRef<"Credential", 'Provider'>
-    readonly secret: FieldRef<"Credential", 'Json'>
+    readonly secret: FieldRef<"Credential", 'String'>
     readonly config: FieldRef<"Credential", 'Json'>
+    readonly expiresIn: FieldRef<"Credential", 'DateTime'>
     readonly userId: FieldRef<"Credential", 'String'>
     readonly createdAt: FieldRef<"Credential", 'DateTime'>
     readonly updatedAt: FieldRef<"Credential", 'DateTime'>
@@ -12381,6 +12402,7 @@ export namespace Prisma {
     provider: 'provider',
     secret: 'secret',
     config: 'config',
+    expiresIn: 'expiresIn',
     userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -12848,8 +12870,9 @@ export namespace Prisma {
     name?: StringFilter<"Credential"> | string
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
-    secret?: JsonNullableFilter<"Credential">
+    secret?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
+    expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
     createdAt?: DateTimeFilter<"Credential"> | Date | string
     updatedAt?: DateTimeFilter<"Credential"> | Date | string
@@ -12864,6 +12887,7 @@ export namespace Prisma {
     provider?: SortOrder
     secret?: SortOrderInput | SortOrder
     config?: SortOrderInput | SortOrder
+    expiresIn?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12880,8 +12904,9 @@ export namespace Prisma {
     name?: StringFilter<"Credential"> | string
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
-    secret?: JsonNullableFilter<"Credential">
+    secret?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
+    expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
     createdAt?: DateTimeFilter<"Credential"> | Date | string
     updatedAt?: DateTimeFilter<"Credential"> | Date | string
@@ -12896,6 +12921,7 @@ export namespace Prisma {
     provider?: SortOrder
     secret?: SortOrderInput | SortOrder
     config?: SortOrderInput | SortOrder
+    expiresIn?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12912,8 +12938,9 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Credential"> | string
     type?: EnumCredentialTypeWithAggregatesFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderWithAggregatesFilter<"Credential"> | $Enums.Provider
-    secret?: JsonNullableWithAggregatesFilter<"Credential">
+    secret?: StringNullableWithAggregatesFilter<"Credential"> | string | null
     config?: JsonNullableWithAggregatesFilter<"Credential">
+    expiresIn?: DateTimeNullableWithAggregatesFilter<"Credential"> | Date | string | null
     userId?: StringWithAggregatesFilter<"Credential"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Credential"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Credential"> | Date | string
@@ -13693,8 +13720,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCredentialsInput
@@ -13706,8 +13734,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13719,8 +13748,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCredentialsNestedInput
@@ -13732,8 +13762,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13745,8 +13776,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13757,8 +13789,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13768,8 +13801,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14759,6 +14793,17 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -14786,6 +14831,7 @@ export namespace Prisma {
     provider?: SortOrder
     secret?: SortOrder
     config?: SortOrder
+    expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14796,6 +14842,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     provider?: SortOrder
+    secret?: SortOrder
+    expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14806,6 +14854,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     provider?: SortOrder
+    secret?: SortOrder
+    expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14857,6 +14907,20 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type EnumWorkflowStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.WorkflowStatus | EnumWorkflowStatusFieldRefInput<$PrismaModel>
     in?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
@@ -14870,17 +14934,6 @@ export namespace Prisma {
     hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type EnumProviderNullableListFilter<$PrismaModel = never> = {
@@ -14972,20 +15025,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumWorkflowStatusFilter<$PrismaModel>
     _max?: NestedEnumWorkflowStatusFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type WorkflowScalarRelationFilter = {
@@ -15671,6 +15710,10 @@ export namespace Prisma {
     set?: $Enums.Provider
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type UserUpdateOneRequiredWithoutCredentialsNestedInput = {
     create?: XOR<UserCreateWithoutCredentialsInput, UserUncheckedCreateWithoutCredentialsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCredentialsInput
@@ -15770,10 +15813,6 @@ export namespace Prisma {
   export type WorkflowUpdatecronExpressionsInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type WorkflowUpdaterequiredProvidersInput = {
@@ -16183,6 +16222,17 @@ export namespace Prisma {
     not?: NestedEnumProviderFilter<$PrismaModel> | $Enums.Provider
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedEnumCredentialTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.CredentialType | EnumCredentialTypeFieldRefInput<$PrismaModel>
     in?: $Enums.CredentialType[] | ListEnumCredentialTypeFieldRefInput<$PrismaModel>
@@ -16226,34 +16276,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedEnumWorkflowStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkflowStatus | EnumWorkflowStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkflowStatusFilter<$PrismaModel> | $Enums.WorkflowStatus
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WorkflowStatus | EnumWorkflowStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel> | $Enums.WorkflowStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWorkflowStatusFilter<$PrismaModel>
-    _max?: NestedEnumWorkflowStatusFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -16266,6 +16288,23 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumWorkflowStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WorkflowStatus | EnumWorkflowStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWorkflowStatusFilter<$PrismaModel> | $Enums.WorkflowStatus
+  }
+
+  export type NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WorkflowStatus | EnumWorkflowStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WorkflowStatus[] | ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel> | $Enums.WorkflowStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWorkflowStatusFilter<$PrismaModel>
+    _max?: NestedEnumWorkflowStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumRunStatusFilter<$PrismaModel = never> = {
@@ -16482,8 +16521,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutCredentialInput
@@ -16494,8 +16534,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutCredentialInput
@@ -16696,8 +16737,9 @@ export namespace Prisma {
     name?: StringFilter<"Credential"> | string
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
-    secret?: JsonNullableFilter<"Credential">
+    secret?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
+    expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
     createdAt?: DateTimeFilter<"Credential"> | Date | string
     updatedAt?: DateTimeFilter<"Credential"> | Date | string
@@ -17247,8 +17289,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCredentialsInput
@@ -17259,8 +17302,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17352,8 +17396,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCredentialsNestedInput
@@ -17364,8 +17409,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17900,8 +17946,9 @@ export namespace Prisma {
     name: string
     type: $Enums.CredentialType
     provider: $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18025,8 +18072,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workflowCredentials?: WorkflowCredentialUpdateManyWithoutCredentialNestedInput
@@ -18037,8 +18085,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutCredentialNestedInput
@@ -18049,8 +18098,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
-    secret?: NullableJsonNullValueInput | InputJsonValue
+    secret?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
+    expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

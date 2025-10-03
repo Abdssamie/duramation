@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import {
+  Provider,
   getProviderConfig,
   getProviderDisplayName,
   getProviderColors
-} from '@duramation/shared';
-import { Provider } from '@duramation/db/types';
+} from '@duramation/integrations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import GoogleIcon from '@/components/icons/GoogleIcon';

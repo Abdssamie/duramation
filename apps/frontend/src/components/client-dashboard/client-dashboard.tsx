@@ -9,6 +9,7 @@ import { ROIMetricsDisplay } from '@/components/client-dashboard/roi-metrics-dis
 import { MetricsOverview } from '@/components/client-dashboard/metrics-overview';
 import { PerformanceCharts } from '@/components/client-dashboard/performance-charts';
 import { ROICalculator } from '@/components/client-dashboard/roi-calculator';
+import Image from 'next/image';
 
 interface ClientBranding {
   companyName: string;
@@ -29,7 +30,7 @@ export function ClientDashboard({ branding, className }: ClientDashboardProps) {
       <div className='flex items-center justify-between'>
         <div className='flex items-center space-x-4'>
           {branding?.logoUrl && (
-            <img
+            <Image
               src={branding.logoUrl}
               alt={`${branding.companyName} logo`}
               className='h-12 w-auto'

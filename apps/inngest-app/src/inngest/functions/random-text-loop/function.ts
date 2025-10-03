@@ -16,7 +16,7 @@ export const randomTextLoopWorkflow = inngest.createFunction(
         }],
     },
     { event: "workflow/random.text.loop" },
-    async ({ step, event, logger, runId, publish }) => {
+    async ({ step, event, logger, runId, publish, credentials }) => {
         const { workflowId, user_id, cronExpression, scheduledRun, tz, input } = event.data;
         const functionId = "random-text-loop";
 

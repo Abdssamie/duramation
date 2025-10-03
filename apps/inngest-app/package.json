@@ -15,6 +15,7 @@
     "@clerk/nextjs": "^6.31.6",
     "@duramation/db": "*",
     "@duramation/shared": "*",
+    "@duramation/integrations": "*",
     "@inngest/agent-kit": "^0.9.0",
     "@inngest/realtime": "^0.3.1",
     "@prisma/client": "^6.16.2",
