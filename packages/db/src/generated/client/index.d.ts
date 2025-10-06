@@ -58,6 +58,41 @@ export type ServiceRequest = $Result.DefaultSelection<Prisma.$ServiceRequestPayl
  * 
  */
 export type AutomationMetrics = $Result.DefaultSelection<Prisma.$AutomationMetricsPayload>
+/**
+ * Model BusinessOutcome
+ * 
+ */
+export type BusinessOutcome = $Result.DefaultSelection<Prisma.$BusinessOutcomePayload>
+/**
+ * Model EfficiencyMetric
+ * 
+ */
+export type EfficiencyMetric = $Result.DefaultSelection<Prisma.$EfficiencyMetricPayload>
+/**
+ * Model AutomationOpportunity
+ * 
+ */
+export type AutomationOpportunity = $Result.DefaultSelection<Prisma.$AutomationOpportunityPayload>
+/**
+ * Model WorkflowHealth
+ * 
+ */
+export type WorkflowHealth = $Result.DefaultSelection<Prisma.$WorkflowHealthPayload>
+/**
+ * Model HealthRecommendation
+ * 
+ */
+export type HealthRecommendation = $Result.DefaultSelection<Prisma.$HealthRecommendationPayload>
+/**
+ * Model HealthAlert
+ * 
+ */
+export type HealthAlert = $Result.DefaultSelection<Prisma.$HealthAlertPayload>
+/**
+ * Model ExecutiveReport
+ * 
+ */
+export type ExecutiveReport = $Result.DefaultSelection<Prisma.$ExecutiveReportPayload>
 
 /**
  * Enums
@@ -128,6 +163,63 @@ export const RequestStatus: {
 
 export type RequestStatus = (typeof RequestStatus)[keyof typeof RequestStatus]
 
+
+export const BusinessOutcomeType: {
+  LEADS_GENERATED: 'LEADS_GENERATED',
+  ORDERS_PROCESSED: 'ORDERS_PROCESSED',
+  TICKETS_RESOLVED: 'TICKETS_RESOLVED',
+  CUSTOM: 'CUSTOM'
+};
+
+export type BusinessOutcomeType = (typeof BusinessOutcomeType)[keyof typeof BusinessOutcomeType]
+
+
+export const OpportunityCategory: {
+  DATA_ENTRY: 'DATA_ENTRY',
+  COMMUNICATION: 'COMMUNICATION',
+  REPORTING: 'REPORTING',
+  INTEGRATION: 'INTEGRATION'
+};
+
+export type OpportunityCategory = (typeof OpportunityCategory)[keyof typeof OpportunityCategory]
+
+
+export const OpportunityStatus: {
+  IDENTIFIED: 'IDENTIFIED',
+  DISMISSED: 'DISMISSED',
+  REQUESTED: 'REQUESTED',
+  IMPLEMENTED: 'IMPLEMENTED'
+};
+
+export type OpportunityStatus = (typeof OpportunityStatus)[keyof typeof OpportunityStatus]
+
+
+export const HealthRecommendationType: {
+  PERFORMANCE: 'PERFORMANCE',
+  RELIABILITY: 'RELIABILITY',
+  OPTIMIZATION: 'OPTIMIZATION'
+};
+
+export type HealthRecommendationType = (typeof HealthRecommendationType)[keyof typeof HealthRecommendationType]
+
+
+export const HealthRecommendationPriority: {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+};
+
+export type HealthRecommendationPriority = (typeof HealthRecommendationPriority)[keyof typeof HealthRecommendationPriority]
+
+
+export const ImplementationEffort: {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+};
+
+export type ImplementationEffort = (typeof ImplementationEffort)[keyof typeof ImplementationEffort]
+
 }
 
 export type CredentialType = $Enums.CredentialType
@@ -153,6 +245,30 @@ export const RequestPriority: typeof $Enums.RequestPriority
 export type RequestStatus = $Enums.RequestStatus
 
 export const RequestStatus: typeof $Enums.RequestStatus
+
+export type BusinessOutcomeType = $Enums.BusinessOutcomeType
+
+export const BusinessOutcomeType: typeof $Enums.BusinessOutcomeType
+
+export type OpportunityCategory = $Enums.OpportunityCategory
+
+export const OpportunityCategory: typeof $Enums.OpportunityCategory
+
+export type OpportunityStatus = $Enums.OpportunityStatus
+
+export const OpportunityStatus: typeof $Enums.OpportunityStatus
+
+export type HealthRecommendationType = $Enums.HealthRecommendationType
+
+export const HealthRecommendationType: typeof $Enums.HealthRecommendationType
+
+export type HealthRecommendationPriority = $Enums.HealthRecommendationPriority
+
+export const HealthRecommendationPriority: typeof $Enums.HealthRecommendationPriority
+
+export type ImplementationEffort = $Enums.ImplementationEffort
+
+export const ImplementationEffort: typeof $Enums.ImplementationEffort
 
 /**
  * ##  Prisma Client ʲˢ
@@ -361,6 +477,76 @@ export class PrismaClient<
     * ```
     */
   get automationMetrics(): Prisma.AutomationMetricsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.businessOutcome`: Exposes CRUD operations for the **BusinessOutcome** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BusinessOutcomes
+    * const businessOutcomes = await prisma.businessOutcome.findMany()
+    * ```
+    */
+  get businessOutcome(): Prisma.BusinessOutcomeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.efficiencyMetric`: Exposes CRUD operations for the **EfficiencyMetric** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EfficiencyMetrics
+    * const efficiencyMetrics = await prisma.efficiencyMetric.findMany()
+    * ```
+    */
+  get efficiencyMetric(): Prisma.EfficiencyMetricDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationOpportunity`: Exposes CRUD operations for the **AutomationOpportunity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationOpportunities
+    * const automationOpportunities = await prisma.automationOpportunity.findMany()
+    * ```
+    */
+  get automationOpportunity(): Prisma.AutomationOpportunityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.workflowHealth`: Exposes CRUD operations for the **WorkflowHealth** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WorkflowHealths
+    * const workflowHealths = await prisma.workflowHealth.findMany()
+    * ```
+    */
+  get workflowHealth(): Prisma.WorkflowHealthDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.healthRecommendation`: Exposes CRUD operations for the **HealthRecommendation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HealthRecommendations
+    * const healthRecommendations = await prisma.healthRecommendation.findMany()
+    * ```
+    */
+  get healthRecommendation(): Prisma.HealthRecommendationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.healthAlert`: Exposes CRUD operations for the **HealthAlert** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HealthAlerts
+    * const healthAlerts = await prisma.healthAlert.findMany()
+    * ```
+    */
+  get healthAlert(): Prisma.HealthAlertDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.executiveReport`: Exposes CRUD operations for the **ExecutiveReport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ExecutiveReports
+    * const executiveReports = await prisma.executiveReport.findMany()
+    * ```
+    */
+  get executiveReport(): Prisma.ExecutiveReportDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -809,7 +995,14 @@ export namespace Prisma {
     WorkflowTemplate: 'WorkflowTemplate',
     ClientBranding: 'ClientBranding',
     ServiceRequest: 'ServiceRequest',
-    AutomationMetrics: 'AutomationMetrics'
+    AutomationMetrics: 'AutomationMetrics',
+    BusinessOutcome: 'BusinessOutcome',
+    EfficiencyMetric: 'EfficiencyMetric',
+    AutomationOpportunity: 'AutomationOpportunity',
+    WorkflowHealth: 'WorkflowHealth',
+    HealthRecommendation: 'HealthRecommendation',
+    HealthAlert: 'HealthAlert',
+    ExecutiveReport: 'ExecutiveReport'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -828,7 +1021,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "credential" | "workflow" | "workflowCredential" | "workflowRun" | "workflowTemplate" | "clientBranding" | "serviceRequest" | "automationMetrics"
+      modelProps: "user" | "credential" | "workflow" | "workflowCredential" | "workflowRun" | "workflowTemplate" | "clientBranding" | "serviceRequest" | "automationMetrics" | "businessOutcome" | "efficiencyMetric" | "automationOpportunity" | "workflowHealth" | "healthRecommendation" | "healthAlert" | "executiveReport"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1498,6 +1691,524 @@ export namespace Prisma {
           }
         }
       }
+      BusinessOutcome: {
+        payload: Prisma.$BusinessOutcomePayload<ExtArgs>
+        fields: Prisma.BusinessOutcomeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BusinessOutcomeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BusinessOutcomeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>
+          }
+          findFirst: {
+            args: Prisma.BusinessOutcomeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BusinessOutcomeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>
+          }
+          findMany: {
+            args: Prisma.BusinessOutcomeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>[]
+          }
+          create: {
+            args: Prisma.BusinessOutcomeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>
+          }
+          createMany: {
+            args: Prisma.BusinessOutcomeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BusinessOutcomeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>[]
+          }
+          delete: {
+            args: Prisma.BusinessOutcomeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>
+          }
+          update: {
+            args: Prisma.BusinessOutcomeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>
+          }
+          deleteMany: {
+            args: Prisma.BusinessOutcomeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BusinessOutcomeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BusinessOutcomeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>[]
+          }
+          upsert: {
+            args: Prisma.BusinessOutcomeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BusinessOutcomePayload>
+          }
+          aggregate: {
+            args: Prisma.BusinessOutcomeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBusinessOutcome>
+          }
+          groupBy: {
+            args: Prisma.BusinessOutcomeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BusinessOutcomeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BusinessOutcomeCountArgs<ExtArgs>
+            result: $Utils.Optional<BusinessOutcomeCountAggregateOutputType> | number
+          }
+        }
+      }
+      EfficiencyMetric: {
+        payload: Prisma.$EfficiencyMetricPayload<ExtArgs>
+        fields: Prisma.EfficiencyMetricFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EfficiencyMetricFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EfficiencyMetricFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>
+          }
+          findFirst: {
+            args: Prisma.EfficiencyMetricFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EfficiencyMetricFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>
+          }
+          findMany: {
+            args: Prisma.EfficiencyMetricFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>[]
+          }
+          create: {
+            args: Prisma.EfficiencyMetricCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>
+          }
+          createMany: {
+            args: Prisma.EfficiencyMetricCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EfficiencyMetricCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>[]
+          }
+          delete: {
+            args: Prisma.EfficiencyMetricDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>
+          }
+          update: {
+            args: Prisma.EfficiencyMetricUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>
+          }
+          deleteMany: {
+            args: Prisma.EfficiencyMetricDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EfficiencyMetricUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EfficiencyMetricUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>[]
+          }
+          upsert: {
+            args: Prisma.EfficiencyMetricUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EfficiencyMetricPayload>
+          }
+          aggregate: {
+            args: Prisma.EfficiencyMetricAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEfficiencyMetric>
+          }
+          groupBy: {
+            args: Prisma.EfficiencyMetricGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EfficiencyMetricGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EfficiencyMetricCountArgs<ExtArgs>
+            result: $Utils.Optional<EfficiencyMetricCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationOpportunity: {
+        payload: Prisma.$AutomationOpportunityPayload<ExtArgs>
+        fields: Prisma.AutomationOpportunityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationOpportunityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationOpportunityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationOpportunityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationOpportunityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationOpportunityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationOpportunityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationOpportunityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationOpportunityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationOpportunityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>
+          }
+          update: {
+            args: Prisma.AutomationOpportunityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationOpportunityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationOpportunityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationOpportunityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationOpportunityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationOpportunityPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationOpportunityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationOpportunity>
+          }
+          groupBy: {
+            args: Prisma.AutomationOpportunityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationOpportunityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationOpportunityCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationOpportunityCountAggregateOutputType> | number
+          }
+        }
+      }
+      WorkflowHealth: {
+        payload: Prisma.$WorkflowHealthPayload<ExtArgs>
+        fields: Prisma.WorkflowHealthFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WorkflowHealthFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WorkflowHealthFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>
+          }
+          findFirst: {
+            args: Prisma.WorkflowHealthFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WorkflowHealthFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>
+          }
+          findMany: {
+            args: Prisma.WorkflowHealthFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>[]
+          }
+          create: {
+            args: Prisma.WorkflowHealthCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>
+          }
+          createMany: {
+            args: Prisma.WorkflowHealthCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WorkflowHealthCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>[]
+          }
+          delete: {
+            args: Prisma.WorkflowHealthDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>
+          }
+          update: {
+            args: Prisma.WorkflowHealthUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>
+          }
+          deleteMany: {
+            args: Prisma.WorkflowHealthDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WorkflowHealthUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WorkflowHealthUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>[]
+          }
+          upsert: {
+            args: Prisma.WorkflowHealthUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkflowHealthPayload>
+          }
+          aggregate: {
+            args: Prisma.WorkflowHealthAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWorkflowHealth>
+          }
+          groupBy: {
+            args: Prisma.WorkflowHealthGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WorkflowHealthGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WorkflowHealthCountArgs<ExtArgs>
+            result: $Utils.Optional<WorkflowHealthCountAggregateOutputType> | number
+          }
+        }
+      }
+      HealthRecommendation: {
+        payload: Prisma.$HealthRecommendationPayload<ExtArgs>
+        fields: Prisma.HealthRecommendationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HealthRecommendationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HealthRecommendationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>
+          }
+          findFirst: {
+            args: Prisma.HealthRecommendationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HealthRecommendationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>
+          }
+          findMany: {
+            args: Prisma.HealthRecommendationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>[]
+          }
+          create: {
+            args: Prisma.HealthRecommendationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>
+          }
+          createMany: {
+            args: Prisma.HealthRecommendationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HealthRecommendationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>[]
+          }
+          delete: {
+            args: Prisma.HealthRecommendationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>
+          }
+          update: {
+            args: Prisma.HealthRecommendationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>
+          }
+          deleteMany: {
+            args: Prisma.HealthRecommendationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HealthRecommendationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HealthRecommendationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>[]
+          }
+          upsert: {
+            args: Prisma.HealthRecommendationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthRecommendationPayload>
+          }
+          aggregate: {
+            args: Prisma.HealthRecommendationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHealthRecommendation>
+          }
+          groupBy: {
+            args: Prisma.HealthRecommendationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HealthRecommendationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HealthRecommendationCountArgs<ExtArgs>
+            result: $Utils.Optional<HealthRecommendationCountAggregateOutputType> | number
+          }
+        }
+      }
+      HealthAlert: {
+        payload: Prisma.$HealthAlertPayload<ExtArgs>
+        fields: Prisma.HealthAlertFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HealthAlertFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HealthAlertFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>
+          }
+          findFirst: {
+            args: Prisma.HealthAlertFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HealthAlertFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>
+          }
+          findMany: {
+            args: Prisma.HealthAlertFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>[]
+          }
+          create: {
+            args: Prisma.HealthAlertCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>
+          }
+          createMany: {
+            args: Prisma.HealthAlertCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HealthAlertCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>[]
+          }
+          delete: {
+            args: Prisma.HealthAlertDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>
+          }
+          update: {
+            args: Prisma.HealthAlertUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>
+          }
+          deleteMany: {
+            args: Prisma.HealthAlertDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HealthAlertUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HealthAlertUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>[]
+          }
+          upsert: {
+            args: Prisma.HealthAlertUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthAlertPayload>
+          }
+          aggregate: {
+            args: Prisma.HealthAlertAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHealthAlert>
+          }
+          groupBy: {
+            args: Prisma.HealthAlertGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HealthAlertGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HealthAlertCountArgs<ExtArgs>
+            result: $Utils.Optional<HealthAlertCountAggregateOutputType> | number
+          }
+        }
+      }
+      ExecutiveReport: {
+        payload: Prisma.$ExecutiveReportPayload<ExtArgs>
+        fields: Prisma.ExecutiveReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ExecutiveReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ExecutiveReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>
+          }
+          findFirst: {
+            args: Prisma.ExecutiveReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ExecutiveReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>
+          }
+          findMany: {
+            args: Prisma.ExecutiveReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>[]
+          }
+          create: {
+            args: Prisma.ExecutiveReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>
+          }
+          createMany: {
+            args: Prisma.ExecutiveReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ExecutiveReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>[]
+          }
+          delete: {
+            args: Prisma.ExecutiveReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>
+          }
+          update: {
+            args: Prisma.ExecutiveReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.ExecutiveReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ExecutiveReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ExecutiveReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.ExecutiveReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExecutiveReportPayload>
+          }
+          aggregate: {
+            args: Prisma.ExecutiveReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateExecutiveReport>
+          }
+          groupBy: {
+            args: Prisma.ExecutiveReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ExecutiveReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ExecutiveReportCountArgs<ExtArgs>
+            result: $Utils.Optional<ExecutiveReportCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1603,6 +2314,13 @@ export namespace Prisma {
     clientBranding?: ClientBrandingOmit
     serviceRequest?: ServiceRequestOmit
     automationMetrics?: AutomationMetricsOmit
+    businessOutcome?: BusinessOutcomeOmit
+    efficiencyMetric?: EfficiencyMetricOmit
+    automationOpportunity?: AutomationOpportunityOmit
+    workflowHealth?: WorkflowHealthOmit
+    healthRecommendation?: HealthRecommendationOmit
+    healthAlert?: HealthAlertOmit
+    executiveReport?: ExecutiveReportOmit
   }
 
   /* Types for Logging */
@@ -1687,6 +2405,8 @@ export namespace Prisma {
     credentials: number
     workflowRuns: number
     serviceRequests: number
+    automationOpportunities: number
+    executiveReports: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1694,6 +2414,8 @@ export namespace Prisma {
     credentials?: boolean | UserCountOutputTypeCountCredentialsArgs
     workflowRuns?: boolean | UserCountOutputTypeCountWorkflowRunsArgs
     serviceRequests?: boolean | UserCountOutputTypeCountServiceRequestsArgs
+    automationOpportunities?: boolean | UserCountOutputTypeCountAutomationOpportunitiesArgs
+    executiveReports?: boolean | UserCountOutputTypeCountExecutiveReportsArgs
   }
 
   // Custom InputTypes
@@ -1733,6 +2455,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountServiceRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ServiceRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAutomationOpportunitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationOpportunityWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountExecutiveReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExecutiveReportWhereInput
   }
 
 
@@ -1775,12 +2511,16 @@ export namespace Prisma {
     workflowCredentials: number
     workflowRuns: number
     automationMetrics: number
+    businessOutcomes: number
+    efficiencyMetrics: number
   }
 
   export type WorkflowCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workflowCredentials?: boolean | WorkflowCountOutputTypeCountWorkflowCredentialsArgs
     workflowRuns?: boolean | WorkflowCountOutputTypeCountWorkflowRunsArgs
     automationMetrics?: boolean | WorkflowCountOutputTypeCountAutomationMetricsArgs
+    businessOutcomes?: boolean | WorkflowCountOutputTypeCountBusinessOutcomesArgs
+    efficiencyMetrics?: boolean | WorkflowCountOutputTypeCountEfficiencyMetricsArgs
   }
 
   // Custom InputTypes
@@ -1813,6 +2553,60 @@ export namespace Prisma {
    */
   export type WorkflowCountOutputTypeCountAutomationMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AutomationMetricsWhereInput
+  }
+
+  /**
+   * WorkflowCountOutputType without action
+   */
+  export type WorkflowCountOutputTypeCountBusinessOutcomesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BusinessOutcomeWhereInput
+  }
+
+  /**
+   * WorkflowCountOutputType without action
+   */
+  export type WorkflowCountOutputTypeCountEfficiencyMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EfficiencyMetricWhereInput
+  }
+
+
+  /**
+   * Count Type WorkflowHealthCountOutputType
+   */
+
+  export type WorkflowHealthCountOutputType = {
+    recommendations: number
+    alerts: number
+  }
+
+  export type WorkflowHealthCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recommendations?: boolean | WorkflowHealthCountOutputTypeCountRecommendationsArgs
+    alerts?: boolean | WorkflowHealthCountOutputTypeCountAlertsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WorkflowHealthCountOutputType without action
+   */
+  export type WorkflowHealthCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealthCountOutputType
+     */
+    select?: WorkflowHealthCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WorkflowHealthCountOutputType without action
+   */
+  export type WorkflowHealthCountOutputTypeCountRecommendationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HealthRecommendationWhereInput
+  }
+
+  /**
+   * WorkflowHealthCountOutputType without action
+   */
+  export type WorkflowHealthCountOutputTypeCountAlertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HealthAlertWhereInput
   }
 
 
@@ -2029,6 +2823,8 @@ export namespace Prisma {
     workflowRuns?: boolean | User$workflowRunsArgs<ExtArgs>
     clientBranding?: boolean | User$clientBrandingArgs<ExtArgs>
     serviceRequests?: boolean | User$serviceRequestsArgs<ExtArgs>
+    automationOpportunities?: boolean | User$automationOpportunitiesArgs<ExtArgs>
+    executiveReports?: boolean | User$executiveReportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2078,6 +2874,8 @@ export namespace Prisma {
     workflowRuns?: boolean | User$workflowRunsArgs<ExtArgs>
     clientBranding?: boolean | User$clientBrandingArgs<ExtArgs>
     serviceRequests?: boolean | User$serviceRequestsArgs<ExtArgs>
+    automationOpportunities?: boolean | User$automationOpportunitiesArgs<ExtArgs>
+    executiveReports?: boolean | User$executiveReportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2091,6 +2889,8 @@ export namespace Prisma {
       workflowRuns: Prisma.$WorkflowRunPayload<ExtArgs>[]
       clientBranding: Prisma.$ClientBrandingPayload<ExtArgs> | null
       serviceRequests: Prisma.$ServiceRequestPayload<ExtArgs>[]
+      automationOpportunities: Prisma.$AutomationOpportunityPayload<ExtArgs>[]
+      executiveReports: Prisma.$ExecutiveReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2505,6 +3305,8 @@ export namespace Prisma {
     workflowRuns<T extends User$workflowRunsArgs<ExtArgs> = {}>(args?: Subset<T, User$workflowRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkflowRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     clientBranding<T extends User$clientBrandingArgs<ExtArgs> = {}>(args?: Subset<T, User$clientBrandingArgs<ExtArgs>>): Prisma__ClientBrandingClient<$Result.GetResult<Prisma.$ClientBrandingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     serviceRequests<T extends User$serviceRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$serviceRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    automationOpportunities<T extends User$automationOpportunitiesArgs<ExtArgs> = {}>(args?: Subset<T, User$automationOpportunitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    executiveReports<T extends User$executiveReportsArgs<ExtArgs> = {}>(args?: Subset<T, User$executiveReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3044,6 +3846,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ServiceRequestScalarFieldEnum | ServiceRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.automationOpportunities
+   */
+  export type User$automationOpportunitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    where?: AutomationOpportunityWhereInput
+    orderBy?: AutomationOpportunityOrderByWithRelationInput | AutomationOpportunityOrderByWithRelationInput[]
+    cursor?: AutomationOpportunityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationOpportunityScalarFieldEnum | AutomationOpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * User.executiveReports
+   */
+  export type User$executiveReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    where?: ExecutiveReportWhereInput
+    orderBy?: ExecutiveReportOrderByWithRelationInput | ExecutiveReportOrderByWithRelationInput[]
+    cursor?: ExecutiveReportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExecutiveReportScalarFieldEnum | ExecutiveReportScalarFieldEnum[]
   }
 
   /**
@@ -4497,6 +5347,9 @@ export namespace Prisma {
     workflowCredentials?: boolean | Workflow$workflowCredentialsArgs<ExtArgs>
     workflowRuns?: boolean | Workflow$workflowRunsArgs<ExtArgs>
     automationMetrics?: boolean | Workflow$automationMetricsArgs<ExtArgs>
+    businessOutcomes?: boolean | Workflow$businessOutcomesArgs<ExtArgs>
+    efficiencyMetrics?: boolean | Workflow$efficiencyMetricsArgs<ExtArgs>
+    workflowHealth?: boolean | Workflow$workflowHealthArgs<ExtArgs>
     _count?: boolean | WorkflowCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workflow"]>
 
@@ -4583,6 +5436,9 @@ export namespace Prisma {
     workflowCredentials?: boolean | Workflow$workflowCredentialsArgs<ExtArgs>
     workflowRuns?: boolean | Workflow$workflowRunsArgs<ExtArgs>
     automationMetrics?: boolean | Workflow$automationMetricsArgs<ExtArgs>
+    businessOutcomes?: boolean | Workflow$businessOutcomesArgs<ExtArgs>
+    efficiencyMetrics?: boolean | Workflow$efficiencyMetricsArgs<ExtArgs>
+    workflowHealth?: boolean | Workflow$workflowHealthArgs<ExtArgs>
     _count?: boolean | WorkflowCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkflowIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4599,6 +5455,9 @@ export namespace Prisma {
       workflowCredentials: Prisma.$WorkflowCredentialPayload<ExtArgs>[]
       workflowRuns: Prisma.$WorkflowRunPayload<ExtArgs>[]
       automationMetrics: Prisma.$AutomationMetricsPayload<ExtArgs>[]
+      businessOutcomes: Prisma.$BusinessOutcomePayload<ExtArgs>[]
+      efficiencyMetrics: Prisma.$EfficiencyMetricPayload<ExtArgs>[]
+      workflowHealth: Prisma.$WorkflowHealthPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5021,6 +5880,9 @@ export namespace Prisma {
     workflowCredentials<T extends Workflow$workflowCredentialsArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$workflowCredentialsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkflowCredentialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     workflowRuns<T extends Workflow$workflowRunsArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$workflowRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkflowRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     automationMetrics<T extends Workflow$automationMetricsArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$automationMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationMetricsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    businessOutcomes<T extends Workflow$businessOutcomesArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$businessOutcomesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    efficiencyMetrics<T extends Workflow$efficiencyMetricsArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$efficiencyMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    workflowHealth<T extends Workflow$workflowHealthArgs<ExtArgs> = {}>(args?: Subset<T, Workflow$workflowHealthArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5537,6 +6399,73 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AutomationMetricsScalarFieldEnum | AutomationMetricsScalarFieldEnum[]
+  }
+
+  /**
+   * Workflow.businessOutcomes
+   */
+  export type Workflow$businessOutcomesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    where?: BusinessOutcomeWhereInput
+    orderBy?: BusinessOutcomeOrderByWithRelationInput | BusinessOutcomeOrderByWithRelationInput[]
+    cursor?: BusinessOutcomeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BusinessOutcomeScalarFieldEnum | BusinessOutcomeScalarFieldEnum[]
+  }
+
+  /**
+   * Workflow.efficiencyMetrics
+   */
+  export type Workflow$efficiencyMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    where?: EfficiencyMetricWhereInput
+    orderBy?: EfficiencyMetricOrderByWithRelationInput | EfficiencyMetricOrderByWithRelationInput[]
+    cursor?: EfficiencyMetricWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EfficiencyMetricScalarFieldEnum | EfficiencyMetricScalarFieldEnum[]
+  }
+
+  /**
+   * Workflow.workflowHealth
+   */
+  export type Workflow$workflowHealthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    where?: WorkflowHealthWhereInput
   }
 
   /**
@@ -12366,6 +13295,8445 @@ export namespace Prisma {
 
 
   /**
+   * Model BusinessOutcome
+   */
+
+  export type AggregateBusinessOutcome = {
+    _count: BusinessOutcomeCountAggregateOutputType | null
+    _avg: BusinessOutcomeAvgAggregateOutputType | null
+    _sum: BusinessOutcomeSumAggregateOutputType | null
+    _min: BusinessOutcomeMinAggregateOutputType | null
+    _max: BusinessOutcomeMaxAggregateOutputType | null
+  }
+
+  export type BusinessOutcomeAvgAggregateOutputType = {
+    value: number | null
+  }
+
+  export type BusinessOutcomeSumAggregateOutputType = {
+    value: number | null
+  }
+
+  export type BusinessOutcomeMinAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    outcomeType: $Enums.BusinessOutcomeType | null
+    value: number | null
+    timestamp: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BusinessOutcomeMaxAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    outcomeType: $Enums.BusinessOutcomeType | null
+    value: number | null
+    timestamp: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BusinessOutcomeCountAggregateOutputType = {
+    id: number
+    workflowId: number
+    outcomeType: number
+    value: number
+    timestamp: number
+    metadata: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BusinessOutcomeAvgAggregateInputType = {
+    value?: true
+  }
+
+  export type BusinessOutcomeSumAggregateInputType = {
+    value?: true
+  }
+
+  export type BusinessOutcomeMinAggregateInputType = {
+    id?: true
+    workflowId?: true
+    outcomeType?: true
+    value?: true
+    timestamp?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BusinessOutcomeMaxAggregateInputType = {
+    id?: true
+    workflowId?: true
+    outcomeType?: true
+    value?: true
+    timestamp?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BusinessOutcomeCountAggregateInputType = {
+    id?: true
+    workflowId?: true
+    outcomeType?: true
+    value?: true
+    timestamp?: true
+    metadata?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BusinessOutcomeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BusinessOutcome to aggregate.
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BusinessOutcomes to fetch.
+     */
+    orderBy?: BusinessOutcomeOrderByWithRelationInput | BusinessOutcomeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BusinessOutcomeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BusinessOutcomes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BusinessOutcomes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BusinessOutcomes
+    **/
+    _count?: true | BusinessOutcomeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BusinessOutcomeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BusinessOutcomeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BusinessOutcomeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BusinessOutcomeMaxAggregateInputType
+  }
+
+  export type GetBusinessOutcomeAggregateType<T extends BusinessOutcomeAggregateArgs> = {
+        [P in keyof T & keyof AggregateBusinessOutcome]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBusinessOutcome[P]>
+      : GetScalarType<T[P], AggregateBusinessOutcome[P]>
+  }
+
+
+
+
+  export type BusinessOutcomeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BusinessOutcomeWhereInput
+    orderBy?: BusinessOutcomeOrderByWithAggregationInput | BusinessOutcomeOrderByWithAggregationInput[]
+    by: BusinessOutcomeScalarFieldEnum[] | BusinessOutcomeScalarFieldEnum
+    having?: BusinessOutcomeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BusinessOutcomeCountAggregateInputType | true
+    _avg?: BusinessOutcomeAvgAggregateInputType
+    _sum?: BusinessOutcomeSumAggregateInputType
+    _min?: BusinessOutcomeMinAggregateInputType
+    _max?: BusinessOutcomeMaxAggregateInputType
+  }
+
+  export type BusinessOutcomeGroupByOutputType = {
+    id: string
+    workflowId: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp: Date
+    metadata: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BusinessOutcomeCountAggregateOutputType | null
+    _avg: BusinessOutcomeAvgAggregateOutputType | null
+    _sum: BusinessOutcomeSumAggregateOutputType | null
+    _min: BusinessOutcomeMinAggregateOutputType | null
+    _max: BusinessOutcomeMaxAggregateOutputType | null
+  }
+
+  type GetBusinessOutcomeGroupByPayload<T extends BusinessOutcomeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BusinessOutcomeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BusinessOutcomeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BusinessOutcomeGroupByOutputType[P]>
+            : GetScalarType<T[P], BusinessOutcomeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BusinessOutcomeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    outcomeType?: boolean
+    value?: boolean
+    timestamp?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["businessOutcome"]>
+
+  export type BusinessOutcomeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    outcomeType?: boolean
+    value?: boolean
+    timestamp?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["businessOutcome"]>
+
+  export type BusinessOutcomeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    outcomeType?: boolean
+    value?: boolean
+    timestamp?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["businessOutcome"]>
+
+  export type BusinessOutcomeSelectScalar = {
+    id?: boolean
+    workflowId?: boolean
+    outcomeType?: boolean
+    value?: boolean
+    timestamp?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BusinessOutcomeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowId" | "outcomeType" | "value" | "timestamp" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["businessOutcome"]>
+  export type BusinessOutcomeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+  export type BusinessOutcomeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+  export type BusinessOutcomeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+
+  export type $BusinessOutcomePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BusinessOutcome"
+    objects: {
+      workflow: Prisma.$WorkflowPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowId: string
+      outcomeType: $Enums.BusinessOutcomeType
+      value: number
+      timestamp: Date
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["businessOutcome"]>
+    composites: {}
+  }
+
+  type BusinessOutcomeGetPayload<S extends boolean | null | undefined | BusinessOutcomeDefaultArgs> = $Result.GetResult<Prisma.$BusinessOutcomePayload, S>
+
+  type BusinessOutcomeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BusinessOutcomeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BusinessOutcomeCountAggregateInputType | true
+    }
+
+  export interface BusinessOutcomeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BusinessOutcome'], meta: { name: 'BusinessOutcome' } }
+    /**
+     * Find zero or one BusinessOutcome that matches the filter.
+     * @param {BusinessOutcomeFindUniqueArgs} args - Arguments to find a BusinessOutcome
+     * @example
+     * // Get one BusinessOutcome
+     * const businessOutcome = await prisma.businessOutcome.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BusinessOutcomeFindUniqueArgs>(args: SelectSubset<T, BusinessOutcomeFindUniqueArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BusinessOutcome that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BusinessOutcomeFindUniqueOrThrowArgs} args - Arguments to find a BusinessOutcome
+     * @example
+     * // Get one BusinessOutcome
+     * const businessOutcome = await prisma.businessOutcome.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BusinessOutcomeFindUniqueOrThrowArgs>(args: SelectSubset<T, BusinessOutcomeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BusinessOutcome that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeFindFirstArgs} args - Arguments to find a BusinessOutcome
+     * @example
+     * // Get one BusinessOutcome
+     * const businessOutcome = await prisma.businessOutcome.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BusinessOutcomeFindFirstArgs>(args?: SelectSubset<T, BusinessOutcomeFindFirstArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BusinessOutcome that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeFindFirstOrThrowArgs} args - Arguments to find a BusinessOutcome
+     * @example
+     * // Get one BusinessOutcome
+     * const businessOutcome = await prisma.businessOutcome.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BusinessOutcomeFindFirstOrThrowArgs>(args?: SelectSubset<T, BusinessOutcomeFindFirstOrThrowArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BusinessOutcomes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BusinessOutcomes
+     * const businessOutcomes = await prisma.businessOutcome.findMany()
+     * 
+     * // Get first 10 BusinessOutcomes
+     * const businessOutcomes = await prisma.businessOutcome.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const businessOutcomeWithIdOnly = await prisma.businessOutcome.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BusinessOutcomeFindManyArgs>(args?: SelectSubset<T, BusinessOutcomeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BusinessOutcome.
+     * @param {BusinessOutcomeCreateArgs} args - Arguments to create a BusinessOutcome.
+     * @example
+     * // Create one BusinessOutcome
+     * const BusinessOutcome = await prisma.businessOutcome.create({
+     *   data: {
+     *     // ... data to create a BusinessOutcome
+     *   }
+     * })
+     * 
+     */
+    create<T extends BusinessOutcomeCreateArgs>(args: SelectSubset<T, BusinessOutcomeCreateArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BusinessOutcomes.
+     * @param {BusinessOutcomeCreateManyArgs} args - Arguments to create many BusinessOutcomes.
+     * @example
+     * // Create many BusinessOutcomes
+     * const businessOutcome = await prisma.businessOutcome.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BusinessOutcomeCreateManyArgs>(args?: SelectSubset<T, BusinessOutcomeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BusinessOutcomes and returns the data saved in the database.
+     * @param {BusinessOutcomeCreateManyAndReturnArgs} args - Arguments to create many BusinessOutcomes.
+     * @example
+     * // Create many BusinessOutcomes
+     * const businessOutcome = await prisma.businessOutcome.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BusinessOutcomes and only return the `id`
+     * const businessOutcomeWithIdOnly = await prisma.businessOutcome.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BusinessOutcomeCreateManyAndReturnArgs>(args?: SelectSubset<T, BusinessOutcomeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BusinessOutcome.
+     * @param {BusinessOutcomeDeleteArgs} args - Arguments to delete one BusinessOutcome.
+     * @example
+     * // Delete one BusinessOutcome
+     * const BusinessOutcome = await prisma.businessOutcome.delete({
+     *   where: {
+     *     // ... filter to delete one BusinessOutcome
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BusinessOutcomeDeleteArgs>(args: SelectSubset<T, BusinessOutcomeDeleteArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BusinessOutcome.
+     * @param {BusinessOutcomeUpdateArgs} args - Arguments to update one BusinessOutcome.
+     * @example
+     * // Update one BusinessOutcome
+     * const businessOutcome = await prisma.businessOutcome.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BusinessOutcomeUpdateArgs>(args: SelectSubset<T, BusinessOutcomeUpdateArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BusinessOutcomes.
+     * @param {BusinessOutcomeDeleteManyArgs} args - Arguments to filter BusinessOutcomes to delete.
+     * @example
+     * // Delete a few BusinessOutcomes
+     * const { count } = await prisma.businessOutcome.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BusinessOutcomeDeleteManyArgs>(args?: SelectSubset<T, BusinessOutcomeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BusinessOutcomes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BusinessOutcomes
+     * const businessOutcome = await prisma.businessOutcome.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BusinessOutcomeUpdateManyArgs>(args: SelectSubset<T, BusinessOutcomeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BusinessOutcomes and returns the data updated in the database.
+     * @param {BusinessOutcomeUpdateManyAndReturnArgs} args - Arguments to update many BusinessOutcomes.
+     * @example
+     * // Update many BusinessOutcomes
+     * const businessOutcome = await prisma.businessOutcome.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BusinessOutcomes and only return the `id`
+     * const businessOutcomeWithIdOnly = await prisma.businessOutcome.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BusinessOutcomeUpdateManyAndReturnArgs>(args: SelectSubset<T, BusinessOutcomeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BusinessOutcome.
+     * @param {BusinessOutcomeUpsertArgs} args - Arguments to update or create a BusinessOutcome.
+     * @example
+     * // Update or create a BusinessOutcome
+     * const businessOutcome = await prisma.businessOutcome.upsert({
+     *   create: {
+     *     // ... data to create a BusinessOutcome
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BusinessOutcome we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BusinessOutcomeUpsertArgs>(args: SelectSubset<T, BusinessOutcomeUpsertArgs<ExtArgs>>): Prisma__BusinessOutcomeClient<$Result.GetResult<Prisma.$BusinessOutcomePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BusinessOutcomes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeCountArgs} args - Arguments to filter BusinessOutcomes to count.
+     * @example
+     * // Count the number of BusinessOutcomes
+     * const count = await prisma.businessOutcome.count({
+     *   where: {
+     *     // ... the filter for the BusinessOutcomes we want to count
+     *   }
+     * })
+    **/
+    count<T extends BusinessOutcomeCountArgs>(
+      args?: Subset<T, BusinessOutcomeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BusinessOutcomeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BusinessOutcome.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BusinessOutcomeAggregateArgs>(args: Subset<T, BusinessOutcomeAggregateArgs>): Prisma.PrismaPromise<GetBusinessOutcomeAggregateType<T>>
+
+    /**
+     * Group by BusinessOutcome.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BusinessOutcomeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BusinessOutcomeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BusinessOutcomeGroupByArgs['orderBy'] }
+        : { orderBy?: BusinessOutcomeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BusinessOutcomeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBusinessOutcomeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BusinessOutcome model
+   */
+  readonly fields: BusinessOutcomeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BusinessOutcome.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BusinessOutcomeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workflow<T extends WorkflowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowDefaultArgs<ExtArgs>>): Prisma__WorkflowClient<$Result.GetResult<Prisma.$WorkflowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BusinessOutcome model
+   */
+  interface BusinessOutcomeFieldRefs {
+    readonly id: FieldRef<"BusinessOutcome", 'String'>
+    readonly workflowId: FieldRef<"BusinessOutcome", 'String'>
+    readonly outcomeType: FieldRef<"BusinessOutcome", 'BusinessOutcomeType'>
+    readonly value: FieldRef<"BusinessOutcome", 'Float'>
+    readonly timestamp: FieldRef<"BusinessOutcome", 'DateTime'>
+    readonly metadata: FieldRef<"BusinessOutcome", 'Json'>
+    readonly createdAt: FieldRef<"BusinessOutcome", 'DateTime'>
+    readonly updatedAt: FieldRef<"BusinessOutcome", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BusinessOutcome findUnique
+   */
+  export type BusinessOutcomeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * Filter, which BusinessOutcome to fetch.
+     */
+    where: BusinessOutcomeWhereUniqueInput
+  }
+
+  /**
+   * BusinessOutcome findUniqueOrThrow
+   */
+  export type BusinessOutcomeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * Filter, which BusinessOutcome to fetch.
+     */
+    where: BusinessOutcomeWhereUniqueInput
+  }
+
+  /**
+   * BusinessOutcome findFirst
+   */
+  export type BusinessOutcomeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * Filter, which BusinessOutcome to fetch.
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BusinessOutcomes to fetch.
+     */
+    orderBy?: BusinessOutcomeOrderByWithRelationInput | BusinessOutcomeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BusinessOutcomes.
+     */
+    cursor?: BusinessOutcomeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BusinessOutcomes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BusinessOutcomes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BusinessOutcomes.
+     */
+    distinct?: BusinessOutcomeScalarFieldEnum | BusinessOutcomeScalarFieldEnum[]
+  }
+
+  /**
+   * BusinessOutcome findFirstOrThrow
+   */
+  export type BusinessOutcomeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * Filter, which BusinessOutcome to fetch.
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BusinessOutcomes to fetch.
+     */
+    orderBy?: BusinessOutcomeOrderByWithRelationInput | BusinessOutcomeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BusinessOutcomes.
+     */
+    cursor?: BusinessOutcomeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BusinessOutcomes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BusinessOutcomes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BusinessOutcomes.
+     */
+    distinct?: BusinessOutcomeScalarFieldEnum | BusinessOutcomeScalarFieldEnum[]
+  }
+
+  /**
+   * BusinessOutcome findMany
+   */
+  export type BusinessOutcomeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * Filter, which BusinessOutcomes to fetch.
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BusinessOutcomes to fetch.
+     */
+    orderBy?: BusinessOutcomeOrderByWithRelationInput | BusinessOutcomeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BusinessOutcomes.
+     */
+    cursor?: BusinessOutcomeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BusinessOutcomes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BusinessOutcomes.
+     */
+    skip?: number
+    distinct?: BusinessOutcomeScalarFieldEnum | BusinessOutcomeScalarFieldEnum[]
+  }
+
+  /**
+   * BusinessOutcome create
+   */
+  export type BusinessOutcomeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BusinessOutcome.
+     */
+    data: XOR<BusinessOutcomeCreateInput, BusinessOutcomeUncheckedCreateInput>
+  }
+
+  /**
+   * BusinessOutcome createMany
+   */
+  export type BusinessOutcomeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BusinessOutcomes.
+     */
+    data: BusinessOutcomeCreateManyInput | BusinessOutcomeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BusinessOutcome createManyAndReturn
+   */
+  export type BusinessOutcomeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * The data used to create many BusinessOutcomes.
+     */
+    data: BusinessOutcomeCreateManyInput | BusinessOutcomeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BusinessOutcome update
+   */
+  export type BusinessOutcomeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BusinessOutcome.
+     */
+    data: XOR<BusinessOutcomeUpdateInput, BusinessOutcomeUncheckedUpdateInput>
+    /**
+     * Choose, which BusinessOutcome to update.
+     */
+    where: BusinessOutcomeWhereUniqueInput
+  }
+
+  /**
+   * BusinessOutcome updateMany
+   */
+  export type BusinessOutcomeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BusinessOutcomes.
+     */
+    data: XOR<BusinessOutcomeUpdateManyMutationInput, BusinessOutcomeUncheckedUpdateManyInput>
+    /**
+     * Filter which BusinessOutcomes to update
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * Limit how many BusinessOutcomes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BusinessOutcome updateManyAndReturn
+   */
+  export type BusinessOutcomeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * The data used to update BusinessOutcomes.
+     */
+    data: XOR<BusinessOutcomeUpdateManyMutationInput, BusinessOutcomeUncheckedUpdateManyInput>
+    /**
+     * Filter which BusinessOutcomes to update
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * Limit how many BusinessOutcomes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BusinessOutcome upsert
+   */
+  export type BusinessOutcomeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BusinessOutcome to update in case it exists.
+     */
+    where: BusinessOutcomeWhereUniqueInput
+    /**
+     * In case the BusinessOutcome found by the `where` argument doesn't exist, create a new BusinessOutcome with this data.
+     */
+    create: XOR<BusinessOutcomeCreateInput, BusinessOutcomeUncheckedCreateInput>
+    /**
+     * In case the BusinessOutcome was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BusinessOutcomeUpdateInput, BusinessOutcomeUncheckedUpdateInput>
+  }
+
+  /**
+   * BusinessOutcome delete
+   */
+  export type BusinessOutcomeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+    /**
+     * Filter which BusinessOutcome to delete.
+     */
+    where: BusinessOutcomeWhereUniqueInput
+  }
+
+  /**
+   * BusinessOutcome deleteMany
+   */
+  export type BusinessOutcomeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BusinessOutcomes to delete
+     */
+    where?: BusinessOutcomeWhereInput
+    /**
+     * Limit how many BusinessOutcomes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BusinessOutcome without action
+   */
+  export type BusinessOutcomeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BusinessOutcome
+     */
+    select?: BusinessOutcomeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BusinessOutcome
+     */
+    omit?: BusinessOutcomeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BusinessOutcomeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model EfficiencyMetric
+   */
+
+  export type AggregateEfficiencyMetric = {
+    _count: EfficiencyMetricCountAggregateOutputType | null
+    _avg: EfficiencyMetricAvgAggregateOutputType | null
+    _sum: EfficiencyMetricSumAggregateOutputType | null
+    _min: EfficiencyMetricMinAggregateOutputType | null
+    _max: EfficiencyMetricMaxAggregateOutputType | null
+  }
+
+  export type EfficiencyMetricAvgAggregateOutputType = {
+    beforeTimeSpent: number | null
+    beforeErrorRate: number | null
+    beforeThroughput: number | null
+    afterTimeSpent: number | null
+    afterErrorRate: number | null
+    afterThroughput: number | null
+    timeReduction: number | null
+    errorReduction: number | null
+    throughputIncrease: number | null
+  }
+
+  export type EfficiencyMetricSumAggregateOutputType = {
+    beforeTimeSpent: number | null
+    beforeErrorRate: number | null
+    beforeThroughput: number | null
+    afterTimeSpent: number | null
+    afterErrorRate: number | null
+    afterThroughput: number | null
+    timeReduction: number | null
+    errorReduction: number | null
+    throughputIncrease: number | null
+  }
+
+  export type EfficiencyMetricMinAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    period: string | null
+    beforeTimeSpent: number | null
+    beforeErrorRate: number | null
+    beforeThroughput: number | null
+    afterTimeSpent: number | null
+    afterErrorRate: number | null
+    afterThroughput: number | null
+    timeReduction: number | null
+    errorReduction: number | null
+    throughputIncrease: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EfficiencyMetricMaxAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    period: string | null
+    beforeTimeSpent: number | null
+    beforeErrorRate: number | null
+    beforeThroughput: number | null
+    afterTimeSpent: number | null
+    afterErrorRate: number | null
+    afterThroughput: number | null
+    timeReduction: number | null
+    errorReduction: number | null
+    throughputIncrease: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EfficiencyMetricCountAggregateOutputType = {
+    id: number
+    workflowId: number
+    period: number
+    beforeTimeSpent: number
+    beforeErrorRate: number
+    beforeThroughput: number
+    afterTimeSpent: number
+    afterErrorRate: number
+    afterThroughput: number
+    timeReduction: number
+    errorReduction: number
+    throughputIncrease: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type EfficiencyMetricAvgAggregateInputType = {
+    beforeTimeSpent?: true
+    beforeErrorRate?: true
+    beforeThroughput?: true
+    afterTimeSpent?: true
+    afterErrorRate?: true
+    afterThroughput?: true
+    timeReduction?: true
+    errorReduction?: true
+    throughputIncrease?: true
+  }
+
+  export type EfficiencyMetricSumAggregateInputType = {
+    beforeTimeSpent?: true
+    beforeErrorRate?: true
+    beforeThroughput?: true
+    afterTimeSpent?: true
+    afterErrorRate?: true
+    afterThroughput?: true
+    timeReduction?: true
+    errorReduction?: true
+    throughputIncrease?: true
+  }
+
+  export type EfficiencyMetricMinAggregateInputType = {
+    id?: true
+    workflowId?: true
+    period?: true
+    beforeTimeSpent?: true
+    beforeErrorRate?: true
+    beforeThroughput?: true
+    afterTimeSpent?: true
+    afterErrorRate?: true
+    afterThroughput?: true
+    timeReduction?: true
+    errorReduction?: true
+    throughputIncrease?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EfficiencyMetricMaxAggregateInputType = {
+    id?: true
+    workflowId?: true
+    period?: true
+    beforeTimeSpent?: true
+    beforeErrorRate?: true
+    beforeThroughput?: true
+    afterTimeSpent?: true
+    afterErrorRate?: true
+    afterThroughput?: true
+    timeReduction?: true
+    errorReduction?: true
+    throughputIncrease?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EfficiencyMetricCountAggregateInputType = {
+    id?: true
+    workflowId?: true
+    period?: true
+    beforeTimeSpent?: true
+    beforeErrorRate?: true
+    beforeThroughput?: true
+    afterTimeSpent?: true
+    afterErrorRate?: true
+    afterThroughput?: true
+    timeReduction?: true
+    errorReduction?: true
+    throughputIncrease?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type EfficiencyMetricAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EfficiencyMetric to aggregate.
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EfficiencyMetrics to fetch.
+     */
+    orderBy?: EfficiencyMetricOrderByWithRelationInput | EfficiencyMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EfficiencyMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EfficiencyMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EfficiencyMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EfficiencyMetrics
+    **/
+    _count?: true | EfficiencyMetricCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EfficiencyMetricAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EfficiencyMetricSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EfficiencyMetricMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EfficiencyMetricMaxAggregateInputType
+  }
+
+  export type GetEfficiencyMetricAggregateType<T extends EfficiencyMetricAggregateArgs> = {
+        [P in keyof T & keyof AggregateEfficiencyMetric]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEfficiencyMetric[P]>
+      : GetScalarType<T[P], AggregateEfficiencyMetric[P]>
+  }
+
+
+
+
+  export type EfficiencyMetricGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EfficiencyMetricWhereInput
+    orderBy?: EfficiencyMetricOrderByWithAggregationInput | EfficiencyMetricOrderByWithAggregationInput[]
+    by: EfficiencyMetricScalarFieldEnum[] | EfficiencyMetricScalarFieldEnum
+    having?: EfficiencyMetricScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EfficiencyMetricCountAggregateInputType | true
+    _avg?: EfficiencyMetricAvgAggregateInputType
+    _sum?: EfficiencyMetricSumAggregateInputType
+    _min?: EfficiencyMetricMinAggregateInputType
+    _max?: EfficiencyMetricMaxAggregateInputType
+  }
+
+  export type EfficiencyMetricGroupByOutputType = {
+    id: string
+    workflowId: string
+    period: string
+    beforeTimeSpent: number | null
+    beforeErrorRate: number | null
+    beforeThroughput: number | null
+    afterTimeSpent: number | null
+    afterErrorRate: number | null
+    afterThroughput: number | null
+    timeReduction: number | null
+    errorReduction: number | null
+    throughputIncrease: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: EfficiencyMetricCountAggregateOutputType | null
+    _avg: EfficiencyMetricAvgAggregateOutputType | null
+    _sum: EfficiencyMetricSumAggregateOutputType | null
+    _min: EfficiencyMetricMinAggregateOutputType | null
+    _max: EfficiencyMetricMaxAggregateOutputType | null
+  }
+
+  type GetEfficiencyMetricGroupByPayload<T extends EfficiencyMetricGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EfficiencyMetricGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EfficiencyMetricGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EfficiencyMetricGroupByOutputType[P]>
+            : GetScalarType<T[P], EfficiencyMetricGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EfficiencyMetricSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    period?: boolean
+    beforeTimeSpent?: boolean
+    beforeErrorRate?: boolean
+    beforeThroughput?: boolean
+    afterTimeSpent?: boolean
+    afterErrorRate?: boolean
+    afterThroughput?: boolean
+    timeReduction?: boolean
+    errorReduction?: boolean
+    throughputIncrease?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["efficiencyMetric"]>
+
+  export type EfficiencyMetricSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    period?: boolean
+    beforeTimeSpent?: boolean
+    beforeErrorRate?: boolean
+    beforeThroughput?: boolean
+    afterTimeSpent?: boolean
+    afterErrorRate?: boolean
+    afterThroughput?: boolean
+    timeReduction?: boolean
+    errorReduction?: boolean
+    throughputIncrease?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["efficiencyMetric"]>
+
+  export type EfficiencyMetricSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    period?: boolean
+    beforeTimeSpent?: boolean
+    beforeErrorRate?: boolean
+    beforeThroughput?: boolean
+    afterTimeSpent?: boolean
+    afterErrorRate?: boolean
+    afterThroughput?: boolean
+    timeReduction?: boolean
+    errorReduction?: boolean
+    throughputIncrease?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["efficiencyMetric"]>
+
+  export type EfficiencyMetricSelectScalar = {
+    id?: boolean
+    workflowId?: boolean
+    period?: boolean
+    beforeTimeSpent?: boolean
+    beforeErrorRate?: boolean
+    beforeThroughput?: boolean
+    afterTimeSpent?: boolean
+    afterErrorRate?: boolean
+    afterThroughput?: boolean
+    timeReduction?: boolean
+    errorReduction?: boolean
+    throughputIncrease?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type EfficiencyMetricOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowId" | "period" | "beforeTimeSpent" | "beforeErrorRate" | "beforeThroughput" | "afterTimeSpent" | "afterErrorRate" | "afterThroughput" | "timeReduction" | "errorReduction" | "throughputIncrease" | "createdAt" | "updatedAt", ExtArgs["result"]["efficiencyMetric"]>
+  export type EfficiencyMetricInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+  export type EfficiencyMetricIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+  export type EfficiencyMetricIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+
+  export type $EfficiencyMetricPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EfficiencyMetric"
+    objects: {
+      workflow: Prisma.$WorkflowPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowId: string
+      period: string
+      beforeTimeSpent: number | null
+      beforeErrorRate: number | null
+      beforeThroughput: number | null
+      afterTimeSpent: number | null
+      afterErrorRate: number | null
+      afterThroughput: number | null
+      timeReduction: number | null
+      errorReduction: number | null
+      throughputIncrease: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["efficiencyMetric"]>
+    composites: {}
+  }
+
+  type EfficiencyMetricGetPayload<S extends boolean | null | undefined | EfficiencyMetricDefaultArgs> = $Result.GetResult<Prisma.$EfficiencyMetricPayload, S>
+
+  type EfficiencyMetricCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EfficiencyMetricFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EfficiencyMetricCountAggregateInputType | true
+    }
+
+  export interface EfficiencyMetricDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EfficiencyMetric'], meta: { name: 'EfficiencyMetric' } }
+    /**
+     * Find zero or one EfficiencyMetric that matches the filter.
+     * @param {EfficiencyMetricFindUniqueArgs} args - Arguments to find a EfficiencyMetric
+     * @example
+     * // Get one EfficiencyMetric
+     * const efficiencyMetric = await prisma.efficiencyMetric.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EfficiencyMetricFindUniqueArgs>(args: SelectSubset<T, EfficiencyMetricFindUniqueArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one EfficiencyMetric that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EfficiencyMetricFindUniqueOrThrowArgs} args - Arguments to find a EfficiencyMetric
+     * @example
+     * // Get one EfficiencyMetric
+     * const efficiencyMetric = await prisma.efficiencyMetric.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EfficiencyMetricFindUniqueOrThrowArgs>(args: SelectSubset<T, EfficiencyMetricFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EfficiencyMetric that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricFindFirstArgs} args - Arguments to find a EfficiencyMetric
+     * @example
+     * // Get one EfficiencyMetric
+     * const efficiencyMetric = await prisma.efficiencyMetric.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EfficiencyMetricFindFirstArgs>(args?: SelectSubset<T, EfficiencyMetricFindFirstArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EfficiencyMetric that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricFindFirstOrThrowArgs} args - Arguments to find a EfficiencyMetric
+     * @example
+     * // Get one EfficiencyMetric
+     * const efficiencyMetric = await prisma.efficiencyMetric.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EfficiencyMetricFindFirstOrThrowArgs>(args?: SelectSubset<T, EfficiencyMetricFindFirstOrThrowArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more EfficiencyMetrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EfficiencyMetrics
+     * const efficiencyMetrics = await prisma.efficiencyMetric.findMany()
+     * 
+     * // Get first 10 EfficiencyMetrics
+     * const efficiencyMetrics = await prisma.efficiencyMetric.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const efficiencyMetricWithIdOnly = await prisma.efficiencyMetric.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EfficiencyMetricFindManyArgs>(args?: SelectSubset<T, EfficiencyMetricFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a EfficiencyMetric.
+     * @param {EfficiencyMetricCreateArgs} args - Arguments to create a EfficiencyMetric.
+     * @example
+     * // Create one EfficiencyMetric
+     * const EfficiencyMetric = await prisma.efficiencyMetric.create({
+     *   data: {
+     *     // ... data to create a EfficiencyMetric
+     *   }
+     * })
+     * 
+     */
+    create<T extends EfficiencyMetricCreateArgs>(args: SelectSubset<T, EfficiencyMetricCreateArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many EfficiencyMetrics.
+     * @param {EfficiencyMetricCreateManyArgs} args - Arguments to create many EfficiencyMetrics.
+     * @example
+     * // Create many EfficiencyMetrics
+     * const efficiencyMetric = await prisma.efficiencyMetric.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EfficiencyMetricCreateManyArgs>(args?: SelectSubset<T, EfficiencyMetricCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EfficiencyMetrics and returns the data saved in the database.
+     * @param {EfficiencyMetricCreateManyAndReturnArgs} args - Arguments to create many EfficiencyMetrics.
+     * @example
+     * // Create many EfficiencyMetrics
+     * const efficiencyMetric = await prisma.efficiencyMetric.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EfficiencyMetrics and only return the `id`
+     * const efficiencyMetricWithIdOnly = await prisma.efficiencyMetric.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EfficiencyMetricCreateManyAndReturnArgs>(args?: SelectSubset<T, EfficiencyMetricCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a EfficiencyMetric.
+     * @param {EfficiencyMetricDeleteArgs} args - Arguments to delete one EfficiencyMetric.
+     * @example
+     * // Delete one EfficiencyMetric
+     * const EfficiencyMetric = await prisma.efficiencyMetric.delete({
+     *   where: {
+     *     // ... filter to delete one EfficiencyMetric
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EfficiencyMetricDeleteArgs>(args: SelectSubset<T, EfficiencyMetricDeleteArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one EfficiencyMetric.
+     * @param {EfficiencyMetricUpdateArgs} args - Arguments to update one EfficiencyMetric.
+     * @example
+     * // Update one EfficiencyMetric
+     * const efficiencyMetric = await prisma.efficiencyMetric.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EfficiencyMetricUpdateArgs>(args: SelectSubset<T, EfficiencyMetricUpdateArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more EfficiencyMetrics.
+     * @param {EfficiencyMetricDeleteManyArgs} args - Arguments to filter EfficiencyMetrics to delete.
+     * @example
+     * // Delete a few EfficiencyMetrics
+     * const { count } = await prisma.efficiencyMetric.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EfficiencyMetricDeleteManyArgs>(args?: SelectSubset<T, EfficiencyMetricDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EfficiencyMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EfficiencyMetrics
+     * const efficiencyMetric = await prisma.efficiencyMetric.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EfficiencyMetricUpdateManyArgs>(args: SelectSubset<T, EfficiencyMetricUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EfficiencyMetrics and returns the data updated in the database.
+     * @param {EfficiencyMetricUpdateManyAndReturnArgs} args - Arguments to update many EfficiencyMetrics.
+     * @example
+     * // Update many EfficiencyMetrics
+     * const efficiencyMetric = await prisma.efficiencyMetric.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EfficiencyMetrics and only return the `id`
+     * const efficiencyMetricWithIdOnly = await prisma.efficiencyMetric.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EfficiencyMetricUpdateManyAndReturnArgs>(args: SelectSubset<T, EfficiencyMetricUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one EfficiencyMetric.
+     * @param {EfficiencyMetricUpsertArgs} args - Arguments to update or create a EfficiencyMetric.
+     * @example
+     * // Update or create a EfficiencyMetric
+     * const efficiencyMetric = await prisma.efficiencyMetric.upsert({
+     *   create: {
+     *     // ... data to create a EfficiencyMetric
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EfficiencyMetric we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EfficiencyMetricUpsertArgs>(args: SelectSubset<T, EfficiencyMetricUpsertArgs<ExtArgs>>): Prisma__EfficiencyMetricClient<$Result.GetResult<Prisma.$EfficiencyMetricPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of EfficiencyMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricCountArgs} args - Arguments to filter EfficiencyMetrics to count.
+     * @example
+     * // Count the number of EfficiencyMetrics
+     * const count = await prisma.efficiencyMetric.count({
+     *   where: {
+     *     // ... the filter for the EfficiencyMetrics we want to count
+     *   }
+     * })
+    **/
+    count<T extends EfficiencyMetricCountArgs>(
+      args?: Subset<T, EfficiencyMetricCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EfficiencyMetricCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EfficiencyMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EfficiencyMetricAggregateArgs>(args: Subset<T, EfficiencyMetricAggregateArgs>): Prisma.PrismaPromise<GetEfficiencyMetricAggregateType<T>>
+
+    /**
+     * Group by EfficiencyMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EfficiencyMetricGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EfficiencyMetricGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EfficiencyMetricGroupByArgs['orderBy'] }
+        : { orderBy?: EfficiencyMetricGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EfficiencyMetricGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEfficiencyMetricGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EfficiencyMetric model
+   */
+  readonly fields: EfficiencyMetricFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EfficiencyMetric.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EfficiencyMetricClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workflow<T extends WorkflowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowDefaultArgs<ExtArgs>>): Prisma__WorkflowClient<$Result.GetResult<Prisma.$WorkflowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EfficiencyMetric model
+   */
+  interface EfficiencyMetricFieldRefs {
+    readonly id: FieldRef<"EfficiencyMetric", 'String'>
+    readonly workflowId: FieldRef<"EfficiencyMetric", 'String'>
+    readonly period: FieldRef<"EfficiencyMetric", 'String'>
+    readonly beforeTimeSpent: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly beforeErrorRate: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly beforeThroughput: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly afterTimeSpent: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly afterErrorRate: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly afterThroughput: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly timeReduction: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly errorReduction: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly throughputIncrease: FieldRef<"EfficiencyMetric", 'Float'>
+    readonly createdAt: FieldRef<"EfficiencyMetric", 'DateTime'>
+    readonly updatedAt: FieldRef<"EfficiencyMetric", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EfficiencyMetric findUnique
+   */
+  export type EfficiencyMetricFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which EfficiencyMetric to fetch.
+     */
+    where: EfficiencyMetricWhereUniqueInput
+  }
+
+  /**
+   * EfficiencyMetric findUniqueOrThrow
+   */
+  export type EfficiencyMetricFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which EfficiencyMetric to fetch.
+     */
+    where: EfficiencyMetricWhereUniqueInput
+  }
+
+  /**
+   * EfficiencyMetric findFirst
+   */
+  export type EfficiencyMetricFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which EfficiencyMetric to fetch.
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EfficiencyMetrics to fetch.
+     */
+    orderBy?: EfficiencyMetricOrderByWithRelationInput | EfficiencyMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EfficiencyMetrics.
+     */
+    cursor?: EfficiencyMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EfficiencyMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EfficiencyMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EfficiencyMetrics.
+     */
+    distinct?: EfficiencyMetricScalarFieldEnum | EfficiencyMetricScalarFieldEnum[]
+  }
+
+  /**
+   * EfficiencyMetric findFirstOrThrow
+   */
+  export type EfficiencyMetricFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which EfficiencyMetric to fetch.
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EfficiencyMetrics to fetch.
+     */
+    orderBy?: EfficiencyMetricOrderByWithRelationInput | EfficiencyMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EfficiencyMetrics.
+     */
+    cursor?: EfficiencyMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EfficiencyMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EfficiencyMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EfficiencyMetrics.
+     */
+    distinct?: EfficiencyMetricScalarFieldEnum | EfficiencyMetricScalarFieldEnum[]
+  }
+
+  /**
+   * EfficiencyMetric findMany
+   */
+  export type EfficiencyMetricFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which EfficiencyMetrics to fetch.
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EfficiencyMetrics to fetch.
+     */
+    orderBy?: EfficiencyMetricOrderByWithRelationInput | EfficiencyMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EfficiencyMetrics.
+     */
+    cursor?: EfficiencyMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EfficiencyMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EfficiencyMetrics.
+     */
+    skip?: number
+    distinct?: EfficiencyMetricScalarFieldEnum | EfficiencyMetricScalarFieldEnum[]
+  }
+
+  /**
+   * EfficiencyMetric create
+   */
+  export type EfficiencyMetricCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EfficiencyMetric.
+     */
+    data: XOR<EfficiencyMetricCreateInput, EfficiencyMetricUncheckedCreateInput>
+  }
+
+  /**
+   * EfficiencyMetric createMany
+   */
+  export type EfficiencyMetricCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EfficiencyMetrics.
+     */
+    data: EfficiencyMetricCreateManyInput | EfficiencyMetricCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EfficiencyMetric createManyAndReturn
+   */
+  export type EfficiencyMetricCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * The data used to create many EfficiencyMetrics.
+     */
+    data: EfficiencyMetricCreateManyInput | EfficiencyMetricCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EfficiencyMetric update
+   */
+  export type EfficiencyMetricUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EfficiencyMetric.
+     */
+    data: XOR<EfficiencyMetricUpdateInput, EfficiencyMetricUncheckedUpdateInput>
+    /**
+     * Choose, which EfficiencyMetric to update.
+     */
+    where: EfficiencyMetricWhereUniqueInput
+  }
+
+  /**
+   * EfficiencyMetric updateMany
+   */
+  export type EfficiencyMetricUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EfficiencyMetrics.
+     */
+    data: XOR<EfficiencyMetricUpdateManyMutationInput, EfficiencyMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which EfficiencyMetrics to update
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * Limit how many EfficiencyMetrics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EfficiencyMetric updateManyAndReturn
+   */
+  export type EfficiencyMetricUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * The data used to update EfficiencyMetrics.
+     */
+    data: XOR<EfficiencyMetricUpdateManyMutationInput, EfficiencyMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which EfficiencyMetrics to update
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * Limit how many EfficiencyMetrics to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EfficiencyMetric upsert
+   */
+  export type EfficiencyMetricUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EfficiencyMetric to update in case it exists.
+     */
+    where: EfficiencyMetricWhereUniqueInput
+    /**
+     * In case the EfficiencyMetric found by the `where` argument doesn't exist, create a new EfficiencyMetric with this data.
+     */
+    create: XOR<EfficiencyMetricCreateInput, EfficiencyMetricUncheckedCreateInput>
+    /**
+     * In case the EfficiencyMetric was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EfficiencyMetricUpdateInput, EfficiencyMetricUncheckedUpdateInput>
+  }
+
+  /**
+   * EfficiencyMetric delete
+   */
+  export type EfficiencyMetricDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+    /**
+     * Filter which EfficiencyMetric to delete.
+     */
+    where: EfficiencyMetricWhereUniqueInput
+  }
+
+  /**
+   * EfficiencyMetric deleteMany
+   */
+  export type EfficiencyMetricDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EfficiencyMetrics to delete
+     */
+    where?: EfficiencyMetricWhereInput
+    /**
+     * Limit how many EfficiencyMetrics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EfficiencyMetric without action
+   */
+  export type EfficiencyMetricDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EfficiencyMetric
+     */
+    select?: EfficiencyMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EfficiencyMetric
+     */
+    omit?: EfficiencyMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EfficiencyMetricInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationOpportunity
+   */
+
+  export type AggregateAutomationOpportunity = {
+    _count: AutomationOpportunityCountAggregateOutputType | null
+    _avg: AutomationOpportunityAvgAggregateOutputType | null
+    _sum: AutomationOpportunitySumAggregateOutputType | null
+    _min: AutomationOpportunityMinAggregateOutputType | null
+    _max: AutomationOpportunityMaxAggregateOutputType | null
+  }
+
+  export type AutomationOpportunityAvgAggregateOutputType = {
+    impactScore: number | null
+    difficultyScore: number | null
+    timeSavingsHours: number | null
+    costSavings: Decimal | null
+    paybackPeriodMonths: number | null
+  }
+
+  export type AutomationOpportunitySumAggregateOutputType = {
+    impactScore: number | null
+    difficultyScore: number | null
+    timeSavingsHours: number | null
+    costSavings: Decimal | null
+    paybackPeriodMonths: number | null
+  }
+
+  export type AutomationOpportunityMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    description: string | null
+    category: $Enums.OpportunityCategory | null
+    impactScore: number | null
+    difficultyScore: number | null
+    timeSavingsHours: number | null
+    costSavings: Decimal | null
+    paybackPeriodMonths: number | null
+    status: $Enums.OpportunityStatus | null
+    identifiedAt: Date | null
+    dismissalReason: string | null
+    implementationNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AutomationOpportunityMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    description: string | null
+    category: $Enums.OpportunityCategory | null
+    impactScore: number | null
+    difficultyScore: number | null
+    timeSavingsHours: number | null
+    costSavings: Decimal | null
+    paybackPeriodMonths: number | null
+    status: $Enums.OpportunityStatus | null
+    identifiedAt: Date | null
+    dismissalReason: string | null
+    implementationNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AutomationOpportunityCountAggregateOutputType = {
+    id: number
+    userId: number
+    title: number
+    description: number
+    category: number
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours: number
+    costSavings: number
+    paybackPeriodMonths: number
+    requiredIntegrations: number
+    status: number
+    identifiedAt: number
+    dismissalReason: number
+    implementationNotes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AutomationOpportunityAvgAggregateInputType = {
+    impactScore?: true
+    difficultyScore?: true
+    timeSavingsHours?: true
+    costSavings?: true
+    paybackPeriodMonths?: true
+  }
+
+  export type AutomationOpportunitySumAggregateInputType = {
+    impactScore?: true
+    difficultyScore?: true
+    timeSavingsHours?: true
+    costSavings?: true
+    paybackPeriodMonths?: true
+  }
+
+  export type AutomationOpportunityMinAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    description?: true
+    category?: true
+    impactScore?: true
+    difficultyScore?: true
+    timeSavingsHours?: true
+    costSavings?: true
+    paybackPeriodMonths?: true
+    status?: true
+    identifiedAt?: true
+    dismissalReason?: true
+    implementationNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AutomationOpportunityMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    description?: true
+    category?: true
+    impactScore?: true
+    difficultyScore?: true
+    timeSavingsHours?: true
+    costSavings?: true
+    paybackPeriodMonths?: true
+    status?: true
+    identifiedAt?: true
+    dismissalReason?: true
+    implementationNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AutomationOpportunityCountAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    description?: true
+    category?: true
+    impactScore?: true
+    difficultyScore?: true
+    timeSavingsHours?: true
+    costSavings?: true
+    paybackPeriodMonths?: true
+    requiredIntegrations?: true
+    status?: true
+    identifiedAt?: true
+    dismissalReason?: true
+    implementationNotes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AutomationOpportunityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationOpportunity to aggregate.
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationOpportunities to fetch.
+     */
+    orderBy?: AutomationOpportunityOrderByWithRelationInput | AutomationOpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationOpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationOpportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationOpportunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationOpportunities
+    **/
+    _count?: true | AutomationOpportunityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AutomationOpportunityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AutomationOpportunitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationOpportunityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationOpportunityMaxAggregateInputType
+  }
+
+  export type GetAutomationOpportunityAggregateType<T extends AutomationOpportunityAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationOpportunity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationOpportunity[P]>
+      : GetScalarType<T[P], AggregateAutomationOpportunity[P]>
+  }
+
+
+
+
+  export type AutomationOpportunityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationOpportunityWhereInput
+    orderBy?: AutomationOpportunityOrderByWithAggregationInput | AutomationOpportunityOrderByWithAggregationInput[]
+    by: AutomationOpportunityScalarFieldEnum[] | AutomationOpportunityScalarFieldEnum
+    having?: AutomationOpportunityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationOpportunityCountAggregateInputType | true
+    _avg?: AutomationOpportunityAvgAggregateInputType
+    _sum?: AutomationOpportunitySumAggregateInputType
+    _min?: AutomationOpportunityMinAggregateInputType
+    _max?: AutomationOpportunityMaxAggregateInputType
+  }
+
+  export type AutomationOpportunityGroupByOutputType = {
+    id: string
+    userId: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours: number | null
+    costSavings: Decimal | null
+    paybackPeriodMonths: number | null
+    requiredIntegrations: string[]
+    status: $Enums.OpportunityStatus
+    identifiedAt: Date
+    dismissalReason: string | null
+    implementationNotes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AutomationOpportunityCountAggregateOutputType | null
+    _avg: AutomationOpportunityAvgAggregateOutputType | null
+    _sum: AutomationOpportunitySumAggregateOutputType | null
+    _min: AutomationOpportunityMinAggregateOutputType | null
+    _max: AutomationOpportunityMaxAggregateOutputType | null
+  }
+
+  type GetAutomationOpportunityGroupByPayload<T extends AutomationOpportunityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationOpportunityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationOpportunityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationOpportunityGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationOpportunityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationOpportunitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    description?: boolean
+    category?: boolean
+    impactScore?: boolean
+    difficultyScore?: boolean
+    timeSavingsHours?: boolean
+    costSavings?: boolean
+    paybackPeriodMonths?: boolean
+    requiredIntegrations?: boolean
+    status?: boolean
+    identifiedAt?: boolean
+    dismissalReason?: boolean
+    implementationNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationOpportunity"]>
+
+  export type AutomationOpportunitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    description?: boolean
+    category?: boolean
+    impactScore?: boolean
+    difficultyScore?: boolean
+    timeSavingsHours?: boolean
+    costSavings?: boolean
+    paybackPeriodMonths?: boolean
+    requiredIntegrations?: boolean
+    status?: boolean
+    identifiedAt?: boolean
+    dismissalReason?: boolean
+    implementationNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationOpportunity"]>
+
+  export type AutomationOpportunitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    description?: boolean
+    category?: boolean
+    impactScore?: boolean
+    difficultyScore?: boolean
+    timeSavingsHours?: boolean
+    costSavings?: boolean
+    paybackPeriodMonths?: boolean
+    requiredIntegrations?: boolean
+    status?: boolean
+    identifiedAt?: boolean
+    dismissalReason?: boolean
+    implementationNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationOpportunity"]>
+
+  export type AutomationOpportunitySelectScalar = {
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    description?: boolean
+    category?: boolean
+    impactScore?: boolean
+    difficultyScore?: boolean
+    timeSavingsHours?: boolean
+    costSavings?: boolean
+    paybackPeriodMonths?: boolean
+    requiredIntegrations?: boolean
+    status?: boolean
+    identifiedAt?: boolean
+    dismissalReason?: boolean
+    implementationNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AutomationOpportunityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "description" | "category" | "impactScore" | "difficultyScore" | "timeSavingsHours" | "costSavings" | "paybackPeriodMonths" | "requiredIntegrations" | "status" | "identifiedAt" | "dismissalReason" | "implementationNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["automationOpportunity"]>
+  export type AutomationOpportunityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AutomationOpportunityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AutomationOpportunityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AutomationOpportunityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationOpportunity"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      title: string
+      description: string
+      category: $Enums.OpportunityCategory
+      impactScore: number
+      difficultyScore: number
+      timeSavingsHours: number | null
+      costSavings: Prisma.Decimal | null
+      paybackPeriodMonths: number | null
+      requiredIntegrations: string[]
+      status: $Enums.OpportunityStatus
+      identifiedAt: Date
+      dismissalReason: string | null
+      implementationNotes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["automationOpportunity"]>
+    composites: {}
+  }
+
+  type AutomationOpportunityGetPayload<S extends boolean | null | undefined | AutomationOpportunityDefaultArgs> = $Result.GetResult<Prisma.$AutomationOpportunityPayload, S>
+
+  type AutomationOpportunityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationOpportunityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationOpportunityCountAggregateInputType | true
+    }
+
+  export interface AutomationOpportunityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationOpportunity'], meta: { name: 'AutomationOpportunity' } }
+    /**
+     * Find zero or one AutomationOpportunity that matches the filter.
+     * @param {AutomationOpportunityFindUniqueArgs} args - Arguments to find a AutomationOpportunity
+     * @example
+     * // Get one AutomationOpportunity
+     * const automationOpportunity = await prisma.automationOpportunity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationOpportunityFindUniqueArgs>(args: SelectSubset<T, AutomationOpportunityFindUniqueArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationOpportunity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationOpportunityFindUniqueOrThrowArgs} args - Arguments to find a AutomationOpportunity
+     * @example
+     * // Get one AutomationOpportunity
+     * const automationOpportunity = await prisma.automationOpportunity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationOpportunityFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationOpportunityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationOpportunity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityFindFirstArgs} args - Arguments to find a AutomationOpportunity
+     * @example
+     * // Get one AutomationOpportunity
+     * const automationOpportunity = await prisma.automationOpportunity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationOpportunityFindFirstArgs>(args?: SelectSubset<T, AutomationOpportunityFindFirstArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationOpportunity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityFindFirstOrThrowArgs} args - Arguments to find a AutomationOpportunity
+     * @example
+     * // Get one AutomationOpportunity
+     * const automationOpportunity = await prisma.automationOpportunity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationOpportunityFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationOpportunityFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationOpportunities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationOpportunities
+     * const automationOpportunities = await prisma.automationOpportunity.findMany()
+     * 
+     * // Get first 10 AutomationOpportunities
+     * const automationOpportunities = await prisma.automationOpportunity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationOpportunityWithIdOnly = await prisma.automationOpportunity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationOpportunityFindManyArgs>(args?: SelectSubset<T, AutomationOpportunityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationOpportunity.
+     * @param {AutomationOpportunityCreateArgs} args - Arguments to create a AutomationOpportunity.
+     * @example
+     * // Create one AutomationOpportunity
+     * const AutomationOpportunity = await prisma.automationOpportunity.create({
+     *   data: {
+     *     // ... data to create a AutomationOpportunity
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationOpportunityCreateArgs>(args: SelectSubset<T, AutomationOpportunityCreateArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationOpportunities.
+     * @param {AutomationOpportunityCreateManyArgs} args - Arguments to create many AutomationOpportunities.
+     * @example
+     * // Create many AutomationOpportunities
+     * const automationOpportunity = await prisma.automationOpportunity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationOpportunityCreateManyArgs>(args?: SelectSubset<T, AutomationOpportunityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationOpportunities and returns the data saved in the database.
+     * @param {AutomationOpportunityCreateManyAndReturnArgs} args - Arguments to create many AutomationOpportunities.
+     * @example
+     * // Create many AutomationOpportunities
+     * const automationOpportunity = await prisma.automationOpportunity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationOpportunities and only return the `id`
+     * const automationOpportunityWithIdOnly = await prisma.automationOpportunity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationOpportunityCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationOpportunityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationOpportunity.
+     * @param {AutomationOpportunityDeleteArgs} args - Arguments to delete one AutomationOpportunity.
+     * @example
+     * // Delete one AutomationOpportunity
+     * const AutomationOpportunity = await prisma.automationOpportunity.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationOpportunity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationOpportunityDeleteArgs>(args: SelectSubset<T, AutomationOpportunityDeleteArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationOpportunity.
+     * @param {AutomationOpportunityUpdateArgs} args - Arguments to update one AutomationOpportunity.
+     * @example
+     * // Update one AutomationOpportunity
+     * const automationOpportunity = await prisma.automationOpportunity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationOpportunityUpdateArgs>(args: SelectSubset<T, AutomationOpportunityUpdateArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationOpportunities.
+     * @param {AutomationOpportunityDeleteManyArgs} args - Arguments to filter AutomationOpportunities to delete.
+     * @example
+     * // Delete a few AutomationOpportunities
+     * const { count } = await prisma.automationOpportunity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationOpportunityDeleteManyArgs>(args?: SelectSubset<T, AutomationOpportunityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationOpportunities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationOpportunities
+     * const automationOpportunity = await prisma.automationOpportunity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationOpportunityUpdateManyArgs>(args: SelectSubset<T, AutomationOpportunityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationOpportunities and returns the data updated in the database.
+     * @param {AutomationOpportunityUpdateManyAndReturnArgs} args - Arguments to update many AutomationOpportunities.
+     * @example
+     * // Update many AutomationOpportunities
+     * const automationOpportunity = await prisma.automationOpportunity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationOpportunities and only return the `id`
+     * const automationOpportunityWithIdOnly = await prisma.automationOpportunity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationOpportunityUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationOpportunityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationOpportunity.
+     * @param {AutomationOpportunityUpsertArgs} args - Arguments to update or create a AutomationOpportunity.
+     * @example
+     * // Update or create a AutomationOpportunity
+     * const automationOpportunity = await prisma.automationOpportunity.upsert({
+     *   create: {
+     *     // ... data to create a AutomationOpportunity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationOpportunity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationOpportunityUpsertArgs>(args: SelectSubset<T, AutomationOpportunityUpsertArgs<ExtArgs>>): Prisma__AutomationOpportunityClient<$Result.GetResult<Prisma.$AutomationOpportunityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationOpportunities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityCountArgs} args - Arguments to filter AutomationOpportunities to count.
+     * @example
+     * // Count the number of AutomationOpportunities
+     * const count = await prisma.automationOpportunity.count({
+     *   where: {
+     *     // ... the filter for the AutomationOpportunities we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationOpportunityCountArgs>(
+      args?: Subset<T, AutomationOpportunityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationOpportunityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationOpportunity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationOpportunityAggregateArgs>(args: Subset<T, AutomationOpportunityAggregateArgs>): Prisma.PrismaPromise<GetAutomationOpportunityAggregateType<T>>
+
+    /**
+     * Group by AutomationOpportunity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationOpportunityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationOpportunityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationOpportunityGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationOpportunityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationOpportunityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationOpportunityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationOpportunity model
+   */
+  readonly fields: AutomationOpportunityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationOpportunity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationOpportunityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationOpportunity model
+   */
+  interface AutomationOpportunityFieldRefs {
+    readonly id: FieldRef<"AutomationOpportunity", 'String'>
+    readonly userId: FieldRef<"AutomationOpportunity", 'String'>
+    readonly title: FieldRef<"AutomationOpportunity", 'String'>
+    readonly description: FieldRef<"AutomationOpportunity", 'String'>
+    readonly category: FieldRef<"AutomationOpportunity", 'OpportunityCategory'>
+    readonly impactScore: FieldRef<"AutomationOpportunity", 'Int'>
+    readonly difficultyScore: FieldRef<"AutomationOpportunity", 'Int'>
+    readonly timeSavingsHours: FieldRef<"AutomationOpportunity", 'Float'>
+    readonly costSavings: FieldRef<"AutomationOpportunity", 'Decimal'>
+    readonly paybackPeriodMonths: FieldRef<"AutomationOpportunity", 'Int'>
+    readonly requiredIntegrations: FieldRef<"AutomationOpportunity", 'String[]'>
+    readonly status: FieldRef<"AutomationOpportunity", 'OpportunityStatus'>
+    readonly identifiedAt: FieldRef<"AutomationOpportunity", 'DateTime'>
+    readonly dismissalReason: FieldRef<"AutomationOpportunity", 'String'>
+    readonly implementationNotes: FieldRef<"AutomationOpportunity", 'String'>
+    readonly createdAt: FieldRef<"AutomationOpportunity", 'DateTime'>
+    readonly updatedAt: FieldRef<"AutomationOpportunity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationOpportunity findUnique
+   */
+  export type AutomationOpportunityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationOpportunity to fetch.
+     */
+    where: AutomationOpportunityWhereUniqueInput
+  }
+
+  /**
+   * AutomationOpportunity findUniqueOrThrow
+   */
+  export type AutomationOpportunityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationOpportunity to fetch.
+     */
+    where: AutomationOpportunityWhereUniqueInput
+  }
+
+  /**
+   * AutomationOpportunity findFirst
+   */
+  export type AutomationOpportunityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationOpportunity to fetch.
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationOpportunities to fetch.
+     */
+    orderBy?: AutomationOpportunityOrderByWithRelationInput | AutomationOpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationOpportunities.
+     */
+    cursor?: AutomationOpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationOpportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationOpportunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationOpportunities.
+     */
+    distinct?: AutomationOpportunityScalarFieldEnum | AutomationOpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationOpportunity findFirstOrThrow
+   */
+  export type AutomationOpportunityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationOpportunity to fetch.
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationOpportunities to fetch.
+     */
+    orderBy?: AutomationOpportunityOrderByWithRelationInput | AutomationOpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationOpportunities.
+     */
+    cursor?: AutomationOpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationOpportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationOpportunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationOpportunities.
+     */
+    distinct?: AutomationOpportunityScalarFieldEnum | AutomationOpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationOpportunity findMany
+   */
+  export type AutomationOpportunityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationOpportunities to fetch.
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationOpportunities to fetch.
+     */
+    orderBy?: AutomationOpportunityOrderByWithRelationInput | AutomationOpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationOpportunities.
+     */
+    cursor?: AutomationOpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationOpportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationOpportunities.
+     */
+    skip?: number
+    distinct?: AutomationOpportunityScalarFieldEnum | AutomationOpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationOpportunity create
+   */
+  export type AutomationOpportunityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationOpportunity.
+     */
+    data: XOR<AutomationOpportunityCreateInput, AutomationOpportunityUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationOpportunity createMany
+   */
+  export type AutomationOpportunityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationOpportunities.
+     */
+    data: AutomationOpportunityCreateManyInput | AutomationOpportunityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationOpportunity createManyAndReturn
+   */
+  export type AutomationOpportunityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationOpportunities.
+     */
+    data: AutomationOpportunityCreateManyInput | AutomationOpportunityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationOpportunity update
+   */
+  export type AutomationOpportunityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationOpportunity.
+     */
+    data: XOR<AutomationOpportunityUpdateInput, AutomationOpportunityUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationOpportunity to update.
+     */
+    where: AutomationOpportunityWhereUniqueInput
+  }
+
+  /**
+   * AutomationOpportunity updateMany
+   */
+  export type AutomationOpportunityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationOpportunities.
+     */
+    data: XOR<AutomationOpportunityUpdateManyMutationInput, AutomationOpportunityUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationOpportunities to update
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * Limit how many AutomationOpportunities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationOpportunity updateManyAndReturn
+   */
+  export type AutomationOpportunityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationOpportunities.
+     */
+    data: XOR<AutomationOpportunityUpdateManyMutationInput, AutomationOpportunityUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationOpportunities to update
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * Limit how many AutomationOpportunities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationOpportunity upsert
+   */
+  export type AutomationOpportunityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationOpportunity to update in case it exists.
+     */
+    where: AutomationOpportunityWhereUniqueInput
+    /**
+     * In case the AutomationOpportunity found by the `where` argument doesn't exist, create a new AutomationOpportunity with this data.
+     */
+    create: XOR<AutomationOpportunityCreateInput, AutomationOpportunityUncheckedCreateInput>
+    /**
+     * In case the AutomationOpportunity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationOpportunityUpdateInput, AutomationOpportunityUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationOpportunity delete
+   */
+  export type AutomationOpportunityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationOpportunity to delete.
+     */
+    where: AutomationOpportunityWhereUniqueInput
+  }
+
+  /**
+   * AutomationOpportunity deleteMany
+   */
+  export type AutomationOpportunityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationOpportunities to delete
+     */
+    where?: AutomationOpportunityWhereInput
+    /**
+     * Limit how many AutomationOpportunities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationOpportunity without action
+   */
+  export type AutomationOpportunityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationOpportunity
+     */
+    select?: AutomationOpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationOpportunity
+     */
+    omit?: AutomationOpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationOpportunityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WorkflowHealth
+   */
+
+  export type AggregateWorkflowHealth = {
+    _count: WorkflowHealthCountAggregateOutputType | null
+    _avg: WorkflowHealthAvgAggregateOutputType | null
+    _sum: WorkflowHealthSumAggregateOutputType | null
+    _min: WorkflowHealthMinAggregateOutputType | null
+    _max: WorkflowHealthMaxAggregateOutputType | null
+  }
+
+  export type WorkflowHealthAvgAggregateOutputType = {
+    healthScore: number | null
+    successRate: number | null
+    performanceTrend: number | null
+    errorPattern: number | null
+    businessImpact: number | null
+  }
+
+  export type WorkflowHealthSumAggregateOutputType = {
+    healthScore: number | null
+    successRate: number | null
+    performanceTrend: number | null
+    errorPattern: number | null
+    businessImpact: number | null
+  }
+
+  export type WorkflowHealthMinAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    healthScore: number | null
+    lastCalculated: Date | null
+    successRate: number | null
+    performanceTrend: number | null
+    errorPattern: number | null
+    businessImpact: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WorkflowHealthMaxAggregateOutputType = {
+    id: string | null
+    workflowId: string | null
+    healthScore: number | null
+    lastCalculated: Date | null
+    successRate: number | null
+    performanceTrend: number | null
+    errorPattern: number | null
+    businessImpact: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WorkflowHealthCountAggregateOutputType = {
+    id: number
+    workflowId: number
+    healthScore: number
+    lastCalculated: number
+    successRate: number
+    performanceTrend: number
+    errorPattern: number
+    businessImpact: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WorkflowHealthAvgAggregateInputType = {
+    healthScore?: true
+    successRate?: true
+    performanceTrend?: true
+    errorPattern?: true
+    businessImpact?: true
+  }
+
+  export type WorkflowHealthSumAggregateInputType = {
+    healthScore?: true
+    successRate?: true
+    performanceTrend?: true
+    errorPattern?: true
+    businessImpact?: true
+  }
+
+  export type WorkflowHealthMinAggregateInputType = {
+    id?: true
+    workflowId?: true
+    healthScore?: true
+    lastCalculated?: true
+    successRate?: true
+    performanceTrend?: true
+    errorPattern?: true
+    businessImpact?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WorkflowHealthMaxAggregateInputType = {
+    id?: true
+    workflowId?: true
+    healthScore?: true
+    lastCalculated?: true
+    successRate?: true
+    performanceTrend?: true
+    errorPattern?: true
+    businessImpact?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WorkflowHealthCountAggregateInputType = {
+    id?: true
+    workflowId?: true
+    healthScore?: true
+    lastCalculated?: true
+    successRate?: true
+    performanceTrend?: true
+    errorPattern?: true
+    businessImpact?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WorkflowHealthAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WorkflowHealth to aggregate.
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkflowHealths to fetch.
+     */
+    orderBy?: WorkflowHealthOrderByWithRelationInput | WorkflowHealthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WorkflowHealthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkflowHealths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkflowHealths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WorkflowHealths
+    **/
+    _count?: true | WorkflowHealthCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WorkflowHealthAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WorkflowHealthSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WorkflowHealthMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WorkflowHealthMaxAggregateInputType
+  }
+
+  export type GetWorkflowHealthAggregateType<T extends WorkflowHealthAggregateArgs> = {
+        [P in keyof T & keyof AggregateWorkflowHealth]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWorkflowHealth[P]>
+      : GetScalarType<T[P], AggregateWorkflowHealth[P]>
+  }
+
+
+
+
+  export type WorkflowHealthGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WorkflowHealthWhereInput
+    orderBy?: WorkflowHealthOrderByWithAggregationInput | WorkflowHealthOrderByWithAggregationInput[]
+    by: WorkflowHealthScalarFieldEnum[] | WorkflowHealthScalarFieldEnum
+    having?: WorkflowHealthScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WorkflowHealthCountAggregateInputType | true
+    _avg?: WorkflowHealthAvgAggregateInputType
+    _sum?: WorkflowHealthSumAggregateInputType
+    _min?: WorkflowHealthMinAggregateInputType
+    _max?: WorkflowHealthMaxAggregateInputType
+  }
+
+  export type WorkflowHealthGroupByOutputType = {
+    id: string
+    workflowId: string
+    healthScore: number
+    lastCalculated: Date
+    successRate: number | null
+    performanceTrend: number | null
+    errorPattern: number | null
+    businessImpact: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: WorkflowHealthCountAggregateOutputType | null
+    _avg: WorkflowHealthAvgAggregateOutputType | null
+    _sum: WorkflowHealthSumAggregateOutputType | null
+    _min: WorkflowHealthMinAggregateOutputType | null
+    _max: WorkflowHealthMaxAggregateOutputType | null
+  }
+
+  type GetWorkflowHealthGroupByPayload<T extends WorkflowHealthGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WorkflowHealthGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WorkflowHealthGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WorkflowHealthGroupByOutputType[P]>
+            : GetScalarType<T[P], WorkflowHealthGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WorkflowHealthSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    healthScore?: boolean
+    lastCalculated?: boolean
+    successRate?: boolean
+    performanceTrend?: boolean
+    errorPattern?: boolean
+    businessImpact?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+    recommendations?: boolean | WorkflowHealth$recommendationsArgs<ExtArgs>
+    alerts?: boolean | WorkflowHealth$alertsArgs<ExtArgs>
+    _count?: boolean | WorkflowHealthCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workflowHealth"]>
+
+  export type WorkflowHealthSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    healthScore?: boolean
+    lastCalculated?: boolean
+    successRate?: boolean
+    performanceTrend?: boolean
+    errorPattern?: boolean
+    businessImpact?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workflowHealth"]>
+
+  export type WorkflowHealthSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowId?: boolean
+    healthScore?: boolean
+    lastCalculated?: boolean
+    successRate?: boolean
+    performanceTrend?: boolean
+    errorPattern?: boolean
+    businessImpact?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workflowHealth"]>
+
+  export type WorkflowHealthSelectScalar = {
+    id?: boolean
+    workflowId?: boolean
+    healthScore?: boolean
+    lastCalculated?: boolean
+    successRate?: boolean
+    performanceTrend?: boolean
+    errorPattern?: boolean
+    businessImpact?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WorkflowHealthOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowId" | "healthScore" | "lastCalculated" | "successRate" | "performanceTrend" | "errorPattern" | "businessImpact" | "createdAt" | "updatedAt", ExtArgs["result"]["workflowHealth"]>
+  export type WorkflowHealthInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+    recommendations?: boolean | WorkflowHealth$recommendationsArgs<ExtArgs>
+    alerts?: boolean | WorkflowHealth$alertsArgs<ExtArgs>
+    _count?: boolean | WorkflowHealthCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type WorkflowHealthIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+  export type WorkflowHealthIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | WorkflowDefaultArgs<ExtArgs>
+  }
+
+  export type $WorkflowHealthPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WorkflowHealth"
+    objects: {
+      workflow: Prisma.$WorkflowPayload<ExtArgs>
+      recommendations: Prisma.$HealthRecommendationPayload<ExtArgs>[]
+      alerts: Prisma.$HealthAlertPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowId: string
+      healthScore: number
+      lastCalculated: Date
+      successRate: number | null
+      performanceTrend: number | null
+      errorPattern: number | null
+      businessImpact: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["workflowHealth"]>
+    composites: {}
+  }
+
+  type WorkflowHealthGetPayload<S extends boolean | null | undefined | WorkflowHealthDefaultArgs> = $Result.GetResult<Prisma.$WorkflowHealthPayload, S>
+
+  type WorkflowHealthCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WorkflowHealthFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WorkflowHealthCountAggregateInputType | true
+    }
+
+  export interface WorkflowHealthDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WorkflowHealth'], meta: { name: 'WorkflowHealth' } }
+    /**
+     * Find zero or one WorkflowHealth that matches the filter.
+     * @param {WorkflowHealthFindUniqueArgs} args - Arguments to find a WorkflowHealth
+     * @example
+     * // Get one WorkflowHealth
+     * const workflowHealth = await prisma.workflowHealth.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WorkflowHealthFindUniqueArgs>(args: SelectSubset<T, WorkflowHealthFindUniqueArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WorkflowHealth that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WorkflowHealthFindUniqueOrThrowArgs} args - Arguments to find a WorkflowHealth
+     * @example
+     * // Get one WorkflowHealth
+     * const workflowHealth = await prisma.workflowHealth.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WorkflowHealthFindUniqueOrThrowArgs>(args: SelectSubset<T, WorkflowHealthFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WorkflowHealth that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthFindFirstArgs} args - Arguments to find a WorkflowHealth
+     * @example
+     * // Get one WorkflowHealth
+     * const workflowHealth = await prisma.workflowHealth.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WorkflowHealthFindFirstArgs>(args?: SelectSubset<T, WorkflowHealthFindFirstArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WorkflowHealth that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthFindFirstOrThrowArgs} args - Arguments to find a WorkflowHealth
+     * @example
+     * // Get one WorkflowHealth
+     * const workflowHealth = await prisma.workflowHealth.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WorkflowHealthFindFirstOrThrowArgs>(args?: SelectSubset<T, WorkflowHealthFindFirstOrThrowArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WorkflowHealths that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WorkflowHealths
+     * const workflowHealths = await prisma.workflowHealth.findMany()
+     * 
+     * // Get first 10 WorkflowHealths
+     * const workflowHealths = await prisma.workflowHealth.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const workflowHealthWithIdOnly = await prisma.workflowHealth.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WorkflowHealthFindManyArgs>(args?: SelectSubset<T, WorkflowHealthFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WorkflowHealth.
+     * @param {WorkflowHealthCreateArgs} args - Arguments to create a WorkflowHealth.
+     * @example
+     * // Create one WorkflowHealth
+     * const WorkflowHealth = await prisma.workflowHealth.create({
+     *   data: {
+     *     // ... data to create a WorkflowHealth
+     *   }
+     * })
+     * 
+     */
+    create<T extends WorkflowHealthCreateArgs>(args: SelectSubset<T, WorkflowHealthCreateArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WorkflowHealths.
+     * @param {WorkflowHealthCreateManyArgs} args - Arguments to create many WorkflowHealths.
+     * @example
+     * // Create many WorkflowHealths
+     * const workflowHealth = await prisma.workflowHealth.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WorkflowHealthCreateManyArgs>(args?: SelectSubset<T, WorkflowHealthCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WorkflowHealths and returns the data saved in the database.
+     * @param {WorkflowHealthCreateManyAndReturnArgs} args - Arguments to create many WorkflowHealths.
+     * @example
+     * // Create many WorkflowHealths
+     * const workflowHealth = await prisma.workflowHealth.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WorkflowHealths and only return the `id`
+     * const workflowHealthWithIdOnly = await prisma.workflowHealth.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WorkflowHealthCreateManyAndReturnArgs>(args?: SelectSubset<T, WorkflowHealthCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WorkflowHealth.
+     * @param {WorkflowHealthDeleteArgs} args - Arguments to delete one WorkflowHealth.
+     * @example
+     * // Delete one WorkflowHealth
+     * const WorkflowHealth = await prisma.workflowHealth.delete({
+     *   where: {
+     *     // ... filter to delete one WorkflowHealth
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WorkflowHealthDeleteArgs>(args: SelectSubset<T, WorkflowHealthDeleteArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WorkflowHealth.
+     * @param {WorkflowHealthUpdateArgs} args - Arguments to update one WorkflowHealth.
+     * @example
+     * // Update one WorkflowHealth
+     * const workflowHealth = await prisma.workflowHealth.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WorkflowHealthUpdateArgs>(args: SelectSubset<T, WorkflowHealthUpdateArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WorkflowHealths.
+     * @param {WorkflowHealthDeleteManyArgs} args - Arguments to filter WorkflowHealths to delete.
+     * @example
+     * // Delete a few WorkflowHealths
+     * const { count } = await prisma.workflowHealth.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WorkflowHealthDeleteManyArgs>(args?: SelectSubset<T, WorkflowHealthDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WorkflowHealths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WorkflowHealths
+     * const workflowHealth = await prisma.workflowHealth.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WorkflowHealthUpdateManyArgs>(args: SelectSubset<T, WorkflowHealthUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WorkflowHealths and returns the data updated in the database.
+     * @param {WorkflowHealthUpdateManyAndReturnArgs} args - Arguments to update many WorkflowHealths.
+     * @example
+     * // Update many WorkflowHealths
+     * const workflowHealth = await prisma.workflowHealth.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WorkflowHealths and only return the `id`
+     * const workflowHealthWithIdOnly = await prisma.workflowHealth.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WorkflowHealthUpdateManyAndReturnArgs>(args: SelectSubset<T, WorkflowHealthUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WorkflowHealth.
+     * @param {WorkflowHealthUpsertArgs} args - Arguments to update or create a WorkflowHealth.
+     * @example
+     * // Update or create a WorkflowHealth
+     * const workflowHealth = await prisma.workflowHealth.upsert({
+     *   create: {
+     *     // ... data to create a WorkflowHealth
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WorkflowHealth we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WorkflowHealthUpsertArgs>(args: SelectSubset<T, WorkflowHealthUpsertArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WorkflowHealths.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthCountArgs} args - Arguments to filter WorkflowHealths to count.
+     * @example
+     * // Count the number of WorkflowHealths
+     * const count = await prisma.workflowHealth.count({
+     *   where: {
+     *     // ... the filter for the WorkflowHealths we want to count
+     *   }
+     * })
+    **/
+    count<T extends WorkflowHealthCountArgs>(
+      args?: Subset<T, WorkflowHealthCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WorkflowHealthCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WorkflowHealth.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WorkflowHealthAggregateArgs>(args: Subset<T, WorkflowHealthAggregateArgs>): Prisma.PrismaPromise<GetWorkflowHealthAggregateType<T>>
+
+    /**
+     * Group by WorkflowHealth.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkflowHealthGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WorkflowHealthGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WorkflowHealthGroupByArgs['orderBy'] }
+        : { orderBy?: WorkflowHealthGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WorkflowHealthGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWorkflowHealthGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WorkflowHealth model
+   */
+  readonly fields: WorkflowHealthFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WorkflowHealth.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WorkflowHealthClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workflow<T extends WorkflowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowDefaultArgs<ExtArgs>>): Prisma__WorkflowClient<$Result.GetResult<Prisma.$WorkflowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    recommendations<T extends WorkflowHealth$recommendationsArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowHealth$recommendationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    alerts<T extends WorkflowHealth$alertsArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowHealth$alertsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WorkflowHealth model
+   */
+  interface WorkflowHealthFieldRefs {
+    readonly id: FieldRef<"WorkflowHealth", 'String'>
+    readonly workflowId: FieldRef<"WorkflowHealth", 'String'>
+    readonly healthScore: FieldRef<"WorkflowHealth", 'Int'>
+    readonly lastCalculated: FieldRef<"WorkflowHealth", 'DateTime'>
+    readonly successRate: FieldRef<"WorkflowHealth", 'Float'>
+    readonly performanceTrend: FieldRef<"WorkflowHealth", 'Float'>
+    readonly errorPattern: FieldRef<"WorkflowHealth", 'Float'>
+    readonly businessImpact: FieldRef<"WorkflowHealth", 'Float'>
+    readonly createdAt: FieldRef<"WorkflowHealth", 'DateTime'>
+    readonly updatedAt: FieldRef<"WorkflowHealth", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WorkflowHealth findUnique
+   */
+  export type WorkflowHealthFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkflowHealth to fetch.
+     */
+    where: WorkflowHealthWhereUniqueInput
+  }
+
+  /**
+   * WorkflowHealth findUniqueOrThrow
+   */
+  export type WorkflowHealthFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkflowHealth to fetch.
+     */
+    where: WorkflowHealthWhereUniqueInput
+  }
+
+  /**
+   * WorkflowHealth findFirst
+   */
+  export type WorkflowHealthFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkflowHealth to fetch.
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkflowHealths to fetch.
+     */
+    orderBy?: WorkflowHealthOrderByWithRelationInput | WorkflowHealthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WorkflowHealths.
+     */
+    cursor?: WorkflowHealthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkflowHealths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkflowHealths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WorkflowHealths.
+     */
+    distinct?: WorkflowHealthScalarFieldEnum | WorkflowHealthScalarFieldEnum[]
+  }
+
+  /**
+   * WorkflowHealth findFirstOrThrow
+   */
+  export type WorkflowHealthFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkflowHealth to fetch.
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkflowHealths to fetch.
+     */
+    orderBy?: WorkflowHealthOrderByWithRelationInput | WorkflowHealthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WorkflowHealths.
+     */
+    cursor?: WorkflowHealthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkflowHealths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkflowHealths.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WorkflowHealths.
+     */
+    distinct?: WorkflowHealthScalarFieldEnum | WorkflowHealthScalarFieldEnum[]
+  }
+
+  /**
+   * WorkflowHealth findMany
+   */
+  export type WorkflowHealthFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkflowHealths to fetch.
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkflowHealths to fetch.
+     */
+    orderBy?: WorkflowHealthOrderByWithRelationInput | WorkflowHealthOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WorkflowHealths.
+     */
+    cursor?: WorkflowHealthWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkflowHealths from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkflowHealths.
+     */
+    skip?: number
+    distinct?: WorkflowHealthScalarFieldEnum | WorkflowHealthScalarFieldEnum[]
+  }
+
+  /**
+   * WorkflowHealth create
+   */
+  export type WorkflowHealthCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WorkflowHealth.
+     */
+    data: XOR<WorkflowHealthCreateInput, WorkflowHealthUncheckedCreateInput>
+  }
+
+  /**
+   * WorkflowHealth createMany
+   */
+  export type WorkflowHealthCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WorkflowHealths.
+     */
+    data: WorkflowHealthCreateManyInput | WorkflowHealthCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WorkflowHealth createManyAndReturn
+   */
+  export type WorkflowHealthCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * The data used to create many WorkflowHealths.
+     */
+    data: WorkflowHealthCreateManyInput | WorkflowHealthCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WorkflowHealth update
+   */
+  export type WorkflowHealthUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WorkflowHealth.
+     */
+    data: XOR<WorkflowHealthUpdateInput, WorkflowHealthUncheckedUpdateInput>
+    /**
+     * Choose, which WorkflowHealth to update.
+     */
+    where: WorkflowHealthWhereUniqueInput
+  }
+
+  /**
+   * WorkflowHealth updateMany
+   */
+  export type WorkflowHealthUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WorkflowHealths.
+     */
+    data: XOR<WorkflowHealthUpdateManyMutationInput, WorkflowHealthUncheckedUpdateManyInput>
+    /**
+     * Filter which WorkflowHealths to update
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * Limit how many WorkflowHealths to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WorkflowHealth updateManyAndReturn
+   */
+  export type WorkflowHealthUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * The data used to update WorkflowHealths.
+     */
+    data: XOR<WorkflowHealthUpdateManyMutationInput, WorkflowHealthUncheckedUpdateManyInput>
+    /**
+     * Filter which WorkflowHealths to update
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * Limit how many WorkflowHealths to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WorkflowHealth upsert
+   */
+  export type WorkflowHealthUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WorkflowHealth to update in case it exists.
+     */
+    where: WorkflowHealthWhereUniqueInput
+    /**
+     * In case the WorkflowHealth found by the `where` argument doesn't exist, create a new WorkflowHealth with this data.
+     */
+    create: XOR<WorkflowHealthCreateInput, WorkflowHealthUncheckedCreateInput>
+    /**
+     * In case the WorkflowHealth was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WorkflowHealthUpdateInput, WorkflowHealthUncheckedUpdateInput>
+  }
+
+  /**
+   * WorkflowHealth delete
+   */
+  export type WorkflowHealthDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+    /**
+     * Filter which WorkflowHealth to delete.
+     */
+    where: WorkflowHealthWhereUniqueInput
+  }
+
+  /**
+   * WorkflowHealth deleteMany
+   */
+  export type WorkflowHealthDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WorkflowHealths to delete
+     */
+    where?: WorkflowHealthWhereInput
+    /**
+     * Limit how many WorkflowHealths to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WorkflowHealth.recommendations
+   */
+  export type WorkflowHealth$recommendationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    where?: HealthRecommendationWhereInput
+    orderBy?: HealthRecommendationOrderByWithRelationInput | HealthRecommendationOrderByWithRelationInput[]
+    cursor?: HealthRecommendationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HealthRecommendationScalarFieldEnum | HealthRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * WorkflowHealth.alerts
+   */
+  export type WorkflowHealth$alertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    where?: HealthAlertWhereInput
+    orderBy?: HealthAlertOrderByWithRelationInput | HealthAlertOrderByWithRelationInput[]
+    cursor?: HealthAlertWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HealthAlertScalarFieldEnum | HealthAlertScalarFieldEnum[]
+  }
+
+  /**
+   * WorkflowHealth without action
+   */
+  export type WorkflowHealthDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkflowHealth
+     */
+    select?: WorkflowHealthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkflowHealth
+     */
+    omit?: WorkflowHealthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkflowHealthInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HealthRecommendation
+   */
+
+  export type AggregateHealthRecommendation = {
+    _count: HealthRecommendationCountAggregateOutputType | null
+    _avg: HealthRecommendationAvgAggregateOutputType | null
+    _sum: HealthRecommendationSumAggregateOutputType | null
+    _min: HealthRecommendationMinAggregateOutputType | null
+    _max: HealthRecommendationMaxAggregateOutputType | null
+  }
+
+  export type HealthRecommendationAvgAggregateOutputType = {
+    effectivenessScore: number | null
+  }
+
+  export type HealthRecommendationSumAggregateOutputType = {
+    effectivenessScore: number | null
+  }
+
+  export type HealthRecommendationMinAggregateOutputType = {
+    id: string | null
+    workflowHealthId: string | null
+    type: $Enums.HealthRecommendationType | null
+    priority: $Enums.HealthRecommendationPriority | null
+    title: string | null
+    description: string | null
+    estimatedImpact: string | null
+    implementationEffort: $Enums.ImplementationEffort | null
+    isImplemented: boolean | null
+    implementedAt: Date | null
+    effectivenessScore: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HealthRecommendationMaxAggregateOutputType = {
+    id: string | null
+    workflowHealthId: string | null
+    type: $Enums.HealthRecommendationType | null
+    priority: $Enums.HealthRecommendationPriority | null
+    title: string | null
+    description: string | null
+    estimatedImpact: string | null
+    implementationEffort: $Enums.ImplementationEffort | null
+    isImplemented: boolean | null
+    implementedAt: Date | null
+    effectivenessScore: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HealthRecommendationCountAggregateOutputType = {
+    id: number
+    workflowHealthId: number
+    type: number
+    priority: number
+    title: number
+    description: number
+    estimatedImpact: number
+    implementationEffort: number
+    isImplemented: number
+    implementedAt: number
+    effectivenessScore: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HealthRecommendationAvgAggregateInputType = {
+    effectivenessScore?: true
+  }
+
+  export type HealthRecommendationSumAggregateInputType = {
+    effectivenessScore?: true
+  }
+
+  export type HealthRecommendationMinAggregateInputType = {
+    id?: true
+    workflowHealthId?: true
+    type?: true
+    priority?: true
+    title?: true
+    description?: true
+    estimatedImpact?: true
+    implementationEffort?: true
+    isImplemented?: true
+    implementedAt?: true
+    effectivenessScore?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HealthRecommendationMaxAggregateInputType = {
+    id?: true
+    workflowHealthId?: true
+    type?: true
+    priority?: true
+    title?: true
+    description?: true
+    estimatedImpact?: true
+    implementationEffort?: true
+    isImplemented?: true
+    implementedAt?: true
+    effectivenessScore?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HealthRecommendationCountAggregateInputType = {
+    id?: true
+    workflowHealthId?: true
+    type?: true
+    priority?: true
+    title?: true
+    description?: true
+    estimatedImpact?: true
+    implementationEffort?: true
+    isImplemented?: true
+    implementedAt?: true
+    effectivenessScore?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HealthRecommendationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HealthRecommendation to aggregate.
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthRecommendations to fetch.
+     */
+    orderBy?: HealthRecommendationOrderByWithRelationInput | HealthRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HealthRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthRecommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HealthRecommendations
+    **/
+    _count?: true | HealthRecommendationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HealthRecommendationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HealthRecommendationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HealthRecommendationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HealthRecommendationMaxAggregateInputType
+  }
+
+  export type GetHealthRecommendationAggregateType<T extends HealthRecommendationAggregateArgs> = {
+        [P in keyof T & keyof AggregateHealthRecommendation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHealthRecommendation[P]>
+      : GetScalarType<T[P], AggregateHealthRecommendation[P]>
+  }
+
+
+
+
+  export type HealthRecommendationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HealthRecommendationWhereInput
+    orderBy?: HealthRecommendationOrderByWithAggregationInput | HealthRecommendationOrderByWithAggregationInput[]
+    by: HealthRecommendationScalarFieldEnum[] | HealthRecommendationScalarFieldEnum
+    having?: HealthRecommendationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HealthRecommendationCountAggregateInputType | true
+    _avg?: HealthRecommendationAvgAggregateInputType
+    _sum?: HealthRecommendationSumAggregateInputType
+    _min?: HealthRecommendationMinAggregateInputType
+    _max?: HealthRecommendationMaxAggregateInputType
+  }
+
+  export type HealthRecommendationGroupByOutputType = {
+    id: string
+    workflowHealthId: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented: boolean
+    implementedAt: Date | null
+    effectivenessScore: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: HealthRecommendationCountAggregateOutputType | null
+    _avg: HealthRecommendationAvgAggregateOutputType | null
+    _sum: HealthRecommendationSumAggregateOutputType | null
+    _min: HealthRecommendationMinAggregateOutputType | null
+    _max: HealthRecommendationMaxAggregateOutputType | null
+  }
+
+  type GetHealthRecommendationGroupByPayload<T extends HealthRecommendationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HealthRecommendationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HealthRecommendationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HealthRecommendationGroupByOutputType[P]>
+            : GetScalarType<T[P], HealthRecommendationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HealthRecommendationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowHealthId?: boolean
+    type?: boolean
+    priority?: boolean
+    title?: boolean
+    description?: boolean
+    estimatedImpact?: boolean
+    implementationEffort?: boolean
+    isImplemented?: boolean
+    implementedAt?: boolean
+    effectivenessScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthRecommendation"]>
+
+  export type HealthRecommendationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowHealthId?: boolean
+    type?: boolean
+    priority?: boolean
+    title?: boolean
+    description?: boolean
+    estimatedImpact?: boolean
+    implementationEffort?: boolean
+    isImplemented?: boolean
+    implementedAt?: boolean
+    effectivenessScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthRecommendation"]>
+
+  export type HealthRecommendationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowHealthId?: boolean
+    type?: boolean
+    priority?: boolean
+    title?: boolean
+    description?: boolean
+    estimatedImpact?: boolean
+    implementationEffort?: boolean
+    isImplemented?: boolean
+    implementedAt?: boolean
+    effectivenessScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthRecommendation"]>
+
+  export type HealthRecommendationSelectScalar = {
+    id?: boolean
+    workflowHealthId?: boolean
+    type?: boolean
+    priority?: boolean
+    title?: boolean
+    description?: boolean
+    estimatedImpact?: boolean
+    implementationEffort?: boolean
+    isImplemented?: boolean
+    implementedAt?: boolean
+    effectivenessScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HealthRecommendationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowHealthId" | "type" | "priority" | "title" | "description" | "estimatedImpact" | "implementationEffort" | "isImplemented" | "implementedAt" | "effectivenessScore" | "createdAt" | "updatedAt", ExtArgs["result"]["healthRecommendation"]>
+  export type HealthRecommendationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }
+  export type HealthRecommendationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }
+  export type HealthRecommendationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }
+
+  export type $HealthRecommendationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HealthRecommendation"
+    objects: {
+      workflowHealth: Prisma.$WorkflowHealthPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowHealthId: string
+      type: $Enums.HealthRecommendationType
+      priority: $Enums.HealthRecommendationPriority
+      title: string
+      description: string
+      estimatedImpact: string
+      implementationEffort: $Enums.ImplementationEffort
+      isImplemented: boolean
+      implementedAt: Date | null
+      effectivenessScore: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["healthRecommendation"]>
+    composites: {}
+  }
+
+  type HealthRecommendationGetPayload<S extends boolean | null | undefined | HealthRecommendationDefaultArgs> = $Result.GetResult<Prisma.$HealthRecommendationPayload, S>
+
+  type HealthRecommendationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HealthRecommendationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HealthRecommendationCountAggregateInputType | true
+    }
+
+  export interface HealthRecommendationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HealthRecommendation'], meta: { name: 'HealthRecommendation' } }
+    /**
+     * Find zero or one HealthRecommendation that matches the filter.
+     * @param {HealthRecommendationFindUniqueArgs} args - Arguments to find a HealthRecommendation
+     * @example
+     * // Get one HealthRecommendation
+     * const healthRecommendation = await prisma.healthRecommendation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HealthRecommendationFindUniqueArgs>(args: SelectSubset<T, HealthRecommendationFindUniqueArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HealthRecommendation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HealthRecommendationFindUniqueOrThrowArgs} args - Arguments to find a HealthRecommendation
+     * @example
+     * // Get one HealthRecommendation
+     * const healthRecommendation = await prisma.healthRecommendation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HealthRecommendationFindUniqueOrThrowArgs>(args: SelectSubset<T, HealthRecommendationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HealthRecommendation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationFindFirstArgs} args - Arguments to find a HealthRecommendation
+     * @example
+     * // Get one HealthRecommendation
+     * const healthRecommendation = await prisma.healthRecommendation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HealthRecommendationFindFirstArgs>(args?: SelectSubset<T, HealthRecommendationFindFirstArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HealthRecommendation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationFindFirstOrThrowArgs} args - Arguments to find a HealthRecommendation
+     * @example
+     * // Get one HealthRecommendation
+     * const healthRecommendation = await prisma.healthRecommendation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HealthRecommendationFindFirstOrThrowArgs>(args?: SelectSubset<T, HealthRecommendationFindFirstOrThrowArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HealthRecommendations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HealthRecommendations
+     * const healthRecommendations = await prisma.healthRecommendation.findMany()
+     * 
+     * // Get first 10 HealthRecommendations
+     * const healthRecommendations = await prisma.healthRecommendation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const healthRecommendationWithIdOnly = await prisma.healthRecommendation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HealthRecommendationFindManyArgs>(args?: SelectSubset<T, HealthRecommendationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HealthRecommendation.
+     * @param {HealthRecommendationCreateArgs} args - Arguments to create a HealthRecommendation.
+     * @example
+     * // Create one HealthRecommendation
+     * const HealthRecommendation = await prisma.healthRecommendation.create({
+     *   data: {
+     *     // ... data to create a HealthRecommendation
+     *   }
+     * })
+     * 
+     */
+    create<T extends HealthRecommendationCreateArgs>(args: SelectSubset<T, HealthRecommendationCreateArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HealthRecommendations.
+     * @param {HealthRecommendationCreateManyArgs} args - Arguments to create many HealthRecommendations.
+     * @example
+     * // Create many HealthRecommendations
+     * const healthRecommendation = await prisma.healthRecommendation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HealthRecommendationCreateManyArgs>(args?: SelectSubset<T, HealthRecommendationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HealthRecommendations and returns the data saved in the database.
+     * @param {HealthRecommendationCreateManyAndReturnArgs} args - Arguments to create many HealthRecommendations.
+     * @example
+     * // Create many HealthRecommendations
+     * const healthRecommendation = await prisma.healthRecommendation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HealthRecommendations and only return the `id`
+     * const healthRecommendationWithIdOnly = await prisma.healthRecommendation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HealthRecommendationCreateManyAndReturnArgs>(args?: SelectSubset<T, HealthRecommendationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HealthRecommendation.
+     * @param {HealthRecommendationDeleteArgs} args - Arguments to delete one HealthRecommendation.
+     * @example
+     * // Delete one HealthRecommendation
+     * const HealthRecommendation = await prisma.healthRecommendation.delete({
+     *   where: {
+     *     // ... filter to delete one HealthRecommendation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HealthRecommendationDeleteArgs>(args: SelectSubset<T, HealthRecommendationDeleteArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HealthRecommendation.
+     * @param {HealthRecommendationUpdateArgs} args - Arguments to update one HealthRecommendation.
+     * @example
+     * // Update one HealthRecommendation
+     * const healthRecommendation = await prisma.healthRecommendation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HealthRecommendationUpdateArgs>(args: SelectSubset<T, HealthRecommendationUpdateArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HealthRecommendations.
+     * @param {HealthRecommendationDeleteManyArgs} args - Arguments to filter HealthRecommendations to delete.
+     * @example
+     * // Delete a few HealthRecommendations
+     * const { count } = await prisma.healthRecommendation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HealthRecommendationDeleteManyArgs>(args?: SelectSubset<T, HealthRecommendationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HealthRecommendations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HealthRecommendations
+     * const healthRecommendation = await prisma.healthRecommendation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HealthRecommendationUpdateManyArgs>(args: SelectSubset<T, HealthRecommendationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HealthRecommendations and returns the data updated in the database.
+     * @param {HealthRecommendationUpdateManyAndReturnArgs} args - Arguments to update many HealthRecommendations.
+     * @example
+     * // Update many HealthRecommendations
+     * const healthRecommendation = await prisma.healthRecommendation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HealthRecommendations and only return the `id`
+     * const healthRecommendationWithIdOnly = await prisma.healthRecommendation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HealthRecommendationUpdateManyAndReturnArgs>(args: SelectSubset<T, HealthRecommendationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HealthRecommendation.
+     * @param {HealthRecommendationUpsertArgs} args - Arguments to update or create a HealthRecommendation.
+     * @example
+     * // Update or create a HealthRecommendation
+     * const healthRecommendation = await prisma.healthRecommendation.upsert({
+     *   create: {
+     *     // ... data to create a HealthRecommendation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HealthRecommendation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HealthRecommendationUpsertArgs>(args: SelectSubset<T, HealthRecommendationUpsertArgs<ExtArgs>>): Prisma__HealthRecommendationClient<$Result.GetResult<Prisma.$HealthRecommendationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HealthRecommendations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationCountArgs} args - Arguments to filter HealthRecommendations to count.
+     * @example
+     * // Count the number of HealthRecommendations
+     * const count = await prisma.healthRecommendation.count({
+     *   where: {
+     *     // ... the filter for the HealthRecommendations we want to count
+     *   }
+     * })
+    **/
+    count<T extends HealthRecommendationCountArgs>(
+      args?: Subset<T, HealthRecommendationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HealthRecommendationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HealthRecommendation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HealthRecommendationAggregateArgs>(args: Subset<T, HealthRecommendationAggregateArgs>): Prisma.PrismaPromise<GetHealthRecommendationAggregateType<T>>
+
+    /**
+     * Group by HealthRecommendation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthRecommendationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HealthRecommendationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HealthRecommendationGroupByArgs['orderBy'] }
+        : { orderBy?: HealthRecommendationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HealthRecommendationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHealthRecommendationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HealthRecommendation model
+   */
+  readonly fields: HealthRecommendationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HealthRecommendation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HealthRecommendationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workflowHealth<T extends WorkflowHealthDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowHealthDefaultArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HealthRecommendation model
+   */
+  interface HealthRecommendationFieldRefs {
+    readonly id: FieldRef<"HealthRecommendation", 'String'>
+    readonly workflowHealthId: FieldRef<"HealthRecommendation", 'String'>
+    readonly type: FieldRef<"HealthRecommendation", 'HealthRecommendationType'>
+    readonly priority: FieldRef<"HealthRecommendation", 'HealthRecommendationPriority'>
+    readonly title: FieldRef<"HealthRecommendation", 'String'>
+    readonly description: FieldRef<"HealthRecommendation", 'String'>
+    readonly estimatedImpact: FieldRef<"HealthRecommendation", 'String'>
+    readonly implementationEffort: FieldRef<"HealthRecommendation", 'ImplementationEffort'>
+    readonly isImplemented: FieldRef<"HealthRecommendation", 'Boolean'>
+    readonly implementedAt: FieldRef<"HealthRecommendation", 'DateTime'>
+    readonly effectivenessScore: FieldRef<"HealthRecommendation", 'Int'>
+    readonly createdAt: FieldRef<"HealthRecommendation", 'DateTime'>
+    readonly updatedAt: FieldRef<"HealthRecommendation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HealthRecommendation findUnique
+   */
+  export type HealthRecommendationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthRecommendation to fetch.
+     */
+    where: HealthRecommendationWhereUniqueInput
+  }
+
+  /**
+   * HealthRecommendation findUniqueOrThrow
+   */
+  export type HealthRecommendationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthRecommendation to fetch.
+     */
+    where: HealthRecommendationWhereUniqueInput
+  }
+
+  /**
+   * HealthRecommendation findFirst
+   */
+  export type HealthRecommendationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthRecommendation to fetch.
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthRecommendations to fetch.
+     */
+    orderBy?: HealthRecommendationOrderByWithRelationInput | HealthRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HealthRecommendations.
+     */
+    cursor?: HealthRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthRecommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HealthRecommendations.
+     */
+    distinct?: HealthRecommendationScalarFieldEnum | HealthRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * HealthRecommendation findFirstOrThrow
+   */
+  export type HealthRecommendationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthRecommendation to fetch.
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthRecommendations to fetch.
+     */
+    orderBy?: HealthRecommendationOrderByWithRelationInput | HealthRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HealthRecommendations.
+     */
+    cursor?: HealthRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthRecommendations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HealthRecommendations.
+     */
+    distinct?: HealthRecommendationScalarFieldEnum | HealthRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * HealthRecommendation findMany
+   */
+  export type HealthRecommendationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthRecommendations to fetch.
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthRecommendations to fetch.
+     */
+    orderBy?: HealthRecommendationOrderByWithRelationInput | HealthRecommendationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HealthRecommendations.
+     */
+    cursor?: HealthRecommendationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthRecommendations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthRecommendations.
+     */
+    skip?: number
+    distinct?: HealthRecommendationScalarFieldEnum | HealthRecommendationScalarFieldEnum[]
+  }
+
+  /**
+   * HealthRecommendation create
+   */
+  export type HealthRecommendationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HealthRecommendation.
+     */
+    data: XOR<HealthRecommendationCreateInput, HealthRecommendationUncheckedCreateInput>
+  }
+
+  /**
+   * HealthRecommendation createMany
+   */
+  export type HealthRecommendationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HealthRecommendations.
+     */
+    data: HealthRecommendationCreateManyInput | HealthRecommendationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HealthRecommendation createManyAndReturn
+   */
+  export type HealthRecommendationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * The data used to create many HealthRecommendations.
+     */
+    data: HealthRecommendationCreateManyInput | HealthRecommendationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HealthRecommendation update
+   */
+  export type HealthRecommendationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HealthRecommendation.
+     */
+    data: XOR<HealthRecommendationUpdateInput, HealthRecommendationUncheckedUpdateInput>
+    /**
+     * Choose, which HealthRecommendation to update.
+     */
+    where: HealthRecommendationWhereUniqueInput
+  }
+
+  /**
+   * HealthRecommendation updateMany
+   */
+  export type HealthRecommendationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HealthRecommendations.
+     */
+    data: XOR<HealthRecommendationUpdateManyMutationInput, HealthRecommendationUncheckedUpdateManyInput>
+    /**
+     * Filter which HealthRecommendations to update
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * Limit how many HealthRecommendations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HealthRecommendation updateManyAndReturn
+   */
+  export type HealthRecommendationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * The data used to update HealthRecommendations.
+     */
+    data: XOR<HealthRecommendationUpdateManyMutationInput, HealthRecommendationUncheckedUpdateManyInput>
+    /**
+     * Filter which HealthRecommendations to update
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * Limit how many HealthRecommendations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HealthRecommendation upsert
+   */
+  export type HealthRecommendationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HealthRecommendation to update in case it exists.
+     */
+    where: HealthRecommendationWhereUniqueInput
+    /**
+     * In case the HealthRecommendation found by the `where` argument doesn't exist, create a new HealthRecommendation with this data.
+     */
+    create: XOR<HealthRecommendationCreateInput, HealthRecommendationUncheckedCreateInput>
+    /**
+     * In case the HealthRecommendation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HealthRecommendationUpdateInput, HealthRecommendationUncheckedUpdateInput>
+  }
+
+  /**
+   * HealthRecommendation delete
+   */
+  export type HealthRecommendationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+    /**
+     * Filter which HealthRecommendation to delete.
+     */
+    where: HealthRecommendationWhereUniqueInput
+  }
+
+  /**
+   * HealthRecommendation deleteMany
+   */
+  export type HealthRecommendationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HealthRecommendations to delete
+     */
+    where?: HealthRecommendationWhereInput
+    /**
+     * Limit how many HealthRecommendations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HealthRecommendation without action
+   */
+  export type HealthRecommendationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthRecommendation
+     */
+    select?: HealthRecommendationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthRecommendation
+     */
+    omit?: HealthRecommendationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthRecommendationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HealthAlert
+   */
+
+  export type AggregateHealthAlert = {
+    _count: HealthAlertCountAggregateOutputType | null
+    _avg: HealthAlertAvgAggregateOutputType | null
+    _sum: HealthAlertSumAggregateOutputType | null
+    _min: HealthAlertMinAggregateOutputType | null
+    _max: HealthAlertMaxAggregateOutputType | null
+  }
+
+  export type HealthAlertAvgAggregateOutputType = {
+    threshold: number | null
+    currentValue: number | null
+  }
+
+  export type HealthAlertSumAggregateOutputType = {
+    threshold: number | null
+    currentValue: number | null
+  }
+
+  export type HealthAlertMinAggregateOutputType = {
+    id: string | null
+    workflowHealthId: string | null
+    alertType: string | null
+    severity: string | null
+    message: string | null
+    threshold: number | null
+    currentValue: number | null
+    isAcknowledged: boolean | null
+    acknowledgedAt: Date | null
+    acknowledgedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HealthAlertMaxAggregateOutputType = {
+    id: string | null
+    workflowHealthId: string | null
+    alertType: string | null
+    severity: string | null
+    message: string | null
+    threshold: number | null
+    currentValue: number | null
+    isAcknowledged: boolean | null
+    acknowledgedAt: Date | null
+    acknowledgedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HealthAlertCountAggregateOutputType = {
+    id: number
+    workflowHealthId: number
+    alertType: number
+    severity: number
+    message: number
+    threshold: number
+    currentValue: number
+    isAcknowledged: number
+    acknowledgedAt: number
+    acknowledgedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HealthAlertAvgAggregateInputType = {
+    threshold?: true
+    currentValue?: true
+  }
+
+  export type HealthAlertSumAggregateInputType = {
+    threshold?: true
+    currentValue?: true
+  }
+
+  export type HealthAlertMinAggregateInputType = {
+    id?: true
+    workflowHealthId?: true
+    alertType?: true
+    severity?: true
+    message?: true
+    threshold?: true
+    currentValue?: true
+    isAcknowledged?: true
+    acknowledgedAt?: true
+    acknowledgedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HealthAlertMaxAggregateInputType = {
+    id?: true
+    workflowHealthId?: true
+    alertType?: true
+    severity?: true
+    message?: true
+    threshold?: true
+    currentValue?: true
+    isAcknowledged?: true
+    acknowledgedAt?: true
+    acknowledgedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HealthAlertCountAggregateInputType = {
+    id?: true
+    workflowHealthId?: true
+    alertType?: true
+    severity?: true
+    message?: true
+    threshold?: true
+    currentValue?: true
+    isAcknowledged?: true
+    acknowledgedAt?: true
+    acknowledgedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HealthAlertAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HealthAlert to aggregate.
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthAlerts to fetch.
+     */
+    orderBy?: HealthAlertOrderByWithRelationInput | HealthAlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HealthAlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthAlerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthAlerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HealthAlerts
+    **/
+    _count?: true | HealthAlertCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HealthAlertAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HealthAlertSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HealthAlertMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HealthAlertMaxAggregateInputType
+  }
+
+  export type GetHealthAlertAggregateType<T extends HealthAlertAggregateArgs> = {
+        [P in keyof T & keyof AggregateHealthAlert]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHealthAlert[P]>
+      : GetScalarType<T[P], AggregateHealthAlert[P]>
+  }
+
+
+
+
+  export type HealthAlertGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HealthAlertWhereInput
+    orderBy?: HealthAlertOrderByWithAggregationInput | HealthAlertOrderByWithAggregationInput[]
+    by: HealthAlertScalarFieldEnum[] | HealthAlertScalarFieldEnum
+    having?: HealthAlertScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HealthAlertCountAggregateInputType | true
+    _avg?: HealthAlertAvgAggregateInputType
+    _sum?: HealthAlertSumAggregateInputType
+    _min?: HealthAlertMinAggregateInputType
+    _max?: HealthAlertMaxAggregateInputType
+  }
+
+  export type HealthAlertGroupByOutputType = {
+    id: string
+    workflowHealthId: string
+    alertType: string
+    severity: string
+    message: string
+    threshold: number | null
+    currentValue: number | null
+    isAcknowledged: boolean
+    acknowledgedAt: Date | null
+    acknowledgedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: HealthAlertCountAggregateOutputType | null
+    _avg: HealthAlertAvgAggregateOutputType | null
+    _sum: HealthAlertSumAggregateOutputType | null
+    _min: HealthAlertMinAggregateOutputType | null
+    _max: HealthAlertMaxAggregateOutputType | null
+  }
+
+  type GetHealthAlertGroupByPayload<T extends HealthAlertGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HealthAlertGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HealthAlertGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HealthAlertGroupByOutputType[P]>
+            : GetScalarType<T[P], HealthAlertGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HealthAlertSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowHealthId?: boolean
+    alertType?: boolean
+    severity?: boolean
+    message?: boolean
+    threshold?: boolean
+    currentValue?: boolean
+    isAcknowledged?: boolean
+    acknowledgedAt?: boolean
+    acknowledgedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthAlert"]>
+
+  export type HealthAlertSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowHealthId?: boolean
+    alertType?: boolean
+    severity?: boolean
+    message?: boolean
+    threshold?: boolean
+    currentValue?: boolean
+    isAcknowledged?: boolean
+    acknowledgedAt?: boolean
+    acknowledgedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthAlert"]>
+
+  export type HealthAlertSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowHealthId?: boolean
+    alertType?: boolean
+    severity?: boolean
+    message?: boolean
+    threshold?: boolean
+    currentValue?: boolean
+    isAcknowledged?: boolean
+    acknowledgedAt?: boolean
+    acknowledgedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthAlert"]>
+
+  export type HealthAlertSelectScalar = {
+    id?: boolean
+    workflowHealthId?: boolean
+    alertType?: boolean
+    severity?: boolean
+    message?: boolean
+    threshold?: boolean
+    currentValue?: boolean
+    isAcknowledged?: boolean
+    acknowledgedAt?: boolean
+    acknowledgedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HealthAlertOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowHealthId" | "alertType" | "severity" | "message" | "threshold" | "currentValue" | "isAcknowledged" | "acknowledgedAt" | "acknowledgedBy" | "createdAt" | "updatedAt", ExtArgs["result"]["healthAlert"]>
+  export type HealthAlertInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }
+  export type HealthAlertIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }
+  export type HealthAlertIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflowHealth?: boolean | WorkflowHealthDefaultArgs<ExtArgs>
+  }
+
+  export type $HealthAlertPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HealthAlert"
+    objects: {
+      workflowHealth: Prisma.$WorkflowHealthPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowHealthId: string
+      alertType: string
+      severity: string
+      message: string
+      threshold: number | null
+      currentValue: number | null
+      isAcknowledged: boolean
+      acknowledgedAt: Date | null
+      acknowledgedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["healthAlert"]>
+    composites: {}
+  }
+
+  type HealthAlertGetPayload<S extends boolean | null | undefined | HealthAlertDefaultArgs> = $Result.GetResult<Prisma.$HealthAlertPayload, S>
+
+  type HealthAlertCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HealthAlertFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HealthAlertCountAggregateInputType | true
+    }
+
+  export interface HealthAlertDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HealthAlert'], meta: { name: 'HealthAlert' } }
+    /**
+     * Find zero or one HealthAlert that matches the filter.
+     * @param {HealthAlertFindUniqueArgs} args - Arguments to find a HealthAlert
+     * @example
+     * // Get one HealthAlert
+     * const healthAlert = await prisma.healthAlert.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HealthAlertFindUniqueArgs>(args: SelectSubset<T, HealthAlertFindUniqueArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HealthAlert that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HealthAlertFindUniqueOrThrowArgs} args - Arguments to find a HealthAlert
+     * @example
+     * // Get one HealthAlert
+     * const healthAlert = await prisma.healthAlert.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HealthAlertFindUniqueOrThrowArgs>(args: SelectSubset<T, HealthAlertFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HealthAlert that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertFindFirstArgs} args - Arguments to find a HealthAlert
+     * @example
+     * // Get one HealthAlert
+     * const healthAlert = await prisma.healthAlert.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HealthAlertFindFirstArgs>(args?: SelectSubset<T, HealthAlertFindFirstArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HealthAlert that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertFindFirstOrThrowArgs} args - Arguments to find a HealthAlert
+     * @example
+     * // Get one HealthAlert
+     * const healthAlert = await prisma.healthAlert.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HealthAlertFindFirstOrThrowArgs>(args?: SelectSubset<T, HealthAlertFindFirstOrThrowArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HealthAlerts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HealthAlerts
+     * const healthAlerts = await prisma.healthAlert.findMany()
+     * 
+     * // Get first 10 HealthAlerts
+     * const healthAlerts = await prisma.healthAlert.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const healthAlertWithIdOnly = await prisma.healthAlert.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HealthAlertFindManyArgs>(args?: SelectSubset<T, HealthAlertFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HealthAlert.
+     * @param {HealthAlertCreateArgs} args - Arguments to create a HealthAlert.
+     * @example
+     * // Create one HealthAlert
+     * const HealthAlert = await prisma.healthAlert.create({
+     *   data: {
+     *     // ... data to create a HealthAlert
+     *   }
+     * })
+     * 
+     */
+    create<T extends HealthAlertCreateArgs>(args: SelectSubset<T, HealthAlertCreateArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HealthAlerts.
+     * @param {HealthAlertCreateManyArgs} args - Arguments to create many HealthAlerts.
+     * @example
+     * // Create many HealthAlerts
+     * const healthAlert = await prisma.healthAlert.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HealthAlertCreateManyArgs>(args?: SelectSubset<T, HealthAlertCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HealthAlerts and returns the data saved in the database.
+     * @param {HealthAlertCreateManyAndReturnArgs} args - Arguments to create many HealthAlerts.
+     * @example
+     * // Create many HealthAlerts
+     * const healthAlert = await prisma.healthAlert.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HealthAlerts and only return the `id`
+     * const healthAlertWithIdOnly = await prisma.healthAlert.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HealthAlertCreateManyAndReturnArgs>(args?: SelectSubset<T, HealthAlertCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HealthAlert.
+     * @param {HealthAlertDeleteArgs} args - Arguments to delete one HealthAlert.
+     * @example
+     * // Delete one HealthAlert
+     * const HealthAlert = await prisma.healthAlert.delete({
+     *   where: {
+     *     // ... filter to delete one HealthAlert
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HealthAlertDeleteArgs>(args: SelectSubset<T, HealthAlertDeleteArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HealthAlert.
+     * @param {HealthAlertUpdateArgs} args - Arguments to update one HealthAlert.
+     * @example
+     * // Update one HealthAlert
+     * const healthAlert = await prisma.healthAlert.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HealthAlertUpdateArgs>(args: SelectSubset<T, HealthAlertUpdateArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HealthAlerts.
+     * @param {HealthAlertDeleteManyArgs} args - Arguments to filter HealthAlerts to delete.
+     * @example
+     * // Delete a few HealthAlerts
+     * const { count } = await prisma.healthAlert.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HealthAlertDeleteManyArgs>(args?: SelectSubset<T, HealthAlertDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HealthAlerts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HealthAlerts
+     * const healthAlert = await prisma.healthAlert.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HealthAlertUpdateManyArgs>(args: SelectSubset<T, HealthAlertUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HealthAlerts and returns the data updated in the database.
+     * @param {HealthAlertUpdateManyAndReturnArgs} args - Arguments to update many HealthAlerts.
+     * @example
+     * // Update many HealthAlerts
+     * const healthAlert = await prisma.healthAlert.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HealthAlerts and only return the `id`
+     * const healthAlertWithIdOnly = await prisma.healthAlert.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HealthAlertUpdateManyAndReturnArgs>(args: SelectSubset<T, HealthAlertUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HealthAlert.
+     * @param {HealthAlertUpsertArgs} args - Arguments to update or create a HealthAlert.
+     * @example
+     * // Update or create a HealthAlert
+     * const healthAlert = await prisma.healthAlert.upsert({
+     *   create: {
+     *     // ... data to create a HealthAlert
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HealthAlert we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HealthAlertUpsertArgs>(args: SelectSubset<T, HealthAlertUpsertArgs<ExtArgs>>): Prisma__HealthAlertClient<$Result.GetResult<Prisma.$HealthAlertPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HealthAlerts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertCountArgs} args - Arguments to filter HealthAlerts to count.
+     * @example
+     * // Count the number of HealthAlerts
+     * const count = await prisma.healthAlert.count({
+     *   where: {
+     *     // ... the filter for the HealthAlerts we want to count
+     *   }
+     * })
+    **/
+    count<T extends HealthAlertCountArgs>(
+      args?: Subset<T, HealthAlertCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HealthAlertCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HealthAlert.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HealthAlertAggregateArgs>(args: Subset<T, HealthAlertAggregateArgs>): Prisma.PrismaPromise<GetHealthAlertAggregateType<T>>
+
+    /**
+     * Group by HealthAlert.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthAlertGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HealthAlertGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HealthAlertGroupByArgs['orderBy'] }
+        : { orderBy?: HealthAlertGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HealthAlertGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHealthAlertGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HealthAlert model
+   */
+  readonly fields: HealthAlertFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HealthAlert.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HealthAlertClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workflowHealth<T extends WorkflowHealthDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkflowHealthDefaultArgs<ExtArgs>>): Prisma__WorkflowHealthClient<$Result.GetResult<Prisma.$WorkflowHealthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HealthAlert model
+   */
+  interface HealthAlertFieldRefs {
+    readonly id: FieldRef<"HealthAlert", 'String'>
+    readonly workflowHealthId: FieldRef<"HealthAlert", 'String'>
+    readonly alertType: FieldRef<"HealthAlert", 'String'>
+    readonly severity: FieldRef<"HealthAlert", 'String'>
+    readonly message: FieldRef<"HealthAlert", 'String'>
+    readonly threshold: FieldRef<"HealthAlert", 'Float'>
+    readonly currentValue: FieldRef<"HealthAlert", 'Float'>
+    readonly isAcknowledged: FieldRef<"HealthAlert", 'Boolean'>
+    readonly acknowledgedAt: FieldRef<"HealthAlert", 'DateTime'>
+    readonly acknowledgedBy: FieldRef<"HealthAlert", 'String'>
+    readonly createdAt: FieldRef<"HealthAlert", 'DateTime'>
+    readonly updatedAt: FieldRef<"HealthAlert", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HealthAlert findUnique
+   */
+  export type HealthAlertFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthAlert to fetch.
+     */
+    where: HealthAlertWhereUniqueInput
+  }
+
+  /**
+   * HealthAlert findUniqueOrThrow
+   */
+  export type HealthAlertFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthAlert to fetch.
+     */
+    where: HealthAlertWhereUniqueInput
+  }
+
+  /**
+   * HealthAlert findFirst
+   */
+  export type HealthAlertFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthAlert to fetch.
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthAlerts to fetch.
+     */
+    orderBy?: HealthAlertOrderByWithRelationInput | HealthAlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HealthAlerts.
+     */
+    cursor?: HealthAlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthAlerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthAlerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HealthAlerts.
+     */
+    distinct?: HealthAlertScalarFieldEnum | HealthAlertScalarFieldEnum[]
+  }
+
+  /**
+   * HealthAlert findFirstOrThrow
+   */
+  export type HealthAlertFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthAlert to fetch.
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthAlerts to fetch.
+     */
+    orderBy?: HealthAlertOrderByWithRelationInput | HealthAlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HealthAlerts.
+     */
+    cursor?: HealthAlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthAlerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthAlerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HealthAlerts.
+     */
+    distinct?: HealthAlertScalarFieldEnum | HealthAlertScalarFieldEnum[]
+  }
+
+  /**
+   * HealthAlert findMany
+   */
+  export type HealthAlertFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthAlerts to fetch.
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthAlerts to fetch.
+     */
+    orderBy?: HealthAlertOrderByWithRelationInput | HealthAlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HealthAlerts.
+     */
+    cursor?: HealthAlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthAlerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthAlerts.
+     */
+    skip?: number
+    distinct?: HealthAlertScalarFieldEnum | HealthAlertScalarFieldEnum[]
+  }
+
+  /**
+   * HealthAlert create
+   */
+  export type HealthAlertCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HealthAlert.
+     */
+    data: XOR<HealthAlertCreateInput, HealthAlertUncheckedCreateInput>
+  }
+
+  /**
+   * HealthAlert createMany
+   */
+  export type HealthAlertCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HealthAlerts.
+     */
+    data: HealthAlertCreateManyInput | HealthAlertCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HealthAlert createManyAndReturn
+   */
+  export type HealthAlertCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * The data used to create many HealthAlerts.
+     */
+    data: HealthAlertCreateManyInput | HealthAlertCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HealthAlert update
+   */
+  export type HealthAlertUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HealthAlert.
+     */
+    data: XOR<HealthAlertUpdateInput, HealthAlertUncheckedUpdateInput>
+    /**
+     * Choose, which HealthAlert to update.
+     */
+    where: HealthAlertWhereUniqueInput
+  }
+
+  /**
+   * HealthAlert updateMany
+   */
+  export type HealthAlertUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HealthAlerts.
+     */
+    data: XOR<HealthAlertUpdateManyMutationInput, HealthAlertUncheckedUpdateManyInput>
+    /**
+     * Filter which HealthAlerts to update
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * Limit how many HealthAlerts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HealthAlert updateManyAndReturn
+   */
+  export type HealthAlertUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * The data used to update HealthAlerts.
+     */
+    data: XOR<HealthAlertUpdateManyMutationInput, HealthAlertUncheckedUpdateManyInput>
+    /**
+     * Filter which HealthAlerts to update
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * Limit how many HealthAlerts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HealthAlert upsert
+   */
+  export type HealthAlertUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HealthAlert to update in case it exists.
+     */
+    where: HealthAlertWhereUniqueInput
+    /**
+     * In case the HealthAlert found by the `where` argument doesn't exist, create a new HealthAlert with this data.
+     */
+    create: XOR<HealthAlertCreateInput, HealthAlertUncheckedCreateInput>
+    /**
+     * In case the HealthAlert was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HealthAlertUpdateInput, HealthAlertUncheckedUpdateInput>
+  }
+
+  /**
+   * HealthAlert delete
+   */
+  export type HealthAlertDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+    /**
+     * Filter which HealthAlert to delete.
+     */
+    where: HealthAlertWhereUniqueInput
+  }
+
+  /**
+   * HealthAlert deleteMany
+   */
+  export type HealthAlertDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HealthAlerts to delete
+     */
+    where?: HealthAlertWhereInput
+    /**
+     * Limit how many HealthAlerts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HealthAlert without action
+   */
+  export type HealthAlertDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthAlert
+     */
+    select?: HealthAlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthAlert
+     */
+    omit?: HealthAlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthAlertInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ExecutiveReport
+   */
+
+  export type AggregateExecutiveReport = {
+    _count: ExecutiveReportCountAggregateOutputType | null
+    _min: ExecutiveReportMinAggregateOutputType | null
+    _max: ExecutiveReportMaxAggregateOutputType | null
+  }
+
+  export type ExecutiveReportMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    periodStart: Date | null
+    periodEnd: Date | null
+    format: string | null
+    companyName: string | null
+    logoUrl: string | null
+    primaryColor: string | null
+    shareableLink: string | null
+    linkExpiresAt: Date | null
+    isPublic: boolean | null
+    generatedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ExecutiveReportMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    title: string | null
+    periodStart: Date | null
+    periodEnd: Date | null
+    format: string | null
+    companyName: string | null
+    logoUrl: string | null
+    primaryColor: string | null
+    shareableLink: string | null
+    linkExpiresAt: Date | null
+    isPublic: boolean | null
+    generatedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ExecutiveReportCountAggregateOutputType = {
+    id: number
+    userId: number
+    title: number
+    periodStart: number
+    periodEnd: number
+    format: number
+    sections: number
+    companyName: number
+    logoUrl: number
+    primaryColor: number
+    shareableLink: number
+    linkExpiresAt: number
+    isPublic: number
+    generatedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ExecutiveReportMinAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    periodStart?: true
+    periodEnd?: true
+    format?: true
+    companyName?: true
+    logoUrl?: true
+    primaryColor?: true
+    shareableLink?: true
+    linkExpiresAt?: true
+    isPublic?: true
+    generatedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ExecutiveReportMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    periodStart?: true
+    periodEnd?: true
+    format?: true
+    companyName?: true
+    logoUrl?: true
+    primaryColor?: true
+    shareableLink?: true
+    linkExpiresAt?: true
+    isPublic?: true
+    generatedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ExecutiveReportCountAggregateInputType = {
+    id?: true
+    userId?: true
+    title?: true
+    periodStart?: true
+    periodEnd?: true
+    format?: true
+    sections?: true
+    companyName?: true
+    logoUrl?: true
+    primaryColor?: true
+    shareableLink?: true
+    linkExpiresAt?: true
+    isPublic?: true
+    generatedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ExecutiveReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ExecutiveReport to aggregate.
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExecutiveReports to fetch.
+     */
+    orderBy?: ExecutiveReportOrderByWithRelationInput | ExecutiveReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ExecutiveReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExecutiveReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExecutiveReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ExecutiveReports
+    **/
+    _count?: true | ExecutiveReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ExecutiveReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ExecutiveReportMaxAggregateInputType
+  }
+
+  export type GetExecutiveReportAggregateType<T extends ExecutiveReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateExecutiveReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateExecutiveReport[P]>
+      : GetScalarType<T[P], AggregateExecutiveReport[P]>
+  }
+
+
+
+
+  export type ExecutiveReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExecutiveReportWhereInput
+    orderBy?: ExecutiveReportOrderByWithAggregationInput | ExecutiveReportOrderByWithAggregationInput[]
+    by: ExecutiveReportScalarFieldEnum[] | ExecutiveReportScalarFieldEnum
+    having?: ExecutiveReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ExecutiveReportCountAggregateInputType | true
+    _min?: ExecutiveReportMinAggregateInputType
+    _max?: ExecutiveReportMaxAggregateInputType
+  }
+
+  export type ExecutiveReportGroupByOutputType = {
+    id: string
+    userId: string
+    title: string
+    periodStart: Date
+    periodEnd: Date
+    format: string
+    sections: JsonValue
+    companyName: string | null
+    logoUrl: string | null
+    primaryColor: string | null
+    shareableLink: string | null
+    linkExpiresAt: Date | null
+    isPublic: boolean
+    generatedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: ExecutiveReportCountAggregateOutputType | null
+    _min: ExecutiveReportMinAggregateOutputType | null
+    _max: ExecutiveReportMaxAggregateOutputType | null
+  }
+
+  type GetExecutiveReportGroupByPayload<T extends ExecutiveReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ExecutiveReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ExecutiveReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ExecutiveReportGroupByOutputType[P]>
+            : GetScalarType<T[P], ExecutiveReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ExecutiveReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    periodStart?: boolean
+    periodEnd?: boolean
+    format?: boolean
+    sections?: boolean
+    companyName?: boolean
+    logoUrl?: boolean
+    primaryColor?: boolean
+    shareableLink?: boolean
+    linkExpiresAt?: boolean
+    isPublic?: boolean
+    generatedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["executiveReport"]>
+
+  export type ExecutiveReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    periodStart?: boolean
+    periodEnd?: boolean
+    format?: boolean
+    sections?: boolean
+    companyName?: boolean
+    logoUrl?: boolean
+    primaryColor?: boolean
+    shareableLink?: boolean
+    linkExpiresAt?: boolean
+    isPublic?: boolean
+    generatedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["executiveReport"]>
+
+  export type ExecutiveReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    periodStart?: boolean
+    periodEnd?: boolean
+    format?: boolean
+    sections?: boolean
+    companyName?: boolean
+    logoUrl?: boolean
+    primaryColor?: boolean
+    shareableLink?: boolean
+    linkExpiresAt?: boolean
+    isPublic?: boolean
+    generatedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["executiveReport"]>
+
+  export type ExecutiveReportSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    title?: boolean
+    periodStart?: boolean
+    periodEnd?: boolean
+    format?: boolean
+    sections?: boolean
+    companyName?: boolean
+    logoUrl?: boolean
+    primaryColor?: boolean
+    shareableLink?: boolean
+    linkExpiresAt?: boolean
+    isPublic?: boolean
+    generatedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ExecutiveReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "periodStart" | "periodEnd" | "format" | "sections" | "companyName" | "logoUrl" | "primaryColor" | "shareableLink" | "linkExpiresAt" | "isPublic" | "generatedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["executiveReport"]>
+  export type ExecutiveReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ExecutiveReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ExecutiveReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ExecutiveReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ExecutiveReport"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      title: string
+      periodStart: Date
+      periodEnd: Date
+      format: string
+      sections: Prisma.JsonValue
+      companyName: string | null
+      logoUrl: string | null
+      primaryColor: string | null
+      shareableLink: string | null
+      linkExpiresAt: Date | null
+      isPublic: boolean
+      generatedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["executiveReport"]>
+    composites: {}
+  }
+
+  type ExecutiveReportGetPayload<S extends boolean | null | undefined | ExecutiveReportDefaultArgs> = $Result.GetResult<Prisma.$ExecutiveReportPayload, S>
+
+  type ExecutiveReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ExecutiveReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ExecutiveReportCountAggregateInputType | true
+    }
+
+  export interface ExecutiveReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ExecutiveReport'], meta: { name: 'ExecutiveReport' } }
+    /**
+     * Find zero or one ExecutiveReport that matches the filter.
+     * @param {ExecutiveReportFindUniqueArgs} args - Arguments to find a ExecutiveReport
+     * @example
+     * // Get one ExecutiveReport
+     * const executiveReport = await prisma.executiveReport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ExecutiveReportFindUniqueArgs>(args: SelectSubset<T, ExecutiveReportFindUniqueArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ExecutiveReport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ExecutiveReportFindUniqueOrThrowArgs} args - Arguments to find a ExecutiveReport
+     * @example
+     * // Get one ExecutiveReport
+     * const executiveReport = await prisma.executiveReport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ExecutiveReportFindUniqueOrThrowArgs>(args: SelectSubset<T, ExecutiveReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ExecutiveReport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportFindFirstArgs} args - Arguments to find a ExecutiveReport
+     * @example
+     * // Get one ExecutiveReport
+     * const executiveReport = await prisma.executiveReport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ExecutiveReportFindFirstArgs>(args?: SelectSubset<T, ExecutiveReportFindFirstArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ExecutiveReport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportFindFirstOrThrowArgs} args - Arguments to find a ExecutiveReport
+     * @example
+     * // Get one ExecutiveReport
+     * const executiveReport = await prisma.executiveReport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ExecutiveReportFindFirstOrThrowArgs>(args?: SelectSubset<T, ExecutiveReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ExecutiveReports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ExecutiveReports
+     * const executiveReports = await prisma.executiveReport.findMany()
+     * 
+     * // Get first 10 ExecutiveReports
+     * const executiveReports = await prisma.executiveReport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const executiveReportWithIdOnly = await prisma.executiveReport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ExecutiveReportFindManyArgs>(args?: SelectSubset<T, ExecutiveReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ExecutiveReport.
+     * @param {ExecutiveReportCreateArgs} args - Arguments to create a ExecutiveReport.
+     * @example
+     * // Create one ExecutiveReport
+     * const ExecutiveReport = await prisma.executiveReport.create({
+     *   data: {
+     *     // ... data to create a ExecutiveReport
+     *   }
+     * })
+     * 
+     */
+    create<T extends ExecutiveReportCreateArgs>(args: SelectSubset<T, ExecutiveReportCreateArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ExecutiveReports.
+     * @param {ExecutiveReportCreateManyArgs} args - Arguments to create many ExecutiveReports.
+     * @example
+     * // Create many ExecutiveReports
+     * const executiveReport = await prisma.executiveReport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ExecutiveReportCreateManyArgs>(args?: SelectSubset<T, ExecutiveReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ExecutiveReports and returns the data saved in the database.
+     * @param {ExecutiveReportCreateManyAndReturnArgs} args - Arguments to create many ExecutiveReports.
+     * @example
+     * // Create many ExecutiveReports
+     * const executiveReport = await prisma.executiveReport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ExecutiveReports and only return the `id`
+     * const executiveReportWithIdOnly = await prisma.executiveReport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ExecutiveReportCreateManyAndReturnArgs>(args?: SelectSubset<T, ExecutiveReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ExecutiveReport.
+     * @param {ExecutiveReportDeleteArgs} args - Arguments to delete one ExecutiveReport.
+     * @example
+     * // Delete one ExecutiveReport
+     * const ExecutiveReport = await prisma.executiveReport.delete({
+     *   where: {
+     *     // ... filter to delete one ExecutiveReport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ExecutiveReportDeleteArgs>(args: SelectSubset<T, ExecutiveReportDeleteArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ExecutiveReport.
+     * @param {ExecutiveReportUpdateArgs} args - Arguments to update one ExecutiveReport.
+     * @example
+     * // Update one ExecutiveReport
+     * const executiveReport = await prisma.executiveReport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ExecutiveReportUpdateArgs>(args: SelectSubset<T, ExecutiveReportUpdateArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ExecutiveReports.
+     * @param {ExecutiveReportDeleteManyArgs} args - Arguments to filter ExecutiveReports to delete.
+     * @example
+     * // Delete a few ExecutiveReports
+     * const { count } = await prisma.executiveReport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ExecutiveReportDeleteManyArgs>(args?: SelectSubset<T, ExecutiveReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ExecutiveReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ExecutiveReports
+     * const executiveReport = await prisma.executiveReport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ExecutiveReportUpdateManyArgs>(args: SelectSubset<T, ExecutiveReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ExecutiveReports and returns the data updated in the database.
+     * @param {ExecutiveReportUpdateManyAndReturnArgs} args - Arguments to update many ExecutiveReports.
+     * @example
+     * // Update many ExecutiveReports
+     * const executiveReport = await prisma.executiveReport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ExecutiveReports and only return the `id`
+     * const executiveReportWithIdOnly = await prisma.executiveReport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ExecutiveReportUpdateManyAndReturnArgs>(args: SelectSubset<T, ExecutiveReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ExecutiveReport.
+     * @param {ExecutiveReportUpsertArgs} args - Arguments to update or create a ExecutiveReport.
+     * @example
+     * // Update or create a ExecutiveReport
+     * const executiveReport = await prisma.executiveReport.upsert({
+     *   create: {
+     *     // ... data to create a ExecutiveReport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ExecutiveReport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ExecutiveReportUpsertArgs>(args: SelectSubset<T, ExecutiveReportUpsertArgs<ExtArgs>>): Prisma__ExecutiveReportClient<$Result.GetResult<Prisma.$ExecutiveReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ExecutiveReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportCountArgs} args - Arguments to filter ExecutiveReports to count.
+     * @example
+     * // Count the number of ExecutiveReports
+     * const count = await prisma.executiveReport.count({
+     *   where: {
+     *     // ... the filter for the ExecutiveReports we want to count
+     *   }
+     * })
+    **/
+    count<T extends ExecutiveReportCountArgs>(
+      args?: Subset<T, ExecutiveReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ExecutiveReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ExecutiveReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ExecutiveReportAggregateArgs>(args: Subset<T, ExecutiveReportAggregateArgs>): Prisma.PrismaPromise<GetExecutiveReportAggregateType<T>>
+
+    /**
+     * Group by ExecutiveReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExecutiveReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ExecutiveReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ExecutiveReportGroupByArgs['orderBy'] }
+        : { orderBy?: ExecutiveReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ExecutiveReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetExecutiveReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ExecutiveReport model
+   */
+  readonly fields: ExecutiveReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ExecutiveReport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ExecutiveReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ExecutiveReport model
+   */
+  interface ExecutiveReportFieldRefs {
+    readonly id: FieldRef<"ExecutiveReport", 'String'>
+    readonly userId: FieldRef<"ExecutiveReport", 'String'>
+    readonly title: FieldRef<"ExecutiveReport", 'String'>
+    readonly periodStart: FieldRef<"ExecutiveReport", 'DateTime'>
+    readonly periodEnd: FieldRef<"ExecutiveReport", 'DateTime'>
+    readonly format: FieldRef<"ExecutiveReport", 'String'>
+    readonly sections: FieldRef<"ExecutiveReport", 'Json'>
+    readonly companyName: FieldRef<"ExecutiveReport", 'String'>
+    readonly logoUrl: FieldRef<"ExecutiveReport", 'String'>
+    readonly primaryColor: FieldRef<"ExecutiveReport", 'String'>
+    readonly shareableLink: FieldRef<"ExecutiveReport", 'String'>
+    readonly linkExpiresAt: FieldRef<"ExecutiveReport", 'DateTime'>
+    readonly isPublic: FieldRef<"ExecutiveReport", 'Boolean'>
+    readonly generatedAt: FieldRef<"ExecutiveReport", 'DateTime'>
+    readonly createdAt: FieldRef<"ExecutiveReport", 'DateTime'>
+    readonly updatedAt: FieldRef<"ExecutiveReport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ExecutiveReport findUnique
+   */
+  export type ExecutiveReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * Filter, which ExecutiveReport to fetch.
+     */
+    where: ExecutiveReportWhereUniqueInput
+  }
+
+  /**
+   * ExecutiveReport findUniqueOrThrow
+   */
+  export type ExecutiveReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * Filter, which ExecutiveReport to fetch.
+     */
+    where: ExecutiveReportWhereUniqueInput
+  }
+
+  /**
+   * ExecutiveReport findFirst
+   */
+  export type ExecutiveReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * Filter, which ExecutiveReport to fetch.
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExecutiveReports to fetch.
+     */
+    orderBy?: ExecutiveReportOrderByWithRelationInput | ExecutiveReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ExecutiveReports.
+     */
+    cursor?: ExecutiveReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExecutiveReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExecutiveReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ExecutiveReports.
+     */
+    distinct?: ExecutiveReportScalarFieldEnum | ExecutiveReportScalarFieldEnum[]
+  }
+
+  /**
+   * ExecutiveReport findFirstOrThrow
+   */
+  export type ExecutiveReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * Filter, which ExecutiveReport to fetch.
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExecutiveReports to fetch.
+     */
+    orderBy?: ExecutiveReportOrderByWithRelationInput | ExecutiveReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ExecutiveReports.
+     */
+    cursor?: ExecutiveReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExecutiveReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExecutiveReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ExecutiveReports.
+     */
+    distinct?: ExecutiveReportScalarFieldEnum | ExecutiveReportScalarFieldEnum[]
+  }
+
+  /**
+   * ExecutiveReport findMany
+   */
+  export type ExecutiveReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * Filter, which ExecutiveReports to fetch.
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ExecutiveReports to fetch.
+     */
+    orderBy?: ExecutiveReportOrderByWithRelationInput | ExecutiveReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ExecutiveReports.
+     */
+    cursor?: ExecutiveReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ExecutiveReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ExecutiveReports.
+     */
+    skip?: number
+    distinct?: ExecutiveReportScalarFieldEnum | ExecutiveReportScalarFieldEnum[]
+  }
+
+  /**
+   * ExecutiveReport create
+   */
+  export type ExecutiveReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ExecutiveReport.
+     */
+    data: XOR<ExecutiveReportCreateInput, ExecutiveReportUncheckedCreateInput>
+  }
+
+  /**
+   * ExecutiveReport createMany
+   */
+  export type ExecutiveReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ExecutiveReports.
+     */
+    data: ExecutiveReportCreateManyInput | ExecutiveReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ExecutiveReport createManyAndReturn
+   */
+  export type ExecutiveReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many ExecutiveReports.
+     */
+    data: ExecutiveReportCreateManyInput | ExecutiveReportCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ExecutiveReport update
+   */
+  export type ExecutiveReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ExecutiveReport.
+     */
+    data: XOR<ExecutiveReportUpdateInput, ExecutiveReportUncheckedUpdateInput>
+    /**
+     * Choose, which ExecutiveReport to update.
+     */
+    where: ExecutiveReportWhereUniqueInput
+  }
+
+  /**
+   * ExecutiveReport updateMany
+   */
+  export type ExecutiveReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ExecutiveReports.
+     */
+    data: XOR<ExecutiveReportUpdateManyMutationInput, ExecutiveReportUncheckedUpdateManyInput>
+    /**
+     * Filter which ExecutiveReports to update
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * Limit how many ExecutiveReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExecutiveReport updateManyAndReturn
+   */
+  export type ExecutiveReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * The data used to update ExecutiveReports.
+     */
+    data: XOR<ExecutiveReportUpdateManyMutationInput, ExecutiveReportUncheckedUpdateManyInput>
+    /**
+     * Filter which ExecutiveReports to update
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * Limit how many ExecutiveReports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ExecutiveReport upsert
+   */
+  export type ExecutiveReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ExecutiveReport to update in case it exists.
+     */
+    where: ExecutiveReportWhereUniqueInput
+    /**
+     * In case the ExecutiveReport found by the `where` argument doesn't exist, create a new ExecutiveReport with this data.
+     */
+    create: XOR<ExecutiveReportCreateInput, ExecutiveReportUncheckedCreateInput>
+    /**
+     * In case the ExecutiveReport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ExecutiveReportUpdateInput, ExecutiveReportUncheckedUpdateInput>
+  }
+
+  /**
+   * ExecutiveReport delete
+   */
+  export type ExecutiveReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+    /**
+     * Filter which ExecutiveReport to delete.
+     */
+    where: ExecutiveReportWhereUniqueInput
+  }
+
+  /**
+   * ExecutiveReport deleteMany
+   */
+  export type ExecutiveReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ExecutiveReports to delete
+     */
+    where?: ExecutiveReportWhereInput
+    /**
+     * Limit how many ExecutiveReports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ExecutiveReport without action
+   */
+  export type ExecutiveReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ExecutiveReport
+     */
+    select?: ExecutiveReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ExecutiveReport
+     */
+    omit?: ExecutiveReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExecutiveReportInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12539,6 +21907,138 @@ export namespace Prisma {
   export type AutomationMetricsScalarFieldEnum = (typeof AutomationMetricsScalarFieldEnum)[keyof typeof AutomationMetricsScalarFieldEnum]
 
 
+  export const BusinessOutcomeScalarFieldEnum: {
+    id: 'id',
+    workflowId: 'workflowId',
+    outcomeType: 'outcomeType',
+    value: 'value',
+    timestamp: 'timestamp',
+    metadata: 'metadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BusinessOutcomeScalarFieldEnum = (typeof BusinessOutcomeScalarFieldEnum)[keyof typeof BusinessOutcomeScalarFieldEnum]
+
+
+  export const EfficiencyMetricScalarFieldEnum: {
+    id: 'id',
+    workflowId: 'workflowId',
+    period: 'period',
+    beforeTimeSpent: 'beforeTimeSpent',
+    beforeErrorRate: 'beforeErrorRate',
+    beforeThroughput: 'beforeThroughput',
+    afterTimeSpent: 'afterTimeSpent',
+    afterErrorRate: 'afterErrorRate',
+    afterThroughput: 'afterThroughput',
+    timeReduction: 'timeReduction',
+    errorReduction: 'errorReduction',
+    throughputIncrease: 'throughputIncrease',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type EfficiencyMetricScalarFieldEnum = (typeof EfficiencyMetricScalarFieldEnum)[keyof typeof EfficiencyMetricScalarFieldEnum]
+
+
+  export const AutomationOpportunityScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    title: 'title',
+    description: 'description',
+    category: 'category',
+    impactScore: 'impactScore',
+    difficultyScore: 'difficultyScore',
+    timeSavingsHours: 'timeSavingsHours',
+    costSavings: 'costSavings',
+    paybackPeriodMonths: 'paybackPeriodMonths',
+    requiredIntegrations: 'requiredIntegrations',
+    status: 'status',
+    identifiedAt: 'identifiedAt',
+    dismissalReason: 'dismissalReason',
+    implementationNotes: 'implementationNotes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AutomationOpportunityScalarFieldEnum = (typeof AutomationOpportunityScalarFieldEnum)[keyof typeof AutomationOpportunityScalarFieldEnum]
+
+
+  export const WorkflowHealthScalarFieldEnum: {
+    id: 'id',
+    workflowId: 'workflowId',
+    healthScore: 'healthScore',
+    lastCalculated: 'lastCalculated',
+    successRate: 'successRate',
+    performanceTrend: 'performanceTrend',
+    errorPattern: 'errorPattern',
+    businessImpact: 'businessImpact',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WorkflowHealthScalarFieldEnum = (typeof WorkflowHealthScalarFieldEnum)[keyof typeof WorkflowHealthScalarFieldEnum]
+
+
+  export const HealthRecommendationScalarFieldEnum: {
+    id: 'id',
+    workflowHealthId: 'workflowHealthId',
+    type: 'type',
+    priority: 'priority',
+    title: 'title',
+    description: 'description',
+    estimatedImpact: 'estimatedImpact',
+    implementationEffort: 'implementationEffort',
+    isImplemented: 'isImplemented',
+    implementedAt: 'implementedAt',
+    effectivenessScore: 'effectivenessScore',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HealthRecommendationScalarFieldEnum = (typeof HealthRecommendationScalarFieldEnum)[keyof typeof HealthRecommendationScalarFieldEnum]
+
+
+  export const HealthAlertScalarFieldEnum: {
+    id: 'id',
+    workflowHealthId: 'workflowHealthId',
+    alertType: 'alertType',
+    severity: 'severity',
+    message: 'message',
+    threshold: 'threshold',
+    currentValue: 'currentValue',
+    isAcknowledged: 'isAcknowledged',
+    acknowledgedAt: 'acknowledgedAt',
+    acknowledgedBy: 'acknowledgedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HealthAlertScalarFieldEnum = (typeof HealthAlertScalarFieldEnum)[keyof typeof HealthAlertScalarFieldEnum]
+
+
+  export const ExecutiveReportScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    title: 'title',
+    periodStart: 'periodStart',
+    periodEnd: 'periodEnd',
+    format: 'format',
+    sections: 'sections',
+    companyName: 'companyName',
+    logoUrl: 'logoUrl',
+    primaryColor: 'primaryColor',
+    shareableLink: 'shareableLink',
+    linkExpiresAt: 'linkExpiresAt',
+    isPublic: 'isPublic',
+    generatedAt: 'generatedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ExecutiveReportScalarFieldEnum = (typeof ExecutiveReportScalarFieldEnum)[keyof typeof ExecutiveReportScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -12553,6 +22053,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -12754,6 +22261,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BusinessOutcomeType'
+   */
+  export type EnumBusinessOutcomeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BusinessOutcomeType'>
+    
+
+
+  /**
+   * Reference to a field of type 'BusinessOutcomeType[]'
+   */
+  export type ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BusinessOutcomeType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -12764,6 +22285,76 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OpportunityCategory'
+   */
+  export type EnumOpportunityCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OpportunityCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'OpportunityCategory[]'
+   */
+  export type ListEnumOpportunityCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OpportunityCategory[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OpportunityStatus'
+   */
+  export type EnumOpportunityStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OpportunityStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OpportunityStatus[]'
+   */
+  export type ListEnumOpportunityStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OpportunityStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'HealthRecommendationType'
+   */
+  export type EnumHealthRecommendationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HealthRecommendationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'HealthRecommendationType[]'
+   */
+  export type ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HealthRecommendationType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'HealthRecommendationPriority'
+   */
+  export type EnumHealthRecommendationPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HealthRecommendationPriority'>
+    
+
+
+  /**
+   * Reference to a field of type 'HealthRecommendationPriority[]'
+   */
+  export type ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HealthRecommendationPriority[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ImplementationEffort'
+   */
+  export type EnumImplementationEffortFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImplementationEffort'>
+    
+
+
+  /**
+   * Reference to a field of type 'ImplementationEffort[]'
+   */
+  export type ListEnumImplementationEffortFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImplementationEffort[]'>
     
   /**
    * Deep Input Types
@@ -12789,6 +22380,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunListRelationFilter
     clientBranding?: XOR<ClientBrandingNullableScalarRelationFilter, ClientBrandingWhereInput> | null
     serviceRequests?: ServiceRequestListRelationFilter
+    automationOpportunities?: AutomationOpportunityListRelationFilter
+    executiveReports?: ExecutiveReportListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12807,6 +22400,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunOrderByRelationAggregateInput
     clientBranding?: ClientBrandingOrderByWithRelationInput
     serviceRequests?: ServiceRequestOrderByRelationAggregateInput
+    automationOpportunities?: AutomationOpportunityOrderByRelationAggregateInput
+    executiveReports?: ExecutiveReportOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -12828,6 +22423,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunListRelationFilter
     clientBranding?: XOR<ClientBrandingNullableScalarRelationFilter, ClientBrandingWhereInput> | null
     serviceRequests?: ServiceRequestListRelationFilter
+    automationOpportunities?: AutomationOpportunityListRelationFilter
+    executiveReports?: ExecutiveReportListRelationFilter
   }, "id" | "clerk_id" | "email" | "name" | "phone_number">
 
   export type UserOrderByWithAggregationInput = {
@@ -12976,6 +22573,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialListRelationFilter
     workflowRuns?: WorkflowRunListRelationFilter
     automationMetrics?: AutomationMetricsListRelationFilter
+    businessOutcomes?: BusinessOutcomeListRelationFilter
+    efficiencyMetrics?: EfficiencyMetricListRelationFilter
+    workflowHealth?: XOR<WorkflowHealthNullableScalarRelationFilter, WorkflowHealthWhereInput> | null
   }
 
   export type WorkflowOrderByWithRelationInput = {
@@ -13005,6 +22605,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialOrderByRelationAggregateInput
     workflowRuns?: WorkflowRunOrderByRelationAggregateInput
     automationMetrics?: AutomationMetricsOrderByRelationAggregateInput
+    businessOutcomes?: BusinessOutcomeOrderByRelationAggregateInput
+    efficiencyMetrics?: EfficiencyMetricOrderByRelationAggregateInput
+    workflowHealth?: WorkflowHealthOrderByWithRelationInput
   }
 
   export type WorkflowWhereUniqueInput = Prisma.AtLeast<{
@@ -13037,6 +22640,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialListRelationFilter
     workflowRuns?: WorkflowRunListRelationFilter
     automationMetrics?: AutomationMetricsListRelationFilter
+    businessOutcomes?: BusinessOutcomeListRelationFilter
+    efficiencyMetrics?: EfficiencyMetricListRelationFilter
+    workflowHealth?: XOR<WorkflowHealthNullableScalarRelationFilter, WorkflowHealthWhereInput> | null
   }, "id">
 
   export type WorkflowOrderByWithAggregationInput = {
@@ -13604,6 +23210,685 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"AutomationMetrics"> | Date | string
   }
 
+  export type BusinessOutcomeWhereInput = {
+    AND?: BusinessOutcomeWhereInput | BusinessOutcomeWhereInput[]
+    OR?: BusinessOutcomeWhereInput[]
+    NOT?: BusinessOutcomeWhereInput | BusinessOutcomeWhereInput[]
+    id?: StringFilter<"BusinessOutcome"> | string
+    workflowId?: StringFilter<"BusinessOutcome"> | string
+    outcomeType?: EnumBusinessOutcomeTypeFilter<"BusinessOutcome"> | $Enums.BusinessOutcomeType
+    value?: FloatFilter<"BusinessOutcome"> | number
+    timestamp?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    metadata?: JsonNullableFilter<"BusinessOutcome">
+    createdAt?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    updatedAt?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    workflow?: XOR<WorkflowScalarRelationFilter, WorkflowWhereInput>
+  }
+
+  export type BusinessOutcomeOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    outcomeType?: SortOrder
+    value?: SortOrder
+    timestamp?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workflow?: WorkflowOrderByWithRelationInput
+  }
+
+  export type BusinessOutcomeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BusinessOutcomeWhereInput | BusinessOutcomeWhereInput[]
+    OR?: BusinessOutcomeWhereInput[]
+    NOT?: BusinessOutcomeWhereInput | BusinessOutcomeWhereInput[]
+    workflowId?: StringFilter<"BusinessOutcome"> | string
+    outcomeType?: EnumBusinessOutcomeTypeFilter<"BusinessOutcome"> | $Enums.BusinessOutcomeType
+    value?: FloatFilter<"BusinessOutcome"> | number
+    timestamp?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    metadata?: JsonNullableFilter<"BusinessOutcome">
+    createdAt?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    updatedAt?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    workflow?: XOR<WorkflowScalarRelationFilter, WorkflowWhereInput>
+  }, "id">
+
+  export type BusinessOutcomeOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    outcomeType?: SortOrder
+    value?: SortOrder
+    timestamp?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BusinessOutcomeCountOrderByAggregateInput
+    _avg?: BusinessOutcomeAvgOrderByAggregateInput
+    _max?: BusinessOutcomeMaxOrderByAggregateInput
+    _min?: BusinessOutcomeMinOrderByAggregateInput
+    _sum?: BusinessOutcomeSumOrderByAggregateInput
+  }
+
+  export type BusinessOutcomeScalarWhereWithAggregatesInput = {
+    AND?: BusinessOutcomeScalarWhereWithAggregatesInput | BusinessOutcomeScalarWhereWithAggregatesInput[]
+    OR?: BusinessOutcomeScalarWhereWithAggregatesInput[]
+    NOT?: BusinessOutcomeScalarWhereWithAggregatesInput | BusinessOutcomeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BusinessOutcome"> | string
+    workflowId?: StringWithAggregatesFilter<"BusinessOutcome"> | string
+    outcomeType?: EnumBusinessOutcomeTypeWithAggregatesFilter<"BusinessOutcome"> | $Enums.BusinessOutcomeType
+    value?: FloatWithAggregatesFilter<"BusinessOutcome"> | number
+    timestamp?: DateTimeWithAggregatesFilter<"BusinessOutcome"> | Date | string
+    metadata?: JsonNullableWithAggregatesFilter<"BusinessOutcome">
+    createdAt?: DateTimeWithAggregatesFilter<"BusinessOutcome"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BusinessOutcome"> | Date | string
+  }
+
+  export type EfficiencyMetricWhereInput = {
+    AND?: EfficiencyMetricWhereInput | EfficiencyMetricWhereInput[]
+    OR?: EfficiencyMetricWhereInput[]
+    NOT?: EfficiencyMetricWhereInput | EfficiencyMetricWhereInput[]
+    id?: StringFilter<"EfficiencyMetric"> | string
+    workflowId?: StringFilter<"EfficiencyMetric"> | string
+    period?: StringFilter<"EfficiencyMetric"> | string
+    beforeTimeSpent?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    beforeErrorRate?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    beforeThroughput?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterTimeSpent?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterErrorRate?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterThroughput?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    timeReduction?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    errorReduction?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    throughputIncrease?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    createdAt?: DateTimeFilter<"EfficiencyMetric"> | Date | string
+    updatedAt?: DateTimeFilter<"EfficiencyMetric"> | Date | string
+    workflow?: XOR<WorkflowScalarRelationFilter, WorkflowWhereInput>
+  }
+
+  export type EfficiencyMetricOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    period?: SortOrder
+    beforeTimeSpent?: SortOrderInput | SortOrder
+    beforeErrorRate?: SortOrderInput | SortOrder
+    beforeThroughput?: SortOrderInput | SortOrder
+    afterTimeSpent?: SortOrderInput | SortOrder
+    afterErrorRate?: SortOrderInput | SortOrder
+    afterThroughput?: SortOrderInput | SortOrder
+    timeReduction?: SortOrderInput | SortOrder
+    errorReduction?: SortOrderInput | SortOrder
+    throughputIncrease?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workflow?: WorkflowOrderByWithRelationInput
+  }
+
+  export type EfficiencyMetricWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    workflowId_period?: EfficiencyMetricWorkflowIdPeriodCompoundUniqueInput
+    AND?: EfficiencyMetricWhereInput | EfficiencyMetricWhereInput[]
+    OR?: EfficiencyMetricWhereInput[]
+    NOT?: EfficiencyMetricWhereInput | EfficiencyMetricWhereInput[]
+    workflowId?: StringFilter<"EfficiencyMetric"> | string
+    period?: StringFilter<"EfficiencyMetric"> | string
+    beforeTimeSpent?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    beforeErrorRate?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    beforeThroughput?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterTimeSpent?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterErrorRate?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterThroughput?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    timeReduction?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    errorReduction?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    throughputIncrease?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    createdAt?: DateTimeFilter<"EfficiencyMetric"> | Date | string
+    updatedAt?: DateTimeFilter<"EfficiencyMetric"> | Date | string
+    workflow?: XOR<WorkflowScalarRelationFilter, WorkflowWhereInput>
+  }, "id" | "workflowId_period">
+
+  export type EfficiencyMetricOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    period?: SortOrder
+    beforeTimeSpent?: SortOrderInput | SortOrder
+    beforeErrorRate?: SortOrderInput | SortOrder
+    beforeThroughput?: SortOrderInput | SortOrder
+    afterTimeSpent?: SortOrderInput | SortOrder
+    afterErrorRate?: SortOrderInput | SortOrder
+    afterThroughput?: SortOrderInput | SortOrder
+    timeReduction?: SortOrderInput | SortOrder
+    errorReduction?: SortOrderInput | SortOrder
+    throughputIncrease?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: EfficiencyMetricCountOrderByAggregateInput
+    _avg?: EfficiencyMetricAvgOrderByAggregateInput
+    _max?: EfficiencyMetricMaxOrderByAggregateInput
+    _min?: EfficiencyMetricMinOrderByAggregateInput
+    _sum?: EfficiencyMetricSumOrderByAggregateInput
+  }
+
+  export type EfficiencyMetricScalarWhereWithAggregatesInput = {
+    AND?: EfficiencyMetricScalarWhereWithAggregatesInput | EfficiencyMetricScalarWhereWithAggregatesInput[]
+    OR?: EfficiencyMetricScalarWhereWithAggregatesInput[]
+    NOT?: EfficiencyMetricScalarWhereWithAggregatesInput | EfficiencyMetricScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"EfficiencyMetric"> | string
+    workflowId?: StringWithAggregatesFilter<"EfficiencyMetric"> | string
+    period?: StringWithAggregatesFilter<"EfficiencyMetric"> | string
+    beforeTimeSpent?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    beforeErrorRate?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    beforeThroughput?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    afterTimeSpent?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    afterErrorRate?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    afterThroughput?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    timeReduction?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    errorReduction?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    throughputIncrease?: FloatNullableWithAggregatesFilter<"EfficiencyMetric"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"EfficiencyMetric"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EfficiencyMetric"> | Date | string
+  }
+
+  export type AutomationOpportunityWhereInput = {
+    AND?: AutomationOpportunityWhereInput | AutomationOpportunityWhereInput[]
+    OR?: AutomationOpportunityWhereInput[]
+    NOT?: AutomationOpportunityWhereInput | AutomationOpportunityWhereInput[]
+    id?: StringFilter<"AutomationOpportunity"> | string
+    userId?: StringFilter<"AutomationOpportunity"> | string
+    title?: StringFilter<"AutomationOpportunity"> | string
+    description?: StringFilter<"AutomationOpportunity"> | string
+    category?: EnumOpportunityCategoryFilter<"AutomationOpportunity"> | $Enums.OpportunityCategory
+    impactScore?: IntFilter<"AutomationOpportunity"> | number
+    difficultyScore?: IntFilter<"AutomationOpportunity"> | number
+    timeSavingsHours?: FloatNullableFilter<"AutomationOpportunity"> | number | null
+    costSavings?: DecimalNullableFilter<"AutomationOpportunity"> | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: IntNullableFilter<"AutomationOpportunity"> | number | null
+    requiredIntegrations?: StringNullableListFilter<"AutomationOpportunity">
+    status?: EnumOpportunityStatusFilter<"AutomationOpportunity"> | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    dismissalReason?: StringNullableFilter<"AutomationOpportunity"> | string | null
+    implementationNotes?: StringNullableFilter<"AutomationOpportunity"> | string | null
+    createdAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type AutomationOpportunityOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrderInput | SortOrder
+    costSavings?: SortOrderInput | SortOrder
+    paybackPeriodMonths?: SortOrderInput | SortOrder
+    requiredIntegrations?: SortOrder
+    status?: SortOrder
+    identifiedAt?: SortOrder
+    dismissalReason?: SortOrderInput | SortOrder
+    implementationNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type AutomationOpportunityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AutomationOpportunityWhereInput | AutomationOpportunityWhereInput[]
+    OR?: AutomationOpportunityWhereInput[]
+    NOT?: AutomationOpportunityWhereInput | AutomationOpportunityWhereInput[]
+    userId?: StringFilter<"AutomationOpportunity"> | string
+    title?: StringFilter<"AutomationOpportunity"> | string
+    description?: StringFilter<"AutomationOpportunity"> | string
+    category?: EnumOpportunityCategoryFilter<"AutomationOpportunity"> | $Enums.OpportunityCategory
+    impactScore?: IntFilter<"AutomationOpportunity"> | number
+    difficultyScore?: IntFilter<"AutomationOpportunity"> | number
+    timeSavingsHours?: FloatNullableFilter<"AutomationOpportunity"> | number | null
+    costSavings?: DecimalNullableFilter<"AutomationOpportunity"> | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: IntNullableFilter<"AutomationOpportunity"> | number | null
+    requiredIntegrations?: StringNullableListFilter<"AutomationOpportunity">
+    status?: EnumOpportunityStatusFilter<"AutomationOpportunity"> | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    dismissalReason?: StringNullableFilter<"AutomationOpportunity"> | string | null
+    implementationNotes?: StringNullableFilter<"AutomationOpportunity"> | string | null
+    createdAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type AutomationOpportunityOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrderInput | SortOrder
+    costSavings?: SortOrderInput | SortOrder
+    paybackPeriodMonths?: SortOrderInput | SortOrder
+    requiredIntegrations?: SortOrder
+    status?: SortOrder
+    identifiedAt?: SortOrder
+    dismissalReason?: SortOrderInput | SortOrder
+    implementationNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AutomationOpportunityCountOrderByAggregateInput
+    _avg?: AutomationOpportunityAvgOrderByAggregateInput
+    _max?: AutomationOpportunityMaxOrderByAggregateInput
+    _min?: AutomationOpportunityMinOrderByAggregateInput
+    _sum?: AutomationOpportunitySumOrderByAggregateInput
+  }
+
+  export type AutomationOpportunityScalarWhereWithAggregatesInput = {
+    AND?: AutomationOpportunityScalarWhereWithAggregatesInput | AutomationOpportunityScalarWhereWithAggregatesInput[]
+    OR?: AutomationOpportunityScalarWhereWithAggregatesInput[]
+    NOT?: AutomationOpportunityScalarWhereWithAggregatesInput | AutomationOpportunityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationOpportunity"> | string
+    userId?: StringWithAggregatesFilter<"AutomationOpportunity"> | string
+    title?: StringWithAggregatesFilter<"AutomationOpportunity"> | string
+    description?: StringWithAggregatesFilter<"AutomationOpportunity"> | string
+    category?: EnumOpportunityCategoryWithAggregatesFilter<"AutomationOpportunity"> | $Enums.OpportunityCategory
+    impactScore?: IntWithAggregatesFilter<"AutomationOpportunity"> | number
+    difficultyScore?: IntWithAggregatesFilter<"AutomationOpportunity"> | number
+    timeSavingsHours?: FloatNullableWithAggregatesFilter<"AutomationOpportunity"> | number | null
+    costSavings?: DecimalNullableWithAggregatesFilter<"AutomationOpportunity"> | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: IntNullableWithAggregatesFilter<"AutomationOpportunity"> | number | null
+    requiredIntegrations?: StringNullableListFilter<"AutomationOpportunity">
+    status?: EnumOpportunityStatusWithAggregatesFilter<"AutomationOpportunity"> | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeWithAggregatesFilter<"AutomationOpportunity"> | Date | string
+    dismissalReason?: StringNullableWithAggregatesFilter<"AutomationOpportunity"> | string | null
+    implementationNotes?: StringNullableWithAggregatesFilter<"AutomationOpportunity"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AutomationOpportunity"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AutomationOpportunity"> | Date | string
+  }
+
+  export type WorkflowHealthWhereInput = {
+    AND?: WorkflowHealthWhereInput | WorkflowHealthWhereInput[]
+    OR?: WorkflowHealthWhereInput[]
+    NOT?: WorkflowHealthWhereInput | WorkflowHealthWhereInput[]
+    id?: StringFilter<"WorkflowHealth"> | string
+    workflowId?: StringFilter<"WorkflowHealth"> | string
+    healthScore?: IntFilter<"WorkflowHealth"> | number
+    lastCalculated?: DateTimeFilter<"WorkflowHealth"> | Date | string
+    successRate?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    performanceTrend?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    errorPattern?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    businessImpact?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    createdAt?: DateTimeFilter<"WorkflowHealth"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkflowHealth"> | Date | string
+    workflow?: XOR<WorkflowScalarRelationFilter, WorkflowWhereInput>
+    recommendations?: HealthRecommendationListRelationFilter
+    alerts?: HealthAlertListRelationFilter
+  }
+
+  export type WorkflowHealthOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    healthScore?: SortOrder
+    lastCalculated?: SortOrder
+    successRate?: SortOrderInput | SortOrder
+    performanceTrend?: SortOrderInput | SortOrder
+    errorPattern?: SortOrderInput | SortOrder
+    businessImpact?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workflow?: WorkflowOrderByWithRelationInput
+    recommendations?: HealthRecommendationOrderByRelationAggregateInput
+    alerts?: HealthAlertOrderByRelationAggregateInput
+  }
+
+  export type WorkflowHealthWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    workflowId?: string
+    AND?: WorkflowHealthWhereInput | WorkflowHealthWhereInput[]
+    OR?: WorkflowHealthWhereInput[]
+    NOT?: WorkflowHealthWhereInput | WorkflowHealthWhereInput[]
+    healthScore?: IntFilter<"WorkflowHealth"> | number
+    lastCalculated?: DateTimeFilter<"WorkflowHealth"> | Date | string
+    successRate?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    performanceTrend?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    errorPattern?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    businessImpact?: FloatNullableFilter<"WorkflowHealth"> | number | null
+    createdAt?: DateTimeFilter<"WorkflowHealth"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkflowHealth"> | Date | string
+    workflow?: XOR<WorkflowScalarRelationFilter, WorkflowWhereInput>
+    recommendations?: HealthRecommendationListRelationFilter
+    alerts?: HealthAlertListRelationFilter
+  }, "id" | "workflowId">
+
+  export type WorkflowHealthOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    healthScore?: SortOrder
+    lastCalculated?: SortOrder
+    successRate?: SortOrderInput | SortOrder
+    performanceTrend?: SortOrderInput | SortOrder
+    errorPattern?: SortOrderInput | SortOrder
+    businessImpact?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WorkflowHealthCountOrderByAggregateInput
+    _avg?: WorkflowHealthAvgOrderByAggregateInput
+    _max?: WorkflowHealthMaxOrderByAggregateInput
+    _min?: WorkflowHealthMinOrderByAggregateInput
+    _sum?: WorkflowHealthSumOrderByAggregateInput
+  }
+
+  export type WorkflowHealthScalarWhereWithAggregatesInput = {
+    AND?: WorkflowHealthScalarWhereWithAggregatesInput | WorkflowHealthScalarWhereWithAggregatesInput[]
+    OR?: WorkflowHealthScalarWhereWithAggregatesInput[]
+    NOT?: WorkflowHealthScalarWhereWithAggregatesInput | WorkflowHealthScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WorkflowHealth"> | string
+    workflowId?: StringWithAggregatesFilter<"WorkflowHealth"> | string
+    healthScore?: IntWithAggregatesFilter<"WorkflowHealth"> | number
+    lastCalculated?: DateTimeWithAggregatesFilter<"WorkflowHealth"> | Date | string
+    successRate?: FloatNullableWithAggregatesFilter<"WorkflowHealth"> | number | null
+    performanceTrend?: FloatNullableWithAggregatesFilter<"WorkflowHealth"> | number | null
+    errorPattern?: FloatNullableWithAggregatesFilter<"WorkflowHealth"> | number | null
+    businessImpact?: FloatNullableWithAggregatesFilter<"WorkflowHealth"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"WorkflowHealth"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WorkflowHealth"> | Date | string
+  }
+
+  export type HealthRecommendationWhereInput = {
+    AND?: HealthRecommendationWhereInput | HealthRecommendationWhereInput[]
+    OR?: HealthRecommendationWhereInput[]
+    NOT?: HealthRecommendationWhereInput | HealthRecommendationWhereInput[]
+    id?: StringFilter<"HealthRecommendation"> | string
+    workflowHealthId?: StringFilter<"HealthRecommendation"> | string
+    type?: EnumHealthRecommendationTypeFilter<"HealthRecommendation"> | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFilter<"HealthRecommendation"> | $Enums.HealthRecommendationPriority
+    title?: StringFilter<"HealthRecommendation"> | string
+    description?: StringFilter<"HealthRecommendation"> | string
+    estimatedImpact?: StringFilter<"HealthRecommendation"> | string
+    implementationEffort?: EnumImplementationEffortFilter<"HealthRecommendation"> | $Enums.ImplementationEffort
+    isImplemented?: BoolFilter<"HealthRecommendation"> | boolean
+    implementedAt?: DateTimeNullableFilter<"HealthRecommendation"> | Date | string | null
+    effectivenessScore?: IntNullableFilter<"HealthRecommendation"> | number | null
+    createdAt?: DateTimeFilter<"HealthRecommendation"> | Date | string
+    updatedAt?: DateTimeFilter<"HealthRecommendation"> | Date | string
+    workflowHealth?: XOR<WorkflowHealthScalarRelationFilter, WorkflowHealthWhereInput>
+  }
+
+  export type HealthRecommendationOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    type?: SortOrder
+    priority?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    estimatedImpact?: SortOrder
+    implementationEffort?: SortOrder
+    isImplemented?: SortOrder
+    implementedAt?: SortOrderInput | SortOrder
+    effectivenessScore?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workflowHealth?: WorkflowHealthOrderByWithRelationInput
+  }
+
+  export type HealthRecommendationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HealthRecommendationWhereInput | HealthRecommendationWhereInput[]
+    OR?: HealthRecommendationWhereInput[]
+    NOT?: HealthRecommendationWhereInput | HealthRecommendationWhereInput[]
+    workflowHealthId?: StringFilter<"HealthRecommendation"> | string
+    type?: EnumHealthRecommendationTypeFilter<"HealthRecommendation"> | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFilter<"HealthRecommendation"> | $Enums.HealthRecommendationPriority
+    title?: StringFilter<"HealthRecommendation"> | string
+    description?: StringFilter<"HealthRecommendation"> | string
+    estimatedImpact?: StringFilter<"HealthRecommendation"> | string
+    implementationEffort?: EnumImplementationEffortFilter<"HealthRecommendation"> | $Enums.ImplementationEffort
+    isImplemented?: BoolFilter<"HealthRecommendation"> | boolean
+    implementedAt?: DateTimeNullableFilter<"HealthRecommendation"> | Date | string | null
+    effectivenessScore?: IntNullableFilter<"HealthRecommendation"> | number | null
+    createdAt?: DateTimeFilter<"HealthRecommendation"> | Date | string
+    updatedAt?: DateTimeFilter<"HealthRecommendation"> | Date | string
+    workflowHealth?: XOR<WorkflowHealthScalarRelationFilter, WorkflowHealthWhereInput>
+  }, "id">
+
+  export type HealthRecommendationOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    type?: SortOrder
+    priority?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    estimatedImpact?: SortOrder
+    implementationEffort?: SortOrder
+    isImplemented?: SortOrder
+    implementedAt?: SortOrderInput | SortOrder
+    effectivenessScore?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HealthRecommendationCountOrderByAggregateInput
+    _avg?: HealthRecommendationAvgOrderByAggregateInput
+    _max?: HealthRecommendationMaxOrderByAggregateInput
+    _min?: HealthRecommendationMinOrderByAggregateInput
+    _sum?: HealthRecommendationSumOrderByAggregateInput
+  }
+
+  export type HealthRecommendationScalarWhereWithAggregatesInput = {
+    AND?: HealthRecommendationScalarWhereWithAggregatesInput | HealthRecommendationScalarWhereWithAggregatesInput[]
+    OR?: HealthRecommendationScalarWhereWithAggregatesInput[]
+    NOT?: HealthRecommendationScalarWhereWithAggregatesInput | HealthRecommendationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HealthRecommendation"> | string
+    workflowHealthId?: StringWithAggregatesFilter<"HealthRecommendation"> | string
+    type?: EnumHealthRecommendationTypeWithAggregatesFilter<"HealthRecommendation"> | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityWithAggregatesFilter<"HealthRecommendation"> | $Enums.HealthRecommendationPriority
+    title?: StringWithAggregatesFilter<"HealthRecommendation"> | string
+    description?: StringWithAggregatesFilter<"HealthRecommendation"> | string
+    estimatedImpact?: StringWithAggregatesFilter<"HealthRecommendation"> | string
+    implementationEffort?: EnumImplementationEffortWithAggregatesFilter<"HealthRecommendation"> | $Enums.ImplementationEffort
+    isImplemented?: BoolWithAggregatesFilter<"HealthRecommendation"> | boolean
+    implementedAt?: DateTimeNullableWithAggregatesFilter<"HealthRecommendation"> | Date | string | null
+    effectivenessScore?: IntNullableWithAggregatesFilter<"HealthRecommendation"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"HealthRecommendation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HealthRecommendation"> | Date | string
+  }
+
+  export type HealthAlertWhereInput = {
+    AND?: HealthAlertWhereInput | HealthAlertWhereInput[]
+    OR?: HealthAlertWhereInput[]
+    NOT?: HealthAlertWhereInput | HealthAlertWhereInput[]
+    id?: StringFilter<"HealthAlert"> | string
+    workflowHealthId?: StringFilter<"HealthAlert"> | string
+    alertType?: StringFilter<"HealthAlert"> | string
+    severity?: StringFilter<"HealthAlert"> | string
+    message?: StringFilter<"HealthAlert"> | string
+    threshold?: FloatNullableFilter<"HealthAlert"> | number | null
+    currentValue?: FloatNullableFilter<"HealthAlert"> | number | null
+    isAcknowledged?: BoolFilter<"HealthAlert"> | boolean
+    acknowledgedAt?: DateTimeNullableFilter<"HealthAlert"> | Date | string | null
+    acknowledgedBy?: StringNullableFilter<"HealthAlert"> | string | null
+    createdAt?: DateTimeFilter<"HealthAlert"> | Date | string
+    updatedAt?: DateTimeFilter<"HealthAlert"> | Date | string
+    workflowHealth?: XOR<WorkflowHealthScalarRelationFilter, WorkflowHealthWhereInput>
+  }
+
+  export type HealthAlertOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    alertType?: SortOrder
+    severity?: SortOrder
+    message?: SortOrder
+    threshold?: SortOrderInput | SortOrder
+    currentValue?: SortOrderInput | SortOrder
+    isAcknowledged?: SortOrder
+    acknowledgedAt?: SortOrderInput | SortOrder
+    acknowledgedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workflowHealth?: WorkflowHealthOrderByWithRelationInput
+  }
+
+  export type HealthAlertWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HealthAlertWhereInput | HealthAlertWhereInput[]
+    OR?: HealthAlertWhereInput[]
+    NOT?: HealthAlertWhereInput | HealthAlertWhereInput[]
+    workflowHealthId?: StringFilter<"HealthAlert"> | string
+    alertType?: StringFilter<"HealthAlert"> | string
+    severity?: StringFilter<"HealthAlert"> | string
+    message?: StringFilter<"HealthAlert"> | string
+    threshold?: FloatNullableFilter<"HealthAlert"> | number | null
+    currentValue?: FloatNullableFilter<"HealthAlert"> | number | null
+    isAcknowledged?: BoolFilter<"HealthAlert"> | boolean
+    acknowledgedAt?: DateTimeNullableFilter<"HealthAlert"> | Date | string | null
+    acknowledgedBy?: StringNullableFilter<"HealthAlert"> | string | null
+    createdAt?: DateTimeFilter<"HealthAlert"> | Date | string
+    updatedAt?: DateTimeFilter<"HealthAlert"> | Date | string
+    workflowHealth?: XOR<WorkflowHealthScalarRelationFilter, WorkflowHealthWhereInput>
+  }, "id">
+
+  export type HealthAlertOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    alertType?: SortOrder
+    severity?: SortOrder
+    message?: SortOrder
+    threshold?: SortOrderInput | SortOrder
+    currentValue?: SortOrderInput | SortOrder
+    isAcknowledged?: SortOrder
+    acknowledgedAt?: SortOrderInput | SortOrder
+    acknowledgedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HealthAlertCountOrderByAggregateInput
+    _avg?: HealthAlertAvgOrderByAggregateInput
+    _max?: HealthAlertMaxOrderByAggregateInput
+    _min?: HealthAlertMinOrderByAggregateInput
+    _sum?: HealthAlertSumOrderByAggregateInput
+  }
+
+  export type HealthAlertScalarWhereWithAggregatesInput = {
+    AND?: HealthAlertScalarWhereWithAggregatesInput | HealthAlertScalarWhereWithAggregatesInput[]
+    OR?: HealthAlertScalarWhereWithAggregatesInput[]
+    NOT?: HealthAlertScalarWhereWithAggregatesInput | HealthAlertScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HealthAlert"> | string
+    workflowHealthId?: StringWithAggregatesFilter<"HealthAlert"> | string
+    alertType?: StringWithAggregatesFilter<"HealthAlert"> | string
+    severity?: StringWithAggregatesFilter<"HealthAlert"> | string
+    message?: StringWithAggregatesFilter<"HealthAlert"> | string
+    threshold?: FloatNullableWithAggregatesFilter<"HealthAlert"> | number | null
+    currentValue?: FloatNullableWithAggregatesFilter<"HealthAlert"> | number | null
+    isAcknowledged?: BoolWithAggregatesFilter<"HealthAlert"> | boolean
+    acknowledgedAt?: DateTimeNullableWithAggregatesFilter<"HealthAlert"> | Date | string | null
+    acknowledgedBy?: StringNullableWithAggregatesFilter<"HealthAlert"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"HealthAlert"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HealthAlert"> | Date | string
+  }
+
+  export type ExecutiveReportWhereInput = {
+    AND?: ExecutiveReportWhereInput | ExecutiveReportWhereInput[]
+    OR?: ExecutiveReportWhereInput[]
+    NOT?: ExecutiveReportWhereInput | ExecutiveReportWhereInput[]
+    id?: StringFilter<"ExecutiveReport"> | string
+    userId?: StringFilter<"ExecutiveReport"> | string
+    title?: StringFilter<"ExecutiveReport"> | string
+    periodStart?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    periodEnd?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    format?: StringFilter<"ExecutiveReport"> | string
+    sections?: JsonFilter<"ExecutiveReport">
+    companyName?: StringNullableFilter<"ExecutiveReport"> | string | null
+    logoUrl?: StringNullableFilter<"ExecutiveReport"> | string | null
+    primaryColor?: StringNullableFilter<"ExecutiveReport"> | string | null
+    shareableLink?: StringNullableFilter<"ExecutiveReport"> | string | null
+    linkExpiresAt?: DateTimeNullableFilter<"ExecutiveReport"> | Date | string | null
+    isPublic?: BoolFilter<"ExecutiveReport"> | boolean
+    generatedAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    createdAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    updatedAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ExecutiveReportOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    periodStart?: SortOrder
+    periodEnd?: SortOrder
+    format?: SortOrder
+    sections?: SortOrder
+    companyName?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    primaryColor?: SortOrderInput | SortOrder
+    shareableLink?: SortOrderInput | SortOrder
+    linkExpiresAt?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    generatedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ExecutiveReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ExecutiveReportWhereInput | ExecutiveReportWhereInput[]
+    OR?: ExecutiveReportWhereInput[]
+    NOT?: ExecutiveReportWhereInput | ExecutiveReportWhereInput[]
+    userId?: StringFilter<"ExecutiveReport"> | string
+    title?: StringFilter<"ExecutiveReport"> | string
+    periodStart?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    periodEnd?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    format?: StringFilter<"ExecutiveReport"> | string
+    sections?: JsonFilter<"ExecutiveReport">
+    companyName?: StringNullableFilter<"ExecutiveReport"> | string | null
+    logoUrl?: StringNullableFilter<"ExecutiveReport"> | string | null
+    primaryColor?: StringNullableFilter<"ExecutiveReport"> | string | null
+    shareableLink?: StringNullableFilter<"ExecutiveReport"> | string | null
+    linkExpiresAt?: DateTimeNullableFilter<"ExecutiveReport"> | Date | string | null
+    isPublic?: BoolFilter<"ExecutiveReport"> | boolean
+    generatedAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    createdAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    updatedAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ExecutiveReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    periodStart?: SortOrder
+    periodEnd?: SortOrder
+    format?: SortOrder
+    sections?: SortOrder
+    companyName?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    primaryColor?: SortOrderInput | SortOrder
+    shareableLink?: SortOrderInput | SortOrder
+    linkExpiresAt?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    generatedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ExecutiveReportCountOrderByAggregateInput
+    _max?: ExecutiveReportMaxOrderByAggregateInput
+    _min?: ExecutiveReportMinOrderByAggregateInput
+  }
+
+  export type ExecutiveReportScalarWhereWithAggregatesInput = {
+    AND?: ExecutiveReportScalarWhereWithAggregatesInput | ExecutiveReportScalarWhereWithAggregatesInput[]
+    OR?: ExecutiveReportScalarWhereWithAggregatesInput[]
+    NOT?: ExecutiveReportScalarWhereWithAggregatesInput | ExecutiveReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ExecutiveReport"> | string
+    userId?: StringWithAggregatesFilter<"ExecutiveReport"> | string
+    title?: StringWithAggregatesFilter<"ExecutiveReport"> | string
+    periodStart?: DateTimeWithAggregatesFilter<"ExecutiveReport"> | Date | string
+    periodEnd?: DateTimeWithAggregatesFilter<"ExecutiveReport"> | Date | string
+    format?: StringWithAggregatesFilter<"ExecutiveReport"> | string
+    sections?: JsonWithAggregatesFilter<"ExecutiveReport">
+    companyName?: StringNullableWithAggregatesFilter<"ExecutiveReport"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"ExecutiveReport"> | string | null
+    primaryColor?: StringNullableWithAggregatesFilter<"ExecutiveReport"> | string | null
+    shareableLink?: StringNullableWithAggregatesFilter<"ExecutiveReport"> | string | null
+    linkExpiresAt?: DateTimeNullableWithAggregatesFilter<"ExecutiveReport"> | Date | string | null
+    isPublic?: BoolWithAggregatesFilter<"ExecutiveReport"> | boolean
+    generatedAt?: DateTimeWithAggregatesFilter<"ExecutiveReport"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"ExecutiveReport"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ExecutiveReport"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     clerk_id: string
@@ -13620,6 +23905,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13638,6 +23925,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13656,6 +23945,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13674,6 +23965,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -13835,6 +24128,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
     workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowUncheckedCreateInput = {
@@ -13863,6 +24159,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowUpdateInput = {
@@ -13891,6 +24190,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
     workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateInput = {
@@ -13919,6 +24221,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowCreateManyInput = {
@@ -14563,6 +24868,784 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BusinessOutcomeCreateInput = {
+    id?: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflow: WorkflowCreateNestedOneWithoutBusinessOutcomesInput
+  }
+
+  export type BusinessOutcomeUncheckedCreateInput = {
+    id?: string
+    workflowId: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BusinessOutcomeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflow?: WorkflowUpdateOneRequiredWithoutBusinessOutcomesNestedInput
+  }
+
+  export type BusinessOutcomeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BusinessOutcomeCreateManyInput = {
+    id?: string
+    workflowId: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BusinessOutcomeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BusinessOutcomeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EfficiencyMetricCreateInput = {
+    id?: string
+    period: string
+    beforeTimeSpent?: number | null
+    beforeErrorRate?: number | null
+    beforeThroughput?: number | null
+    afterTimeSpent?: number | null
+    afterErrorRate?: number | null
+    afterThroughput?: number | null
+    timeReduction?: number | null
+    errorReduction?: number | null
+    throughputIncrease?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflow: WorkflowCreateNestedOneWithoutEfficiencyMetricsInput
+  }
+
+  export type EfficiencyMetricUncheckedCreateInput = {
+    id?: string
+    workflowId: string
+    period: string
+    beforeTimeSpent?: number | null
+    beforeErrorRate?: number | null
+    beforeThroughput?: number | null
+    afterTimeSpent?: number | null
+    afterErrorRate?: number | null
+    afterThroughput?: number | null
+    timeReduction?: number | null
+    errorReduction?: number | null
+    throughputIncrease?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EfficiencyMetricUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflow?: WorkflowUpdateOneRequiredWithoutEfficiencyMetricsNestedInput
+  }
+
+  export type EfficiencyMetricUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EfficiencyMetricCreateManyInput = {
+    id?: string
+    workflowId: string
+    period: string
+    beforeTimeSpent?: number | null
+    beforeErrorRate?: number | null
+    beforeThroughput?: number | null
+    afterTimeSpent?: number | null
+    afterErrorRate?: number | null
+    afterThroughput?: number | null
+    timeReduction?: number | null
+    errorReduction?: number | null
+    throughputIncrease?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EfficiencyMetricUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EfficiencyMetricUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationOpportunityCreateInput = {
+    id?: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours?: number | null
+    costSavings?: Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: number | null
+    requiredIntegrations?: AutomationOpportunityCreaterequiredIntegrationsInput | string[]
+    status?: $Enums.OpportunityStatus
+    identifiedAt?: Date | string
+    dismissalReason?: string | null
+    implementationNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAutomationOpportunitiesInput
+  }
+
+  export type AutomationOpportunityUncheckedCreateInput = {
+    id?: string
+    userId: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours?: number | null
+    costSavings?: Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: number | null
+    requiredIntegrations?: AutomationOpportunityCreaterequiredIntegrationsInput | string[]
+    status?: $Enums.OpportunityStatus
+    identifiedAt?: Date | string
+    dismissalReason?: string | null
+    implementationNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationOpportunityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAutomationOpportunitiesNestedInput
+  }
+
+  export type AutomationOpportunityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationOpportunityCreateManyInput = {
+    id?: string
+    userId: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours?: number | null
+    costSavings?: Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: number | null
+    requiredIntegrations?: AutomationOpportunityCreaterequiredIntegrationsInput | string[]
+    status?: $Enums.OpportunityStatus
+    identifiedAt?: Date | string
+    dismissalReason?: string | null
+    implementationNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationOpportunityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationOpportunityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkflowHealthCreateInput = {
+    id?: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflow: WorkflowCreateNestedOneWithoutWorkflowHealthInput
+    recommendations?: HealthRecommendationCreateNestedManyWithoutWorkflowHealthInput
+    alerts?: HealthAlertCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthUncheckedCreateInput = {
+    id?: string
+    workflowId: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recommendations?: HealthRecommendationUncheckedCreateNestedManyWithoutWorkflowHealthInput
+    alerts?: HealthAlertUncheckedCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflow?: WorkflowUpdateOneRequiredWithoutWorkflowHealthNestedInput
+    recommendations?: HealthRecommendationUpdateManyWithoutWorkflowHealthNestedInput
+    alerts?: HealthAlertUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type WorkflowHealthUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recommendations?: HealthRecommendationUncheckedUpdateManyWithoutWorkflowHealthNestedInput
+    alerts?: HealthAlertUncheckedUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type WorkflowHealthCreateManyInput = {
+    id?: string
+    workflowId: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkflowHealthUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkflowHealthUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthRecommendationCreateInput = {
+    id?: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented?: boolean
+    implementedAt?: Date | string | null
+    effectivenessScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflowHealth: WorkflowHealthCreateNestedOneWithoutRecommendationsInput
+  }
+
+  export type HealthRecommendationUncheckedCreateInput = {
+    id?: string
+    workflowHealthId: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented?: boolean
+    implementedAt?: Date | string | null
+    effectivenessScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthRecommendationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflowHealth?: WorkflowHealthUpdateOneRequiredWithoutRecommendationsNestedInput
+  }
+
+  export type HealthRecommendationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowHealthId?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthRecommendationCreateManyInput = {
+    id?: string
+    workflowHealthId: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented?: boolean
+    implementedAt?: Date | string | null
+    effectivenessScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthRecommendationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthRecommendationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowHealthId?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthAlertCreateInput = {
+    id?: string
+    alertType: string
+    severity: string
+    message: string
+    threshold?: number | null
+    currentValue?: number | null
+    isAcknowledged?: boolean
+    acknowledgedAt?: Date | string | null
+    acknowledgedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflowHealth: WorkflowHealthCreateNestedOneWithoutAlertsInput
+  }
+
+  export type HealthAlertUncheckedCreateInput = {
+    id?: string
+    workflowHealthId: string
+    alertType: string
+    severity: string
+    message: string
+    threshold?: number | null
+    currentValue?: number | null
+    isAcknowledged?: boolean
+    acknowledgedAt?: Date | string | null
+    acknowledgedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthAlertUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflowHealth?: WorkflowHealthUpdateOneRequiredWithoutAlertsNestedInput
+  }
+
+  export type HealthAlertUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowHealthId?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthAlertCreateManyInput = {
+    id?: string
+    workflowHealthId: string
+    alertType: string
+    severity: string
+    message: string
+    threshold?: number | null
+    currentValue?: number | null
+    isAcknowledged?: boolean
+    acknowledgedAt?: Date | string | null
+    acknowledgedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthAlertUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthAlertUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowHealthId?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExecutiveReportCreateInput = {
+    id?: string
+    title: string
+    periodStart: Date | string
+    periodEnd: Date | string
+    format: string
+    sections: JsonNullValueInput | InputJsonValue
+    companyName?: string | null
+    logoUrl?: string | null
+    primaryColor?: string | null
+    shareableLink?: string | null
+    linkExpiresAt?: Date | string | null
+    isPublic?: boolean
+    generatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutExecutiveReportsInput
+  }
+
+  export type ExecutiveReportUncheckedCreateInput = {
+    id?: string
+    userId: string
+    title: string
+    periodStart: Date | string
+    periodEnd: Date | string
+    format: string
+    sections: JsonNullValueInput | InputJsonValue
+    companyName?: string | null
+    logoUrl?: string | null
+    primaryColor?: string | null
+    shareableLink?: string | null
+    linkExpiresAt?: Date | string | null
+    isPublic?: boolean
+    generatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExecutiveReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutExecutiveReportsNestedInput
+  }
+
+  export type ExecutiveReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExecutiveReportCreateManyInput = {
+    id?: string
+    userId: string
+    title: string
+    periodStart: Date | string
+    periodEnd: Date | string
+    format: string
+    sections: JsonNullValueInput | InputJsonValue
+    companyName?: string | null
+    logoUrl?: string | null
+    primaryColor?: string | null
+    shareableLink?: string | null
+    linkExpiresAt?: Date | string | null
+    isPublic?: boolean
+    generatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExecutiveReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExecutiveReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -14638,6 +25721,18 @@ export namespace Prisma {
     none?: ServiceRequestWhereInput
   }
 
+  export type AutomationOpportunityListRelationFilter = {
+    every?: AutomationOpportunityWhereInput
+    some?: AutomationOpportunityWhereInput
+    none?: AutomationOpportunityWhereInput
+  }
+
+  export type ExecutiveReportListRelationFilter = {
+    every?: ExecutiveReportWhereInput
+    some?: ExecutiveReportWhereInput
+    none?: ExecutiveReportWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -14656,6 +25751,14 @@ export namespace Prisma {
   }
 
   export type ServiceRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AutomationOpportunityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ExecutiveReportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14950,7 +26053,32 @@ export namespace Prisma {
     none?: AutomationMetricsWhereInput
   }
 
+  export type BusinessOutcomeListRelationFilter = {
+    every?: BusinessOutcomeWhereInput
+    some?: BusinessOutcomeWhereInput
+    none?: BusinessOutcomeWhereInput
+  }
+
+  export type EfficiencyMetricListRelationFilter = {
+    every?: EfficiencyMetricWhereInput
+    some?: EfficiencyMetricWhereInput
+    none?: EfficiencyMetricWhereInput
+  }
+
+  export type WorkflowHealthNullableScalarRelationFilter = {
+    is?: WorkflowHealthWhereInput | null
+    isNot?: WorkflowHealthWhereInput | null
+  }
+
   export type AutomationMetricsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BusinessOutcomeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EfficiencyMetricOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15466,6 +26594,650 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type EnumBusinessOutcomeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.BusinessOutcomeType | EnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBusinessOutcomeTypeFilter<$PrismaModel> | $Enums.BusinessOutcomeType
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type BusinessOutcomeCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    outcomeType?: SortOrder
+    value?: SortOrder
+    timestamp?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BusinessOutcomeAvgOrderByAggregateInput = {
+    value?: SortOrder
+  }
+
+  export type BusinessOutcomeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    outcomeType?: SortOrder
+    value?: SortOrder
+    timestamp?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BusinessOutcomeMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    outcomeType?: SortOrder
+    value?: SortOrder
+    timestamp?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BusinessOutcomeSumOrderByAggregateInput = {
+    value?: SortOrder
+  }
+
+  export type EnumBusinessOutcomeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BusinessOutcomeType | EnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBusinessOutcomeTypeWithAggregatesFilter<$PrismaModel> | $Enums.BusinessOutcomeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBusinessOutcomeTypeFilter<$PrismaModel>
+    _max?: NestedEnumBusinessOutcomeTypeFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type EfficiencyMetricWorkflowIdPeriodCompoundUniqueInput = {
+    workflowId: string
+    period: string
+  }
+
+  export type EfficiencyMetricCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    period?: SortOrder
+    beforeTimeSpent?: SortOrder
+    beforeErrorRate?: SortOrder
+    beforeThroughput?: SortOrder
+    afterTimeSpent?: SortOrder
+    afterErrorRate?: SortOrder
+    afterThroughput?: SortOrder
+    timeReduction?: SortOrder
+    errorReduction?: SortOrder
+    throughputIncrease?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EfficiencyMetricAvgOrderByAggregateInput = {
+    beforeTimeSpent?: SortOrder
+    beforeErrorRate?: SortOrder
+    beforeThroughput?: SortOrder
+    afterTimeSpent?: SortOrder
+    afterErrorRate?: SortOrder
+    afterThroughput?: SortOrder
+    timeReduction?: SortOrder
+    errorReduction?: SortOrder
+    throughputIncrease?: SortOrder
+  }
+
+  export type EfficiencyMetricMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    period?: SortOrder
+    beforeTimeSpent?: SortOrder
+    beforeErrorRate?: SortOrder
+    beforeThroughput?: SortOrder
+    afterTimeSpent?: SortOrder
+    afterErrorRate?: SortOrder
+    afterThroughput?: SortOrder
+    timeReduction?: SortOrder
+    errorReduction?: SortOrder
+    throughputIncrease?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EfficiencyMetricMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    period?: SortOrder
+    beforeTimeSpent?: SortOrder
+    beforeErrorRate?: SortOrder
+    beforeThroughput?: SortOrder
+    afterTimeSpent?: SortOrder
+    afterErrorRate?: SortOrder
+    afterThroughput?: SortOrder
+    timeReduction?: SortOrder
+    errorReduction?: SortOrder
+    throughputIncrease?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EfficiencyMetricSumOrderByAggregateInput = {
+    beforeTimeSpent?: SortOrder
+    beforeErrorRate?: SortOrder
+    beforeThroughput?: SortOrder
+    afterTimeSpent?: SortOrder
+    afterErrorRate?: SortOrder
+    afterThroughput?: SortOrder
+    timeReduction?: SortOrder
+    errorReduction?: SortOrder
+    throughputIncrease?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type EnumOpportunityCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityCategory | EnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityCategoryFilter<$PrismaModel> | $Enums.OpportunityCategory
+  }
+
+  export type EnumOpportunityStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityStatus | EnumOpportunityStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityStatusFilter<$PrismaModel> | $Enums.OpportunityStatus
+  }
+
+  export type AutomationOpportunityCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrder
+    costSavings?: SortOrder
+    paybackPeriodMonths?: SortOrder
+    requiredIntegrations?: SortOrder
+    status?: SortOrder
+    identifiedAt?: SortOrder
+    dismissalReason?: SortOrder
+    implementationNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationOpportunityAvgOrderByAggregateInput = {
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrder
+    costSavings?: SortOrder
+    paybackPeriodMonths?: SortOrder
+  }
+
+  export type AutomationOpportunityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrder
+    costSavings?: SortOrder
+    paybackPeriodMonths?: SortOrder
+    status?: SortOrder
+    identifiedAt?: SortOrder
+    dismissalReason?: SortOrder
+    implementationNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationOpportunityMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrder
+    costSavings?: SortOrder
+    paybackPeriodMonths?: SortOrder
+    status?: SortOrder
+    identifiedAt?: SortOrder
+    dismissalReason?: SortOrder
+    implementationNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationOpportunitySumOrderByAggregateInput = {
+    impactScore?: SortOrder
+    difficultyScore?: SortOrder
+    timeSavingsHours?: SortOrder
+    costSavings?: SortOrder
+    paybackPeriodMonths?: SortOrder
+  }
+
+  export type EnumOpportunityCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityCategory | EnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityCategoryWithAggregatesFilter<$PrismaModel> | $Enums.OpportunityCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOpportunityCategoryFilter<$PrismaModel>
+    _max?: NestedEnumOpportunityCategoryFilter<$PrismaModel>
+  }
+
+  export type EnumOpportunityStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityStatus | EnumOpportunityStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityStatusWithAggregatesFilter<$PrismaModel> | $Enums.OpportunityStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOpportunityStatusFilter<$PrismaModel>
+    _max?: NestedEnumOpportunityStatusFilter<$PrismaModel>
+  }
+
+  export type HealthRecommendationListRelationFilter = {
+    every?: HealthRecommendationWhereInput
+    some?: HealthRecommendationWhereInput
+    none?: HealthRecommendationWhereInput
+  }
+
+  export type HealthAlertListRelationFilter = {
+    every?: HealthAlertWhereInput
+    some?: HealthAlertWhereInput
+    none?: HealthAlertWhereInput
+  }
+
+  export type HealthRecommendationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HealthAlertOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WorkflowHealthCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    healthScore?: SortOrder
+    lastCalculated?: SortOrder
+    successRate?: SortOrder
+    performanceTrend?: SortOrder
+    errorPattern?: SortOrder
+    businessImpact?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkflowHealthAvgOrderByAggregateInput = {
+    healthScore?: SortOrder
+    successRate?: SortOrder
+    performanceTrend?: SortOrder
+    errorPattern?: SortOrder
+    businessImpact?: SortOrder
+  }
+
+  export type WorkflowHealthMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    healthScore?: SortOrder
+    lastCalculated?: SortOrder
+    successRate?: SortOrder
+    performanceTrend?: SortOrder
+    errorPattern?: SortOrder
+    businessImpact?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkflowHealthMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowId?: SortOrder
+    healthScore?: SortOrder
+    lastCalculated?: SortOrder
+    successRate?: SortOrder
+    performanceTrend?: SortOrder
+    errorPattern?: SortOrder
+    businessImpact?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkflowHealthSumOrderByAggregateInput = {
+    healthScore?: SortOrder
+    successRate?: SortOrder
+    performanceTrend?: SortOrder
+    errorPattern?: SortOrder
+    businessImpact?: SortOrder
+  }
+
+  export type EnumHealthRecommendationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationType | EnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationTypeFilter<$PrismaModel> | $Enums.HealthRecommendationType
+  }
+
+  export type EnumHealthRecommendationPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationPriority | EnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationPriorityFilter<$PrismaModel> | $Enums.HealthRecommendationPriority
+  }
+
+  export type EnumImplementationEffortFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImplementationEffort | EnumImplementationEffortFieldRefInput<$PrismaModel>
+    in?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    not?: NestedEnumImplementationEffortFilter<$PrismaModel> | $Enums.ImplementationEffort
+  }
+
+  export type WorkflowHealthScalarRelationFilter = {
+    is?: WorkflowHealthWhereInput
+    isNot?: WorkflowHealthWhereInput
+  }
+
+  export type HealthRecommendationCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    type?: SortOrder
+    priority?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    estimatedImpact?: SortOrder
+    implementationEffort?: SortOrder
+    isImplemented?: SortOrder
+    implementedAt?: SortOrder
+    effectivenessScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HealthRecommendationAvgOrderByAggregateInput = {
+    effectivenessScore?: SortOrder
+  }
+
+  export type HealthRecommendationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    type?: SortOrder
+    priority?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    estimatedImpact?: SortOrder
+    implementationEffort?: SortOrder
+    isImplemented?: SortOrder
+    implementedAt?: SortOrder
+    effectivenessScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HealthRecommendationMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    type?: SortOrder
+    priority?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    estimatedImpact?: SortOrder
+    implementationEffort?: SortOrder
+    isImplemented?: SortOrder
+    implementedAt?: SortOrder
+    effectivenessScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HealthRecommendationSumOrderByAggregateInput = {
+    effectivenessScore?: SortOrder
+  }
+
+  export type EnumHealthRecommendationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationType | EnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationTypeWithAggregatesFilter<$PrismaModel> | $Enums.HealthRecommendationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHealthRecommendationTypeFilter<$PrismaModel>
+    _max?: NestedEnumHealthRecommendationTypeFilter<$PrismaModel>
+  }
+
+  export type EnumHealthRecommendationPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationPriority | EnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationPriorityWithAggregatesFilter<$PrismaModel> | $Enums.HealthRecommendationPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHealthRecommendationPriorityFilter<$PrismaModel>
+    _max?: NestedEnumHealthRecommendationPriorityFilter<$PrismaModel>
+  }
+
+  export type EnumImplementationEffortWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImplementationEffort | EnumImplementationEffortFieldRefInput<$PrismaModel>
+    in?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    not?: NestedEnumImplementationEffortWithAggregatesFilter<$PrismaModel> | $Enums.ImplementationEffort
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumImplementationEffortFilter<$PrismaModel>
+    _max?: NestedEnumImplementationEffortFilter<$PrismaModel>
+  }
+
+  export type HealthAlertCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    alertType?: SortOrder
+    severity?: SortOrder
+    message?: SortOrder
+    threshold?: SortOrder
+    currentValue?: SortOrder
+    isAcknowledged?: SortOrder
+    acknowledgedAt?: SortOrder
+    acknowledgedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HealthAlertAvgOrderByAggregateInput = {
+    threshold?: SortOrder
+    currentValue?: SortOrder
+  }
+
+  export type HealthAlertMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    alertType?: SortOrder
+    severity?: SortOrder
+    message?: SortOrder
+    threshold?: SortOrder
+    currentValue?: SortOrder
+    isAcknowledged?: SortOrder
+    acknowledgedAt?: SortOrder
+    acknowledgedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HealthAlertMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowHealthId?: SortOrder
+    alertType?: SortOrder
+    severity?: SortOrder
+    message?: SortOrder
+    threshold?: SortOrder
+    currentValue?: SortOrder
+    isAcknowledged?: SortOrder
+    acknowledgedAt?: SortOrder
+    acknowledgedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HealthAlertSumOrderByAggregateInput = {
+    threshold?: SortOrder
+    currentValue?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type ExecutiveReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    periodStart?: SortOrder
+    periodEnd?: SortOrder
+    format?: SortOrder
+    sections?: SortOrder
+    companyName?: SortOrder
+    logoUrl?: SortOrder
+    primaryColor?: SortOrder
+    shareableLink?: SortOrder
+    linkExpiresAt?: SortOrder
+    isPublic?: SortOrder
+    generatedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExecutiveReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    periodStart?: SortOrder
+    periodEnd?: SortOrder
+    format?: SortOrder
+    companyName?: SortOrder
+    logoUrl?: SortOrder
+    primaryColor?: SortOrder
+    shareableLink?: SortOrder
+    linkExpiresAt?: SortOrder
+    isPublic?: SortOrder
+    generatedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExecutiveReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    title?: SortOrder
+    periodStart?: SortOrder
+    periodEnd?: SortOrder
+    format?: SortOrder
+    companyName?: SortOrder
+    logoUrl?: SortOrder
+    primaryColor?: SortOrder
+    shareableLink?: SortOrder
+    linkExpiresAt?: SortOrder
+    isPublic?: SortOrder
+    generatedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
   export type WorkflowCreateNestedManyWithoutUserInput = {
     create?: XOR<WorkflowCreateWithoutUserInput, WorkflowUncheckedCreateWithoutUserInput> | WorkflowCreateWithoutUserInput[] | WorkflowUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WorkflowCreateOrConnectWithoutUserInput | WorkflowCreateOrConnectWithoutUserInput[]
@@ -15500,6 +27272,20 @@ export namespace Prisma {
     connect?: ServiceRequestWhereUniqueInput | ServiceRequestWhereUniqueInput[]
   }
 
+  export type AutomationOpportunityCreateNestedManyWithoutUserInput = {
+    create?: XOR<AutomationOpportunityCreateWithoutUserInput, AutomationOpportunityUncheckedCreateWithoutUserInput> | AutomationOpportunityCreateWithoutUserInput[] | AutomationOpportunityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AutomationOpportunityCreateOrConnectWithoutUserInput | AutomationOpportunityCreateOrConnectWithoutUserInput[]
+    createMany?: AutomationOpportunityCreateManyUserInputEnvelope
+    connect?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+  }
+
+  export type ExecutiveReportCreateNestedManyWithoutUserInput = {
+    create?: XOR<ExecutiveReportCreateWithoutUserInput, ExecutiveReportUncheckedCreateWithoutUserInput> | ExecutiveReportCreateWithoutUserInput[] | ExecutiveReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ExecutiveReportCreateOrConnectWithoutUserInput | ExecutiveReportCreateOrConnectWithoutUserInput[]
+    createMany?: ExecutiveReportCreateManyUserInputEnvelope
+    connect?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+  }
+
   export type WorkflowUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<WorkflowCreateWithoutUserInput, WorkflowUncheckedCreateWithoutUserInput> | WorkflowCreateWithoutUserInput[] | WorkflowUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WorkflowCreateOrConnectWithoutUserInput | WorkflowCreateOrConnectWithoutUserInput[]
@@ -15532,6 +27318,20 @@ export namespace Prisma {
     connectOrCreate?: ServiceRequestCreateOrConnectWithoutUserInput | ServiceRequestCreateOrConnectWithoutUserInput[]
     createMany?: ServiceRequestCreateManyUserInputEnvelope
     connect?: ServiceRequestWhereUniqueInput | ServiceRequestWhereUniqueInput[]
+  }
+
+  export type AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AutomationOpportunityCreateWithoutUserInput, AutomationOpportunityUncheckedCreateWithoutUserInput> | AutomationOpportunityCreateWithoutUserInput[] | AutomationOpportunityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AutomationOpportunityCreateOrConnectWithoutUserInput | AutomationOpportunityCreateOrConnectWithoutUserInput[]
+    createMany?: AutomationOpportunityCreateManyUserInputEnvelope
+    connect?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+  }
+
+  export type ExecutiveReportUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ExecutiveReportCreateWithoutUserInput, ExecutiveReportUncheckedCreateWithoutUserInput> | ExecutiveReportCreateWithoutUserInput[] | ExecutiveReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ExecutiveReportCreateOrConnectWithoutUserInput | ExecutiveReportCreateOrConnectWithoutUserInput[]
+    createMany?: ExecutiveReportCreateManyUserInputEnvelope
+    connect?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -15616,6 +27416,34 @@ export namespace Prisma {
     deleteMany?: ServiceRequestScalarWhereInput | ServiceRequestScalarWhereInput[]
   }
 
+  export type AutomationOpportunityUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AutomationOpportunityCreateWithoutUserInput, AutomationOpportunityUncheckedCreateWithoutUserInput> | AutomationOpportunityCreateWithoutUserInput[] | AutomationOpportunityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AutomationOpportunityCreateOrConnectWithoutUserInput | AutomationOpportunityCreateOrConnectWithoutUserInput[]
+    upsert?: AutomationOpportunityUpsertWithWhereUniqueWithoutUserInput | AutomationOpportunityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AutomationOpportunityCreateManyUserInputEnvelope
+    set?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    disconnect?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    delete?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    connect?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    update?: AutomationOpportunityUpdateWithWhereUniqueWithoutUserInput | AutomationOpportunityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AutomationOpportunityUpdateManyWithWhereWithoutUserInput | AutomationOpportunityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AutomationOpportunityScalarWhereInput | AutomationOpportunityScalarWhereInput[]
+  }
+
+  export type ExecutiveReportUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ExecutiveReportCreateWithoutUserInput, ExecutiveReportUncheckedCreateWithoutUserInput> | ExecutiveReportCreateWithoutUserInput[] | ExecutiveReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ExecutiveReportCreateOrConnectWithoutUserInput | ExecutiveReportCreateOrConnectWithoutUserInput[]
+    upsert?: ExecutiveReportUpsertWithWhereUniqueWithoutUserInput | ExecutiveReportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ExecutiveReportCreateManyUserInputEnvelope
+    set?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    disconnect?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    delete?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    connect?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    update?: ExecutiveReportUpdateWithWhereUniqueWithoutUserInput | ExecutiveReportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ExecutiveReportUpdateManyWithWhereWithoutUserInput | ExecutiveReportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ExecutiveReportScalarWhereInput | ExecutiveReportScalarWhereInput[]
+  }
+
   export type WorkflowUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<WorkflowCreateWithoutUserInput, WorkflowUncheckedCreateWithoutUserInput> | WorkflowCreateWithoutUserInput[] | WorkflowUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WorkflowCreateOrConnectWithoutUserInput | WorkflowCreateOrConnectWithoutUserInput[]
@@ -15680,6 +27508,34 @@ export namespace Prisma {
     update?: ServiceRequestUpdateWithWhereUniqueWithoutUserInput | ServiceRequestUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ServiceRequestUpdateManyWithWhereWithoutUserInput | ServiceRequestUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ServiceRequestScalarWhereInput | ServiceRequestScalarWhereInput[]
+  }
+
+  export type AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AutomationOpportunityCreateWithoutUserInput, AutomationOpportunityUncheckedCreateWithoutUserInput> | AutomationOpportunityCreateWithoutUserInput[] | AutomationOpportunityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AutomationOpportunityCreateOrConnectWithoutUserInput | AutomationOpportunityCreateOrConnectWithoutUserInput[]
+    upsert?: AutomationOpportunityUpsertWithWhereUniqueWithoutUserInput | AutomationOpportunityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AutomationOpportunityCreateManyUserInputEnvelope
+    set?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    disconnect?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    delete?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    connect?: AutomationOpportunityWhereUniqueInput | AutomationOpportunityWhereUniqueInput[]
+    update?: AutomationOpportunityUpdateWithWhereUniqueWithoutUserInput | AutomationOpportunityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AutomationOpportunityUpdateManyWithWhereWithoutUserInput | AutomationOpportunityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AutomationOpportunityScalarWhereInput | AutomationOpportunityScalarWhereInput[]
+  }
+
+  export type ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ExecutiveReportCreateWithoutUserInput, ExecutiveReportUncheckedCreateWithoutUserInput> | ExecutiveReportCreateWithoutUserInput[] | ExecutiveReportUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ExecutiveReportCreateOrConnectWithoutUserInput | ExecutiveReportCreateOrConnectWithoutUserInput[]
+    upsert?: ExecutiveReportUpsertWithWhereUniqueWithoutUserInput | ExecutiveReportUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ExecutiveReportCreateManyUserInputEnvelope
+    set?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    disconnect?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    delete?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    connect?: ExecutiveReportWhereUniqueInput | ExecutiveReportWhereUniqueInput[]
+    update?: ExecutiveReportUpdateWithWhereUniqueWithoutUserInput | ExecutiveReportUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ExecutiveReportUpdateManyWithWhereWithoutUserInput | ExecutiveReportUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ExecutiveReportScalarWhereInput | ExecutiveReportScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCredentialsInput = {
@@ -15785,6 +27641,26 @@ export namespace Prisma {
     connect?: AutomationMetricsWhereUniqueInput | AutomationMetricsWhereUniqueInput[]
   }
 
+  export type BusinessOutcomeCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<BusinessOutcomeCreateWithoutWorkflowInput, BusinessOutcomeUncheckedCreateWithoutWorkflowInput> | BusinessOutcomeCreateWithoutWorkflowInput[] | BusinessOutcomeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: BusinessOutcomeCreateOrConnectWithoutWorkflowInput | BusinessOutcomeCreateOrConnectWithoutWorkflowInput[]
+    createMany?: BusinessOutcomeCreateManyWorkflowInputEnvelope
+    connect?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+  }
+
+  export type EfficiencyMetricCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<EfficiencyMetricCreateWithoutWorkflowInput, EfficiencyMetricUncheckedCreateWithoutWorkflowInput> | EfficiencyMetricCreateWithoutWorkflowInput[] | EfficiencyMetricUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: EfficiencyMetricCreateOrConnectWithoutWorkflowInput | EfficiencyMetricCreateOrConnectWithoutWorkflowInput[]
+    createMany?: EfficiencyMetricCreateManyWorkflowInputEnvelope
+    connect?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+  }
+
+  export type WorkflowHealthCreateNestedOneWithoutWorkflowInput = {
+    create?: XOR<WorkflowHealthCreateWithoutWorkflowInput, WorkflowHealthUncheckedCreateWithoutWorkflowInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutWorkflowInput
+    connect?: WorkflowHealthWhereUniqueInput
+  }
+
   export type WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput = {
     create?: XOR<WorkflowCredentialCreateWithoutWorkflowInput, WorkflowCredentialUncheckedCreateWithoutWorkflowInput> | WorkflowCredentialCreateWithoutWorkflowInput[] | WorkflowCredentialUncheckedCreateWithoutWorkflowInput[]
     connectOrCreate?: WorkflowCredentialCreateOrConnectWithoutWorkflowInput | WorkflowCredentialCreateOrConnectWithoutWorkflowInput[]
@@ -15804,6 +27680,26 @@ export namespace Prisma {
     connectOrCreate?: AutomationMetricsCreateOrConnectWithoutWorkflowInput | AutomationMetricsCreateOrConnectWithoutWorkflowInput[]
     createMany?: AutomationMetricsCreateManyWorkflowInputEnvelope
     connect?: AutomationMetricsWhereUniqueInput | AutomationMetricsWhereUniqueInput[]
+  }
+
+  export type BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<BusinessOutcomeCreateWithoutWorkflowInput, BusinessOutcomeUncheckedCreateWithoutWorkflowInput> | BusinessOutcomeCreateWithoutWorkflowInput[] | BusinessOutcomeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: BusinessOutcomeCreateOrConnectWithoutWorkflowInput | BusinessOutcomeCreateOrConnectWithoutWorkflowInput[]
+    createMany?: BusinessOutcomeCreateManyWorkflowInputEnvelope
+    connect?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+  }
+
+  export type EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<EfficiencyMetricCreateWithoutWorkflowInput, EfficiencyMetricUncheckedCreateWithoutWorkflowInput> | EfficiencyMetricCreateWithoutWorkflowInput[] | EfficiencyMetricUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: EfficiencyMetricCreateOrConnectWithoutWorkflowInput | EfficiencyMetricCreateOrConnectWithoutWorkflowInput[]
+    createMany?: EfficiencyMetricCreateManyWorkflowInputEnvelope
+    connect?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+  }
+
+  export type WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput = {
+    create?: XOR<WorkflowHealthCreateWithoutWorkflowInput, WorkflowHealthUncheckedCreateWithoutWorkflowInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutWorkflowInput
+    connect?: WorkflowHealthWhereUniqueInput
   }
 
   export type EnumWorkflowStatusFieldUpdateOperationsInput = {
@@ -15870,6 +27766,44 @@ export namespace Prisma {
     deleteMany?: AutomationMetricsScalarWhereInput | AutomationMetricsScalarWhereInput[]
   }
 
+  export type BusinessOutcomeUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<BusinessOutcomeCreateWithoutWorkflowInput, BusinessOutcomeUncheckedCreateWithoutWorkflowInput> | BusinessOutcomeCreateWithoutWorkflowInput[] | BusinessOutcomeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: BusinessOutcomeCreateOrConnectWithoutWorkflowInput | BusinessOutcomeCreateOrConnectWithoutWorkflowInput[]
+    upsert?: BusinessOutcomeUpsertWithWhereUniqueWithoutWorkflowInput | BusinessOutcomeUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: BusinessOutcomeCreateManyWorkflowInputEnvelope
+    set?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    disconnect?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    delete?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    connect?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    update?: BusinessOutcomeUpdateWithWhereUniqueWithoutWorkflowInput | BusinessOutcomeUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: BusinessOutcomeUpdateManyWithWhereWithoutWorkflowInput | BusinessOutcomeUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: BusinessOutcomeScalarWhereInput | BusinessOutcomeScalarWhereInput[]
+  }
+
+  export type EfficiencyMetricUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<EfficiencyMetricCreateWithoutWorkflowInput, EfficiencyMetricUncheckedCreateWithoutWorkflowInput> | EfficiencyMetricCreateWithoutWorkflowInput[] | EfficiencyMetricUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: EfficiencyMetricCreateOrConnectWithoutWorkflowInput | EfficiencyMetricCreateOrConnectWithoutWorkflowInput[]
+    upsert?: EfficiencyMetricUpsertWithWhereUniqueWithoutWorkflowInput | EfficiencyMetricUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: EfficiencyMetricCreateManyWorkflowInputEnvelope
+    set?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    disconnect?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    delete?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    connect?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    update?: EfficiencyMetricUpdateWithWhereUniqueWithoutWorkflowInput | EfficiencyMetricUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: EfficiencyMetricUpdateManyWithWhereWithoutWorkflowInput | EfficiencyMetricUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: EfficiencyMetricScalarWhereInput | EfficiencyMetricScalarWhereInput[]
+  }
+
+  export type WorkflowHealthUpdateOneWithoutWorkflowNestedInput = {
+    create?: XOR<WorkflowHealthCreateWithoutWorkflowInput, WorkflowHealthUncheckedCreateWithoutWorkflowInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutWorkflowInput
+    upsert?: WorkflowHealthUpsertWithoutWorkflowInput
+    disconnect?: WorkflowHealthWhereInput | boolean
+    delete?: WorkflowHealthWhereInput | boolean
+    connect?: WorkflowHealthWhereUniqueInput
+    update?: XOR<XOR<WorkflowHealthUpdateToOneWithWhereWithoutWorkflowInput, WorkflowHealthUpdateWithoutWorkflowInput>, WorkflowHealthUncheckedUpdateWithoutWorkflowInput>
+  }
+
   export type WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput = {
     create?: XOR<WorkflowCredentialCreateWithoutWorkflowInput, WorkflowCredentialUncheckedCreateWithoutWorkflowInput> | WorkflowCredentialCreateWithoutWorkflowInput[] | WorkflowCredentialUncheckedCreateWithoutWorkflowInput[]
     connectOrCreate?: WorkflowCredentialCreateOrConnectWithoutWorkflowInput | WorkflowCredentialCreateOrConnectWithoutWorkflowInput[]
@@ -15910,6 +27844,44 @@ export namespace Prisma {
     update?: AutomationMetricsUpdateWithWhereUniqueWithoutWorkflowInput | AutomationMetricsUpdateWithWhereUniqueWithoutWorkflowInput[]
     updateMany?: AutomationMetricsUpdateManyWithWhereWithoutWorkflowInput | AutomationMetricsUpdateManyWithWhereWithoutWorkflowInput[]
     deleteMany?: AutomationMetricsScalarWhereInput | AutomationMetricsScalarWhereInput[]
+  }
+
+  export type BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<BusinessOutcomeCreateWithoutWorkflowInput, BusinessOutcomeUncheckedCreateWithoutWorkflowInput> | BusinessOutcomeCreateWithoutWorkflowInput[] | BusinessOutcomeUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: BusinessOutcomeCreateOrConnectWithoutWorkflowInput | BusinessOutcomeCreateOrConnectWithoutWorkflowInput[]
+    upsert?: BusinessOutcomeUpsertWithWhereUniqueWithoutWorkflowInput | BusinessOutcomeUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: BusinessOutcomeCreateManyWorkflowInputEnvelope
+    set?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    disconnect?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    delete?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    connect?: BusinessOutcomeWhereUniqueInput | BusinessOutcomeWhereUniqueInput[]
+    update?: BusinessOutcomeUpdateWithWhereUniqueWithoutWorkflowInput | BusinessOutcomeUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: BusinessOutcomeUpdateManyWithWhereWithoutWorkflowInput | BusinessOutcomeUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: BusinessOutcomeScalarWhereInput | BusinessOutcomeScalarWhereInput[]
+  }
+
+  export type EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<EfficiencyMetricCreateWithoutWorkflowInput, EfficiencyMetricUncheckedCreateWithoutWorkflowInput> | EfficiencyMetricCreateWithoutWorkflowInput[] | EfficiencyMetricUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: EfficiencyMetricCreateOrConnectWithoutWorkflowInput | EfficiencyMetricCreateOrConnectWithoutWorkflowInput[]
+    upsert?: EfficiencyMetricUpsertWithWhereUniqueWithoutWorkflowInput | EfficiencyMetricUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: EfficiencyMetricCreateManyWorkflowInputEnvelope
+    set?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    disconnect?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    delete?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    connect?: EfficiencyMetricWhereUniqueInput | EfficiencyMetricWhereUniqueInput[]
+    update?: EfficiencyMetricUpdateWithWhereUniqueWithoutWorkflowInput | EfficiencyMetricUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: EfficiencyMetricUpdateManyWithWhereWithoutWorkflowInput | EfficiencyMetricUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: EfficiencyMetricScalarWhereInput | EfficiencyMetricScalarWhereInput[]
+  }
+
+  export type WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput = {
+    create?: XOR<WorkflowHealthCreateWithoutWorkflowInput, WorkflowHealthUncheckedCreateWithoutWorkflowInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutWorkflowInput
+    upsert?: WorkflowHealthUpsertWithoutWorkflowInput
+    disconnect?: WorkflowHealthWhereInput | boolean
+    delete?: WorkflowHealthWhereInput | boolean
+    connect?: WorkflowHealthWhereUniqueInput
+    update?: XOR<XOR<WorkflowHealthUpdateToOneWithWhereWithoutWorkflowInput, WorkflowHealthUpdateWithoutWorkflowInput>, WorkflowHealthUncheckedUpdateWithoutWorkflowInput>
   }
 
   export type WorkflowCreateNestedOneWithoutWorkflowCredentialsInput = {
@@ -16084,6 +28056,237 @@ export namespace Prisma {
     upsert?: WorkflowUpsertWithoutAutomationMetricsInput
     connect?: WorkflowWhereUniqueInput
     update?: XOR<XOR<WorkflowUpdateToOneWithWhereWithoutAutomationMetricsInput, WorkflowUpdateWithoutAutomationMetricsInput>, WorkflowUncheckedUpdateWithoutAutomationMetricsInput>
+  }
+
+  export type WorkflowCreateNestedOneWithoutBusinessOutcomesInput = {
+    create?: XOR<WorkflowCreateWithoutBusinessOutcomesInput, WorkflowUncheckedCreateWithoutBusinessOutcomesInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutBusinessOutcomesInput
+    connect?: WorkflowWhereUniqueInput
+  }
+
+  export type EnumBusinessOutcomeTypeFieldUpdateOperationsInput = {
+    set?: $Enums.BusinessOutcomeType
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type WorkflowUpdateOneRequiredWithoutBusinessOutcomesNestedInput = {
+    create?: XOR<WorkflowCreateWithoutBusinessOutcomesInput, WorkflowUncheckedCreateWithoutBusinessOutcomesInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutBusinessOutcomesInput
+    upsert?: WorkflowUpsertWithoutBusinessOutcomesInput
+    connect?: WorkflowWhereUniqueInput
+    update?: XOR<XOR<WorkflowUpdateToOneWithWhereWithoutBusinessOutcomesInput, WorkflowUpdateWithoutBusinessOutcomesInput>, WorkflowUncheckedUpdateWithoutBusinessOutcomesInput>
+  }
+
+  export type WorkflowCreateNestedOneWithoutEfficiencyMetricsInput = {
+    create?: XOR<WorkflowCreateWithoutEfficiencyMetricsInput, WorkflowUncheckedCreateWithoutEfficiencyMetricsInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutEfficiencyMetricsInput
+    connect?: WorkflowWhereUniqueInput
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type WorkflowUpdateOneRequiredWithoutEfficiencyMetricsNestedInput = {
+    create?: XOR<WorkflowCreateWithoutEfficiencyMetricsInput, WorkflowUncheckedCreateWithoutEfficiencyMetricsInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutEfficiencyMetricsInput
+    upsert?: WorkflowUpsertWithoutEfficiencyMetricsInput
+    connect?: WorkflowWhereUniqueInput
+    update?: XOR<XOR<WorkflowUpdateToOneWithWhereWithoutEfficiencyMetricsInput, WorkflowUpdateWithoutEfficiencyMetricsInput>, WorkflowUncheckedUpdateWithoutEfficiencyMetricsInput>
+  }
+
+  export type AutomationOpportunityCreaterequiredIntegrationsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutAutomationOpportunitiesInput = {
+    create?: XOR<UserCreateWithoutAutomationOpportunitiesInput, UserUncheckedCreateWithoutAutomationOpportunitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAutomationOpportunitiesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumOpportunityCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.OpportunityCategory
+  }
+
+  export type AutomationOpportunityUpdaterequiredIntegrationsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type EnumOpportunityStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OpportunityStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutAutomationOpportunitiesNestedInput = {
+    create?: XOR<UserCreateWithoutAutomationOpportunitiesInput, UserUncheckedCreateWithoutAutomationOpportunitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAutomationOpportunitiesInput
+    upsert?: UserUpsertWithoutAutomationOpportunitiesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAutomationOpportunitiesInput, UserUpdateWithoutAutomationOpportunitiesInput>, UserUncheckedUpdateWithoutAutomationOpportunitiesInput>
+  }
+
+  export type WorkflowCreateNestedOneWithoutWorkflowHealthInput = {
+    create?: XOR<WorkflowCreateWithoutWorkflowHealthInput, WorkflowUncheckedCreateWithoutWorkflowHealthInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutWorkflowHealthInput
+    connect?: WorkflowWhereUniqueInput
+  }
+
+  export type HealthRecommendationCreateNestedManyWithoutWorkflowHealthInput = {
+    create?: XOR<HealthRecommendationCreateWithoutWorkflowHealthInput, HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput> | HealthRecommendationCreateWithoutWorkflowHealthInput[] | HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput | HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput[]
+    createMany?: HealthRecommendationCreateManyWorkflowHealthInputEnvelope
+    connect?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+  }
+
+  export type HealthAlertCreateNestedManyWithoutWorkflowHealthInput = {
+    create?: XOR<HealthAlertCreateWithoutWorkflowHealthInput, HealthAlertUncheckedCreateWithoutWorkflowHealthInput> | HealthAlertCreateWithoutWorkflowHealthInput[] | HealthAlertUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthAlertCreateOrConnectWithoutWorkflowHealthInput | HealthAlertCreateOrConnectWithoutWorkflowHealthInput[]
+    createMany?: HealthAlertCreateManyWorkflowHealthInputEnvelope
+    connect?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+  }
+
+  export type HealthRecommendationUncheckedCreateNestedManyWithoutWorkflowHealthInput = {
+    create?: XOR<HealthRecommendationCreateWithoutWorkflowHealthInput, HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput> | HealthRecommendationCreateWithoutWorkflowHealthInput[] | HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput | HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput[]
+    createMany?: HealthRecommendationCreateManyWorkflowHealthInputEnvelope
+    connect?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+  }
+
+  export type HealthAlertUncheckedCreateNestedManyWithoutWorkflowHealthInput = {
+    create?: XOR<HealthAlertCreateWithoutWorkflowHealthInput, HealthAlertUncheckedCreateWithoutWorkflowHealthInput> | HealthAlertCreateWithoutWorkflowHealthInput[] | HealthAlertUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthAlertCreateOrConnectWithoutWorkflowHealthInput | HealthAlertCreateOrConnectWithoutWorkflowHealthInput[]
+    createMany?: HealthAlertCreateManyWorkflowHealthInputEnvelope
+    connect?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+  }
+
+  export type WorkflowUpdateOneRequiredWithoutWorkflowHealthNestedInput = {
+    create?: XOR<WorkflowCreateWithoutWorkflowHealthInput, WorkflowUncheckedCreateWithoutWorkflowHealthInput>
+    connectOrCreate?: WorkflowCreateOrConnectWithoutWorkflowHealthInput
+    upsert?: WorkflowUpsertWithoutWorkflowHealthInput
+    connect?: WorkflowWhereUniqueInput
+    update?: XOR<XOR<WorkflowUpdateToOneWithWhereWithoutWorkflowHealthInput, WorkflowUpdateWithoutWorkflowHealthInput>, WorkflowUncheckedUpdateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthRecommendationUpdateManyWithoutWorkflowHealthNestedInput = {
+    create?: XOR<HealthRecommendationCreateWithoutWorkflowHealthInput, HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput> | HealthRecommendationCreateWithoutWorkflowHealthInput[] | HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput | HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput[]
+    upsert?: HealthRecommendationUpsertWithWhereUniqueWithoutWorkflowHealthInput | HealthRecommendationUpsertWithWhereUniqueWithoutWorkflowHealthInput[]
+    createMany?: HealthRecommendationCreateManyWorkflowHealthInputEnvelope
+    set?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    disconnect?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    delete?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    connect?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    update?: HealthRecommendationUpdateWithWhereUniqueWithoutWorkflowHealthInput | HealthRecommendationUpdateWithWhereUniqueWithoutWorkflowHealthInput[]
+    updateMany?: HealthRecommendationUpdateManyWithWhereWithoutWorkflowHealthInput | HealthRecommendationUpdateManyWithWhereWithoutWorkflowHealthInput[]
+    deleteMany?: HealthRecommendationScalarWhereInput | HealthRecommendationScalarWhereInput[]
+  }
+
+  export type HealthAlertUpdateManyWithoutWorkflowHealthNestedInput = {
+    create?: XOR<HealthAlertCreateWithoutWorkflowHealthInput, HealthAlertUncheckedCreateWithoutWorkflowHealthInput> | HealthAlertCreateWithoutWorkflowHealthInput[] | HealthAlertUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthAlertCreateOrConnectWithoutWorkflowHealthInput | HealthAlertCreateOrConnectWithoutWorkflowHealthInput[]
+    upsert?: HealthAlertUpsertWithWhereUniqueWithoutWorkflowHealthInput | HealthAlertUpsertWithWhereUniqueWithoutWorkflowHealthInput[]
+    createMany?: HealthAlertCreateManyWorkflowHealthInputEnvelope
+    set?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    disconnect?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    delete?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    connect?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    update?: HealthAlertUpdateWithWhereUniqueWithoutWorkflowHealthInput | HealthAlertUpdateWithWhereUniqueWithoutWorkflowHealthInput[]
+    updateMany?: HealthAlertUpdateManyWithWhereWithoutWorkflowHealthInput | HealthAlertUpdateManyWithWhereWithoutWorkflowHealthInput[]
+    deleteMany?: HealthAlertScalarWhereInput | HealthAlertScalarWhereInput[]
+  }
+
+  export type HealthRecommendationUncheckedUpdateManyWithoutWorkflowHealthNestedInput = {
+    create?: XOR<HealthRecommendationCreateWithoutWorkflowHealthInput, HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput> | HealthRecommendationCreateWithoutWorkflowHealthInput[] | HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput | HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput[]
+    upsert?: HealthRecommendationUpsertWithWhereUniqueWithoutWorkflowHealthInput | HealthRecommendationUpsertWithWhereUniqueWithoutWorkflowHealthInput[]
+    createMany?: HealthRecommendationCreateManyWorkflowHealthInputEnvelope
+    set?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    disconnect?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    delete?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    connect?: HealthRecommendationWhereUniqueInput | HealthRecommendationWhereUniqueInput[]
+    update?: HealthRecommendationUpdateWithWhereUniqueWithoutWorkflowHealthInput | HealthRecommendationUpdateWithWhereUniqueWithoutWorkflowHealthInput[]
+    updateMany?: HealthRecommendationUpdateManyWithWhereWithoutWorkflowHealthInput | HealthRecommendationUpdateManyWithWhereWithoutWorkflowHealthInput[]
+    deleteMany?: HealthRecommendationScalarWhereInput | HealthRecommendationScalarWhereInput[]
+  }
+
+  export type HealthAlertUncheckedUpdateManyWithoutWorkflowHealthNestedInput = {
+    create?: XOR<HealthAlertCreateWithoutWorkflowHealthInput, HealthAlertUncheckedCreateWithoutWorkflowHealthInput> | HealthAlertCreateWithoutWorkflowHealthInput[] | HealthAlertUncheckedCreateWithoutWorkflowHealthInput[]
+    connectOrCreate?: HealthAlertCreateOrConnectWithoutWorkflowHealthInput | HealthAlertCreateOrConnectWithoutWorkflowHealthInput[]
+    upsert?: HealthAlertUpsertWithWhereUniqueWithoutWorkflowHealthInput | HealthAlertUpsertWithWhereUniqueWithoutWorkflowHealthInput[]
+    createMany?: HealthAlertCreateManyWorkflowHealthInputEnvelope
+    set?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    disconnect?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    delete?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    connect?: HealthAlertWhereUniqueInput | HealthAlertWhereUniqueInput[]
+    update?: HealthAlertUpdateWithWhereUniqueWithoutWorkflowHealthInput | HealthAlertUpdateWithWhereUniqueWithoutWorkflowHealthInput[]
+    updateMany?: HealthAlertUpdateManyWithWhereWithoutWorkflowHealthInput | HealthAlertUpdateManyWithWhereWithoutWorkflowHealthInput[]
+    deleteMany?: HealthAlertScalarWhereInput | HealthAlertScalarWhereInput[]
+  }
+
+  export type WorkflowHealthCreateNestedOneWithoutRecommendationsInput = {
+    create?: XOR<WorkflowHealthCreateWithoutRecommendationsInput, WorkflowHealthUncheckedCreateWithoutRecommendationsInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutRecommendationsInput
+    connect?: WorkflowHealthWhereUniqueInput
+  }
+
+  export type EnumHealthRecommendationTypeFieldUpdateOperationsInput = {
+    set?: $Enums.HealthRecommendationType
+  }
+
+  export type EnumHealthRecommendationPriorityFieldUpdateOperationsInput = {
+    set?: $Enums.HealthRecommendationPriority
+  }
+
+  export type EnumImplementationEffortFieldUpdateOperationsInput = {
+    set?: $Enums.ImplementationEffort
+  }
+
+  export type WorkflowHealthUpdateOneRequiredWithoutRecommendationsNestedInput = {
+    create?: XOR<WorkflowHealthCreateWithoutRecommendationsInput, WorkflowHealthUncheckedCreateWithoutRecommendationsInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutRecommendationsInput
+    upsert?: WorkflowHealthUpsertWithoutRecommendationsInput
+    connect?: WorkflowHealthWhereUniqueInput
+    update?: XOR<XOR<WorkflowHealthUpdateToOneWithWhereWithoutRecommendationsInput, WorkflowHealthUpdateWithoutRecommendationsInput>, WorkflowHealthUncheckedUpdateWithoutRecommendationsInput>
+  }
+
+  export type WorkflowHealthCreateNestedOneWithoutAlertsInput = {
+    create?: XOR<WorkflowHealthCreateWithoutAlertsInput, WorkflowHealthUncheckedCreateWithoutAlertsInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutAlertsInput
+    connect?: WorkflowHealthWhereUniqueInput
+  }
+
+  export type WorkflowHealthUpdateOneRequiredWithoutAlertsNestedInput = {
+    create?: XOR<WorkflowHealthCreateWithoutAlertsInput, WorkflowHealthUncheckedCreateWithoutAlertsInput>
+    connectOrCreate?: WorkflowHealthCreateOrConnectWithoutAlertsInput
+    upsert?: WorkflowHealthUpsertWithoutAlertsInput
+    connect?: WorkflowHealthWhereUniqueInput
+    update?: XOR<XOR<WorkflowHealthUpdateToOneWithWhereWithoutAlertsInput, WorkflowHealthUpdateWithoutAlertsInput>, WorkflowHealthUncheckedUpdateWithoutAlertsInput>
+  }
+
+  export type UserCreateNestedOneWithoutExecutiveReportsInput = {
+    create?: XOR<UserCreateWithoutExecutiveReportsInput, UserUncheckedCreateWithoutExecutiveReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutExecutiveReportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutExecutiveReportsNestedInput = {
+    create?: XOR<UserCreateWithoutExecutiveReportsInput, UserUncheckedCreateWithoutExecutiveReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutExecutiveReportsInput
+    upsert?: UserUpsertWithoutExecutiveReportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutExecutiveReportsInput, UserUpdateWithoutExecutiveReportsInput>, UserUncheckedUpdateWithoutExecutiveReportsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -16452,6 +28655,163 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumBusinessOutcomeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.BusinessOutcomeType | EnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBusinessOutcomeTypeFilter<$PrismaModel> | $Enums.BusinessOutcomeType
+  }
+
+  export type NestedEnumBusinessOutcomeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BusinessOutcomeType | EnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BusinessOutcomeType[] | ListEnumBusinessOutcomeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumBusinessOutcomeTypeWithAggregatesFilter<$PrismaModel> | $Enums.BusinessOutcomeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBusinessOutcomeTypeFilter<$PrismaModel>
+    _max?: NestedEnumBusinessOutcomeTypeFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOpportunityCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityCategory | EnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityCategoryFilter<$PrismaModel> | $Enums.OpportunityCategory
+  }
+
+  export type NestedEnumOpportunityStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityStatus | EnumOpportunityStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityStatusFilter<$PrismaModel> | $Enums.OpportunityStatus
+  }
+
+  export type NestedEnumOpportunityCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityCategory | EnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityCategory[] | ListEnumOpportunityCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityCategoryWithAggregatesFilter<$PrismaModel> | $Enums.OpportunityCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOpportunityCategoryFilter<$PrismaModel>
+    _max?: NestedEnumOpportunityCategoryFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOpportunityStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OpportunityStatus | EnumOpportunityStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OpportunityStatus[] | ListEnumOpportunityStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOpportunityStatusWithAggregatesFilter<$PrismaModel> | $Enums.OpportunityStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOpportunityStatusFilter<$PrismaModel>
+    _max?: NestedEnumOpportunityStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumHealthRecommendationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationType | EnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationTypeFilter<$PrismaModel> | $Enums.HealthRecommendationType
+  }
+
+  export type NestedEnumHealthRecommendationPriorityFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationPriority | EnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationPriorityFilter<$PrismaModel> | $Enums.HealthRecommendationPriority
+  }
+
+  export type NestedEnumImplementationEffortFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImplementationEffort | EnumImplementationEffortFieldRefInput<$PrismaModel>
+    in?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    not?: NestedEnumImplementationEffortFilter<$PrismaModel> | $Enums.ImplementationEffort
+  }
+
+  export type NestedEnumHealthRecommendationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationType | EnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationType[] | ListEnumHealthRecommendationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationTypeWithAggregatesFilter<$PrismaModel> | $Enums.HealthRecommendationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHealthRecommendationTypeFilter<$PrismaModel>
+    _max?: NestedEnumHealthRecommendationTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumHealthRecommendationPriorityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HealthRecommendationPriority | EnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    in?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.HealthRecommendationPriority[] | ListEnumHealthRecommendationPriorityFieldRefInput<$PrismaModel>
+    not?: NestedEnumHealthRecommendationPriorityWithAggregatesFilter<$PrismaModel> | $Enums.HealthRecommendationPriority
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHealthRecommendationPriorityFilter<$PrismaModel>
+    _max?: NestedEnumHealthRecommendationPriorityFilter<$PrismaModel>
+  }
+
+  export type NestedEnumImplementationEffortWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ImplementationEffort | EnumImplementationEffortFieldRefInput<$PrismaModel>
+    in?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ImplementationEffort[] | ListEnumImplementationEffortFieldRefInput<$PrismaModel>
+    not?: NestedEnumImplementationEffortWithAggregatesFilter<$PrismaModel> | $Enums.ImplementationEffort
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumImplementationEffortFilter<$PrismaModel>
+    _max?: NestedEnumImplementationEffortFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type WorkflowCreateWithoutUserInput = {
     id?: string
     name: string
@@ -16477,6 +28837,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
     workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowUncheckedCreateWithoutUserInput = {
@@ -16504,6 +28867,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowCreateOrConnectWithoutUserInput = {
@@ -16666,6 +29032,100 @@ export namespace Prisma {
 
   export type ServiceRequestCreateManyUserInputEnvelope = {
     data: ServiceRequestCreateManyUserInput | ServiceRequestCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AutomationOpportunityCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours?: number | null
+    costSavings?: Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: number | null
+    requiredIntegrations?: AutomationOpportunityCreaterequiredIntegrationsInput | string[]
+    status?: $Enums.OpportunityStatus
+    identifiedAt?: Date | string
+    dismissalReason?: string | null
+    implementationNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationOpportunityUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours?: number | null
+    costSavings?: Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: number | null
+    requiredIntegrations?: AutomationOpportunityCreaterequiredIntegrationsInput | string[]
+    status?: $Enums.OpportunityStatus
+    identifiedAt?: Date | string
+    dismissalReason?: string | null
+    implementationNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationOpportunityCreateOrConnectWithoutUserInput = {
+    where: AutomationOpportunityWhereUniqueInput
+    create: XOR<AutomationOpportunityCreateWithoutUserInput, AutomationOpportunityUncheckedCreateWithoutUserInput>
+  }
+
+  export type AutomationOpportunityCreateManyUserInputEnvelope = {
+    data: AutomationOpportunityCreateManyUserInput | AutomationOpportunityCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ExecutiveReportCreateWithoutUserInput = {
+    id?: string
+    title: string
+    periodStart: Date | string
+    periodEnd: Date | string
+    format: string
+    sections: JsonNullValueInput | InputJsonValue
+    companyName?: string | null
+    logoUrl?: string | null
+    primaryColor?: string | null
+    shareableLink?: string | null
+    linkExpiresAt?: Date | string | null
+    isPublic?: boolean
+    generatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExecutiveReportUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    periodStart: Date | string
+    periodEnd: Date | string
+    format: string
+    sections: JsonNullValueInput | InputJsonValue
+    companyName?: string | null
+    logoUrl?: string | null
+    primaryColor?: string | null
+    shareableLink?: string | null
+    linkExpiresAt?: Date | string | null
+    isPublic?: boolean
+    generatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExecutiveReportCreateOrConnectWithoutUserInput = {
+    where: ExecutiveReportWhereUniqueInput
+    create: XOR<ExecutiveReportCreateWithoutUserInput, ExecutiveReportUncheckedCreateWithoutUserInput>
+  }
+
+  export type ExecutiveReportCreateManyUserInputEnvelope = {
+    data: ExecutiveReportCreateManyUserInput | ExecutiveReportCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16852,6 +29312,83 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ServiceRequest"> | Date | string
   }
 
+  export type AutomationOpportunityUpsertWithWhereUniqueWithoutUserInput = {
+    where: AutomationOpportunityWhereUniqueInput
+    update: XOR<AutomationOpportunityUpdateWithoutUserInput, AutomationOpportunityUncheckedUpdateWithoutUserInput>
+    create: XOR<AutomationOpportunityCreateWithoutUserInput, AutomationOpportunityUncheckedCreateWithoutUserInput>
+  }
+
+  export type AutomationOpportunityUpdateWithWhereUniqueWithoutUserInput = {
+    where: AutomationOpportunityWhereUniqueInput
+    data: XOR<AutomationOpportunityUpdateWithoutUserInput, AutomationOpportunityUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AutomationOpportunityUpdateManyWithWhereWithoutUserInput = {
+    where: AutomationOpportunityScalarWhereInput
+    data: XOR<AutomationOpportunityUpdateManyMutationInput, AutomationOpportunityUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AutomationOpportunityScalarWhereInput = {
+    AND?: AutomationOpportunityScalarWhereInput | AutomationOpportunityScalarWhereInput[]
+    OR?: AutomationOpportunityScalarWhereInput[]
+    NOT?: AutomationOpportunityScalarWhereInput | AutomationOpportunityScalarWhereInput[]
+    id?: StringFilter<"AutomationOpportunity"> | string
+    userId?: StringFilter<"AutomationOpportunity"> | string
+    title?: StringFilter<"AutomationOpportunity"> | string
+    description?: StringFilter<"AutomationOpportunity"> | string
+    category?: EnumOpportunityCategoryFilter<"AutomationOpportunity"> | $Enums.OpportunityCategory
+    impactScore?: IntFilter<"AutomationOpportunity"> | number
+    difficultyScore?: IntFilter<"AutomationOpportunity"> | number
+    timeSavingsHours?: FloatNullableFilter<"AutomationOpportunity"> | number | null
+    costSavings?: DecimalNullableFilter<"AutomationOpportunity"> | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: IntNullableFilter<"AutomationOpportunity"> | number | null
+    requiredIntegrations?: StringNullableListFilter<"AutomationOpportunity">
+    status?: EnumOpportunityStatusFilter<"AutomationOpportunity"> | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    dismissalReason?: StringNullableFilter<"AutomationOpportunity"> | string | null
+    implementationNotes?: StringNullableFilter<"AutomationOpportunity"> | string | null
+    createdAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationOpportunity"> | Date | string
+  }
+
+  export type ExecutiveReportUpsertWithWhereUniqueWithoutUserInput = {
+    where: ExecutiveReportWhereUniqueInput
+    update: XOR<ExecutiveReportUpdateWithoutUserInput, ExecutiveReportUncheckedUpdateWithoutUserInput>
+    create: XOR<ExecutiveReportCreateWithoutUserInput, ExecutiveReportUncheckedCreateWithoutUserInput>
+  }
+
+  export type ExecutiveReportUpdateWithWhereUniqueWithoutUserInput = {
+    where: ExecutiveReportWhereUniqueInput
+    data: XOR<ExecutiveReportUpdateWithoutUserInput, ExecutiveReportUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ExecutiveReportUpdateManyWithWhereWithoutUserInput = {
+    where: ExecutiveReportScalarWhereInput
+    data: XOR<ExecutiveReportUpdateManyMutationInput, ExecutiveReportUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ExecutiveReportScalarWhereInput = {
+    AND?: ExecutiveReportScalarWhereInput | ExecutiveReportScalarWhereInput[]
+    OR?: ExecutiveReportScalarWhereInput[]
+    NOT?: ExecutiveReportScalarWhereInput | ExecutiveReportScalarWhereInput[]
+    id?: StringFilter<"ExecutiveReport"> | string
+    userId?: StringFilter<"ExecutiveReport"> | string
+    title?: StringFilter<"ExecutiveReport"> | string
+    periodStart?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    periodEnd?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    format?: StringFilter<"ExecutiveReport"> | string
+    sections?: JsonFilter<"ExecutiveReport">
+    companyName?: StringNullableFilter<"ExecutiveReport"> | string | null
+    logoUrl?: StringNullableFilter<"ExecutiveReport"> | string | null
+    primaryColor?: StringNullableFilter<"ExecutiveReport"> | string | null
+    shareableLink?: StringNullableFilter<"ExecutiveReport"> | string | null
+    linkExpiresAt?: DateTimeNullableFilter<"ExecutiveReport"> | Date | string | null
+    isPublic?: BoolFilter<"ExecutiveReport"> | boolean
+    generatedAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    createdAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+    updatedAt?: DateTimeFilter<"ExecutiveReport"> | Date | string
+  }
+
   export type UserCreateWithoutCredentialsInput = {
     id?: string
     clerk_id: string
@@ -16867,6 +29404,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCredentialsInput = {
@@ -16884,6 +29423,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCredentialsInput = {
@@ -16935,6 +29476,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCredentialsInput = {
@@ -16952,6 +29495,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkflowCredentialUpsertWithWhereUniqueWithoutCredentialInput = {
@@ -16993,6 +29538,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWorkflowsInput = {
@@ -17010,6 +29557,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWorkflowsInput = {
@@ -17115,6 +29664,111 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BusinessOutcomeCreateWithoutWorkflowInput = {
+    id?: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BusinessOutcomeUncheckedCreateWithoutWorkflowInput = {
+    id?: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BusinessOutcomeCreateOrConnectWithoutWorkflowInput = {
+    where: BusinessOutcomeWhereUniqueInput
+    create: XOR<BusinessOutcomeCreateWithoutWorkflowInput, BusinessOutcomeUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type BusinessOutcomeCreateManyWorkflowInputEnvelope = {
+    data: BusinessOutcomeCreateManyWorkflowInput | BusinessOutcomeCreateManyWorkflowInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EfficiencyMetricCreateWithoutWorkflowInput = {
+    id?: string
+    period: string
+    beforeTimeSpent?: number | null
+    beforeErrorRate?: number | null
+    beforeThroughput?: number | null
+    afterTimeSpent?: number | null
+    afterErrorRate?: number | null
+    afterThroughput?: number | null
+    timeReduction?: number | null
+    errorReduction?: number | null
+    throughputIncrease?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EfficiencyMetricUncheckedCreateWithoutWorkflowInput = {
+    id?: string
+    period: string
+    beforeTimeSpent?: number | null
+    beforeErrorRate?: number | null
+    beforeThroughput?: number | null
+    afterTimeSpent?: number | null
+    afterErrorRate?: number | null
+    afterThroughput?: number | null
+    timeReduction?: number | null
+    errorReduction?: number | null
+    throughputIncrease?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EfficiencyMetricCreateOrConnectWithoutWorkflowInput = {
+    where: EfficiencyMetricWhereUniqueInput
+    create: XOR<EfficiencyMetricCreateWithoutWorkflowInput, EfficiencyMetricUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type EfficiencyMetricCreateManyWorkflowInputEnvelope = {
+    data: EfficiencyMetricCreateManyWorkflowInput | EfficiencyMetricCreateManyWorkflowInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkflowHealthCreateWithoutWorkflowInput = {
+    id?: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recommendations?: HealthRecommendationCreateNestedManyWithoutWorkflowHealthInput
+    alerts?: HealthAlertCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthUncheckedCreateWithoutWorkflowInput = {
+    id?: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recommendations?: HealthRecommendationUncheckedCreateNestedManyWithoutWorkflowHealthInput
+    alerts?: HealthAlertUncheckedCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthCreateOrConnectWithoutWorkflowInput = {
+    where: WorkflowHealthWhereUniqueInput
+    create: XOR<WorkflowHealthCreateWithoutWorkflowInput, WorkflowHealthUncheckedCreateWithoutWorkflowInput>
+  }
+
   export type UserUpsertWithoutWorkflowsInput = {
     update: XOR<UserUpdateWithoutWorkflowsInput, UserUncheckedUpdateWithoutWorkflowsInput>
     create: XOR<UserCreateWithoutWorkflowsInput, UserUncheckedCreateWithoutWorkflowsInput>
@@ -17141,6 +29795,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWorkflowsInput = {
@@ -17158,6 +29814,8 @@ export namespace Prisma {
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkflowCredentialUpsertWithWhereUniqueWithoutWorkflowInput = {
@@ -17225,6 +29883,111 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AutomationMetrics"> | Date | string
   }
 
+  export type BusinessOutcomeUpsertWithWhereUniqueWithoutWorkflowInput = {
+    where: BusinessOutcomeWhereUniqueInput
+    update: XOR<BusinessOutcomeUpdateWithoutWorkflowInput, BusinessOutcomeUncheckedUpdateWithoutWorkflowInput>
+    create: XOR<BusinessOutcomeCreateWithoutWorkflowInput, BusinessOutcomeUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type BusinessOutcomeUpdateWithWhereUniqueWithoutWorkflowInput = {
+    where: BusinessOutcomeWhereUniqueInput
+    data: XOR<BusinessOutcomeUpdateWithoutWorkflowInput, BusinessOutcomeUncheckedUpdateWithoutWorkflowInput>
+  }
+
+  export type BusinessOutcomeUpdateManyWithWhereWithoutWorkflowInput = {
+    where: BusinessOutcomeScalarWhereInput
+    data: XOR<BusinessOutcomeUpdateManyMutationInput, BusinessOutcomeUncheckedUpdateManyWithoutWorkflowInput>
+  }
+
+  export type BusinessOutcomeScalarWhereInput = {
+    AND?: BusinessOutcomeScalarWhereInput | BusinessOutcomeScalarWhereInput[]
+    OR?: BusinessOutcomeScalarWhereInput[]
+    NOT?: BusinessOutcomeScalarWhereInput | BusinessOutcomeScalarWhereInput[]
+    id?: StringFilter<"BusinessOutcome"> | string
+    workflowId?: StringFilter<"BusinessOutcome"> | string
+    outcomeType?: EnumBusinessOutcomeTypeFilter<"BusinessOutcome"> | $Enums.BusinessOutcomeType
+    value?: FloatFilter<"BusinessOutcome"> | number
+    timestamp?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    metadata?: JsonNullableFilter<"BusinessOutcome">
+    createdAt?: DateTimeFilter<"BusinessOutcome"> | Date | string
+    updatedAt?: DateTimeFilter<"BusinessOutcome"> | Date | string
+  }
+
+  export type EfficiencyMetricUpsertWithWhereUniqueWithoutWorkflowInput = {
+    where: EfficiencyMetricWhereUniqueInput
+    update: XOR<EfficiencyMetricUpdateWithoutWorkflowInput, EfficiencyMetricUncheckedUpdateWithoutWorkflowInput>
+    create: XOR<EfficiencyMetricCreateWithoutWorkflowInput, EfficiencyMetricUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type EfficiencyMetricUpdateWithWhereUniqueWithoutWorkflowInput = {
+    where: EfficiencyMetricWhereUniqueInput
+    data: XOR<EfficiencyMetricUpdateWithoutWorkflowInput, EfficiencyMetricUncheckedUpdateWithoutWorkflowInput>
+  }
+
+  export type EfficiencyMetricUpdateManyWithWhereWithoutWorkflowInput = {
+    where: EfficiencyMetricScalarWhereInput
+    data: XOR<EfficiencyMetricUpdateManyMutationInput, EfficiencyMetricUncheckedUpdateManyWithoutWorkflowInput>
+  }
+
+  export type EfficiencyMetricScalarWhereInput = {
+    AND?: EfficiencyMetricScalarWhereInput | EfficiencyMetricScalarWhereInput[]
+    OR?: EfficiencyMetricScalarWhereInput[]
+    NOT?: EfficiencyMetricScalarWhereInput | EfficiencyMetricScalarWhereInput[]
+    id?: StringFilter<"EfficiencyMetric"> | string
+    workflowId?: StringFilter<"EfficiencyMetric"> | string
+    period?: StringFilter<"EfficiencyMetric"> | string
+    beforeTimeSpent?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    beforeErrorRate?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    beforeThroughput?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterTimeSpent?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterErrorRate?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    afterThroughput?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    timeReduction?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    errorReduction?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    throughputIncrease?: FloatNullableFilter<"EfficiencyMetric"> | number | null
+    createdAt?: DateTimeFilter<"EfficiencyMetric"> | Date | string
+    updatedAt?: DateTimeFilter<"EfficiencyMetric"> | Date | string
+  }
+
+  export type WorkflowHealthUpsertWithoutWorkflowInput = {
+    update: XOR<WorkflowHealthUpdateWithoutWorkflowInput, WorkflowHealthUncheckedUpdateWithoutWorkflowInput>
+    create: XOR<WorkflowHealthCreateWithoutWorkflowInput, WorkflowHealthUncheckedCreateWithoutWorkflowInput>
+    where?: WorkflowHealthWhereInput
+  }
+
+  export type WorkflowHealthUpdateToOneWithWhereWithoutWorkflowInput = {
+    where?: WorkflowHealthWhereInput
+    data: XOR<WorkflowHealthUpdateWithoutWorkflowInput, WorkflowHealthUncheckedUpdateWithoutWorkflowInput>
+  }
+
+  export type WorkflowHealthUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recommendations?: HealthRecommendationUpdateManyWithoutWorkflowHealthNestedInput
+    alerts?: HealthAlertUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type WorkflowHealthUncheckedUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recommendations?: HealthRecommendationUncheckedUpdateManyWithoutWorkflowHealthNestedInput
+    alerts?: HealthAlertUncheckedUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
   export type WorkflowCreateWithoutWorkflowCredentialsInput = {
     id?: string
     name: string
@@ -17250,6 +30013,9 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutWorkflowsInput
     workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowUncheckedCreateWithoutWorkflowCredentialsInput = {
@@ -17277,6 +30043,9 @@ export namespace Prisma {
     config?: NullableJsonNullValueInput | InputJsonValue
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowCreateOrConnectWithoutWorkflowCredentialsInput = {
@@ -17351,6 +30120,9 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
     workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateWithoutWorkflowCredentialsInput = {
@@ -17378,6 +30150,9 @@ export namespace Prisma {
     config?: NullableJsonNullValueInput | InputJsonValue
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
   }
 
   export type CredentialUpsertWithoutWorkflowCredentialsInput = {
@@ -17442,6 +30217,9 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutWorkflowsInput
     workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowUncheckedCreateWithoutWorkflowRunsInput = {
@@ -17469,6 +30247,9 @@ export namespace Prisma {
     config?: NullableJsonNullValueInput | InputJsonValue
     workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
     automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowCreateOrConnectWithoutWorkflowRunsInput = {
@@ -17491,6 +30272,8 @@ export namespace Prisma {
     credentials?: CredentialCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWorkflowRunsInput = {
@@ -17508,6 +30291,8 @@ export namespace Prisma {
     credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
     serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWorkflowRunsInput = {
@@ -17551,6 +30336,9 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
     workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateWithoutWorkflowRunsInput = {
@@ -17578,6 +30366,9 @@ export namespace Prisma {
     config?: NullableJsonNullValueInput | InputJsonValue
     workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
   }
 
   export type UserUpsertWithoutWorkflowRunsInput = {
@@ -17606,6 +30397,8 @@ export namespace Prisma {
     credentials?: CredentialUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWorkflowRunsInput = {
@@ -17623,6 +30416,8 @@ export namespace Prisma {
     credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
     serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutClientBrandingInput = {
@@ -17640,6 +30435,8 @@ export namespace Prisma {
     credentials?: CredentialCreateNestedManyWithoutUserInput
     workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
     serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutClientBrandingInput = {
@@ -17657,6 +30454,8 @@ export namespace Prisma {
     credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
     serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutClientBrandingInput = {
@@ -17690,6 +30489,8 @@ export namespace Prisma {
     credentials?: CredentialUpdateManyWithoutUserNestedInput
     workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
     serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClientBrandingInput = {
@@ -17707,6 +30508,8 @@ export namespace Prisma {
     credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
     serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutServiceRequestsInput = {
@@ -17724,6 +30527,8 @@ export namespace Prisma {
     credentials?: CredentialCreateNestedManyWithoutUserInput
     workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutServiceRequestsInput = {
@@ -17741,6 +30546,8 @@ export namespace Prisma {
     credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
     clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutServiceRequestsInput = {
@@ -17774,6 +30581,8 @@ export namespace Prisma {
     credentials?: CredentialUpdateManyWithoutUserNestedInput
     workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutServiceRequestsInput = {
@@ -17791,6 +30600,8 @@ export namespace Prisma {
     credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
     clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkflowCreateWithoutAutomationMetricsInput = {
@@ -17818,6 +30629,9 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutWorkflowsInput
     workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
     workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowUncheckedCreateWithoutAutomationMetricsInput = {
@@ -17845,6 +30659,9 @@ export namespace Prisma {
     config?: NullableJsonNullValueInput | InputJsonValue
     workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
     workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
   }
 
   export type WorkflowCreateOrConnectWithoutAutomationMetricsInput = {
@@ -17888,6 +30705,9 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
     workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
     workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateWithoutAutomationMetricsInput = {
@@ -17915,6 +30735,892 @@ export namespace Prisma {
     config?: NullableJsonNullValueInput | InputJsonValue
     workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
+  }
+
+  export type WorkflowCreateWithoutBusinessOutcomesInput = {
+    id?: string
+    name: string
+    templateId: string
+    description?: string | null
+    available?: boolean
+    status?: $Enums.WorkflowStatus
+    canBeScheduled?: boolean
+    idempotencyKey?: string | null
+    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
+    timezone?: string | null
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    requiredProviders?: WorkflowCreaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutWorkflowsInput
+    workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
+    workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
+    automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
+  }
+
+  export type WorkflowUncheckedCreateWithoutBusinessOutcomesInput = {
+    id?: string
+    name: string
+    templateId: string
+    description?: string | null
+    available?: boolean
+    status?: $Enums.WorkflowStatus
+    canBeScheduled?: boolean
+    idempotencyKey?: string | null
+    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
+    timezone?: string | null
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    requiredProviders?: WorkflowCreaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
+    automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
+  }
+
+  export type WorkflowCreateOrConnectWithoutBusinessOutcomesInput = {
+    where: WorkflowWhereUniqueInput
+    create: XOR<WorkflowCreateWithoutBusinessOutcomesInput, WorkflowUncheckedCreateWithoutBusinessOutcomesInput>
+  }
+
+  export type WorkflowUpsertWithoutBusinessOutcomesInput = {
+    update: XOR<WorkflowUpdateWithoutBusinessOutcomesInput, WorkflowUncheckedUpdateWithoutBusinessOutcomesInput>
+    create: XOR<WorkflowCreateWithoutBusinessOutcomesInput, WorkflowUncheckedCreateWithoutBusinessOutcomesInput>
+    where?: WorkflowWhereInput
+  }
+
+  export type WorkflowUpdateToOneWithWhereWithoutBusinessOutcomesInput = {
+    where?: WorkflowWhereInput
+    data: XOR<WorkflowUpdateWithoutBusinessOutcomesInput, WorkflowUncheckedUpdateWithoutBusinessOutcomesInput>
+  }
+
+  export type WorkflowUpdateWithoutBusinessOutcomesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    available?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
+    canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
+    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requiredProviders?: WorkflowUpdaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
+    workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
+    workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
+    automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
+  }
+
+  export type WorkflowUncheckedUpdateWithoutBusinessOutcomesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    available?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
+    canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
+    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    requiredProviders?: WorkflowUpdaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
+    automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
+  }
+
+  export type WorkflowCreateWithoutEfficiencyMetricsInput = {
+    id?: string
+    name: string
+    templateId: string
+    description?: string | null
+    available?: boolean
+    status?: $Enums.WorkflowStatus
+    canBeScheduled?: boolean
+    idempotencyKey?: string | null
+    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
+    timezone?: string | null
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    requiredProviders?: WorkflowCreaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutWorkflowsInput
+    workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
+    workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
+    automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthCreateNestedOneWithoutWorkflowInput
+  }
+
+  export type WorkflowUncheckedCreateWithoutEfficiencyMetricsInput = {
+    id?: string
+    name: string
+    templateId: string
+    description?: string | null
+    available?: boolean
+    status?: $Enums.WorkflowStatus
+    canBeScheduled?: boolean
+    idempotencyKey?: string | null
+    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
+    timezone?: string | null
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    requiredProviders?: WorkflowCreaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
+    automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowHealth?: WorkflowHealthUncheckedCreateNestedOneWithoutWorkflowInput
+  }
+
+  export type WorkflowCreateOrConnectWithoutEfficiencyMetricsInput = {
+    where: WorkflowWhereUniqueInput
+    create: XOR<WorkflowCreateWithoutEfficiencyMetricsInput, WorkflowUncheckedCreateWithoutEfficiencyMetricsInput>
+  }
+
+  export type WorkflowUpsertWithoutEfficiencyMetricsInput = {
+    update: XOR<WorkflowUpdateWithoutEfficiencyMetricsInput, WorkflowUncheckedUpdateWithoutEfficiencyMetricsInput>
+    create: XOR<WorkflowCreateWithoutEfficiencyMetricsInput, WorkflowUncheckedCreateWithoutEfficiencyMetricsInput>
+    where?: WorkflowWhereInput
+  }
+
+  export type WorkflowUpdateToOneWithWhereWithoutEfficiencyMetricsInput = {
+    where?: WorkflowWhereInput
+    data: XOR<WorkflowUpdateWithoutEfficiencyMetricsInput, WorkflowUncheckedUpdateWithoutEfficiencyMetricsInput>
+  }
+
+  export type WorkflowUpdateWithoutEfficiencyMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    available?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
+    canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
+    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requiredProviders?: WorkflowUpdaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
+    workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
+    workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
+    automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
+  }
+
+  export type WorkflowUncheckedUpdateWithoutEfficiencyMetricsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    available?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
+    canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
+    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    requiredProviders?: WorkflowUpdaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
+    automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
+  }
+
+  export type UserCreateWithoutAutomationOpportunitiesInput = {
+    id?: string
+    clerk_id: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    phone_number?: string | null
+    role?: string
+    language?: string
+    is_active?: boolean
+    workflows?: WorkflowCreateNestedManyWithoutUserInput
+    credentials?: CredentialCreateNestedManyWithoutUserInput
+    workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
+    clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
+    serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAutomationOpportunitiesInput = {
+    id?: string
+    clerk_id: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    phone_number?: string | null
+    role?: string
+    language?: string
+    is_active?: boolean
+    workflows?: WorkflowUncheckedCreateNestedManyWithoutUserInput
+    credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
+    workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
+    clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
+    serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    executiveReports?: ExecutiveReportUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAutomationOpportunitiesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAutomationOpportunitiesInput, UserUncheckedCreateWithoutAutomationOpportunitiesInput>
+  }
+
+  export type UserUpsertWithoutAutomationOpportunitiesInput = {
+    update: XOR<UserUpdateWithoutAutomationOpportunitiesInput, UserUncheckedUpdateWithoutAutomationOpportunitiesInput>
+    create: XOR<UserCreateWithoutAutomationOpportunitiesInput, UserUncheckedCreateWithoutAutomationOpportunitiesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAutomationOpportunitiesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAutomationOpportunitiesInput, UserUncheckedUpdateWithoutAutomationOpportunitiesInput>
+  }
+
+  export type UserUpdateWithoutAutomationOpportunitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerk_id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    workflows?: WorkflowUpdateManyWithoutUserNestedInput
+    credentials?: CredentialUpdateManyWithoutUserNestedInput
+    workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
+    clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
+    serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAutomationOpportunitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerk_id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput
+    credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
+    workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
+    clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
+    serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    executiveReports?: ExecutiveReportUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type WorkflowCreateWithoutWorkflowHealthInput = {
+    id?: string
+    name: string
+    templateId: string
+    description?: string | null
+    available?: boolean
+    status?: $Enums.WorkflowStatus
+    canBeScheduled?: boolean
+    idempotencyKey?: string | null
+    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
+    timezone?: string | null
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    requiredProviders?: WorkflowCreaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutWorkflowsInput
+    workflowCredentials?: WorkflowCredentialCreateNestedManyWithoutWorkflowInput
+    workflowRuns?: WorkflowRunCreateNestedManyWithoutWorkflowInput
+    automationMetrics?: AutomationMetricsCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricCreateNestedManyWithoutWorkflowInput
+  }
+
+  export type WorkflowUncheckedCreateWithoutWorkflowHealthInput = {
+    id?: string
+    name: string
+    templateId: string
+    description?: string | null
+    available?: boolean
+    status?: $Enums.WorkflowStatus
+    canBeScheduled?: boolean
+    idempotencyKey?: string | null
+    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
+    timezone?: string | null
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    requiredProviders?: WorkflowCreaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    workflowCredentials?: WorkflowCredentialUncheckedCreateNestedManyWithoutWorkflowInput
+    workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutWorkflowInput
+    automationMetrics?: AutomationMetricsUncheckedCreateNestedManyWithoutWorkflowInput
+    businessOutcomes?: BusinessOutcomeUncheckedCreateNestedManyWithoutWorkflowInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedCreateNestedManyWithoutWorkflowInput
+  }
+
+  export type WorkflowCreateOrConnectWithoutWorkflowHealthInput = {
+    where: WorkflowWhereUniqueInput
+    create: XOR<WorkflowCreateWithoutWorkflowHealthInput, WorkflowUncheckedCreateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthRecommendationCreateWithoutWorkflowHealthInput = {
+    id?: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented?: boolean
+    implementedAt?: Date | string | null
+    effectivenessScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput = {
+    id?: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented?: boolean
+    implementedAt?: Date | string | null
+    effectivenessScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthRecommendationCreateOrConnectWithoutWorkflowHealthInput = {
+    where: HealthRecommendationWhereUniqueInput
+    create: XOR<HealthRecommendationCreateWithoutWorkflowHealthInput, HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthRecommendationCreateManyWorkflowHealthInputEnvelope = {
+    data: HealthRecommendationCreateManyWorkflowHealthInput | HealthRecommendationCreateManyWorkflowHealthInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type HealthAlertCreateWithoutWorkflowHealthInput = {
+    id?: string
+    alertType: string
+    severity: string
+    message: string
+    threshold?: number | null
+    currentValue?: number | null
+    isAcknowledged?: boolean
+    acknowledgedAt?: Date | string | null
+    acknowledgedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthAlertUncheckedCreateWithoutWorkflowHealthInput = {
+    id?: string
+    alertType: string
+    severity: string
+    message: string
+    threshold?: number | null
+    currentValue?: number | null
+    isAcknowledged?: boolean
+    acknowledgedAt?: Date | string | null
+    acknowledgedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthAlertCreateOrConnectWithoutWorkflowHealthInput = {
+    where: HealthAlertWhereUniqueInput
+    create: XOR<HealthAlertCreateWithoutWorkflowHealthInput, HealthAlertUncheckedCreateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthAlertCreateManyWorkflowHealthInputEnvelope = {
+    data: HealthAlertCreateManyWorkflowHealthInput | HealthAlertCreateManyWorkflowHealthInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkflowUpsertWithoutWorkflowHealthInput = {
+    update: XOR<WorkflowUpdateWithoutWorkflowHealthInput, WorkflowUncheckedUpdateWithoutWorkflowHealthInput>
+    create: XOR<WorkflowCreateWithoutWorkflowHealthInput, WorkflowUncheckedCreateWithoutWorkflowHealthInput>
+    where?: WorkflowWhereInput
+  }
+
+  export type WorkflowUpdateToOneWithWhereWithoutWorkflowHealthInput = {
+    where?: WorkflowWhereInput
+    data: XOR<WorkflowUpdateWithoutWorkflowHealthInput, WorkflowUncheckedUpdateWithoutWorkflowHealthInput>
+  }
+
+  export type WorkflowUpdateWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    available?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
+    canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
+    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requiredProviders?: WorkflowUpdaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutWorkflowsNestedInput
+    workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
+    workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
+    automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+  }
+
+  export type WorkflowUncheckedUpdateWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    available?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
+    canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
+    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fields?: NullableJsonNullValueInput | InputJsonValue
+    input?: NullableJsonNullValueInput | InputJsonValue
+    eventName?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    requiredProviders?: WorkflowUpdaterequiredProvidersInput | $Enums.Provider[]
+    requiredScopes?: NullableJsonNullValueInput | InputJsonValue
+    version?: NullableStringFieldUpdateOperationsInput | string | null
+    config?: NullableJsonNullValueInput | InputJsonValue
+    workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
+    automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+  }
+
+  export type HealthRecommendationUpsertWithWhereUniqueWithoutWorkflowHealthInput = {
+    where: HealthRecommendationWhereUniqueInput
+    update: XOR<HealthRecommendationUpdateWithoutWorkflowHealthInput, HealthRecommendationUncheckedUpdateWithoutWorkflowHealthInput>
+    create: XOR<HealthRecommendationCreateWithoutWorkflowHealthInput, HealthRecommendationUncheckedCreateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthRecommendationUpdateWithWhereUniqueWithoutWorkflowHealthInput = {
+    where: HealthRecommendationWhereUniqueInput
+    data: XOR<HealthRecommendationUpdateWithoutWorkflowHealthInput, HealthRecommendationUncheckedUpdateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthRecommendationUpdateManyWithWhereWithoutWorkflowHealthInput = {
+    where: HealthRecommendationScalarWhereInput
+    data: XOR<HealthRecommendationUpdateManyMutationInput, HealthRecommendationUncheckedUpdateManyWithoutWorkflowHealthInput>
+  }
+
+  export type HealthRecommendationScalarWhereInput = {
+    AND?: HealthRecommendationScalarWhereInput | HealthRecommendationScalarWhereInput[]
+    OR?: HealthRecommendationScalarWhereInput[]
+    NOT?: HealthRecommendationScalarWhereInput | HealthRecommendationScalarWhereInput[]
+    id?: StringFilter<"HealthRecommendation"> | string
+    workflowHealthId?: StringFilter<"HealthRecommendation"> | string
+    type?: EnumHealthRecommendationTypeFilter<"HealthRecommendation"> | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFilter<"HealthRecommendation"> | $Enums.HealthRecommendationPriority
+    title?: StringFilter<"HealthRecommendation"> | string
+    description?: StringFilter<"HealthRecommendation"> | string
+    estimatedImpact?: StringFilter<"HealthRecommendation"> | string
+    implementationEffort?: EnumImplementationEffortFilter<"HealthRecommendation"> | $Enums.ImplementationEffort
+    isImplemented?: BoolFilter<"HealthRecommendation"> | boolean
+    implementedAt?: DateTimeNullableFilter<"HealthRecommendation"> | Date | string | null
+    effectivenessScore?: IntNullableFilter<"HealthRecommendation"> | number | null
+    createdAt?: DateTimeFilter<"HealthRecommendation"> | Date | string
+    updatedAt?: DateTimeFilter<"HealthRecommendation"> | Date | string
+  }
+
+  export type HealthAlertUpsertWithWhereUniqueWithoutWorkflowHealthInput = {
+    where: HealthAlertWhereUniqueInput
+    update: XOR<HealthAlertUpdateWithoutWorkflowHealthInput, HealthAlertUncheckedUpdateWithoutWorkflowHealthInput>
+    create: XOR<HealthAlertCreateWithoutWorkflowHealthInput, HealthAlertUncheckedCreateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthAlertUpdateWithWhereUniqueWithoutWorkflowHealthInput = {
+    where: HealthAlertWhereUniqueInput
+    data: XOR<HealthAlertUpdateWithoutWorkflowHealthInput, HealthAlertUncheckedUpdateWithoutWorkflowHealthInput>
+  }
+
+  export type HealthAlertUpdateManyWithWhereWithoutWorkflowHealthInput = {
+    where: HealthAlertScalarWhereInput
+    data: XOR<HealthAlertUpdateManyMutationInput, HealthAlertUncheckedUpdateManyWithoutWorkflowHealthInput>
+  }
+
+  export type HealthAlertScalarWhereInput = {
+    AND?: HealthAlertScalarWhereInput | HealthAlertScalarWhereInput[]
+    OR?: HealthAlertScalarWhereInput[]
+    NOT?: HealthAlertScalarWhereInput | HealthAlertScalarWhereInput[]
+    id?: StringFilter<"HealthAlert"> | string
+    workflowHealthId?: StringFilter<"HealthAlert"> | string
+    alertType?: StringFilter<"HealthAlert"> | string
+    severity?: StringFilter<"HealthAlert"> | string
+    message?: StringFilter<"HealthAlert"> | string
+    threshold?: FloatNullableFilter<"HealthAlert"> | number | null
+    currentValue?: FloatNullableFilter<"HealthAlert"> | number | null
+    isAcknowledged?: BoolFilter<"HealthAlert"> | boolean
+    acknowledgedAt?: DateTimeNullableFilter<"HealthAlert"> | Date | string | null
+    acknowledgedBy?: StringNullableFilter<"HealthAlert"> | string | null
+    createdAt?: DateTimeFilter<"HealthAlert"> | Date | string
+    updatedAt?: DateTimeFilter<"HealthAlert"> | Date | string
+  }
+
+  export type WorkflowHealthCreateWithoutRecommendationsInput = {
+    id?: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflow: WorkflowCreateNestedOneWithoutWorkflowHealthInput
+    alerts?: HealthAlertCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthUncheckedCreateWithoutRecommendationsInput = {
+    id?: string
+    workflowId: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    alerts?: HealthAlertUncheckedCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthCreateOrConnectWithoutRecommendationsInput = {
+    where: WorkflowHealthWhereUniqueInput
+    create: XOR<WorkflowHealthCreateWithoutRecommendationsInput, WorkflowHealthUncheckedCreateWithoutRecommendationsInput>
+  }
+
+  export type WorkflowHealthUpsertWithoutRecommendationsInput = {
+    update: XOR<WorkflowHealthUpdateWithoutRecommendationsInput, WorkflowHealthUncheckedUpdateWithoutRecommendationsInput>
+    create: XOR<WorkflowHealthCreateWithoutRecommendationsInput, WorkflowHealthUncheckedCreateWithoutRecommendationsInput>
+    where?: WorkflowHealthWhereInput
+  }
+
+  export type WorkflowHealthUpdateToOneWithWhereWithoutRecommendationsInput = {
+    where?: WorkflowHealthWhereInput
+    data: XOR<WorkflowHealthUpdateWithoutRecommendationsInput, WorkflowHealthUncheckedUpdateWithoutRecommendationsInput>
+  }
+
+  export type WorkflowHealthUpdateWithoutRecommendationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflow?: WorkflowUpdateOneRequiredWithoutWorkflowHealthNestedInput
+    alerts?: HealthAlertUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type WorkflowHealthUncheckedUpdateWithoutRecommendationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerts?: HealthAlertUncheckedUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type WorkflowHealthCreateWithoutAlertsInput = {
+    id?: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workflow: WorkflowCreateNestedOneWithoutWorkflowHealthInput
+    recommendations?: HealthRecommendationCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthUncheckedCreateWithoutAlertsInput = {
+    id?: string
+    workflowId: string
+    healthScore: number
+    lastCalculated?: Date | string
+    successRate?: number | null
+    performanceTrend?: number | null
+    errorPattern?: number | null
+    businessImpact?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recommendations?: HealthRecommendationUncheckedCreateNestedManyWithoutWorkflowHealthInput
+  }
+
+  export type WorkflowHealthCreateOrConnectWithoutAlertsInput = {
+    where: WorkflowHealthWhereUniqueInput
+    create: XOR<WorkflowHealthCreateWithoutAlertsInput, WorkflowHealthUncheckedCreateWithoutAlertsInput>
+  }
+
+  export type WorkflowHealthUpsertWithoutAlertsInput = {
+    update: XOR<WorkflowHealthUpdateWithoutAlertsInput, WorkflowHealthUncheckedUpdateWithoutAlertsInput>
+    create: XOR<WorkflowHealthCreateWithoutAlertsInput, WorkflowHealthUncheckedCreateWithoutAlertsInput>
+    where?: WorkflowHealthWhereInput
+  }
+
+  export type WorkflowHealthUpdateToOneWithWhereWithoutAlertsInput = {
+    where?: WorkflowHealthWhereInput
+    data: XOR<WorkflowHealthUpdateWithoutAlertsInput, WorkflowHealthUncheckedUpdateWithoutAlertsInput>
+  }
+
+  export type WorkflowHealthUpdateWithoutAlertsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflow?: WorkflowUpdateOneRequiredWithoutWorkflowHealthNestedInput
+    recommendations?: HealthRecommendationUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type WorkflowHealthUncheckedUpdateWithoutAlertsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowId?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    lastCalculated?: DateTimeFieldUpdateOperationsInput | Date | string
+    successRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    performanceTrend?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorPattern?: NullableFloatFieldUpdateOperationsInput | number | null
+    businessImpact?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recommendations?: HealthRecommendationUncheckedUpdateManyWithoutWorkflowHealthNestedInput
+  }
+
+  export type UserCreateWithoutExecutiveReportsInput = {
+    id?: string
+    clerk_id: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    phone_number?: string | null
+    role?: string
+    language?: string
+    is_active?: boolean
+    workflows?: WorkflowCreateNestedManyWithoutUserInput
+    credentials?: CredentialCreateNestedManyWithoutUserInput
+    workflowRuns?: WorkflowRunCreateNestedManyWithoutUserInput
+    clientBranding?: ClientBrandingCreateNestedOneWithoutUserInput
+    serviceRequests?: ServiceRequestCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutExecutiveReportsInput = {
+    id?: string
+    clerk_id: string
+    email: string
+    name?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    phone_number?: string | null
+    role?: string
+    language?: string
+    is_active?: boolean
+    workflows?: WorkflowUncheckedCreateNestedManyWithoutUserInput
+    credentials?: CredentialUncheckedCreateNestedManyWithoutUserInput
+    workflowRuns?: WorkflowRunUncheckedCreateNestedManyWithoutUserInput
+    clientBranding?: ClientBrandingUncheckedCreateNestedOneWithoutUserInput
+    serviceRequests?: ServiceRequestUncheckedCreateNestedManyWithoutUserInput
+    automationOpportunities?: AutomationOpportunityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutExecutiveReportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutExecutiveReportsInput, UserUncheckedCreateWithoutExecutiveReportsInput>
+  }
+
+  export type UserUpsertWithoutExecutiveReportsInput = {
+    update: XOR<UserUpdateWithoutExecutiveReportsInput, UserUncheckedUpdateWithoutExecutiveReportsInput>
+    create: XOR<UserCreateWithoutExecutiveReportsInput, UserUncheckedCreateWithoutExecutiveReportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutExecutiveReportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutExecutiveReportsInput, UserUncheckedUpdateWithoutExecutiveReportsInput>
+  }
+
+  export type UserUpdateWithoutExecutiveReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerk_id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    workflows?: WorkflowUpdateManyWithoutUserNestedInput
+    credentials?: CredentialUpdateManyWithoutUserNestedInput
+    workflowRuns?: WorkflowRunUpdateManyWithoutUserNestedInput
+    clientBranding?: ClientBrandingUpdateOneWithoutUserNestedInput
+    serviceRequests?: ServiceRequestUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutExecutiveReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clerk_id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
+    language?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    workflows?: WorkflowUncheckedUpdateManyWithoutUserNestedInput
+    credentials?: CredentialUncheckedUpdateManyWithoutUserNestedInput
+    workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutUserNestedInput
+    clientBranding?: ClientBrandingUncheckedUpdateOneWithoutUserNestedInput
+    serviceRequests?: ServiceRequestUncheckedUpdateManyWithoutUserNestedInput
+    automationOpportunities?: AutomationOpportunityUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkflowCreateManyUserInput = {
@@ -17989,6 +31695,43 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type AutomationOpportunityCreateManyUserInput = {
+    id?: string
+    title: string
+    description: string
+    category: $Enums.OpportunityCategory
+    impactScore: number
+    difficultyScore: number
+    timeSavingsHours?: number | null
+    costSavings?: Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: number | null
+    requiredIntegrations?: AutomationOpportunityCreaterequiredIntegrationsInput | string[]
+    status?: $Enums.OpportunityStatus
+    identifiedAt?: Date | string
+    dismissalReason?: string | null
+    implementationNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExecutiveReportCreateManyUserInput = {
+    id?: string
+    title: string
+    periodStart: Date | string
+    periodEnd: Date | string
+    format: string
+    sections: JsonNullValueInput | InputJsonValue
+    companyName?: string | null
+    logoUrl?: string | null
+    primaryColor?: string | null
+    shareableLink?: string | null
+    linkExpiresAt?: Date | string | null
+    isPublic?: boolean
+    generatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type WorkflowUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -18014,6 +31757,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialUpdateManyWithoutWorkflowNestedInput
     workflowRuns?: WorkflowRunUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateWithoutUserInput = {
@@ -18041,6 +31787,9 @@ export namespace Prisma {
     workflowCredentials?: WorkflowCredentialUncheckedUpdateManyWithoutWorkflowNestedInput
     workflowRuns?: WorkflowRunUncheckedUpdateManyWithoutWorkflowNestedInput
     automationMetrics?: AutomationMetricsUncheckedUpdateManyWithoutWorkflowNestedInput
+    businessOutcomes?: BusinessOutcomeUncheckedUpdateManyWithoutWorkflowNestedInput
+    efficiencyMetrics?: EfficiencyMetricUncheckedUpdateManyWithoutWorkflowNestedInput
+    workflowHealth?: WorkflowHealthUncheckedUpdateOneWithoutWorkflowNestedInput
   }
 
   export type WorkflowUncheckedUpdateManyWithoutUserInput = {
@@ -18213,6 +31962,117 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AutomationOpportunityUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationOpportunityUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationOpportunityUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    category?: EnumOpportunityCategoryFieldUpdateOperationsInput | $Enums.OpportunityCategory
+    impactScore?: IntFieldUpdateOperationsInput | number
+    difficultyScore?: IntFieldUpdateOperationsInput | number
+    timeSavingsHours?: NullableFloatFieldUpdateOperationsInput | number | null
+    costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paybackPeriodMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredIntegrations?: AutomationOpportunityUpdaterequiredIntegrationsInput | string[]
+    status?: EnumOpportunityStatusFieldUpdateOperationsInput | $Enums.OpportunityStatus
+    identifiedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dismissalReason?: NullableStringFieldUpdateOperationsInput | string | null
+    implementationNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExecutiveReportUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExecutiveReportUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExecutiveReportUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    periodStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    periodEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    format?: StringFieldUpdateOperationsInput | string
+    sections?: JsonNullValueInput | InputJsonValue
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    shareableLink?: NullableStringFieldUpdateOperationsInput | string | null
+    linkExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    generatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WorkflowCredentialCreateManyCredentialInput = {
     workflowId: string
   }
@@ -18261,6 +32121,32 @@ export namespace Prisma {
     errorsPrevented?: number | null
     costSavings?: Decimal | DecimalJsLike | number | string | null
     createdAt?: Date | string
+  }
+
+  export type BusinessOutcomeCreateManyWorkflowInput = {
+    id?: string
+    outcomeType: $Enums.BusinessOutcomeType
+    value: number
+    timestamp?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EfficiencyMetricCreateManyWorkflowInput = {
+    id?: string
+    period: string
+    beforeTimeSpent?: number | null
+    beforeErrorRate?: number | null
+    beforeThroughput?: number | null
+    afterTimeSpent?: number | null
+    afterErrorRate?: number | null
+    afterThroughput?: number | null
+    timeReduction?: number | null
+    errorReduction?: number | null
+    throughputIncrease?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WorkflowCredentialUpdateWithoutWorkflowInput = {
@@ -18363,6 +32249,200 @@ export namespace Prisma {
     errorsPrevented?: NullableIntFieldUpdateOperationsInput | number | null
     costSavings?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BusinessOutcomeUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BusinessOutcomeUncheckedUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BusinessOutcomeUncheckedUpdateManyWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    outcomeType?: EnumBusinessOutcomeTypeFieldUpdateOperationsInput | $Enums.BusinessOutcomeType
+    value?: FloatFieldUpdateOperationsInput | number
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EfficiencyMetricUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EfficiencyMetricUncheckedUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EfficiencyMetricUncheckedUpdateManyWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    period?: StringFieldUpdateOperationsInput | string
+    beforeTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    beforeThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterTimeSpent?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterErrorRate?: NullableFloatFieldUpdateOperationsInput | number | null
+    afterThroughput?: NullableFloatFieldUpdateOperationsInput | number | null
+    timeReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    errorReduction?: NullableFloatFieldUpdateOperationsInput | number | null
+    throughputIncrease?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthRecommendationCreateManyWorkflowHealthInput = {
+    id?: string
+    type: $Enums.HealthRecommendationType
+    priority: $Enums.HealthRecommendationPriority
+    title: string
+    description: string
+    estimatedImpact: string
+    implementationEffort: $Enums.ImplementationEffort
+    isImplemented?: boolean
+    implementedAt?: Date | string | null
+    effectivenessScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthAlertCreateManyWorkflowHealthInput = {
+    id?: string
+    alertType: string
+    severity: string
+    message: string
+    threshold?: number | null
+    currentValue?: number | null
+    isAcknowledged?: boolean
+    acknowledgedAt?: Date | string | null
+    acknowledgedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthRecommendationUpdateWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthRecommendationUncheckedUpdateWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthRecommendationUncheckedUpdateManyWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumHealthRecommendationTypeFieldUpdateOperationsInput | $Enums.HealthRecommendationType
+    priority?: EnumHealthRecommendationPriorityFieldUpdateOperationsInput | $Enums.HealthRecommendationPriority
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    estimatedImpact?: StringFieldUpdateOperationsInput | string
+    implementationEffort?: EnumImplementationEffortFieldUpdateOperationsInput | $Enums.ImplementationEffort
+    isImplemented?: BoolFieldUpdateOperationsInput | boolean
+    implementedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    effectivenessScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthAlertUpdateWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthAlertUncheckedUpdateWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthAlertUncheckedUpdateManyWithoutWorkflowHealthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alertType?: StringFieldUpdateOperationsInput | string
+    severity?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    threshold?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    isAcknowledged?: BoolFieldUpdateOperationsInput | boolean
+    acknowledgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acknowledgedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

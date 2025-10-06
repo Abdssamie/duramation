@@ -46,6 +46,10 @@ model User {
   // Service requests from this user
   serviceRequests ServiceRequest[]
 
+  // Enhanced dashboard relations
+  automationOpportunities AutomationOpportunity[]
+  executiveReports        ExecutiveReport[]
+
   @@map("users")
 }
 
@@ -158,6 +162,11 @@ model Workflow {
 
   // Automation metrics for this workflow
   automationMetrics AutomationMetrics[]
+
+  // Enhanced dashboard relations
+  businessOutcomes  BusinessOutcome[]
+  efficiencyMetrics EfficiencyMetric[]
+  workflowHealth    WorkflowHealth?
 
   @@index([userId])
   @@map("workflows")
@@ -328,4 +337,238 @@ model AutomationMetrics {
   @@index([workflowId])
   @@index([date])
   @@map("automation_metrics")
+}
+
+enum BusinessOutcomeType {
+  LEADS_GENERATED
+  ORDERS_PROCESSED
+  TICKETS_RESOLVED
+  CUSTOM
+}
+
+enum OpportunityCategory {
+  DATA_ENTRY
+  COMMUNICATION
+  REPORTING
+  INTEGRATION
+}
+
+enum OpportunityStatus {
+  IDENTIFIED
+  DISMISSED
+  REQUESTED
+  IMPLEMENTED
+}
+
+enum HealthRecommendationType {
+  PERFORMANCE
+  RELIABILITY
+  OPTIMIZATION
+}
+
+enum HealthRecommendationPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ImplementationEffort {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+// Business outcome tracking for workflows
+model BusinessOutcome {
+  id          String              @id @default(cuid())
+  workflowId  String
+  workflow    Workflow            @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  outcomeType BusinessOutcomeType
+  value       Float
+  timestamp   DateTime            @default(now())
+  metadata    Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workflowId])
+  @@index([timestamp])
+  @@index([outcomeType])
+  @@map("business_outcomes")
+}
+
+// Efficiency metrics comparing before/after automation
+model EfficiencyMetric {
+  id         String   @id @default(cuid())
+  workflowId String
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  period     String // e.g., "2024-Q1", "2024-01"
+
+  // Before automation metrics
+  beforeTimeSpent  Float? // hours
+  beforeErrorRate  Float? // percentage
+  beforeThroughput Float? // items per hour
+
+  // After automation metrics
+  afterTimeSpent  Float? // hours
+  afterErrorRate  Float? // percentage
+  afterThroughput Float? // items per hour
+
+  // Calculated improvements
+  timeReduction      Float? // percentage
+  errorReduction     Float? // percentage
+  throughputIncrease Float? // percentage
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([workflowId, period])
+  @@index([workflowId])
+  @@index([period])
+  @@map("efficiency_metrics")
+}
+
+// Automation opportunity identification and tracking
+model AutomationOpportunity {
+  id              String              @id @default(cuid())
+  userId          String
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title           String
+  description     String
+  category        OpportunityCategory
+  impactScore     Int // 1-10
+  difficultyScore Int // 1-10
+
+  // ROI estimates
+  timeSavingsHours    Float?
+  costSavings         Decimal?
+  paybackPeriodMonths Int?
+
+  requiredIntegrations String[]          @default([])
+  status               OpportunityStatus @default(IDENTIFIED)
+  identifiedAt         DateTime          @default(now())
+
+  // Learning and feedback
+  dismissalReason     String?
+  implementationNotes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@index([impactScore])
+  @@index([identifiedAt])
+  @@map("automation_opportunities")
+}
+
+// Workflow health scoring and monitoring
+model WorkflowHealth {
+  id             String   @id @default(cuid())
+  workflowId     String   @unique
+  workflow       Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  healthScore    Int // 0-100
+  lastCalculated DateTime @default(now())
+
+  // Health factors
+  successRate      Float?
+  performanceTrend Float?
+  errorPattern     Float?
+  businessImpact   Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Related recommendations and alerts
+  recommendations HealthRecommendation[]
+  alerts          HealthAlert[]
+
+  @@index([workflowId])
+  @@index([healthScore])
+  @@index([lastCalculated])
+  @@map("workflow_health")
+}
+
+// Health improvement recommendations
+model HealthRecommendation {
+  id                   String                       @id @default(cuid())
+  workflowHealthId     String
+  workflowHealth       WorkflowHealth               @relation(fields: [workflowHealthId], references: [id], onDelete: Cascade)
+  type                 HealthRecommendationType
+  priority             HealthRecommendationPriority
+  title                String
+  description          String
+  estimatedImpact      String
+  implementationEffort ImplementationEffort
+
+  // Tracking
+  isImplemented      Boolean   @default(false)
+  implementedAt      DateTime?
+  effectivenessScore Int? // 1-10, measured after implementation
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workflowHealthId])
+  @@index([priority])
+  @@index([isImplemented])
+  @@map("health_recommendations")
+}
+
+// Health alerts for declining performance
+model HealthAlert {
+  id               String         @id @default(cuid())
+  workflowHealthId String
+  workflowHealth   WorkflowHealth @relation(fields: [workflowHealthId], references: [id], onDelete: Cascade)
+  alertType        String // e.g., "performance_decline", "error_spike"
+  severity         String // "low", "medium", "high", "critical"
+  message          String
+  threshold        Float? // The threshold that triggered this alert
+  currentValue     Float? // The current value that exceeded the threshold
+
+  isAcknowledged Boolean   @default(false)
+  acknowledgedAt DateTime?
+  acknowledgedBy String? // User ID who acknowledged
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workflowHealthId])
+  @@index([severity])
+  @@index([isAcknowledged])
+  @@index([createdAt])
+  @@map("health_alerts")
+}
+
+// Executive report generation and sharing
+model ExecutiveReport {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  periodStart DateTime
+  periodEnd   DateTime
+  format      String // "pdf", "pptx", "web"
+
+  // Report content
+  sections Json // Array of report sections
+
+  // Branding
+  companyName  String?
+  logoUrl      String?
+  primaryColor String?
+
+  // Sharing
+  shareableLink String?
+  linkExpiresAt DateTime?
+  isPublic      Boolean   @default(false)
+
+  generatedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([generatedAt])
+  @@index([shareableLink])
+  @@map("executive_reports")
 }

@@ -253,6 +253,117 @@ exports.Prisma.AutomationMetricsScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.BusinessOutcomeScalarFieldEnum = {
+  id: 'id',
+  workflowId: 'workflowId',
+  outcomeType: 'outcomeType',
+  value: 'value',
+  timestamp: 'timestamp',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EfficiencyMetricScalarFieldEnum = {
+  id: 'id',
+  workflowId: 'workflowId',
+  period: 'period',
+  beforeTimeSpent: 'beforeTimeSpent',
+  beforeErrorRate: 'beforeErrorRate',
+  beforeThroughput: 'beforeThroughput',
+  afterTimeSpent: 'afterTimeSpent',
+  afterErrorRate: 'afterErrorRate',
+  afterThroughput: 'afterThroughput',
+  timeReduction: 'timeReduction',
+  errorReduction: 'errorReduction',
+  throughputIncrease: 'throughputIncrease',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AutomationOpportunityScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  impactScore: 'impactScore',
+  difficultyScore: 'difficultyScore',
+  timeSavingsHours: 'timeSavingsHours',
+  costSavings: 'costSavings',
+  paybackPeriodMonths: 'paybackPeriodMonths',
+  requiredIntegrations: 'requiredIntegrations',
+  status: 'status',
+  identifiedAt: 'identifiedAt',
+  dismissalReason: 'dismissalReason',
+  implementationNotes: 'implementationNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WorkflowHealthScalarFieldEnum = {
+  id: 'id',
+  workflowId: 'workflowId',
+  healthScore: 'healthScore',
+  lastCalculated: 'lastCalculated',
+  successRate: 'successRate',
+  performanceTrend: 'performanceTrend',
+  errorPattern: 'errorPattern',
+  businessImpact: 'businessImpact',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.HealthRecommendationScalarFieldEnum = {
+  id: 'id',
+  workflowHealthId: 'workflowHealthId',
+  type: 'type',
+  priority: 'priority',
+  title: 'title',
+  description: 'description',
+  estimatedImpact: 'estimatedImpact',
+  implementationEffort: 'implementationEffort',
+  isImplemented: 'isImplemented',
+  implementedAt: 'implementedAt',
+  effectivenessScore: 'effectivenessScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.HealthAlertScalarFieldEnum = {
+  id: 'id',
+  workflowHealthId: 'workflowHealthId',
+  alertType: 'alertType',
+  severity: 'severity',
+  message: 'message',
+  threshold: 'threshold',
+  currentValue: 'currentValue',
+  isAcknowledged: 'isAcknowledged',
+  acknowledgedAt: 'acknowledgedAt',
+  acknowledgedBy: 'acknowledgedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExecutiveReportScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  periodStart: 'periodStart',
+  periodEnd: 'periodEnd',
+  format: 'format',
+  sections: 'sections',
+  companyName: 'companyName',
+  logoUrl: 'logoUrl',
+  primaryColor: 'primaryColor',
+  shareableLink: 'shareableLink',
+  linkExpiresAt: 'linkExpiresAt',
+  isPublic: 'isPublic',
+  generatedAt: 'generatedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -260,6 +371,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -326,6 +441,45 @@ exports.RequestStatus = exports.$Enums.RequestStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.BusinessOutcomeType = exports.$Enums.BusinessOutcomeType = {
+  LEADS_GENERATED: 'LEADS_GENERATED',
+  ORDERS_PROCESSED: 'ORDERS_PROCESSED',
+  TICKETS_RESOLVED: 'TICKETS_RESOLVED',
+  CUSTOM: 'CUSTOM'
+};
+
+exports.OpportunityCategory = exports.$Enums.OpportunityCategory = {
+  DATA_ENTRY: 'DATA_ENTRY',
+  COMMUNICATION: 'COMMUNICATION',
+  REPORTING: 'REPORTING',
+  INTEGRATION: 'INTEGRATION'
+};
+
+exports.OpportunityStatus = exports.$Enums.OpportunityStatus = {
+  IDENTIFIED: 'IDENTIFIED',
+  DISMISSED: 'DISMISSED',
+  REQUESTED: 'REQUESTED',
+  IMPLEMENTED: 'IMPLEMENTED'
+};
+
+exports.HealthRecommendationType = exports.$Enums.HealthRecommendationType = {
+  PERFORMANCE: 'PERFORMANCE',
+  RELIABILITY: 'RELIABILITY',
+  OPTIMIZATION: 'OPTIMIZATION'
+};
+
+exports.HealthRecommendationPriority = exports.$Enums.HealthRecommendationPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+};
+
+exports.ImplementationEffort = exports.$Enums.ImplementationEffort = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Credential: 'Credential',
@@ -335,7 +489,14 @@ exports.Prisma.ModelName = {
   WorkflowTemplate: 'WorkflowTemplate',
   ClientBranding: 'ClientBranding',
   ServiceRequest: 'ServiceRequest',
-  AutomationMetrics: 'AutomationMetrics'
+  AutomationMetrics: 'AutomationMetrics',
+  BusinessOutcome: 'BusinessOutcome',
+  EfficiencyMetric: 'EfficiencyMetric',
+  AutomationOpportunity: 'AutomationOpportunity',
+  WorkflowHealth: 'WorkflowHealth',
+  HealthRecommendation: 'HealthRecommendation',
+  HealthAlert: 'HealthAlert',
+  ExecutiveReport: 'ExecutiveReport'
 };
 
 /**
