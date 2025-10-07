@@ -1,8 +1,8 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate } from "@/lib/realtime-channels";
-import { updateStatusForWorkflow } from "@/utils/updateWorkflowStatus";
 import { RunStatus, WorkflowStatus } from "@duramation/db";
+import {updateStatusForWorkflow} from "@/utils/sendWebhookWithRetry";
 
 
 export const randomTextLoopWorkflow = inngest.createFunction(

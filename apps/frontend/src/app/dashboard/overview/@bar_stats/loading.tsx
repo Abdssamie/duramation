@@ -1,5 +1,5 @@
-import { BarGraphSkeleton } from '@/features/overview/components/bar-graph-skeleton';
+import { WorkflowRunsChartSkeleton } from '@/features/overview/components/workflow-runs-chart-skeleton';
 
 export default function Loading() {
-  return <BarGraphSkeleton />;
+  return <WorkflowRunsChartSkeleton />;
 }

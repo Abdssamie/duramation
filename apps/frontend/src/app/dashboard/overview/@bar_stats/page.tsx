@@ -1,5 +1,5 @@
-import { BarGraph } from '@/features/overview/components/bar-graph';
+import { WorkflowRunsChart } from '@/features/overview/components/workflow-runs-chart';
 
 export default async function BarStats() {
-  return <BarGraph chartType="topWorkflows" />;
+  return <WorkflowRunsChart />;
 }

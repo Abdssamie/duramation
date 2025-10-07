@@ -40,10 +40,15 @@ export function BarGraph({ chartType = 'pageViews' }: BarGraphProps) {
   useEffect(() => {
     const fetchData = async () => {
       if (chartType === 'topWorkflows') {
-        const token = await getToken();
-        if (!token) return;
-        const data = await dashboardApi.getTopWorkflows(token);
-        setChartData(data);
+        // Mock data for top workflows
+        const mockData = [
+          { name: 'Customer Onboarding', runs: 145 },
+          { name: 'Email Marketing', runs: 132 },
+          { name: 'Data Sync', runs: 98 },
+          { name: 'Report Generation', runs: 87 },
+          { name: 'Lead Processing', runs: 76 }
+        ];
+        setChartData(mockData);
         setCardTitle('Top 5 Active Workflows');
         setCardDescription('The most frequently run workflows.');
         setChartConfig({
@@ -54,6 +59,24 @@ export function BarGraph({ chartType = 'pageViews' }: BarGraphProps) {
         } satisfies ChartConfig);
       } else {
         // Existing pageViews data logic
+        const mockPageViewsData = [
+          { date: 'Jan', views: 186 },
+          { date: 'Feb', views: 305 },
+          { date: 'Mar', views: 237 },
+          { date: 'Apr', views: 173 },
+          { date: 'May', views: 209 },
+          { date: 'Jun', views: 214 }
+        ];
+        setChartData(mockPageViewsData);
+        setCardTitle('Page Views');
+        setCardDescription('Monthly page view statistics.');
+        setChartConfig({
+          views: {
+            label: 'Views',
+            color: 'var(--primary)'
+          }
+        } satisfies ChartConfig);
+        setActiveChart('views');
       }
     };
 

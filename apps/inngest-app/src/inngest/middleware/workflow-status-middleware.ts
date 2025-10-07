@@ -1,5 +1,6 @@
 import { InngestMiddleware } from "inngest";
-import { updateStatusForWorkflow } from "@/utils/updateWorkflowStatus";
+import logger from '@/services/logging';
+import {updateStatusForWorkflow} from "@/utils/updateWorkflowStatus";
 
 export const workflowStatusMiddleware = new InngestMiddleware({
   name: "Workflow Status Middleware",
@@ -24,7 +25,6 @@ export const workflowStatusMiddleware = new InngestMiddleware({
         return {
           async transformInput({ ctx }) {
             const step = ctx.step;
-            const logger = ctx.logger;
            
             try {
               await updateStatusForWorkflow(

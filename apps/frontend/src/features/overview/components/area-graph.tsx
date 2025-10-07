@@ -40,10 +40,15 @@ export function AreaGraph({ chartType = 'visitors' }: AreaGraphProps) {
   useEffect(() => {
     const fetchData = async () => {
       if (chartType === 'workflowRoi') {
-        const token = await getToken();
-        if (!token) return;
-        const data = await dashboardApi.getWorkflowRoi(token);
-        setChartData(data);
+        // Mock data for workflow ROI
+        const mockRoiData = [
+          { name: 'Customer Onboarding', timeSaved: 24, moneySaved: 1200 },
+          { name: 'Email Marketing', timeSaved: 18, moneySaved: 900 },
+          { name: 'Data Sync', timeSaved: 32, moneySaved: 1600 },
+          { name: 'Report Generation', timeSaved: 12, moneySaved: 600 },
+          { name: 'Lead Processing', timeSaved: 28, moneySaved: 1400 }
+        ];
+        setChartData(mockRoiData);
         setCardTitle('Workflow ROI');
         setCardDescription('Time and money saved per workflow.');
         setChartConfig({

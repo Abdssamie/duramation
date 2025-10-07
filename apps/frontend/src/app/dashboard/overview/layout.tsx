@@ -10,32 +10,18 @@ import {
 } from '@/components/ui/card';
 import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 import React from 'react';
-
-interface MetricsData {
-  totalRuns: number;
-  successRate: number;
-  avgDuration: number;
-  timeSavedHours: number;
-  costSavings: number;
-  errorsPrevented: number;
-  trend: {
-    runs: number;
-    successRate: number;
-    timeSaved: number;
-    costSavings: number;
-  };
-}
-
+import { SimplifiedMetrics } from '@duramation/shared';
 import { dashboardApi } from '@/services/api/api-client';
 import { auth } from '@clerk/nextjs/server';
+import { ServiceRequestDialogWrapper } from '@/components/dialogs/service-request-dialog-wrapper';
 
-async function getMetrics(): Promise<MetricsData> {
+async function getSimplifiedMetrics(): Promise<SimplifiedMetrics> {
   const { getToken } = await auth();
   const token = await getToken();
   if (!token) {
     throw new Error('Unauthorized');
   }
-  return dashboardApi.getMetrics(token);
+  return dashboardApi.getSimplifiedMetrics(token);
 }
 
 export default async function OverViewLayout({
@@ -45,7 +31,7 @@ export default async function OverViewLayout({
   sales: React.ReactNode;
   bar_stats: React.ReactNode;
 }) {
-  const metrics = await getMetrics();
+  const metrics = await getSimplifiedMetrics();
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -82,94 +68,92 @@ export default async function OverViewLayout({
 
   return (
     <PageContainer>
-      <div className='flex flex-1 flex-col space-y-2'>
+      <div className='flex flex-1 flex-col space-y-3'>
         <div className='flex items-center justify-between space-y-2'>
           <h2 className='text-2xl font-bold tracking-tight'>
             Hi, Welcome back 👋
           </h2>
+          <ServiceRequestDialogWrapper />
         </div>
 
-        <div className='*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs md:grid-cols-2 lg:grid-cols-4'>
+        <div className='*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-2 gap-3 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs md:grid-cols-4 lg:grid-cols-6'>
+          {/* 1. Workflow Runs This Month */}
           <Card className='@container/card'>
             <CardHeader>
-              <CardDescription>Total Runs</CardDescription>
+              <CardDescription>Runs This Month</CardDescription>
               <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                {metrics.totalRuns.toLocaleString()}
+                {metrics.workflowRunsThisMonth.total.toLocaleString()}
               </CardTitle>
               <CardAction>
-                {getTrendBadge(metrics.trend.runs)}
+                <Badge variant='outline'>
+                  <IconTrendingUp />
+                  {getTrendBadge(metrics.workflowRunsThisMonth.trend)}
+                </Badge>
               </CardAction>
             </CardHeader>
             <CardFooter className='flex-col items-start gap-1.5 text-sm'>
               <div className='line-clamp-1 flex gap-2 font-medium'>
-                {metrics.trend.runs >= 0 ? 'Trending up' : 'Trending down'} this period {getTrendIcon(metrics.trend.runs)}
+                Trending up this month <IconTrendingUp className='size-4' />
               </div>
               <div className='text-muted-foreground'>
-                Total workflow runs
+                Visitors for the last 6 months
               </div>
             </CardFooter>
           </Card>
+
+          {/* 2. Total Automations Executed */}
           <Card className='@container/card'>
-            <CardHeader>
-              <CardDescription>Success Rate</CardDescription>
-              <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                {formatPercentage(metrics.successRate)}
+            <CardHeader className='pb-2'>
+              <CardDescription className='text-xs'>Total Automations</CardDescription>
+              <CardTitle className='text-xl font-semibold tabular-nums'>
+                {metrics.totalAutomationsExecuted.toLocaleString()}
               </CardTitle>
-              <CardAction>
-                {getTrendBadge(metrics.trend.successRate)}
-              </CardAction>
             </CardHeader>
-            <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-              <div className='line-clamp-1 flex gap-2 font-medium'>
-                {metrics.trend.successRate >= 0 ? 'Improved' : 'Decreased'} success rate {getTrendIcon(metrics.trend.successRate)}
-              </div>
-              <div className='text-muted-foreground'>
-                Percentage of successful runs
-              </div>
-            </CardFooter>
           </Card>
+
+          {/* 3. Average Execution Time */}
           <Card className='@container/card'>
-            <CardHeader>
-              <CardDescription>Time Saved</CardDescription>
-              <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                {metrics.timeSavedHours.toFixed(1)}h
+            <CardHeader className='pb-2'>
+              <CardDescription className='text-xs'>Avg Time</CardDescription>
+              <CardTitle className='text-xl font-semibold tabular-nums'>
+                {metrics.averageExecutionTime.toFixed(1)}s
               </CardTitle>
-              <CardAction>
-                {getTrendBadge(metrics.trend.timeSaved)}
-              </CardAction>
             </CardHeader>
-            <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-              <div className='line-clamp-1 flex gap-2 font-medium'>
-                {metrics.trend.timeSaved >= 0 ? 'More time saved' : 'Less time saved'} this period {getTrendIcon(metrics.trend.timeSaved)}
-              </div>
-              <div className='text-muted-foreground'>
-                Estimated hours saved by automations
-              </div>
-            </CardFooter>
           </Card>
+
+          {/* 4. Estimated Savings */}
           <Card className='@container/card'>
-            <CardHeader>
-              <CardDescription>Cost Savings</CardDescription>
-              <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                {formatCurrency(metrics.costSavings)}
+            <CardHeader className='pb-2'>
+              <CardDescription className='text-xs'>Time Saved</CardDescription>
+              <CardTitle className='text-xl font-semibold tabular-nums'>
+                {metrics.estimatedSavings.timeHours.toFixed(1)}h
               </CardTitle>
-              <CardAction>
-                {getTrendBadge(metrics.trend.costSavings)}
-              </CardAction>
             </CardHeader>
-            <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-              <div className='line-clamp-1 flex gap-2 font-medium'>
-                {metrics.trend.costSavings >= 0 ? 'Increased savings' : 'Decreased savings'} this period {getTrendIcon(metrics.trend.costSavings)}
-              </div>
-              <div className='text-muted-foreground'>
-                Estimated cost savings from automations
-              </div>
-            </CardFooter>
+          </Card>
+
+          {/* 5. Workflow Success Rate */}
+          <Card className='@container/card'>
+            <CardHeader className='pb-2'>
+              <CardDescription className='text-xs'>Success Rate</CardDescription>
+              <CardTitle className='text-xl font-semibold tabular-nums'>
+                {metrics.workflowSuccessRate.toFixed(1)}%
+              </CardTitle>
+            </CardHeader>
+          </Card>
+
+          {/* 6. Active Workflows */}
+          <Card className='@container/card'>
+            <CardHeader className='pb-2'>
+              <CardDescription className='text-xs'>Active Workflows</CardDescription>
+              <CardTitle className='text-xl font-semibold tabular-nums'>
+                {metrics.activeWorkflows.total}
+              </CardTitle>
+            </CardHeader>
           </Card>
         </div>
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
-          <div className='col-span-1'>{sales}</div>
           <div className='col-span-1'>{bar_stats}</div>
+          <div className='col-span-1'>{sales}</div>
         </div>
       </div>
     </PageContainer>

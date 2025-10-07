@@ -7,6 +7,7 @@ import { WorkflowRandomTextLoopInput } from '@/inngest/functions/random-text-loo
 import { InternalUserId } from '@/types/user';
 import { credentialMiddleware } from '@/inngest/middleware/credential';
 import { workflowStatusMiddleware } from '@/inngest/middleware/workflow-status-middleware';
+import { workflowRunTrackingMiddleware } from '@/inngest/middleware/workflow-run-tracking';
 
 // Basic scheduler input schema (defined inline in templates)
 export type BasicSchedulerInput = {
@@ -60,6 +61,39 @@ export type Events = {
   'workflow/report.requested': WorkflowTriggerPayload<WorkflowDailyReportInput>;
   'workflow/random.text.loop': WorkflowTriggerPayload<WorkflowRandomTextLoopInput>;
 
+  // Automation metrics events
+  'automation/metrics.aggregate': {
+    data: {
+      startDate?: string;
+      endDate?: string;
+      days?: number;
+      user_id: InternalUserId;
+    };
+  };
+  'automation/metrics.updated': {
+    data: {
+      workflowId: string;
+      userId: string;
+      date: string;
+    };
+  };
+
+  // Service request events
+  'service-request/status.changed': {
+    data: {
+      serviceRequestId: string;
+      userId: string;
+      oldStatus: string;
+      newStatus: string;
+    };
+  };
+  'service-request/created': {
+    data: {
+      serviceRequestId: string;
+      userId: string;
+    };
+  };
+
 };
 
 // Array of the event keys for runtime check
@@ -69,6 +103,10 @@ const eventKeys = [
   'workflow/report.requested',
   'workflow/random.text.loop',
   'workflow/stop',
+  'automation/metrics.aggregate',
+  'automation/metrics.updated',
+  'service-request/status.changed',
+  'service-request/created',
   'blog-post.updated',
   'invoice/data.submitted',
 ] as const;
@@ -90,6 +128,7 @@ export const inngest = new Inngest({
   middleware: [
     realtimeMiddleware(),
     credentialMiddleware,
+    workflowRunTrackingMiddleware,
     workflowStatusMiddleware
   ],
   logger: logger,

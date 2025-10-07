@@ -9,6 +9,12 @@ const BASE_URL =
   process.env.NEXT_BACKEND_API_URL ||
   'http://localhost:3001';
 
+console.log('API Client BASE_URL:', BASE_URL);
+console.log('Environment variables:', {
+  NEXT_PUBLIC_BACKEND_API_URL: process.env.NEXT_PUBLIC_BACKEND_API_URL,
+  NEXT_BACKEND_API_URL: process.env.NEXT_BACKEND_API_URL
+});
+
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 function authHeaders(token: string) {
@@ -23,38 +29,73 @@ async function request<T>(
   options: { token: string; method?: HttpMethod; body?: unknown }
 ): Promise<T> {
   const { token, method = 'GET', body } = options;
+  const url = `${BASE_URL}${path}`;
+  
   console.log('API Request:', {
-    url: `${BASE_URL}${path}`,
+    url,
     method,
-    body
+    body,
+    baseUrl: BASE_URL
   });
-  const res = await fetch(`${BASE_URL}${path}`, {
-    method,
-    headers: authHeaders(token),
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-    cache: 'no-store'
-  });
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    let errorMessage = `Request failed ${method} ${path}: ${res.status} ${text}`;
 
-    try {
-      const errorBody = JSON.parse(text);
-      if (errorBody.error && Array.isArray(errorBody.details)) {
-        errorMessage = `${errorBody.error}: ${errorBody.details.join(', ')}`;
-      } else if (errorBody.error) {
-        errorMessage = errorBody.error;
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: authHeaders(token),
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+      cache: 'no-store'
+    });
+
+    console.log('API Response:', {
+      url,
+      status: res.status,
+      statusText: res.statusText,
+      ok: res.ok
+    });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      let errorMessage = `Request failed ${method} ${path}: ${res.status} ${text}`;
+
+      try {
+        const errorBody = JSON.parse(text);
+        if (errorBody.error && Array.isArray(errorBody.details)) {
+          errorMessage = `${errorBody.error}: ${errorBody.details.join(', ')}`;
+        } else if (errorBody.error) {
+          errorMessage = errorBody.error;
+        }
+      } catch (e) {
+        // If parsing fails, use the original text
       }
-    } catch (e) {
-      // If parsing fails, use the original text
+      throw new Error(errorMessage);
     }
-    throw new Error(errorMessage);
+    
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      return (await res.json()) as Promise<T>;
+    }
+    return undefined as unknown as T;
+  } catch (error) {
+    console.error('API Request Error:', {
+      url,
+      method,
+      baseUrl: BASE_URL,
+      errorType: typeof error,
+      errorName: error instanceof Error ? error.name : 'Unknown',
+      errorMessage: error instanceof Error ? error.message : String(error),
+      fullError: error
+    });
+    
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error(`Failed to connect to backend server at ${BASE_URL}. Make sure the backend is running on port 3001.`);
+    }
+    
+    if (error instanceof Error && error.message.includes('NetworkError')) {
+      throw new Error(`Network error connecting to ${BASE_URL}. Check if the backend server is running.`);
+    }
+    
+    throw error;
   }
-  const contentType = res.headers.get('content-type') || '';
-  if (contentType.includes('application/json')) {
-    return (await res.json()) as Promise<T>;
-  }
-  return undefined as unknown as T;
 }
 
 // Workflows
@@ -245,13 +286,23 @@ export const realtimeApi = {
     })
 };
 
+export interface ServiceRequestCreateInput {
+  title: string;
+  description: string;
+  businessProcess: string;
+  desiredOutcome: string;
+  priority?: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
+}
+
 export const dashboardApi = {
-  getMetrics: (token: string) =>
-    request<any>(`/api/client-dashboard/metrics`, { token }),
-  getWorkflowRoi: (token: string) =>
-    request<any>(`/api/client-dashboard/workflow-roi`, { token }),
-  getTopWorkflows: (token: string) =>
-    request<any>(`/api/client-dashboard/top-workflows`, { token }),
+  getSimplifiedMetrics: (token: string) =>
+    request<any>(`/api/dashboard/metrics`, { token }),
+  getServiceRequests: (token: string) =>
+    request<any>(`/api/dashboard/service-requests`, { token }),
+  createServiceRequest: (token: string, data: ServiceRequestCreateInput) =>
+    request<any>(`/api/dashboard/service-requests`, { token, method: 'POST', body: data }),
+  getChartData: (token: string, params: URLSearchParams) =>
+    request<any>(`/api/dashboard/chart-data?${params.toString()}`, { token }),
 };
 
 export default {

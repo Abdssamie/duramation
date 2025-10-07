@@ -1,5 +1,5 @@
-import { AreaGraph } from '@/features/overview/components/area-graph';
+import { RecentServiceRequestsWrapper } from '@/features/overview/components/recent-service-requests-wrapper';
 
-export default async function Sales() {
-  return <AreaGraph chartType="workflowRoi" />;
+export default function ServiceRequests() {
+  return <RecentServiceRequestsWrapper />;
 }

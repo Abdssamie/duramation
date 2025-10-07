@@ -1,61 +1,20 @@
+import { Logger } from "winston";
 import { RunStatus, WorkflowStatus } from "@duramation/db";
+import { v4 as uuidv4 } from "uuid";
+import { CacheInvalidationService } from "@/services/cache-invalidation";
 import prisma from "@/lib/prisma";
-
-import { v4 as uuidv4 } from 'uuid';
-
-const MAX_RETRIES = 3;
-const RETRY_DELAY_MS = 1000; // 1 second
-
-async function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function sendWebhookWithRetry(webhookUrl: string, webhookSecret: string, body: any, logger: any, maxRetries = MAX_RETRIES): Promise<boolean> {
-  let lastError: Error | null = null;
-
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${webhookSecret}`,
-        },
-        body: JSON.stringify(body),
-      });
-
-      if (response.ok) {
-        logger.info(`Webhook sent successfully to: ${webhookUrl}`);
-        return true;
-      }
-
-      const errorBody = await response.text();
-      throw new Error(`HTTP ${response.status}: ${errorBody}`);
-    } catch (error) {
-      lastError = error as Error;
-      const delayMs = RETRY_DELAY_MS * attempt; // Exponential backoff
-      logger.warn(`Attempt ${attempt} failed (${lastError.message}). Retrying in ${delayMs}ms...`);
-
-      if (attempt < maxRetries) {
-        await delay(delayMs);
-      }
-    }
-  }
-
-  logger.error(`Failed to send webhook after ${maxRetries} attempts: ${lastError?.message}`);
-  return false;
-}
+import { sendWebhookWithRetry } from "@/utils/sendWebhookWithRetry";
 
 export async function updateStatusForWorkflow(
   step: any,
-  logger: any,
+  logger: Logger,
   workflowId: string,
   runId: string,
   userId: string,
   workflowStatus: WorkflowStatus,
   runStatus: RunStatus,
   stepName: string,
-  errorMessage?: string
+  errorMessage?: string,
 ) {
   await step.run(stepName, async () => {
     if (!workflowId) {
@@ -66,42 +25,109 @@ export async function updateStatusForWorkflow(
     logger.info("Updating workflow status");
 
     const idempotencyKey = uuidv4();
-    const webhookUrl = process.env.FRONTEND_WEBHOOK_URL || 'http://localhost:3000/api/realtime/notify';
-    const webhookSecret = process.env.INNGEST_WEBHOOK_SECRET || '';
+    const webhookUrl =
+      process.env.FRONTEND_WEBHOOK_URL ||
+      "http://localhost:3000/api/realtime/notify";
+    const webhookSecret = process.env.INNGEST_WEBHOOK_SECRET || "";
+    const cacheService = new CacheInvalidationService();
 
     const isFinished =
       runStatus === RunStatus.COMPLETED ||
       runStatus === RunStatus.FAILED ||
       runStatus === RunStatus.CANCELLED;
 
-    // Update workflow status
+    const completedAt = new Date();
+
+    // Upsert workflow status - create if doesn't exist, update if it does
     const updateData: any = {
       status: workflowStatus,
-      ...(workflowStatus !== WorkflowStatus.RUNNING && { idempotencyKey })
+      lastRunAt: new Date(),
+      ...(workflowStatus !== WorkflowStatus.RUNNING && { idempotencyKey }),
     };
 
-    await prisma.workflow.update({
-      where: { id: workflowId, userId: userId },
-      data: updateData,
-    });
+    try {
+      await prisma.workflow.upsert({
+        where: {
+          id: workflowId,
+          userId: userId,
+        },
+        update: updateData,
+        create: {
+          id: workflowId,
+          userId: userId,
+          name: `workflow-${workflowId}`, // Default name if creating
+          templateId: "unknown",
+          eventName: "unknown",
+          ...updateData,
+        },
+      });
 
-    const completedAt = new Date();
+      logger.info(`Upserted workflow status for workflow: ${workflowId}`);
+    } catch (error) {
+      logger.error(`Failed to upsert workflow status: ${error}`);
+      // Fallback to update only if upsert fails
+      await prisma.workflow.updateMany({
+        where: { id: workflowId, userId: userId },
+        data: updateData,
+      });
+    }
 
     logger.info("Updating workflow run status");
 
-    await prisma.workflowRun.updateMany({
-      where: {
-        userId: userId,
-        workflowId: workflowId,
-        idempotencyKey: idempotencyKey,
-        inngestRunId: runId
-      },
-      data: {
-        status: runStatus,
-        completedAt,
-        error: errorMessage || null,
-      },
-    });
+    // Upsert workflow run - create if doesn't exist, update if it does
+    try {
+      await prisma.workflowRun.upsert({
+        where: {
+          inngestRunId: runId,
+          userId: userId,
+        },
+        update: {
+          status: runStatus,
+          completedAt: isFinished ? completedAt : null,
+          error: errorMessage || null,
+        },
+        create: {
+          inngestRunId: runId,
+          idempotencyKey,
+          workflowId,
+          userId,
+          status: runStatus,
+          startedAt: new Date(),
+          completedAt: isFinished ? completedAt : null,
+          error: errorMessage || null,
+        },
+      });
+
+      logger.info(`Upserted workflow run status for run: ${runId}`);
+    } catch (error) {
+      logger.error(`Failed to upsert workflow run: ${error}`);
+      // Fallback to updateMany if upsert fails
+      await prisma.workflowRun.updateMany({
+        where: {
+          userId: userId,
+          workflowId: workflowId,
+          inngestRunId: runId,
+        },
+        data: {
+          status: runStatus,
+          completedAt: isFinished ? completedAt : null,
+          error: errorMessage || null,
+        },
+      });
+    }
+
+    // Invalidate cache after database updates
+    try {
+      await cacheService.invalidateWorkflowRunCache(
+        userId,
+        workflowId,
+        "updated",
+      );
+      logger.info("Cache invalidated successfully");
+    } catch (error) {
+      logger.error("Failed to invalidate cache:", error);
+      // Don't throw error to prevent breaking workflow execution
+    }
 
     // Send webhook if this is a terminal state
     if (isFinished && webhookUrl) {
@@ -115,14 +141,14 @@ export async function updateStatusForWorkflow(
         status: runStatus,
         completedAt,
         error: errorMessage,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       await sendWebhookWithRetry(
         webhookUrl,
         webhookSecret,
         webhookBody,
-        logger
+        logger,
       );
     }
 
