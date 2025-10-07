@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import { ClerkUserId } from "@/types/user";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import {
   SERVER_PROVIDER_REGISTRY,
   getServerProviderConfig,
@@ -37,15 +35,13 @@ export async function GET(req: Request) {
     }
 
     // Authenticate user
-    const user = await auth();
-    if (!user || !user.userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    const id = await getInternalUserId(user.userId as ClerkUserId);
-    if (!id) {
-      return new Response("User not found", { status: 404 });
-    }
+    const { userId: id } = authResult;
 
     // Get scopes from query param or use defaults
     const config = getServerProviderConfig(provider);

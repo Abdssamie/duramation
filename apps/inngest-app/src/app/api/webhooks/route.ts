@@ -11,6 +11,10 @@ export async function POST(req: NextRequest) {
         const { id } = evt.data;
         const eventType = evt.type;
 
+        if (!id) {
+            return new Response('Unexpected error', { status: 500 });
+        }
+
         console.log(
             `Received webhook with ID ${id} and event type of ${eventType}`
         );
@@ -42,7 +46,7 @@ export async function POST(req: NextRequest) {
               });
               console.log('Successfully created user in Database with ID:', id);
 
-                console.log('Successfully created default workflows for user with ID:', id);
+              console.log('Successfully created default workflows for user with ID:', id);
 
             } catch (error) {
                 console.error(

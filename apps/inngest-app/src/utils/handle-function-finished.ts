@@ -6,7 +6,7 @@ import { updateStatusForWorkflow } from "@/utils/updateWorkflowStatus";
 export async function handleFunctionFinished(
   event: any,
   step: any,
-  logger: Logger,
+  logger: any,
   userId: string,
   workflowId: string,
 ) {

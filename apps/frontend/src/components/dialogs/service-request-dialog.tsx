@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,6 +30,8 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
     businessProcess: '',
     desiredOutcome: '',
     priority: 'MEDIUM',
+    preferredMeetingDate: '',
+    availabilityNotes: '',
   });
 
   const handleInputChange = (field: keyof ServiceRequestCreateInput, value: string) => {
@@ -43,6 +45,8 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
       businessProcess: '',
       desiredOutcome: '',
       priority: 'MEDIUM',
+      preferredMeetingDate: '',
+      availabilityNotes: '',
     });
     setSubmitStatus('idle');
     setErrorMessage('');
@@ -64,19 +68,21 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
 
     try {
       const token = await getToken();
-      if (!token) {
-        throw new Error('Authentication required');
-      }
 
-      await dashboardApi.createServiceRequest(token, formData);
-      
-      setSubmitStatus('success');
-      
-      // Close dialog and call success callback after a brief delay
-      setTimeout(() => {
-        setOpen(false);
-        onSuccess?.();
-      }, 2000);
+      if (token) {
+        await dashboardApi.createServiceRequest(token, formData);
+
+        setSubmitStatus('success');
+
+        // Close dialog and call success callback after a brief delay
+        setTimeout(() => {
+          setOpen(false);
+          onSuccess?.();
+        }, 2000);
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage('Authentication required');
+      }
 
     } catch (error) {
       setSubmitStatus('error');
@@ -104,7 +110,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
         <DialogHeader>
           <DialogTitle>Request Automation Service</DialogTitle>
           <DialogDescription>
-            Tell us about your business process and how we can help automate it for you. We'll reach out and book a sales call with you as soon as possible.
+            Tell us about your business process and how we can help automate it for you. We&#39;ll reach out and book a sales call with you as soon as possible.
           </DialogDescription>
         </DialogHeader>
 
@@ -113,7 +119,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-green-700 mb-2">Request Submitted Successfully!</h3>
             <p className="text-muted-foreground">
-              We've received your service request and will reach out to book a sales call with you as soon as possible. You'll be contacted within 1-2 business days.
+              We&#39;ve received your service request and will reach out to book a sales call with you as soon as possible. You&#39;ll be contacted within 1-2 business days.
             </p>
           </div>
         ) : (
@@ -199,6 +205,40 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
                   <SelectItem value="URGENT">Urgent - Need ASAP</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="border-t pt-4">
+              <h4 className="text-sm font-medium mb-4">Sales Call Availability</h4>
+              
+              <div className="space-y-2">
+                <Label htmlFor="preferredMeetingDate">Preferred Meeting Date</Label>
+                <Input
+                  id="preferredMeetingDate"
+                  type="datetime-local"
+                  value={formData.preferredMeetingDate}
+                  onChange={(e) => handleInputChange('preferredMeetingDate', e.target.value)}
+                  disabled={isSubmitting}
+                  min={new Date().toISOString().slice(0, 16)}
+                />
+                <p className="text-sm text-muted-foreground">
+                  Select your preferred date and time for the sales call (optional).
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="availabilityNotes">Availability Notes</Label>
+                <Textarea
+                  id="availabilityNotes"
+                  placeholder="e.g., Available weekdays 9 AM - 5 PM EST, prefer mornings, avoid Fridays..."
+                  value={formData.availabilityNotes}
+                  onChange={(e) => handleInputChange('availabilityNotes', e.target.value)}
+                  disabled={isSubmitting}
+                  rows={2}
+                />
+                <p className="text-sm text-muted-foreground">
+                  Let us know your general availability or any scheduling preferences.
+                </p>
+              </div>
             </div>
 
             <div className="flex gap-3 pt-4">

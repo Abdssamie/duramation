@@ -1,23 +1,17 @@
 import { getAllUserCredentials, storeCredential } from "@/services/credentials-store"
-import { auth } from "@clerk/nextjs/server";
 import { NextRequest } from "next/server";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import { ClerkUserId } from "@/types/user";
 import { CredentialCreateRequest, validateCredentialSecret } from "@duramation/shared";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 
 
 export async function GET() {
-    const user = await auth();
-
-    if (!user || !user.userId) {
-        return new Response('Unauthorized', { status: 401 });
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+        return authResult;
     }
 
-    const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
-
-    if (!internalUserId) {
-        return new Response("User not found", { status: 404 });
-    }
+    const { userId: internalUserId } = authResult;
 
     try {
         const credentials = await getAllUserCredentials(internalUserId);
@@ -37,17 +31,13 @@ export async function GET() {
 
 
 export async function POST(req: NextRequest) {
-    const user = await auth();
-
-    if (!user || !user.userId) {
-        return new Response('Unauthorized', { status: 401 });
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+        return authResult;
     }
 
-    const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
-
-    if (!internalUserId) {
-        return new Response("User not found", { status: 404 });
-    }
+    const { userId: internalUserId } = authResult;
 
     const body: CredentialCreateRequest = await req.json();
 

@@ -1,28 +1,16 @@
-import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import { ClerkUserId } from "@/types/user";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 
 
 export async function GET() {
-    const user = await auth();
+    const authResult = await authenticateUser();
 
-    if (!user || !user.userId) {
-        return NextResponse.json(
-            { success: false, message: "Unauthorized" },
-            { status: 401 }
-        );
+    if (isAuthError(authResult)) {
+        return authResult;
     }
-    
-    const id = await getInternalUserId(user.userId as ClerkUserId);
 
-    if (!id) {
-        return NextResponse.json(
-            { success: false, message: "Internal Server Error: User not found. This error comes from us. We'll fix it asap." },
-            { status: 505 }
-        );
-    }
+    const { userId: id } = authResult;
 
     try {
         const workflows = await prisma.workflow.findMany({

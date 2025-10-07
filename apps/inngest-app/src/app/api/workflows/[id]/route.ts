@@ -1,7 +1,8 @@
-import {auth} from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import prisma from "@/lib/prisma";
-import {NextRequest, NextResponse} from "next/server";
-import {z} from "zod";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { validateWorkflowInput } from "@duramation/shared";
 import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
 import { ClerkUserId } from "@/types/user";
@@ -38,25 +39,23 @@ const WorkflowUpdateRequestSchema = z.object({
 });
 
 
-export async function GET({params}: { params: Promise<{ id: string }> }) {
-    const user = await auth();
+export async function GET({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const workflowId = id;
 
-    if (!user || !user.userId) {
-        return new Response('Unauthorized', {status: 401});
+    const authResult = await authenticateUser();
+
+    if (isAuthError(authResult)) {
+        return authResult;
     }
 
-    const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
-    if (!internalUserId) {
-        return new Response('User not found', {status: 404});
-    }
+    const { userId } = authResult;
 
     try {
         const workflow = await prisma.workflow.findFirst({
             where: {
                 id: workflowId,
-                userId: internalUserId,
+                userId: userId,
             },
             select: {
                 id: true,
@@ -90,27 +89,27 @@ export async function GET({params}: { params: Promise<{ id: string }> }) {
         });
 
         if (!workflow) {
-            return new Response('Workflow not found', {status: 404});
+            return new Response('Workflow not found', { status: 404 });
         }
 
-        return new Response(JSON.stringify(workflow), {status: 200});
+        return new Response(JSON.stringify(workflow), { status: 200 });
     } catch (error) {
         console.error('Error getting workflow:', error);
-        return new Response('Error getting workflow', {status: 500});
+        return new Response('Error getting workflow', { status: 500 });
     }
 }
 
 
 
-export async function PUT(req: NextRequest, {params}: { params: Promise<{ id: string }> }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const user = await auth();
     const { id } = await params;
     const workflowId = id;
 
     if (!user || !user.userId) {
         return NextResponse.json(
-            {message: "Unauthorized"},
-            {status: 401}
+            { message: "Unauthorized" },
+            { status: 401 }
         );
     }
 
@@ -130,11 +129,11 @@ export async function PUT(req: NextRequest, {params}: { params: Promise<{ id: st
                     message: "Invalid request body",
                     errors: validationResult.error.issues.map(e => e.message)
                 },
-                {status: 400}
+                { status: 400 }
             );
         }
 
-        const {name, description, available, input, credentials} = validationResult.data;
+        const { name, description, available, input, credentials } = validationResult.data;
 
         // Get existing workflow to validate ownership and input
         const existingWorkflow = await prisma.workflow.findUnique({
@@ -146,8 +145,8 @@ export async function PUT(req: NextRequest, {params}: { params: Promise<{ id: st
 
         if (!existingWorkflow) {
             return NextResponse.json(
-                {message: "Workflow not found"},
-                {status: 404}
+                { message: "Workflow not found" },
+                { status: 404 }
             );
         }
 
@@ -171,16 +170,16 @@ export async function PUT(req: NextRequest, {params}: { params: Promise<{ id: st
                 userId: internalUserId,
             },
             data: {
-                ...(name !== undefined && {name}),
-                ...(description !== undefined && {description}),
-                ...(available !== undefined && {available}),
-                ...(input !== undefined && {input}),
+                ...(name !== undefined && { name }),
+                ...(description !== undefined && { description }),
+                ...(available !== undefined && { available }),
+                ...(input !== undefined && { input }),
                 ...(credentials && credentials.length > 0
                     ? {
                         workflowCredentials: {
                             deleteMany: {}, // remove old links
                             create: credentials.map((c) => ({
-                                credential: {connect: {id: c.credentialId}},
+                                credential: { connect: { id: c.credentialId } },
                             })),
                         },
                     }
@@ -202,30 +201,30 @@ export async function PUT(req: NextRequest, {params}: { params: Promise<{ id: st
             },
         });
 
-        return NextResponse.json(updatedWorkflow, {status: 200});
+        return NextResponse.json(updatedWorkflow, { status: 200 });
     } catch (error) {
         console.error('Error updating workflow:', error);
         return NextResponse.json(
-            {message: 'Error updating workflow'},
-            {status: 500}
+            { message: 'Error updating workflow' },
+            { status: 500 }
         );
     }
 }
 
 
 
-export async function DELETE(req: NextRequest, {params}: { params: Promise<{ id: string }> }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const user = await auth();
     const { id } = await params;
     const workflowId = id;
 
     if (!user || !user.userId) {
-        return new Response('Unauthorized', {status: 401});
+        return new Response('Unauthorized', { status: 401 });
     }
 
     const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
     if (!internalUserId) {
-        return new Response('User not found', {status: 404});
+        return new Response('User not found', { status: 404 });
     }
 
     try {
@@ -235,9 +234,9 @@ export async function DELETE(req: NextRequest, {params}: { params: Promise<{ id:
                 userId: internalUserId,
             },
         });
-        return new Response('Workflow deleted successfully', {status: 200});
+        return new Response('Workflow deleted successfully', { status: 200 });
     } catch (error) {
         console.error('Error deleting workflow:', error);
-        return new Response('Error deleting workflow', {status: 500});
+        return new Response('Error deleting workflow', { status: 500 });
     }
 }

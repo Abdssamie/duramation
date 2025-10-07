@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ internalUserId: user.id });
-  } catch (error) {
+  } catch (error: any) {
     return new Response(`Error: ${error.message}`, { status: 500 });
   }
 }

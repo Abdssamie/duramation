@@ -5,7 +5,7 @@ import { workflowChannel } from "@/lib/realtime-channels";
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-
+import { ClerkUserId } from "@/types/user";
 
 export async function POST(req: NextRequest) {
   try {

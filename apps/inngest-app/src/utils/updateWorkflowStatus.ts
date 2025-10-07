@@ -1,4 +1,3 @@
-import { Logger } from "winston";
 import { RunStatus, WorkflowStatus } from "@duramation/db";
 import { v4 as uuidv4 } from "uuid";
 import { CacheInvalidationService } from "@/services/cache-invalidation";
@@ -7,7 +6,7 @@ import { sendWebhookWithRetry } from "@/utils/sendWebhookWithRetry";
 
 export async function updateStatusForWorkflow(
   step: any,
-  logger: Logger,
+  logger: any,
   workflowId: string,
   runId: string,
   userId: string,

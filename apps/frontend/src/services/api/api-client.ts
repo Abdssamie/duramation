@@ -1,5 +1,4 @@
 import {
-  WorkflowInputFieldDefinition,
   CredentialCreateRequest
 } from '@duramation/shared';
 import { WorkflowWithCredentials } from '@/types/workflow';
@@ -9,11 +8,10 @@ const BASE_URL =
   process.env.NEXT_BACKEND_API_URL ||
   'http://localhost:3001';
 
-console.log('API Client BASE_URL:', BASE_URL);
-console.log('Environment variables:', {
-  NEXT_PUBLIC_BACKEND_API_URL: process.env.NEXT_PUBLIC_BACKEND_API_URL,
-  NEXT_BACKEND_API_URL: process.env.NEXT_BACKEND_API_URL
-});
+// Only log in development
+if (process.env.NODE_ENV === 'development') {
+  console.log('API Client BASE_URL:', BASE_URL);
+}
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -31,27 +29,27 @@ async function request<T>(
   const { token, method = 'GET', body } = options;
   const url = `${BASE_URL}${path}`;
   
-  console.log('API Request:', {
-    url,
-    method,
-    body,
-    baseUrl: BASE_URL
-  });
+  if (process.env.NODE_ENV === 'development') {
+    console.log('API Request:', { url, method });
+  }
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
     const res = await fetch(url, {
       method,
       headers: authHeaders(token),
       body: body !== undefined ? JSON.stringify(body) : undefined,
-      cache: 'no-store'
+      cache: 'no-store',
+      signal: controller.signal
     });
 
-    console.log('API Response:', {
-      url,
-      status: res.status,
-      statusText: res.statusText,
-      ok: res.ok
-    });
+    clearTimeout(timeoutId);
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('API Response:', { url, status: res.status, ok: res.ok });
+    }
 
     if (!res.ok) {
       const text = await res.text().catch(() => '');
@@ -76,22 +74,24 @@ async function request<T>(
     }
     return undefined as unknown as T;
   } catch (error) {
-    console.error('API Request Error:', {
-      url,
-      method,
-      baseUrl: BASE_URL,
-      errorType: typeof error,
-      errorName: error instanceof Error ? error.name : 'Unknown',
-      errorMessage: error instanceof Error ? error.message : String(error),
-      fullError: error
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API Request Error:', {
+        url,
+        method,
+        errorMessage: error instanceof Error ? error.message : String(error)
+      });
+    }
+    
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error('Request timed out. Please try again.');
+    }
     
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error(`Failed to connect to backend server at ${BASE_URL}. Make sure the backend is running on port 3001.`);
+      throw new Error('Unable to connect to server. Please check your internet connection and try again.');
     }
     
     if (error instanceof Error && error.message.includes('NetworkError')) {
-      throw new Error(`Network error connecting to ${BASE_URL}. Check if the backend server is running.`);
+      throw new Error('Network error occurred. Please try again later.');
     }
     
     throw error;
@@ -127,14 +127,7 @@ export const workflowsApi = {
     request<any>(`/api/workflows/${id}`, { token, method: 'PUT', body: data }),
   remove: (token: string, id: string) =>
     request<any>(`/api/workflows/${id}`, { token, method: 'DELETE' }),
-  fields: (token: string, templateId: string) =>
-    request<{ fields: WorkflowInputFieldDefinition[] }>(
-      `/api/workflows/templates/fields/${templateId}`,
-      {
-        token,
-        method: 'GET'
-      }
-    ),
+
   run: (
     token: string,
     id: string,
@@ -150,23 +143,7 @@ export const workflowsApi = {
     }),
   stop: (token: string, id: string) =>
     request<any>(`/api/workflows/run/${id}`, { token, method: 'DELETE' }),
-  schedule: (
-    token: string,
-    id: string,
-    data?: {
-      input?: Record<string, unknown>;
-      cronExpression?: string;
-      timezone?: string;
-      metadata?: Record<string, unknown>;
-    }
-  ) =>
-    request<any>(`/api/workflows/schedule/${id}`, {
-      token,
-      method: 'POST',
-      body: data || {}
-    }),
-  unschedule: (token: string, id: string) =>
-    request<any>(`/api/workflows/schedule/${id}`, { token, method: 'DELETE' }),
+
   install: (
     token: string,
     templateId: string,
@@ -274,7 +251,7 @@ export interface SubscriptionTokenRequest {
 }
 
 export interface SubscriptionTokenResponse {
-  token: any;
+  token: string;
 }
 
 export const realtimeApi = {
@@ -292,6 +269,8 @@ export interface ServiceRequestCreateInput {
   businessProcess: string;
   desiredOutcome: string;
   priority?: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
+  preferredMeetingDate?: string;
+  availabilityNotes?: string;
 }
 
 export const dashboardApi = {
@@ -301,6 +280,8 @@ export const dashboardApi = {
     request<any>(`/api/dashboard/service-requests`, { token }),
   createServiceRequest: (token: string, data: ServiceRequestCreateInput) =>
     request<any>(`/api/dashboard/service-requests`, { token, method: 'POST', body: data }),
+  updateServiceRequest: (token: string, data: { id: string; status?: string; priority?: string; estimatedHours?: number }) =>
+    request<any>(`/api/dashboard/service-requests`, { token, method: 'PATCH', body: data }),
   getChartData: (token: string, params: URLSearchParams) =>
     request<any>(`/api/dashboard/chart-data?${params.toString()}`, { token }),
 };

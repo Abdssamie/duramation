@@ -1,6 +1,5 @@
 import { InngestMiddleware } from "inngest";
-import { WorkflowStatus, RunStatus } from "@duramation/db";
-import {updateStatusForWorkflow} from "@/utils/sendWebhookWithRetry";
+import { updateStatusForWorkflow } from "@/utils/updateWorkflowStatus";
 
 export const workflowStatusMiddleware = new InngestMiddleware({
   name: "Workflow Status Middleware",
@@ -31,7 +30,7 @@ export const workflowStatusMiddleware = new InngestMiddleware({
             try {
               await updateStatusForWorkflow(
                 step,
-                logger, // Use console as logger for middleware
+                logger,
                 workflowId,
                 runId,
                 userId,

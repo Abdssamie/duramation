@@ -2,6 +2,9 @@
 
 import * as React from 'react';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { useAuth } from '@clerk/nextjs';
+import { Activity } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 
 import {
   Card,
@@ -16,134 +19,263 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
-
-export const description = 'An interactive bar chart';
-
-import { useEffect, useState } from 'react';
-import { useAuth } from '@clerk/nextjs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { ChartDataResponse, TimeRange } from '@duramation/shared';
 import { dashboardApi } from '@/services/api/api-client';
+import { TIME_RANGE_OPTIONS} from '@/constants/workflow-run-chart';
+import { useCallback } from 'react';
+import { formatTooltipLabel, getTrendIcon, getTrendText } from '@/utils/graph-utils';
 
-type ChartType = 'pageViews' | 'topWorkflows';
+const chartConfig = {
+  runs: {
+    label: 'Workflow Runs',
+    color: 'var(--primary)'
+  }
+} satisfies ChartConfig;
 
-interface BarGraphProps {
-  chartType?: ChartType;
-}
-
-export function BarGraph({ chartType = 'pageViews' }: BarGraphProps) {
+export function BarGraph() {
   const { getToken } = useAuth();
-  const [chartData, setChartData] = useState<any[]>([]);
-  const [chartConfig, setChartConfig] = useState<ChartConfig>({});
-  const [cardTitle, setCardTitle] = useState('');
-  const [cardDescription, setCardDescription] = useState('');
-  const [activeChart, setActiveChart] = useState<string>('runs');
+  const [chartData, setChartData] = React.useState<ChartDataResponse | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+  const [timeRange, setTimeRange] = React.useState<TimeRange>('30d');
+  const [selectedWorkflow, setSelectedWorkflow] = React.useState<string>('all');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (chartType === 'topWorkflows') {
-        // Mock data for top workflows
-        const mockData = [
-          { name: 'Customer Onboarding', runs: 145 },
-          { name: 'Email Marketing', runs: 132 },
-          { name: 'Data Sync', runs: 98 },
-          { name: 'Report Generation', runs: 87 },
-          { name: 'Lead Processing', runs: 76 }
-        ];
-        setChartData(mockData);
-        setCardTitle('Top 5 Active Workflows');
-        setCardDescription('The most frequently run workflows.');
-        setChartConfig({
-          runs: {
-            label: 'Runs',
-            color: 'var(--primary)'
-          }
-        } satisfies ChartConfig);
+  const fetchChartData = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const token = await getToken();
+
+      if (token) {
+        const params = new URLSearchParams({
+          timeRange: timeRange
+        });
+
+        if (selectedWorkflow !== 'all') {
+          params.append('workflowId', selectedWorkflow);
+        }
+
+        const data: ChartDataResponse = await dashboardApi.getChartData(token, params);
+        setChartData(data);
+
       } else {
-        // Existing pageViews data logic
-        const mockPageViewsData = [
-          { date: 'Jan', views: 186 },
-          { date: 'Feb', views: 305 },
-          { date: 'Mar', views: 237 },
-          { date: 'Apr', views: 173 },
-          { date: 'May', views: 209 },
-          { date: 'Jun', views: 214 }
-        ];
-        setChartData(mockPageViewsData);
-        setCardTitle('Page Views');
-        setCardDescription('Monthly page view statistics.');
-        setChartConfig({
-          views: {
-            label: 'Views',
-            color: 'var(--primary)'
-          }
-        } satisfies ChartConfig);
-        setActiveChart('views');
+        setError('Authentication Error');
       }
-    };
 
-    fetchData();
-  }, [chartType, getToken]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load chart data');
+    } finally {
+      setLoading(false);
+    }
+  }, [timeRange, selectedWorkflow, getToken]);
+
+  React.useEffect(() => {
+    fetchChartData();
+  }, [timeRange, selectedWorkflow, fetchChartData]);
+
+  const formatXAxisTick = (value: string) => {
+    try {
+      const date = parseISO(value);
+      return timeRange === '7d' 
+        ? format(date, 'MMM dd')
+        : timeRange === '30d'
+        ? format(date, 'MMM dd')
+        : format(date, 'MMM dd');
+    } catch {
+      return value;
+    }
+  };
+
+
+  if (loading) {
+    return (
+      <Card className='@container/card'>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Activity className="h-5 w-5" />
+            Workflow Runs
+          </CardTitle>
+          <CardDescription>Loading workflow data...</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[300px] flex items-center justify-center">
+            <div className="animate-pulse bg-muted rounded h-full w-full" />
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className='@container/card'>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Activity className="h-5 w-5" />
+            Workflow Runs
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Alert variant="destructive">
+            <AlertDescription>
+              {error}
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={fetchChartData}
+                className="ml-2"
+              >
+                Retry
+              </Button>
+            </AlertDescription>
+          </Alert>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!chartData || chartData.data.length === 0) {
+    return (
+      <Card className='@container/card'>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Activity className="h-5 w-5" />
+            Workflow Runs
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[300px] items-center justify-center">
+            <div className="text-center">
+              <Activity className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium text-muted-foreground mb-2">
+                No Workflow Data Available
+              </h3>
+              <p className="text-sm text-muted-foreground max-w-sm">
+                Create and run workflows to see execution metrics and trends displayed in this chart.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
 
   return (
-    <Card className='@container/card !pt-3'>
-      <CardHeader className='flex flex-col items-stretch space-y-0 border-b !p-0 sm:flex-row'>
-        <div className='flex flex-1 flex-col justify-center gap-1 px-6 !py-0'>
-          <CardTitle>{cardTitle}</CardTitle>
-          <CardDescription>
-            <span className='hidden @[540px]/card:block'>
-              {cardDescription}
-            </span>
-            <span className='@[540px]/card:hidden'>{cardDescription}</span>
-          </CardDescription>
+    <Card className='@container/card'>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="h-5 w-5" />
+              Workflow Runs
+            </CardTitle>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              {getTrendIcon(chartData)}
+              <span className="text-sm font-medium">
+                {getTrendText(chartData)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              {chartData && chartData.availableWorkflows.length > 0 && (
+                <Select value={selectedWorkflow} onValueChange={setSelectedWorkflow}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Workflows</SelectItem>
+                    {chartData.availableWorkflows.map(workflow => (
+                      <SelectItem key={workflow.id} value={workflow.id}>
+                        {workflow.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+              <Select value={timeRange} onValueChange={(value: TimeRange) => setTimeRange(value)}>
+                <SelectTrigger className="w-32">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {TIME_RANGE_OPTIONS.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
       </CardHeader>
-      <CardContent className='px-2 pt-4 sm:px-6 sm:pt-6'>
+      <CardContent className="px-2 sm:px-6">
         <ChartContainer
           config={chartConfig}
-          className='aspect-auto h-[250px] w-full'
+          className='h-[300px] w-full'
         >
           <BarChart
-            data={chartData}
+            data={chartData.data}
             margin={{
-              left: 12,
-              right: 12
+              left: 0,
+              right: 0,
+              top: 12,
+              bottom: 12
             }}
           >
             <defs>
               <linearGradient id='fillBar' x1='0' y1='0' x2='0' y2='1'>
                 <stop
                   offset='0%'
-                  stopColor='var(--primary)'
+                  stopColor='var(--color-runs)'
                   stopOpacity={0.8}
                 />
                 <stop
                   offset='100%'
-                  stopColor='var(--primary)'
-                  stopOpacity={0.2}
+                  stopColor='var(--color-runs)'
+                  stopOpacity={0.1}
                 />
               </linearGradient>
             </defs>
-            <CartesianGrid vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis
-              dataKey={chartType === 'topWorkflows' ? 'name' : 'date'}
+              dataKey='date'
               tickLine={false}
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tick={{ fontSize: 12 }}
+              tickFormatter={formatXAxisTick}
             />
             <ChartTooltip
-              cursor={{ fill: 'var(--primary)', opacity: 0.1 }}
+              cursor={{ fill: 'var(--color-runs)', opacity: 0.1 }}
               content={
                 <ChartTooltipContent
-                  className='w-[150px]'
-                  nameKey='views'
+                  labelFormatter={formatTooltipLabel}
+                  formatter={(value) => [
+                    typeof value === 'number' ? value.toLocaleString() : value,
+                    'Workflow Runs'
+                  ]}
                 />
               }
             />
             <Bar
-              dataKey={activeChart}
+              dataKey="runs"
               fill='url(#fillBar)'
               radius={[4, 4, 0, 0]}
+              strokeWidth={1}
+              stroke='var(--color-runs)'
             />
           </BarChart>
         </ChartContainer>

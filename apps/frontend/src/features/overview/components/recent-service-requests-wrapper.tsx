@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -25,18 +25,20 @@ export function RecentServiceRequestsWrapper({
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
 
-  const fetchServiceRequests = async () => {
+  const fetchServiceRequests = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
       const token = await getToken();
-      if (!token) {
-        throw new Error('Authentication required');
+
+      if (token) {
+        const response = await dashboardApi.getServiceRequests(token);
+      setData(response);
+      } else {
+        setError('Authentication required');
       }
 
-      const response = await dashboardApi.getServiceRequests(token);
-      setData(response);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load service requests';
       setError(errorMessage);
@@ -48,13 +50,13 @@ export function RecentServiceRequestsWrapper({
     } finally {
       setLoading(false);
     }
-  };
+  }, [data, fallbackData, getToken]);
 
   useEffect(() => {
     if (!fallbackData) {
       fetchServiceRequests();
     }
-  }, []);
+  }, [fallbackData, fetchServiceRequests]);
 
   const handleRetry = () => {
     setRetryCount(prev => prev + 1);
@@ -201,7 +203,7 @@ export function RecentServiceRequestsWrapper({
           <div className="text-center py-12 text-muted-foreground">
             <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <h3 className="font-medium mb-2">No Service Requests</h3>
-            <p className="text-sm">Submit a service request and we'll book a sales call with you as soon as possible.</p>
+            <p className="text-sm">Submit a service request and we&#39;ll book a sales call with you as soon as possible.</p>
           </div>
         </CardContent>
       </Card>

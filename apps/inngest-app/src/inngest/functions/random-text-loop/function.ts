@@ -1,8 +1,6 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate } from "@/lib/realtime-channels";
-import { RunStatus, WorkflowStatus } from "@duramation/db";
-import {updateStatusForWorkflow} from "@/utils/sendWebhookWithRetry";
 
 
 export const randomTextLoopWorkflow = inngest.createFunction(
@@ -16,21 +14,9 @@ export const randomTextLoopWorkflow = inngest.createFunction(
         }],
     },
     { event: "workflow/random.text.loop" },
-    async ({ step, event, logger, runId, publish, credentials }) => {
+    async ({ step, event, logger, runId, publish }) => {
         const { workflowId, user_id, cronExpression, scheduledRun, tz, input } = event.data;
         const functionId = "random-text-loop";
-
-        await updateStatusForWorkflow(
-            step,
-            logger,
-            workflowId,
-            runId,
-            user_id,
-            WorkflowStatus.RUNNING,
-            RunStatus.RUNNING,
-            "update-workflow-status-failed",
-        );
-
 
         // Initialize workflow run and publish status update
         await step.run("initialize-workflow", async () => {
@@ -66,6 +52,7 @@ export const randomTextLoopWorkflow = inngest.createFunction(
             logger.info({ runId, functionId, workflowId, userId: user_id }, "Starting random text loop");
 
             if (!input) {
+
                 await publish({
                     channel: `user:${user_id}:workflow:${workflowId}`,
                     topic: "updates",

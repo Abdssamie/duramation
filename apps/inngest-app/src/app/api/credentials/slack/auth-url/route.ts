@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import { auth } from "@clerk/nextjs/server";
 import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
 import { ClerkUserId } from "@/types/user";
@@ -6,7 +7,7 @@ import {
   OAuthProviderFullConfig,
   Slack,
   getProviderRegistryConfig,
-} from "@duramation/integrations";
+} from "@duramation/integrations/server";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -14,17 +15,14 @@ export async function GET(req: Request) {
   const workflowId = searchParams.get("workflowId");
   
   try {
-    const user = await auth();
-
-    if (!user || !user.userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    // Authenticate user
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    const id = await getInternalUserId(user.userId as ClerkUserId);
-
-    if (!id) {
-      return new Response("User not found", { status: 404 });
-    }
+    const { userId: id } = authResult;
 
     // Get scopes from query param or use defaults
     const config = getProviderRegistryConfig('SLACK') as OAuthProviderFullConfig;

@@ -1,27 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import {
-    queryWorkflowTemplates
-} from "@duramation/shared";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
+import { withErrorHandler, AppError } from "@/lib/utils/error-handler";
+import { validateQueryParams, CommonSchemas } from "@/lib/utils/validation";
+import { queryWorkflowTemplates } from "@duramation/shared";
 import prisma from "@/lib/prisma";
-import { ClerkUserId } from "@/types/user";
-
+import { z } from "zod";
 
 
 export async function GET(req: NextRequest) {
-    const user = await auth();
-
-    if (!user || !user.userId) {
-        return NextResponse.json(
-            { success: false, message: "Unauthorized" },
-            { status: 401 }
-        );
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    try {
-        const userId = await getInternalUserId(user.userId as ClerkUserId);
+    const { userId } = authResult;
 
+    try {
         if (!userId) {
             return NextResponse.json(
                 { success: false, message: "User not found" },

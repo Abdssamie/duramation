@@ -40,7 +40,7 @@ export const workflowStatusHandler = inngest.createFunction(
         return handleFunctionFailed(event, step, logger, user_id, workflowId);
       case "inngest/function.cancelled":
         return handleFunctionCancelled(
-          event as any,
+          event,
           step,
           logger,
           user_id,

@@ -1,22 +1,19 @@
 import { storeCredentialForWorkflow } from "@/services/credentials-store";
 import { auth } from "@clerk/nextjs/server";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import { NextRequest } from "next/server";
 import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
 import { ClerkUserId } from "@/types/user";
 import { CredentialCreateRequest, validateCredentialSecret } from "@duramation/shared";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-    const user = await auth();
-
-    if (!user || !user.userId) {
-        return new Response('Unauthorized', { status: 401 });
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
-
-    if (!internalUserId) {
-        return new Response("User not found", { status: 404 });
-    }
+    const { userId } = authResult;
 
     const workflowId = params.id;
     const body: CredentialCreateRequest = await req.json();
@@ -31,7 +28,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 
     try {
-        const newCredential = await storeCredentialForWorkflow(internalUserId, workflowId, body);
+        const newCredential = await storeCredentialForWorkflow(userId, workflowId, body);
         
         return new Response(JSON.stringify(newCredential), { status: 201 });
     } catch (error) {

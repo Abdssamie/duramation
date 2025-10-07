@@ -42,13 +42,13 @@ export async function GET(request: NextRequest) {
       const runs = workflow.workflowRuns;
       const totalRuns = runs.length;
       const successfulRuns = runs.filter(
-        (run) => run.status === RunStatus.COMPLETED
+        (run) => run.status === 'COMPLETED'
       ).length;
       const failedRuns = runs.filter(
-        (run) => run.status === RunStatus.FAILED
+        (run) => run.status === 'FAILED'
       ).length;
       const runningRuns = runs.filter(
-        (run) => run.status === RunStatus.RUNNING || run.status === RunStatus.STARTED
+        (run) => run.status === 'RUNNING' || run.status === 'STARTED'
       ).length;
 
       const successRate = totalRuns > 0 ? (successfulRuns / totalRuns) * 100 : 0;
@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
       if (runningRuns > 0) {
         status = 'RUNNING';
       } else if (runs.length > 0) {
-        status = runs[0].status as 'RUNNING' | 'COMPLETED' | 'FAILED' | 'STARTED';
+        status = runs[0]?.status as 'RUNNING' | 'COMPLETED' | 'FAILED' | 'STARTED';
       }
 
       // Calculate trend (compare recent runs to older runs)
@@ -66,13 +66,13 @@ export async function GET(request: NextRequest) {
       const olderRuns = runs.slice(3, 6);
       const recentSuccessRate =
         recentRuns.length > 0
-          ? (recentRuns.filter((r) => r.status === RunStatus.COMPLETED).length /
+          ? (recentRuns.filter((r) => r.status === 'COMPLETED').length /
               recentRuns.length) *
             100
           : 0;
       const olderSuccessRate =
         olderRuns.length > 0
-          ? (olderRuns.filter((r) => r.status === RunStatus.COMPLETED).length /
+          ? (olderRuns.filter((r) => r.status === 'COMPLETED').length /
               olderRuns.length) *
             100
           : 0;

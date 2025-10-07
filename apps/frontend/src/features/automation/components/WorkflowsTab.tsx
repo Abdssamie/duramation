@@ -38,6 +38,12 @@ export default function WorkflowsTab() {
     useState<WorkflowInputFieldDefinition[] | null>(null);
 
   const handleRealtimeUpdate = useCallback((data: WorkflowStatusUpdate) => {
+    // Handle case where status might be undefined
+    if (!data.status) {
+      console.warn('Received status update with undefined status:', data);
+      return;
+    }
+
     const newStatus = data.status.toUpperCase() as WorkflowStatus;
 
     setWorkflows((prev) =>

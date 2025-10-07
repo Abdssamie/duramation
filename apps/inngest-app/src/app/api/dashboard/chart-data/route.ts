@@ -1,22 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
-import { getInternalUserId } from '@/lib/helpers/getInternalUserId';
-import { ClerkUserId, InternalUserId } from "@/types/user";
 import prisma from '@/lib/prisma';
 import { subDays, format, eachDayOfInterval, startOfDay, endOfDay } from 'date-fns';
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const { userId: clerkUserId } = await auth();
+    const authResult = await authenticateUser();
     
-    if (!clerkUserId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    const userId = await getInternalUserId(clerkUserId as ClerkUserId);
-    if (!userId) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
+    const { userId } = authResult;
 
     const { searchParams } = new URL(request.url);
     const timeRange = searchParams.get('timeRange') || '30d';

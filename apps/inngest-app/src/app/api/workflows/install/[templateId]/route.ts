@@ -1,34 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
-import { getWorkflowTemplate, WorkflowTemplate } from "@duramation/shared";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
+import { isAuthError, authenticateUser } from "@/lib/utils/auth";
+import { getWorkflowTemplate } from "@duramation/shared";
 import prisma from "@/lib/prisma";
-import { ClerkUserId } from "@/types/user";
 import { Prisma } from "@duramation/db";
 import { InputJsonValue } from "@prisma/client/runtime/library";
 
 
 export async function POST(
     req: NextRequest,
-    {params}: { params: Promise<{ templateId: string }> }
+    { params }: { params: Promise<{ templateId: string }> }
 ) {
-    const user = await auth();
+    const authResult = await authenticateUser();
+
+    if (isAuthError(authResult)) {
+        return authResult;
+    }
+
+    const { userId } = authResult;
 
     const { templateId } = await params;
 
-    if (!user || !user.userId) {
-        return NextResponse.json(
-            {success: false, message: "Unauthorized"},
-            {status: 401}
-        );
-    }
-
-    const userId = await getInternalUserId(user.userId as ClerkUserId);
-
     if (!userId) {
         return NextResponse.json(
-            {success: false, message: "User not found"},
-            {status: 404}
+            { success: false, message: "User not found" },
+            { status: 404 }
         );
     }
 
@@ -41,8 +36,8 @@ export async function POST(
 
         if (!template) {
             return NextResponse.json(
-                {success: false, message: "Workflow template not found"},
-                {status: 404}
+                { success: false, message: "Workflow template not found" },
+                { status: 404 }
             );
         }
 
@@ -87,7 +82,7 @@ export async function POST(
                         data: response,
                         message: `Workflow template '${template.name}' updated successfully to version ${template.version}`,
                     },
-                    {status: 200}
+                    { status: 200 }
                 );
             } else {
                 // Workflow is already installed and up-to-date or no update requested
@@ -95,9 +90,9 @@ export async function POST(
                     {
                         success: false,
                         message: "This workflow template is already installed and up-to-date",
-                        data: {existingWorkflowId: existingWorkflow.id}
+                        data: { existingWorkflowId: existingWorkflow.id }
                     },
-                    {status: 409}
+                    { status: 409 }
                 );
             }
         }
@@ -139,14 +134,14 @@ export async function POST(
                 data: response,
                 message: `Workflow template '${template.name}' installed successfully`,
             },
-            {status: 201}
+            { status: 201 }
         );
     } catch (error) {
         console.error('Error installing workflow template:', error);
 
         return NextResponse.json(
-            {success: false, message: 'Error installing workflow template'},
-            {status: 500}
+            { success: false, message: 'Error installing workflow template' },
+            { status: 500 }
         );
     }
 }

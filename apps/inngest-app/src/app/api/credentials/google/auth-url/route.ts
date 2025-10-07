@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import { ClerkUserId } from "@/types/user";
+import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import {
   Google,
   getProviderRegistryConfig,
@@ -14,17 +12,13 @@ export async function GET(req: Request) {
   const workflowId = searchParams.get("workflowId");
 
   try {
-    const user = await auth();
+    const authResult = await authenticateUser();
 
-    if (!user || !user.userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    const id = await getInternalUserId(user.userId as ClerkUserId);
-
-    if (!id) {
-      return new Response("User not found", { status: 404 });
-    }
+    const { userId: id } = authResult;
 
     // Get scopes from query param or use defaults
     const config = getProviderRegistryConfig('GOOGLE') as OAuthProviderFullConfig;

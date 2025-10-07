@@ -5,8 +5,6 @@ import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
 import { ClerkUserId } from "@/types/user";
 import { CredentialUpdateRequest, validateCredentialSecret } from "@duramation/shared";
 
-
-
 export async function GET({ params }: { params: Promise<{ id: string }> }) {
     const user = await auth();
     const { id } = await params;
