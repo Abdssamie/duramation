@@ -35,6 +35,7 @@ export interface ApiKeyProviderConfig {
 export interface BaseProviderConfig {
   provider: Provider;
   name: string;
+  displayName: string;
   description: string;
   icon: string;
   ui: ProviderUIConfig;

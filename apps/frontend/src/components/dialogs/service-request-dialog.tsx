@@ -12,6 +12,13 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, CheckCircle, AlertCircle, Plus } from 'lucide-react';
 import { dashboardApi } from '@/services/api/api-client';
 import { ServiceRequestCreateRequest } from '@duramation/shared';
+// Extend the backend type for frontend form usage
+interface ExtendedServiceRequestCreateRequest extends ServiceRequestCreateRequest {
+  businessProcess: string;
+  desiredOutcome: string;
+  preferredMeetingDate: string;
+  availabilityNotes: string;
+}
 
 interface ServiceRequestDialogProps {
   onSuccess?: () => void;
@@ -25,17 +32,18 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [formData, setFormData] = useState<ServiceRequestCreateRequest>({
+  const [formData, setFormData] = useState<ExtendedServiceRequestCreateRequest>({
     title: '',
     description: '',
+    category: 'automation',
+    priority: 'medium',
     businessProcess: '',
     desiredOutcome: '',
-    priority: 'MEDIUM',
     preferredMeetingDate: '',
     availabilityNotes: '',
   });
 
-  const handleInputChange = (field: keyof ServiceRequestCreateRequest, value: string) => {
+  const handleInputChange = (field: keyof ExtendedServiceRequestCreateRequest, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -43,9 +51,10 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
     setFormData({
       title: '',
       description: '',
+      category: 'automation',
+      priority: 'medium',
       businessProcess: '',
       desiredOutcome: '',
-      priority: 'MEDIUM',
       preferredMeetingDate: '',
       availabilityNotes: '',
     });
@@ -71,7 +80,17 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
       const token = await getToken();
 
       if (token) {
-        await dashboardApi.createServiceRequest(token, formData);
+        // Send all required fields to backend
+        await dashboardApi.createServiceRequest(token, {
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          priority: formData.priority,
+          businessProcess: formData.businessProcess,
+          desiredOutcome: formData.desiredOutcome,
+          preferredMeetingDate: formData.preferredMeetingDate,
+          availabilityNotes: formData.availabilityNotes,
+        });
 
         setSubmitStatus('success');
 
@@ -94,6 +113,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
   };
 
   const isFormValid = formData.title && formData.description && formData.businessProcess && formData.desiredOutcome;
+  // All fields required for frontend validation
 
   const defaultTrigger = (
     <Button>
@@ -111,7 +131,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
         <DialogHeader>
           <DialogTitle>Request Automation Service</DialogTitle>
           <DialogDescription>
-            Tell us about your business process and how we can help automate it for you. We&#39;ll reach out and book a sales call with you as soon as possible.
+            Tell us about your business process and how we can help automate it for you. We&apos;ll reach out and book a sales call with you as soon as possible.
           </DialogDescription>
         </DialogHeader>
 
@@ -120,7 +140,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-green-700 mb-2">Request Submitted Successfully!</h3>
             <p className="text-muted-foreground">
-              We&#39;ve received your service request and will reach out to book a sales call with you as soon as possible. You&#39;ll be contacted within 1-2 business days.
+              We&apos;ve received your service request and will reach out to book a sales call with you as soon as possible. You&apos;ll be contacted within 1-2 business days.
             </p>
           </div>
         ) : (
@@ -200,10 +220,10 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="LOW">Low - Can wait a few weeks</SelectItem>
-                  <SelectItem value="MEDIUM">Medium - Would like within 1-2 weeks</SelectItem>
-                  <SelectItem value="HIGH">High - Need within a few days</SelectItem>
-                  <SelectItem value="URGENT">Urgent - Need ASAP</SelectItem>
+                  <SelectItem value="low">Low - Can wait a few weeks</SelectItem>
+                  <SelectItem value="medium">Medium - Would like within 1-2 weeks</SelectItem>
+                  <SelectItem value="high">High - Need within a few days</SelectItem>
+                  <SelectItem value="urgent">Urgent - Need ASAP</SelectItem>
                 </SelectContent>
               </Select>
             </div>

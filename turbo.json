@@ -29,12 +29,15 @@
       "cache": false,
       "persistent": true,
       "env": [
-        "NEXT_BACKEND_API_URL",
-        "UPSTASH_REDIS_REST_URL",
-        "UPSTASH_REDIS_REST_TOKEN",
-        "INNGEST_WEBHOOK_SECRET",
-        "FRONTEND_WEBHOOK_URL",
-        "NODE_ENV"
+  "NEXT_BACKEND_API_URL",
+  "UPSTASH_REDIS_REST_URL",
+  "UPSTASH_REDIS_REST_TOKEN",
+  "INNGEST_WEBHOOK_SECRET",
+  "FRONTEND_WEBHOOK_URL",
+  "NODE_ENV",
+  "INTERNAL_API_SECRET",
+  "REDIS_URL",
+  "NEXT_RUNTIME"
       ]
     }
   }

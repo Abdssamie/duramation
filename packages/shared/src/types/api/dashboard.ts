@@ -42,6 +42,10 @@ export interface ServiceRequestCreateRequest {
   priority?: 'low' | 'medium' | 'high' | 'urgent';
   estimatedHours?: number;
   assignedTo?: string;
+  businessProcess: string;
+  desiredOutcome: string;
+  preferredMeetingDate?: string;
+  availabilityNotes?: string;
 }
 
 export type ServiceRequestCreateResponse = ApiResponse<ServiceRequest>;

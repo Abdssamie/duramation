@@ -27,6 +27,7 @@ export const SERVER_PROVIDER_REGISTRY: Record<Provider, ServerProviderRegistryEn
     config: {
       provider: 'HUBSPOT',
       name: 'HubSpot',
+      displayName: 'HubSpot',
       description: 'Connect HubSpot CRM',
       icon: 'hubspot',
       authType: 'OAUTH',
@@ -51,6 +52,7 @@ export const SERVER_PROVIDER_REGISTRY: Record<Provider, ServerProviderRegistryEn
     config: {
       provider: 'INSTAGRAM',
       name: 'Instagram',
+      displayName: 'Instagram',
       description: 'Connect Instagram Business',
       icon: 'instagram',
       authType: 'OAUTH',
@@ -71,6 +73,7 @@ export const SERVER_PROVIDER_REGISTRY: Record<Provider, ServerProviderRegistryEn
     config: {
       provider: 'CUSTOM',
       name: 'Custom',
+      displayName: 'Custom',
       description: 'Custom integration',
       icon: 'custom',
       authType: 'API_KEY',

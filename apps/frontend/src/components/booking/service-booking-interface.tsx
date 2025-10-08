@@ -201,8 +201,8 @@ export function ServiceBookingInterface({ onRequestSubmitted }: ServiceBookingIn
             <div className="text-center">
               <h3 className="font-semibold mb-2">Ready to get started?</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                You've selected {services.find(s => s.id === selectedService)?.title}. 
-                Choose how you'd like to proceed above.
+                You&apos;ve selected {services.find(s => s.id === selectedService)?.title}. 
+                Choose how you&apos;d like to proceed above.
               </p>
             </div>
           </CardContent>

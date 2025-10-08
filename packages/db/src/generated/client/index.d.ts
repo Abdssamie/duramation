@@ -9953,6 +9953,8 @@ export namespace Prisma {
     meetingScheduled: boolean | null
     meetingUrl: string | null
     meetingDate: Date | null
+    preferredMeetingDate: string | null
+    availabilityNotes: string | null
     proposalSent: boolean | null
     proposalAccepted: boolean | null
     estimatedHours: number | null
@@ -9973,6 +9975,8 @@ export namespace Prisma {
     meetingScheduled: boolean | null
     meetingUrl: string | null
     meetingDate: Date | null
+    preferredMeetingDate: string | null
+    availabilityNotes: string | null
     proposalSent: boolean | null
     proposalAccepted: boolean | null
     estimatedHours: number | null
@@ -9993,6 +9997,8 @@ export namespace Prisma {
     meetingScheduled: number
     meetingUrl: number
     meetingDate: number
+    preferredMeetingDate: number
+    availabilityNotes: number
     proposalSent: number
     proposalAccepted: number
     estimatedHours: number
@@ -10025,6 +10031,8 @@ export namespace Prisma {
     meetingScheduled?: true
     meetingUrl?: true
     meetingDate?: true
+    preferredMeetingDate?: true
+    availabilityNotes?: true
     proposalSent?: true
     proposalAccepted?: true
     estimatedHours?: true
@@ -10045,6 +10053,8 @@ export namespace Prisma {
     meetingScheduled?: true
     meetingUrl?: true
     meetingDate?: true
+    preferredMeetingDate?: true
+    availabilityNotes?: true
     proposalSent?: true
     proposalAccepted?: true
     estimatedHours?: true
@@ -10065,6 +10075,8 @@ export namespace Prisma {
     meetingScheduled?: true
     meetingUrl?: true
     meetingDate?: true
+    preferredMeetingDate?: true
+    availabilityNotes?: true
     proposalSent?: true
     proposalAccepted?: true
     estimatedHours?: true
@@ -10172,6 +10184,8 @@ export namespace Prisma {
     meetingScheduled: boolean
     meetingUrl: string | null
     meetingDate: Date | null
+    preferredMeetingDate: string | null
+    availabilityNotes: string | null
     proposalSent: boolean
     proposalAccepted: boolean | null
     estimatedHours: number | null
@@ -10211,6 +10225,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: boolean
     meetingDate?: boolean
+    preferredMeetingDate?: boolean
+    availabilityNotes?: boolean
     proposalSent?: boolean
     proposalAccepted?: boolean
     estimatedHours?: boolean
@@ -10232,6 +10248,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: boolean
     meetingDate?: boolean
+    preferredMeetingDate?: boolean
+    availabilityNotes?: boolean
     proposalSent?: boolean
     proposalAccepted?: boolean
     estimatedHours?: boolean
@@ -10253,6 +10271,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: boolean
     meetingDate?: boolean
+    preferredMeetingDate?: boolean
+    availabilityNotes?: boolean
     proposalSent?: boolean
     proposalAccepted?: boolean
     estimatedHours?: boolean
@@ -10274,6 +10294,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: boolean
     meetingDate?: boolean
+    preferredMeetingDate?: boolean
+    availabilityNotes?: boolean
     proposalSent?: boolean
     proposalAccepted?: boolean
     estimatedHours?: boolean
@@ -10282,7 +10304,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ServiceRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "description" | "businessProcess" | "desiredOutcome" | "priority" | "status" | "meetingScheduled" | "meetingUrl" | "meetingDate" | "proposalSent" | "proposalAccepted" | "estimatedHours" | "quotedPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceRequest"]>
+  export type ServiceRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "description" | "businessProcess" | "desiredOutcome" | "priority" | "status" | "meetingScheduled" | "meetingUrl" | "meetingDate" | "preferredMeetingDate" | "availabilityNotes" | "proposalSent" | "proposalAccepted" | "estimatedHours" | "quotedPrice" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceRequest"]>
   export type ServiceRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10310,6 +10332,8 @@ export namespace Prisma {
       meetingScheduled: boolean
       meetingUrl: string | null
       meetingDate: Date | null
+      preferredMeetingDate: string | null
+      availabilityNotes: string | null
       proposalSent: boolean
       proposalAccepted: boolean | null
       estimatedHours: number | null
@@ -10751,6 +10775,8 @@ export namespace Prisma {
     readonly meetingScheduled: FieldRef<"ServiceRequest", 'Boolean'>
     readonly meetingUrl: FieldRef<"ServiceRequest", 'String'>
     readonly meetingDate: FieldRef<"ServiceRequest", 'DateTime'>
+    readonly preferredMeetingDate: FieldRef<"ServiceRequest", 'String'>
+    readonly availabilityNotes: FieldRef<"ServiceRequest", 'String'>
     readonly proposalSent: FieldRef<"ServiceRequest", 'Boolean'>
     readonly proposalAccepted: FieldRef<"ServiceRequest", 'Boolean'>
     readonly estimatedHours: FieldRef<"ServiceRequest", 'Int'>
@@ -12511,6 +12537,8 @@ export namespace Prisma {
     meetingScheduled: 'meetingScheduled',
     meetingUrl: 'meetingUrl',
     meetingDate: 'meetingDate',
+    preferredMeetingDate: 'preferredMeetingDate',
+    availabilityNotes: 'availabilityNotes',
     proposalSent: 'proposalSent',
     proposalAccepted: 'proposalAccepted',
     estimatedHours: 'estimatedHours',
@@ -13414,6 +13442,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFilter<"ServiceRequest"> | boolean
     meetingUrl?: StringNullableFilter<"ServiceRequest"> | string | null
     meetingDate?: DateTimeNullableFilter<"ServiceRequest"> | Date | string | null
+    preferredMeetingDate?: StringNullableFilter<"ServiceRequest"> | string | null
+    availabilityNotes?: StringNullableFilter<"ServiceRequest"> | string | null
     proposalSent?: BoolFilter<"ServiceRequest"> | boolean
     proposalAccepted?: BoolNullableFilter<"ServiceRequest"> | boolean | null
     estimatedHours?: IntNullableFilter<"ServiceRequest"> | number | null
@@ -13435,6 +13465,8 @@ export namespace Prisma {
     meetingScheduled?: SortOrder
     meetingUrl?: SortOrderInput | SortOrder
     meetingDate?: SortOrderInput | SortOrder
+    preferredMeetingDate?: SortOrderInput | SortOrder
+    availabilityNotes?: SortOrderInput | SortOrder
     proposalSent?: SortOrder
     proposalAccepted?: SortOrderInput | SortOrder
     estimatedHours?: SortOrderInput | SortOrder
@@ -13459,6 +13491,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFilter<"ServiceRequest"> | boolean
     meetingUrl?: StringNullableFilter<"ServiceRequest"> | string | null
     meetingDate?: DateTimeNullableFilter<"ServiceRequest"> | Date | string | null
+    preferredMeetingDate?: StringNullableFilter<"ServiceRequest"> | string | null
+    availabilityNotes?: StringNullableFilter<"ServiceRequest"> | string | null
     proposalSent?: BoolFilter<"ServiceRequest"> | boolean
     proposalAccepted?: BoolNullableFilter<"ServiceRequest"> | boolean | null
     estimatedHours?: IntNullableFilter<"ServiceRequest"> | number | null
@@ -13480,6 +13514,8 @@ export namespace Prisma {
     meetingScheduled?: SortOrder
     meetingUrl?: SortOrderInput | SortOrder
     meetingDate?: SortOrderInput | SortOrder
+    preferredMeetingDate?: SortOrderInput | SortOrder
+    availabilityNotes?: SortOrderInput | SortOrder
     proposalSent?: SortOrder
     proposalAccepted?: SortOrderInput | SortOrder
     estimatedHours?: SortOrderInput | SortOrder
@@ -13508,6 +13544,8 @@ export namespace Prisma {
     meetingScheduled?: BoolWithAggregatesFilter<"ServiceRequest"> | boolean
     meetingUrl?: StringNullableWithAggregatesFilter<"ServiceRequest"> | string | null
     meetingDate?: DateTimeNullableWithAggregatesFilter<"ServiceRequest"> | Date | string | null
+    preferredMeetingDate?: StringNullableWithAggregatesFilter<"ServiceRequest"> | string | null
+    availabilityNotes?: StringNullableWithAggregatesFilter<"ServiceRequest"> | string | null
     proposalSent?: BoolWithAggregatesFilter<"ServiceRequest"> | boolean
     proposalAccepted?: BoolNullableWithAggregatesFilter<"ServiceRequest"> | boolean | null
     estimatedHours?: IntNullableWithAggregatesFilter<"ServiceRequest"> | number | null
@@ -14338,6 +14376,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: string | null
     meetingDate?: Date | string | null
+    preferredMeetingDate?: string | null
+    availabilityNotes?: string | null
     proposalSent?: boolean
     proposalAccepted?: boolean | null
     estimatedHours?: number | null
@@ -14359,6 +14399,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: string | null
     meetingDate?: Date | string | null
+    preferredMeetingDate?: string | null
+    availabilityNotes?: string | null
     proposalSent?: boolean
     proposalAccepted?: boolean | null
     estimatedHours?: number | null
@@ -14378,6 +14420,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14399,6 +14443,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14419,6 +14465,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: string | null
     meetingDate?: Date | string | null
+    preferredMeetingDate?: string | null
+    availabilityNotes?: string | null
     proposalSent?: boolean
     proposalAccepted?: boolean | null
     estimatedHours?: number | null
@@ -14438,6 +14486,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14458,6 +14508,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
@@ -15254,6 +15306,8 @@ export namespace Prisma {
     meetingScheduled?: SortOrder
     meetingUrl?: SortOrder
     meetingDate?: SortOrder
+    preferredMeetingDate?: SortOrder
+    availabilityNotes?: SortOrder
     proposalSent?: SortOrder
     proposalAccepted?: SortOrder
     estimatedHours?: SortOrder
@@ -15279,6 +15333,8 @@ export namespace Prisma {
     meetingScheduled?: SortOrder
     meetingUrl?: SortOrder
     meetingDate?: SortOrder
+    preferredMeetingDate?: SortOrder
+    availabilityNotes?: SortOrder
     proposalSent?: SortOrder
     proposalAccepted?: SortOrder
     estimatedHours?: SortOrder
@@ -15299,6 +15355,8 @@ export namespace Prisma {
     meetingScheduled?: SortOrder
     meetingUrl?: SortOrder
     meetingDate?: SortOrder
+    preferredMeetingDate?: SortOrder
+    availabilityNotes?: SortOrder
     proposalSent?: SortOrder
     proposalAccepted?: SortOrder
     estimatedHours?: SortOrder
@@ -16632,6 +16690,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: string | null
     meetingDate?: Date | string | null
+    preferredMeetingDate?: string | null
+    availabilityNotes?: string | null
     proposalSent?: boolean
     proposalAccepted?: boolean | null
     estimatedHours?: number | null
@@ -16651,6 +16711,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: string | null
     meetingDate?: Date | string | null
+    preferredMeetingDate?: string | null
+    availabilityNotes?: string | null
     proposalSent?: boolean
     proposalAccepted?: boolean | null
     estimatedHours?: number | null
@@ -16844,6 +16906,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFilter<"ServiceRequest"> | boolean
     meetingUrl?: StringNullableFilter<"ServiceRequest"> | string | null
     meetingDate?: DateTimeNullableFilter<"ServiceRequest"> | Date | string | null
+    preferredMeetingDate?: StringNullableFilter<"ServiceRequest"> | string | null
+    availabilityNotes?: StringNullableFilter<"ServiceRequest"> | string | null
     proposalSent?: BoolFilter<"ServiceRequest"> | boolean
     proposalAccepted?: BoolNullableFilter<"ServiceRequest"> | boolean | null
     estimatedHours?: IntNullableFilter<"ServiceRequest"> | number | null
@@ -17981,6 +18045,8 @@ export namespace Prisma {
     meetingScheduled?: boolean
     meetingUrl?: string | null
     meetingDate?: Date | string | null
+    preferredMeetingDate?: string | null
+    availabilityNotes?: string | null
     proposalSent?: boolean
     proposalAccepted?: boolean | null
     estimatedHours?: number | null
@@ -18167,6 +18233,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
@@ -18186,6 +18254,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
@@ -18205,6 +18275,8 @@ export namespace Prisma {
     meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
     meetingUrl?: NullableStringFieldUpdateOperationsInput | string | null
     meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    preferredMeetingDate?: NullableStringFieldUpdateOperationsInput | string | null
+    availabilityNotes?: NullableStringFieldUpdateOperationsInput | string | null
     proposalSent?: BoolFieldUpdateOperationsInput | boolean
     proposalAccepted?: NullableBoolFieldUpdateOperationsInput | boolean | null
     estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null

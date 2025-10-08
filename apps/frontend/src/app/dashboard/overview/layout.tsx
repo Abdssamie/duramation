@@ -6,6 +6,8 @@ import React from 'react';
 import { ActionCards } from '@/components/dashboard/action-cards';
 import { getSimplifiedMetrics } from '@/services/api/getSimplifiedMetrics';
 
+export const dynamic = 'force-dynamic'
+
 // Helper function to format currency
 function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-US', {

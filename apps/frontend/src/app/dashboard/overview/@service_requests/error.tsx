@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
-import * as Sentry from '@sentry/nextjs';
 
 interface ServiceRequestsErrorProps {
   error: Error;
@@ -16,10 +15,6 @@ interface ServiceRequestsErrorProps {
 export default function ServiceRequestsError({ error, reset }: ServiceRequestsErrorProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    Sentry.captureException(error);
-  }, [error]);
 
   const handleRetry = () => {
     startTransition(() => {

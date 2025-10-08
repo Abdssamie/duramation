@@ -6,6 +6,7 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
   GOOGLE: {
     provider: 'GOOGLE',
     name: 'Google',
+    displayName: 'Google',
     description: 'Connect to Google services like Gmail, Drive, Sheets, Calendar',
     icon: 'google',
     authType: 'OAUTH',
@@ -31,6 +32,7 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
   SLACK: {
     provider: 'SLACK',
     name: 'Slack',
+    displayName: 'Slack',
     description: 'Send messages and manage Slack workspaces',
     icon: 'slack',
     authType: 'OAUTH',
@@ -53,6 +55,7 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
   FIRECRAWL: {
     provider: 'FIRECRAWL',
     name: 'Firecrawl',
+    displayName: 'Firecrawl',
     description: 'Web scraping and data extraction',
     icon: 'firecrawl',
     authType: 'API_KEY',
@@ -78,6 +81,7 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
   HUBSPOT: {
     provider: 'HUBSPOT',
     name: 'HubSpot',
+    displayName: 'HubSpot',
     description: 'Connect HubSpot CRM',
     icon: 'hubspot',
     authType: 'OAUTH',
@@ -99,6 +103,7 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
   INSTAGRAM: {
     provider: 'INSTAGRAM',
     name: 'Instagram',
+    displayName: 'Instagram',
     description: 'Connect Instagram Business',
     icon: 'instagram',
     authType: 'OAUTH',
@@ -116,6 +121,7 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
   CUSTOM: {
     provider: 'CUSTOM',
     name: 'Custom',
+    displayName: 'Custom',
     description: 'Custom integration',
     icon: 'custom',
     authType: 'API_KEY',

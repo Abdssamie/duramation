@@ -85,7 +85,7 @@ export const chartFiltersSchema = z.object({
 );
 
 export const chartDataPointSchema = z.object({
-  timestamp: z.string().datetime(),
+  timestamp: z.iso.datetime(),
   value: z.number(),
   label: z.string().optional(),
   metadata: z.record(z.string(), z.any()).optional(),
@@ -115,8 +115,8 @@ export const serviceRequestSchema = z.object({
   actualHours: nonNegativeNumberSchema.optional(),
   assignedTo: idSchema.optional(),
   requestedBy: idSchema,
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
   completedAt: optionalDateStringSchema,
   metadata: z.record(z.string(), z.any()).optional(),
 });
@@ -131,6 +131,10 @@ export const serviceRequestCreateRequestSchema = z.object({
   priority: serviceRequestPrioritySchema.default('medium'),
   estimatedHours: positiveNumberSchema.optional(),
   assignedTo: idSchema.optional(),
+  businessProcess: nonEmptyStringSchema,
+  desiredOutcome: nonEmptyStringSchema,
+  preferredMeetingDate: z.string().optional(),
+  availabilityNotes: z.string().optional(),
 });
 
 export const serviceRequestCreateResponseSchema = apiResponseSchema(serviceRequestSchema);
@@ -144,8 +148,8 @@ export const serviceRequestListRequestSchema = paginationParamsSchema.extend({
   priority: serviceRequestPrioritySchema.optional(),
   assignedTo: idSchema.optional(),
   requestedBy: idSchema.optional(),
-  createdAfter: z.string().datetime().optional(),
-  createdBefore: z.string().datetime().optional(),
+  createdAfter: z.iso.datetime().optional(),
+  createdBefore: z.iso.datetime().optional(),
 });
 
 export const serviceRequestsResponseSchema = z.object({

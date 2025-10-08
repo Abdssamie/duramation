@@ -231,6 +231,8 @@ exports.Prisma.ServiceRequestScalarFieldEnum = {
   meetingScheduled: 'meetingScheduled',
   meetingUrl: 'meetingUrl',
   meetingDate: 'meetingDate',
+  preferredMeetingDate: 'preferredMeetingDate',
+  availabilityNotes: 'availabilityNotes',
   proposalSent: 'proposalSent',
   proposalAccepted: 'proposalAccepted',
   estimatedHours: 'estimatedHours',

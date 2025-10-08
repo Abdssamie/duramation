@@ -16,8 +16,7 @@ export type {
 export {
   getRequiredFields,
   getTemplateFields,
-  hasRequiredFields,
-  getProviderDisplayName
+  hasRequiredFields
 } from '@duramation/shared';
 
 // Enhanced workflow type with credential relationships - browser-safe

@@ -113,7 +113,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({ initialData }) => {
   ];
 
   const next = async () => {
-    const fields = steps[currentStep].fields;
+    const fields = steps[currentStep]?.fields;
 
     const output = await form.trigger(fields as FieldName[], {
       shouldFocus: true

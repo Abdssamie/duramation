@@ -10,6 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import GoogleIcon from '@/components/icons/GoogleIcon';
+import InstagramIcon from '@/components/icons/InstagramIcon';
 
 interface IntegrationSelectorProps {
   requiredProviders: Provider[];
@@ -22,26 +23,25 @@ interface IntegrationSelectorProps {
 const PROVIDER_ICONS = {
   ['GOOGLE']: GoogleIcon,
   ['SLACK']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-purple-600 text-xs font-bold text-white'>
-      S
-    </div>
+    <div className='flex h-4 w-4 items-center justify-center rounded bg-purple-600 text-xs font-bold text-white'>S</div>
   ),
   ['HUBSPOT']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-orange-600 text-xs font-bold text-white'>
-      H
-    </div>
+    <div className='flex h-4 w-4 items-center justify-center rounded bg-orange-600 text-xs font-bold text-white'>H</div>
   ),
   ['FIRECRAWL']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-red-600 text-xs font-bold text-white'>
-      F
-    </div>
+    <div className='flex h-4 w-4 items-center justify-center rounded bg-red-600 text-xs font-bold text-white'>F</div>
   ),
   ['CUSTOM']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-gray-600 text-xs font-bold text-white'>
-      C
-    </div>
-  )
+    <div className='flex h-4 w-4 items-center justify-center rounded bg-gray-600 text-xs font-bold text-white'>C</div>
+  ),
+  ['INSTAGRAM']: InstagramIcon,
 };
+
+// Fallback icon for unknown providers
+const DefaultProviderIcon = () => (
+  <div className='flex h-4 w-4 items-center justify-center rounded bg-gray-400 text-xs font-bold text-white'>?</div>
+);
+
 
 export default function IntegrationSelector({
   requiredProviders,
@@ -81,7 +81,7 @@ export default function IntegrationSelector({
         {providersToShow.map((provider) => {
           const config = getProviderConfig(provider);
           const colors = getProviderColors(provider);
-          const IconComponent = PROVIDER_ICONS[provider];
+          const IconComponent = PROVIDER_ICONS[provider] || DefaultProviderIcon;
           const isSelected = selectedProvider === provider;
 
           return (

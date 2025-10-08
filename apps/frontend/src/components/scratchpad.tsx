@@ -399,7 +399,7 @@ const EnhancedForm: React.FC = () => {
 
       if (field.type === "email" && formData[field.id]) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData[field.id])) {
+        if (!emailRegex.test(formData[field.id] || "")) {
           newErrors[field.id] = "Please enter a valid email address";
         }
       }

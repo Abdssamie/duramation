@@ -290,6 +290,8 @@ model ServiceRequest {
   meetingScheduled Boolean   @default(false)
   meetingUrl       String?
   meetingDate      DateTime?
+  preferredMeetingDate String? // New field for preferred meeting date
+  availabilityNotes String?    // New field for availability notes
 
   // Proposal tracking
   proposalSent     Boolean  @default(false)

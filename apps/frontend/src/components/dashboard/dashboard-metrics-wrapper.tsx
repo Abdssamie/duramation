@@ -36,7 +36,7 @@ export function DashboardMetricsWrapper({
       }
 
       const data = await dashboardApi.getSimplifiedMetrics(token);
-      setMetrics(data);
+      setMetrics(data.data ?? null);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load dashboard metrics';
       setError(errorMessage);
@@ -92,7 +92,7 @@ export function DashboardMetricsWrapper({
 
           <div className='space-y-2'>
             <p className='text-muted-foreground text-sm'>
-              We couldn't load your dashboard metrics. This might be temporary.
+              We couldn&apos;t load your dashboard metrics. This might be temporary.
             </p>
           </div>
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import PageContainer from '@/components/layout/page-container';
-import * as Sentry from '@sentry/nextjs';
+// import * as Sentry from '@sentry/nextjs';
 
 interface Props {
   children: ReactNode;
@@ -31,13 +31,13 @@ export class DashboardErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: any) {
     console.error('Dashboard Error:', error, errorInfo);
-    Sentry.captureException(error, {
-      contexts: {
-        errorBoundary: {
-          componentStack: errorInfo.componentStack,
-        },
-      },
-    });
+    // Sentry.captureException(error, {
+    //   contexts: {
+    //     errorBoundary: {
+    //       componentStack: errorInfo.componentStack,
+    //     },
+    //   },
+    // });
   }
 
   handleRetry = () => {

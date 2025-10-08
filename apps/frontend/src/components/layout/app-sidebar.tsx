@@ -67,11 +67,11 @@ export default function AppSidebar() {
   const router = useRouter();
   const dict = useDictionary();
 
-  const handleSwitchTenant = (_tenantId: string) => {
+  const handleSwitchTenant = () => {
     // Tenant switching functionality would be implemented here
   };
 
-  const activeTenant = tenants[0];
+  const activeTenant = tenants[0] ?? { id: '', name: '' };
 
   React.useEffect(() => {
     // Side effects based on sidebar state changes

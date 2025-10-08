@@ -3,7 +3,7 @@ import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import { NextRequest } from "next/server";
 import { CredentialCreateRequest, validateCredentialSecret } from "@duramation/shared";
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const authResult = await authenticateUser();
     
     if (isAuthError(authResult)) {
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     const { userId } = authResult;
 
-    const workflowId = params.id;
+    const workflowId = (await params).id;
     const body: CredentialCreateRequest = await req.json();
 
     if (body.type === 'OAUTH') {

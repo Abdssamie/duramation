@@ -4,6 +4,7 @@ import type { ProviderUIConfig, ApiKeyProviderConfig } from '../types.js';
 export const FIRECRAWL_CONFIG = {
   provider: 'FIRECRAWL' as Provider,
   name: 'Firecrawl',
+  displayName: 'Firecrawl',
   description: 'Connect Firecrawl to scrape and crawl websites',
   icon: 'https://firecrawl.dev/favicon.ico',
   authType: 'API_KEY' as const,

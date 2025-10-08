@@ -4,6 +4,7 @@ import type { ProviderUIConfig, OAuthProviderConfig } from '../types.js';
 export const SLACK_CONFIG = {
   provider: 'SLACK' as Provider,
   name: 'Slack',
+  displayName: 'Slack',
   description: 'Connect your Slack workspace to send messages, manage channels, and more',
   icon: 'https://slack.com/favicon.ico',
   authType: 'OAUTH' as const,

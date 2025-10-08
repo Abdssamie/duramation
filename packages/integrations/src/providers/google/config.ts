@@ -4,6 +4,7 @@ import type { ProviderUIConfig, OAuthProviderConfig } from '../types.js';
 export const GOOGLE_CONFIG = {
   provider: 'GOOGLE' as Provider,
   name: 'Google',
+  displayName: 'Google',
   description: 'Connect your Google account to access Gmail, Sheets, Calendar, and more',
   icon: 'https://www.google.com/favicon.ico',
   authType: 'OAUTH' as const,

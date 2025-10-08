@@ -3,7 +3,7 @@ import { storeCredential, storeCredentialForWorkflow } from "@/services/credenti
 import { CredentialType, Provider } from "@duramation/db";
 import { InternalUserId } from "@/types/user";
 import { CredentialCreateRequest } from "@duramation/shared";
-import { Slack } from "@duramation/integrations";
+import { Slack } from "@duramation/integrations/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

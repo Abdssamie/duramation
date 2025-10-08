@@ -29,7 +29,10 @@ export function ServiceRequestForm({ onSuccess, onCancel }: ServiceRequestFormPr
     description: '',
     businessProcess: '',
     desiredOutcome: '',
-    priority: 'MEDIUM',
+    priority: 'medium',
+    category: 'automation',
+    preferredMeetingDate: '',
+    availabilityNotes: '',
   });
 
   const handleInputChange = (field: keyof ServiceRequestCreateRequest, value: string) => {
@@ -48,17 +51,29 @@ export function ServiceRequestForm({ onSuccess, onCancel }: ServiceRequestFormPr
         throw new Error('Authentication required');
       }
 
-      await dashboardApi.createServiceRequest(token, formData);
-      
+      await dashboardApi.createServiceRequest(token, {
+        title: formData.title,
+        description: formData.description,
+        businessProcess: formData.businessProcess,
+        desiredOutcome: formData.desiredOutcome,
+        priority: formData.priority,
+        category: formData.category,
+        preferredMeetingDate: formData.preferredMeetingDate,
+        availabilityNotes: formData.availabilityNotes,
+      });
+
       setSubmitStatus('success');
-      
+
       // Reset form
       setFormData({
         title: '',
         description: '',
         businessProcess: '',
         desiredOutcome: '',
-        priority: 'MEDIUM',
+        priority: 'medium',
+        category: 'automation',
+        preferredMeetingDate: '',
+        availabilityNotes: '',
       });
 
       // Call success callback after a brief delay
@@ -180,10 +195,10 @@ export function ServiceRequestForm({ onSuccess, onCancel }: ServiceRequestFormPr
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="LOW">Low - Can wait a few weeks</SelectItem>
-                <SelectItem value="MEDIUM">Medium - Would like within 1-2 weeks</SelectItem>
-                <SelectItem value="HIGH">High - Need within a few days</SelectItem>
-                <SelectItem value="URGENT">Urgent - Need ASAP</SelectItem>
+                <SelectItem value="low">Low - Can wait a few weeks</SelectItem>
+                <SelectItem value="medium">Medium - Would like within 1-2 weeks</SelectItem>
+                <SelectItem value="high">High - Need within a few days</SelectItem>
+                <SelectItem value="urgent">Urgent - Need ASAP</SelectItem>
               </SelectContent>
             </Select>
           </div>

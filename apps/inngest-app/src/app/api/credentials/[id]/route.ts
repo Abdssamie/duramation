@@ -10,10 +10,9 @@ import type {
     CredentialDeleteResponse 
 } from "@duramation/shared";
 
-export async function GET({ params }: { params: Promise<{ id: string }> }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const user = await auth();
-    const { id } = await params;
-    const credentialId = id;
+    const credentialId = (await params).id;
 
     if (!user || !user.userId) {
         const errorResponse: CredentialGetResponse = {
@@ -150,12 +149,11 @@ export async function PUT(
 
 
 export async function DELETE(
-    _req: NextRequest,
+    req: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     const user = await auth();
-    const { id } = await params;
-    const credentialId = id;
+    const credentialId = (await params).id;
 
     if (!user || !user.userId) {
         const errorResponse: CredentialDeleteResponse = {
