@@ -31,7 +31,7 @@ export const integrationMiddleware = new InngestMiddleware({
 
             try {
               // Fetch workflow credentials from the database
-              const credentials = await credentialStore.getWorkflowCredentials(userId, workflowId);
+              const credentials = await credentialStore.getWorkflowCredentials(workflowId, userId);
 
               // Return the credentials in the context (serialize to plain objects)
               return {

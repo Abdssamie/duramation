@@ -62,7 +62,6 @@ export default function MarketplaceClient({ items, pagination, limit }: Marketpl
 
   const handleInstallWorkflow = async (tpl: MarketplaceItem) => {
     setLoadingStates(prev => ({ ...prev, [tpl.id]: true }));
-    
     try {
       const token = await getToken();
       if (!token) {
@@ -78,18 +77,21 @@ export default function MarketplaceClient({ items, pagination, limit }: Marketpl
         tpl.name,
         wasUpdate
       );
-      
+
       // Immediately update local state for instant UI feedback
-      setLocalItems(prev => prev.map(item => 
-        item.id === tpl.id 
-          ? { 
-              ...item, 
-              isInstalled: true, 
-              hasNewVersion: false 
-            }
-          : item
-      ));
-      
+      setLocalItems(prev => prev.map(item => {
+        if (item.id === tpl.id) {
+          // After initial install, disable further installs
+          return {
+            ...item,
+            isInstalled: true,
+            hasNewVersion: false,
+            canInstall: false // Prevent further installs after success
+          };
+        }
+        return item;
+      }));
+
       toast.success(
         wasUpdate
           ? 'Workflow updated successfully!'

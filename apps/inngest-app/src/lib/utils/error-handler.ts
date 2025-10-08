@@ -45,7 +45,7 @@ export function handleApiError(error: unknown): NextResponse<ApiError> {
       {
         error: "Validation failed",
         code: "VALIDATION_ERROR",
-        details: error.errors.map(err => `${err.path.join('.')}: ${err.message}`)
+        details: error.issues.map(err => `${err.path.join('.')}: ${err.message}`)
       },
       { status: 400 }
     );

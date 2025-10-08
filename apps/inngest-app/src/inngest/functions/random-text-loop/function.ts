@@ -44,9 +44,7 @@ export const randomTextLoopWorkflow = inngest.createFunction(
                     createWorkflowUpdate("status", "Random text loop workflow started")
                 )
             );
-        });
-
-        
+        });        
 
         await step.run("start-random-text-loop", async () => {
             logger.info({ runId, functionId, workflowId, userId: user_id }, "Starting random text loop");

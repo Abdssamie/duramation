@@ -117,17 +117,15 @@ export default function WorkflowCredentialsTab({
           {missingCredentials.map((requirement) => (
             <Card key={requirement.provider} className='p-3'>
               <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-3 min-w-0'>
                   {getStatusIcon(requirement.available, requirement.provider)}
-                  <div>
-                    <div className='text-sm font-medium'>
+                  <div className='min-w-0'>
+                    <div className='text-sm font-medium truncate'>
                       {getProviderDisplayName(requirement.provider)}
                     </div>
-                    {requirement.scopes && requirement.scopes.length > 0 && (
-                      <div className='text-muted-foreground text-xs'>
-                        Scopes: {requirement.scopes.join(', ')}
-                      </div>
-                    )}
+                    <div className='text-muted-foreground text-xs break-words'>
+                      This service needs to be connected to run this workflow.
+                    </div>
                   </div>
                 </div>
                 {getStatusBadge(requirement.available)}

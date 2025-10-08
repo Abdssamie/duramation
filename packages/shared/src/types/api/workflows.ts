@@ -72,6 +72,7 @@ export interface WorkflowRunRequest {
 export interface WorkflowRunData {
   runId: string;
   workflowId: string;
+  workflowName: string;
   status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
   startedAt: string;
   completedAt?: string;
@@ -105,3 +106,15 @@ export interface WorkflowDeleteRequest {
 }
 
 export type WorkflowDeleteResponse = ApiResponse<{ deleted: boolean }>;
+
+/**
+ * Workflow History Request/Response Types
+ */
+export interface WorkflowHistoryRequest extends QueryParams {
+  workflowId?: string;
+  status?: 'started' | 'running' | 'completed' | 'failed' | 'cancelled';
+  startDate?: string;
+  endDate?: string;
+}
+
+export type WorkflowHistoryResponse = PaginatedResponse<WorkflowRunData>;

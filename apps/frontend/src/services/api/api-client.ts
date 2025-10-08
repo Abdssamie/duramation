@@ -32,7 +32,10 @@ import {
   // Marketplace types
   MarketplaceQuery,
   MarketplaceResponse,
-  TemplateInstallationResponse
+  TemplateInstallationResponse,
+  
+  // Workflow history types
+  WorkflowHistoryResponse
 } from '@duramation/shared';
 import type { WorkflowUpdateRequest } from '@duramation/shared';
 
@@ -172,7 +175,19 @@ export const workflowsApi = {
       token,
       method: 'POST',
       body: { name, update }
-    })
+    }),
+
+  history: (token: string, params: {
+    workflowId?: string;
+    status?: 'started' | 'running' | 'completed' | 'failed' | 'cancelled';
+    startDate?: string;
+    endDate?: string;
+    page?: number;
+    limit?: number;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+  } = {}) =>
+    request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token })
 };
 
 // Marketplace - using shared types

@@ -17,6 +17,10 @@ export async function sendWebhookWithRetry(
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
+      // Add timeout to prevent hanging
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
@@ -24,7 +28,10 @@ export async function sendWebhookWithRetry(
           Authorization: `Bearer ${webhookSecret}`,
         },
         body: JSON.stringify(body),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         logger.info(`Webhook sent successfully to: ${webhookUrl}`);
@@ -35,12 +42,17 @@ export async function sendWebhookWithRetry(
       throw new Error(`HTTP ${response.status}: ${errorBody}`);
     } catch (error) {
       lastError = error as Error;
-      const delayMs = RETRY_DELAY_MS * attempt; // Exponential backoff
-      logger.warn(
-        `Attempt ${attempt} failed (${lastError.message}). Retrying in ${delayMs}ms...`,
-      );
+      
+      // Handle timeout specifically
+      if (error instanceof Error && error.name === 'AbortError') {
+        logger.warn(`Attempt ${attempt} timed out after 5 seconds`);
+      } else {
+        logger.warn(`Attempt ${attempt} failed (${lastError.message})`);
+      }
 
       if (attempt < maxRetries) {
+        const delayMs = RETRY_DELAY_MS * attempt; // Exponential backoff
+        logger.warn(`Retrying in ${delayMs}ms...`);
         await delay(delayMs);
       }
     }

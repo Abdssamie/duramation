@@ -187,3 +187,26 @@
 {"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"warn","message":"Attempt 3 failed (fetch failed). Retrying in 3000ms...","runID":"01K6ZCQAZKF0SQJK81Q5JVJYRR","service":"user-service"}
 {"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"error","message":"Failed to send webhook after 3 attempts: fetch failed","runID":"01K6ZCQAZKF0SQJK81Q5JVJYRR","service":"user-service"}
 {"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Workflow and run status update complete","runID":"01K6ZCQAZKF0SQJK81Q5JVJYRR","service":"user-service"}
+{"level":"info","message":"Running workflow cmgicnsn600034zgeg716l6kk for user cmgiclfmk00004zgep4lpkhsv","service":"user-service"}
+{"level":"info","message":"idempotency_key: cmgicnsn600044zgew40o5i1b","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"--------------------------------\n","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"duramation-random-text-loop","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"--------------------------------\n","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"cmgicnsn600034zgeg716l6kk","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"cmgiclfmk00004zgep4lpkhsv","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Updating workflow status","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Upserted workflow status for workflow: cmgicnsn600034zgeg716l6kk","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Updating workflow run status","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Upserted workflow run status for run: 01K72Q1M2DK8TTKHJK2HVCKCDZ","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Cache invalidated successfully","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Sending webhook to: http://localhost:3000/api/realtime/notify","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Webhook sent successfully to: http://localhost:3000/api/realtime/notify","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.cancelled","functionName":"workflow-status-handler","level":"info","message":"Workflow and run status update complete","runID":"01K72Q5E2J83X9Z4Y3AP3XVCZZ","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"--------------------------------\n","runID":"01K72Q5PD429N3EZD6JTY6JEFF","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"duramation-workflow-status-handler","runID":"01K72Q5PD429N3EZD6JTY6JEFF","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"--------------------------------\n","runID":"01K72Q5PD429N3EZD6JTY6JEFF","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","runID":"01K72Q5PD429N3EZD6JTY6JEFF","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","runID":"01K72Q5PD429N3EZD6JTY6JEFF","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"error","message":"Unable to determine workflowId or user_id for event:","runID":"01K72Q5PD429N3EZD6JTY6JEFF","service":"user-service"}
+{"level":"info","message":"Running workflow cmgicnsn600034zgeg716l6kk for user cmgiclfmk00004zgep4lpkhsv","service":"user-service"}
+{"level":"info","message":"idempotency_key: 87c5d675-88e8-4792-a697-24f7e0c5d0ed","service":"user-service"}

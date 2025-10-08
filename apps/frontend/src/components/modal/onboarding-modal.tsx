@@ -20,9 +20,6 @@ import {
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import {
-  Plane,
-  Hotel,
-  MapPin,
   Users,
   Building2,
   Mail,
@@ -32,7 +29,13 @@ import {
   Clock,
   CheckCircle,
   ArrowRight,
-  X
+  X,
+  Target,
+  Briefcase,
+  MessageSquare,
+  Calendar,
+  DollarSign,
+  BarChart3
 } from 'lucide-react';
 
 interface OnboardingFormData {
@@ -45,7 +48,7 @@ interface OnboardingFormData {
   website: string;
   automationGoals: string;
   currentChallenges: string;
-  monthlyBookings: string;
+  monthlyClients: string;
   currentTools: string[];
   otherTools: string;
 }
@@ -73,7 +76,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
     website: '',
     automationGoals: '',
     currentChallenges: '',
-    monthlyBookings: '',
+    monthlyClients: '',
     currentTools: [],
     otherTools: ''
   });
@@ -117,8 +120,8 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
           newErrors.teamSize = 'Team size is required';
           isValid = false;
         }
-        if (!formData.monthlyBookings) {
-          newErrors.monthlyBookings = 'Monthly bookings are required';
+        if (!formData.monthlyClients) {
+          newErrors.monthlyClients = 'Monthly clients are required';
           isValid = false;
         }
         break;
@@ -196,10 +199,10 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
             </div>
             <div>
               <CardTitle className='text-2xl'>
-                Welcome to Tripixir Potions
+                Welcome to Duramation
               </CardTitle>
               <CardDescription>
-                Let&#39;s set up your travel automation platform in just a few
+                Let&#39;s set up your automation platform in just a few
                 steps
               </CardDescription>
             </div>
@@ -223,7 +226,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   Tell us about your business
                 </h3>
                 <p className='text-muted-foreground'>
-                  Help us understand your travel agency better
+                  Help us understand your agency better
                 </p>
               </div>
 
@@ -232,7 +235,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <Label htmlFor='companyName'>Company Name</Label>
                   <Input
                     id='companyName'
-                    placeholder='Your Travel Agency'
+                    placeholder='Your Agency Name'
                     value={formData.companyName}
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -258,16 +261,15 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                       <SelectValue placeholder='Select business type' />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value='agency'>Travel Agency</SelectItem>
-                      <SelectItem value='consultant'>
-                        Travel Consultant
-                      </SelectItem>
-                      <SelectItem value='corporate'>
-                        Corporate Travel
-                      </SelectItem>
-                      <SelectItem value='tour-operator'>
-                        Tour Operator
-                      </SelectItem>
+                      <SelectItem value='marketing'>Marketing Agency</SelectItem>
+                      <SelectItem value='digital'>Digital Agency</SelectItem>
+                      <SelectItem value='creative'>Creative Agency</SelectItem>
+                      <SelectItem value='consulting'>Consulting</SelectItem>
+                      <SelectItem value='real-estate'>Real Estate</SelectItem>
+                      <SelectItem value='insurance'>Insurance</SelectItem>
+                      <SelectItem value='financial'>Financial Services</SelectItem>
+                      <SelectItem value='legal'>Legal Services</SelectItem>
+                      <SelectItem value='healthcare'>Healthcare</SelectItem>
                       <SelectItem value='other'>Other</SelectItem>
                     </SelectContent>
                   </Select>
@@ -303,13 +305,13 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 </div>
 
                 <div className='space-y-2'>
-                  <Label htmlFor='monthlyBookings'>Monthly Bookings</Label>
+                  <Label htmlFor='monthlyClients'>Monthly Clients</Label>
                   <Select
-                    value={formData.monthlyBookings}
+                    value={formData.monthlyClients}
                     onValueChange={(value) =>
                       setFormData((prev) => ({
                         ...prev,
-                        monthlyBookings: value
+                        monthlyClients: value
                       }))
                     }
                   >
@@ -317,15 +319,15 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                       <SelectValue placeholder='Select volume' />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value='1-10'>1-10 bookings</SelectItem>
-                      <SelectItem value='11-50'>11-50 bookings</SelectItem>
-                      <SelectItem value='51-200'>51-200 bookings</SelectItem>
-                      <SelectItem value='200+'>200+ bookings</SelectItem>
+                      <SelectItem value='1-10'>1-10 clients</SelectItem>
+                      <SelectItem value='11-50'>11-50 clients</SelectItem>
+                      <SelectItem value='51-200'>51-200 clients</SelectItem>
+                      <SelectItem value='200+'>200+ clients</SelectItem>
                     </SelectContent>
                   </Select>
-                  {errors.monthlyBookings && (
+                  {errors.monthlyClients && (
                     <p className='text-sm text-red-500'>
-                      {errors.monthlyBookings}
+                      {errors.monthlyClients}
                     </p>
                   )}
                 </div>
@@ -351,20 +353,14 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
               )}
               <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
                 {[
-                  { id: 'flights', label: 'Flight Bookings', icon: Plane },
-                  { id: 'hotels', label: 'Hotel Reservations', icon: Hotel },
-                  { id: 'packages', label: 'Travel Packages', icon: MapPin },
-                  {
-                    id: 'corporate',
-                    label: 'Corporate Travel',
-                    icon: Building2
-                  },
-                  { id: 'groups', label: 'Group Travel', icon: Users },
-                  {
-                    id: 'international',
-                    label: 'International Travel',
-                    icon: Globe
-                  }
+                  { id: 'lead-generation', label: 'Lead Generation', icon: Target },
+                  { id: 'client-management', label: 'Client Management', icon: Users },
+                  { id: 'project-management', label: 'Project Management', icon: Briefcase },
+                  { id: 'marketing', label: 'Marketing & Campaigns', icon: BarChart3 },
+                  { id: 'customer-support', label: 'Customer Support', icon: MessageSquare },
+                  { id: 'scheduling', label: 'Scheduling & Appointments', icon: Calendar },
+                  { id: 'sales', label: 'Sales & Proposals', icon: DollarSign },
+                  { id: 'consulting', label: 'Consulting Services', icon: Building2 }
                 ].map((service) => {
                   const Icon = service.icon;
                   const isSelected = formData.primaryServices.includes(
@@ -496,30 +492,26 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
               <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
                 {[
-                  { id: 'sabre', label: 'Sabre', category: 'GDS' },
-                  { id: 'amadeus', label: 'Amadeus', category: 'GDS' },
-                  { id: 'travelport', label: 'Travelport', category: 'GDS' },
                   { id: 'salesforce', label: 'Salesforce', category: 'CRM' },
                   { id: 'hubspot', label: 'HubSpot', category: 'CRM' },
+                  { id: 'pipedrive', label: 'Pipedrive', category: 'CRM' },
+                  { id: 'monday', label: 'Monday.com', category: 'Project Mgmt' },
+                  { id: 'asana', label: 'Asana', category: 'Project Mgmt' },
+                  { id: 'trello', label: 'Trello', category: 'Project Mgmt' },
                   { id: 'mailchimp', label: 'Mailchimp', category: 'Email' },
                   { id: 'gmail', label: 'Gmail', category: 'Email' },
                   { id: 'outlook', label: 'Outlook', category: 'Email' },
                   { id: 'slack', label: 'Slack', category: 'Communication' },
-                  {
-                    id: 'teams',
-                    label: 'Microsoft Teams',
-                    category: 'Communication'
-                  },
-                  {
-                    id: 'quickbooks',
-                    label: 'QuickBooks',
-                    category: 'Accounting'
-                  },
+                  { id: 'teams', label: 'Microsoft Teams', category: 'Communication' },
+                  { id: 'discord', label: 'Discord', category: 'Communication' },
+                  { id: 'quickbooks', label: 'QuickBooks', category: 'Accounting' },
                   { id: 'xero', label: 'Xero', category: 'Accounting' },
                   { id: 'stripe', label: 'Stripe', category: 'Payments' },
                   { id: 'paypal', label: 'PayPal', category: 'Payments' },
                   { id: 'zapier', label: 'Zapier', category: 'Automation' },
-                  { id: 'calendly', label: 'Calendly', category: 'Scheduling' }
+                  { id: 'calendly', label: 'Calendly', category: 'Scheduling' },
+                  { id: 'google-workspace', label: 'Google Workspace', category: 'Productivity' },
+                  { id: 'microsoft-365', label: 'Microsoft 365', category: 'Productivity' }
                 ].map((tool) => {
                   const isSelected = formData.currentTools.includes(tool.id);
 
@@ -572,7 +564,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     <p className='font-medium'>Integration Benefits</p>
                     <p className='text-muted-foreground text-sm'>
                       We&#39;ll create seamless workflows between your existing
-                      tools and Potions to eliminate manual data transfer
+                      tools and Duramation to eliminate manual data transfer
                     </p>
                   </div>
                 </div>
@@ -596,7 +588,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   </Label>
                   <Textarea
                     id='automationGoals'
-                    placeholder='e.g., Customer follow-ups, booking confirmations, itinerary generation...'
+                    placeholder='e.g., Lead nurturing, client onboarding, proposal generation, follow-up emails...'
                     value={formData.automationGoals}
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -619,7 +611,7 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   </Label>
                   <Textarea
                     id='currentChallenges'
-                    placeholder='e.g., Manual data entry, repetitive emails, updating multiple systems...'
+                    placeholder='e.g., Manual data entry, repetitive client communications, updating multiple systems, scheduling conflicts...'
                     value={formData.currentChallenges}
                     onChange={(e) =>
                       setFormData((prev) => ({
@@ -643,8 +635,8 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <div className='space-y-1'>
                     <p className='font-medium'>Time-Saving Potential</p>
                     <p className='text-muted-foreground text-sm'>
-                      Based on similar agencies, you could save 15-20 hours per
-                      week with automation
+                      Based on similar agencies, you could save 15-25 hours per
+                      week with smart automation workflows
                     </p>
                   </div>
                 </div>

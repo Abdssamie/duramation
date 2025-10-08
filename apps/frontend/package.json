@@ -31,7 +31,7 @@
     "@duramation/shared": "*",
     "@formatjs/intl-localematcher": "^0.6.1",
     "@hookform/resolvers": "^3.9.1",
-    "@inngest/realtime": "^0.4.1",
+    "@inngest/realtime": "^0.4.4",
     "@next/bundle-analyzer": "^15.5.4",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
