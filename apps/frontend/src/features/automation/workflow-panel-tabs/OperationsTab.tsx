@@ -178,10 +178,6 @@ export default function OperationsTab({
         <CardContent className='space-y-2 text-sm'>
           <div className='grid grid-cols-2 gap-2'>
             <div>
-              <div className='text-muted-foreground text-xs'> Event </div>
-              <div className='font-medium'> {workflow.eventName || '—'} </div>
-            </div>
-            <div>
               <div className='text-muted-foreground text-xs'> Available </div>
               <div className='font-medium'>
                 {' '}

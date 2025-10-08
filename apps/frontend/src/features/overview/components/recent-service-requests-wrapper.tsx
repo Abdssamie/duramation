@@ -34,7 +34,8 @@ export function RecentServiceRequestsWrapper({
 
       if (token) {
         const response = await dashboardApi.getServiceRequests(token);
-      setData(response);
+        const responseData = response.data ? response.data : null;
+        setData(responseData);
       } else {
         setError('Authentication required');
       }
@@ -43,14 +44,14 @@ export function RecentServiceRequestsWrapper({
       const errorMessage = err instanceof Error ? err.message : 'Failed to load service requests';
       setError(errorMessage);
 
-      // If we have fallback data, use it
-      if (fallbackData && !data) {
+      // If we have fallback data and no current data, use it
+      if (fallbackData) {
         setData(fallbackData);
       }
     } finally {
       setLoading(false);
     }
-  }, [data, fallbackData, getToken]);
+  }, [fallbackData, getToken]);
 
   useEffect(() => {
     if (!fallbackData) {
@@ -165,6 +166,10 @@ export function RecentServiceRequestsWrapper({
     );
   }
 
+  const handleDataUpdate = (updatedData: ServiceRequestsResponse) => {
+    setData(updatedData);
+  };
+
   // Show stale data warning if we have data but there's an error
   if (error && data) {
     return (
@@ -184,7 +189,7 @@ export function RecentServiceRequestsWrapper({
             </Button>
           </AlertDescription>
         </Alert>
-        <RecentServiceRequestsClient data={data} />
+        <RecentServiceRequestsClient data={data} onDataUpdate={handleDataUpdate} />
       </div>
     );
   }
@@ -212,7 +217,7 @@ export function RecentServiceRequestsWrapper({
 
   // Render with data
   if (data) {
-    return <RecentServiceRequestsClient data={data} />;
+    return <RecentServiceRequestsClient data={data} onDataUpdate={handleDataUpdate} />;
   }
 
   // Fallback - should not reach here

@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, CheckCircle, AlertCircle, Plus } from 'lucide-react';
-import { dashboardApi, ServiceRequestCreateInput } from '@/services/api/api-client';
+import { dashboardApi } from '@/services/api/api-client';
+import { ServiceRequestCreateRequest } from '@duramation/shared';
 
 interface ServiceRequestDialogProps {
   onSuccess?: () => void;
@@ -24,7 +25,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [formData, setFormData] = useState<ServiceRequestCreateInput>({
+  const [formData, setFormData] = useState<ServiceRequestCreateRequest>({
     title: '',
     description: '',
     businessProcess: '',
@@ -34,7 +35,7 @@ export function ServiceRequestDialog({ onSuccess, trigger }: ServiceRequestDialo
     availabilityNotes: '',
   });
 
-  const handleInputChange = (field: keyof ServiceRequestCreateInput, value: string) => {
+  const handleInputChange = (field: keyof ServiceRequestCreateRequest, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

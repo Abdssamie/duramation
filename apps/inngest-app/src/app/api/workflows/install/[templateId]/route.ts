@@ -4,6 +4,8 @@ import { getWorkflowTemplate } from "@duramation/shared";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@duramation/db";
 import { InputJsonValue } from "@prisma/client/runtime/library";
+import type { TemplateInstallationRequest, TemplateInstallationResponse } from "@duramation/shared";
+import { z } from "zod";
 
 
 export async function POST(
@@ -29,16 +31,45 @@ export async function POST(
 
     try {
         const body = await req.json();
-        const { name, update } = body; // Added 'update' flag
+        
+        // Validate request body against shared types
+        const installRequestSchema = z.object({
+            templateId: z.string(),
+            workflowName: z.string().optional(),
+            configuration: z.record(z.string(), z.any()).optional(),
+            inputFields: z.array(z.object({
+                key: z.string(),
+                value: z.any(),
+            })).optional(),
+            isActive: z.boolean().optional(),
+            // Legacy fields for backward compatibility
+            name: z.string().optional(),
+            update: z.boolean().optional(),
+        }) satisfies z.ZodType<TemplateInstallationRequest & { name?: string; update?: boolean }>;
+
+        const validationResult = installRequestSchema.safeParse({ ...body, templateId });
+        if (!validationResult.success) {
+            const errorResponse: TemplateInstallationResponse = {
+                success: false,
+                error: "Invalid request body",
+                code: "VALIDATION_ERROR",
+            };
+            return NextResponse.json(errorResponse, { status: 400 });
+        }
+
+        const { workflowName, configuration, isActive, name, update } = validationResult.data;
+        const finalName = workflowName || name;
 
         // Get the template definition
         const template = await getWorkflowTemplate(prisma, templateId);
 
         if (!template) {
-            return NextResponse.json(
-                { success: false, message: "Workflow template not found" },
-                { status: 404 }
-            );
+            const errorResponse: TemplateInstallationResponse = {
+                success: false,
+                error: "Workflow template not found",
+                code: "NOT_FOUND",
+            };
+            return NextResponse.json(errorResponse, { status: 404 });
         }
 
         // Check if user already has this template installed
@@ -55,7 +86,7 @@ export async function POST(
                 const updatedWorkflow = await prisma.workflow.update({
                     where: { id: existingWorkflow.id },
                     data: {
-                        name: name || template.name,
+                        name: finalName || template.name,
                         description: template.description,
                         canBeScheduled: template.canBeScheduled,
                         fields: template.fields as unknown as Prisma.InputJsonValue,
@@ -63,6 +94,8 @@ export async function POST(
                         requiredProviders: template.requiredProviders,
                         requiredScopes: template.requiredScopes as unknown as InputJsonValue,
                         version: template.version, // Update the version
+                        available: isActive !== undefined ? isActive : true,
+                        input: configuration || {},
                         config: {
                             ...existingWorkflow.config as object, // Keep existing config
                             version: template.version,
@@ -71,29 +104,31 @@ export async function POST(
                     },
                 });
 
-                const response = {
-                    ...updatedWorkflow,
-                    template: template,
+                const response: TemplateInstallationResponse = {
+                    success: true,
+                    data: {
+                        workflowId: updatedWorkflow.id,
+                        templateId: template.id,
+                        installationStatus: 'completed',
+                        requiredCredentials: template.requiredProviders?.map(provider => ({
+                            provider,
+                            scopes: [],
+                            isConfigured: false,
+                        })) || [],
+                        configurationSteps: [],
+                    },
+                    message: `Workflow template '${template.name}' updated successfully to version ${template.version}`,
                 };
 
-                return NextResponse.json(
-                    {
-                        success: true,
-                        data: response,
-                        message: `Workflow template '${template.name}' updated successfully to version ${template.version}`,
-                    },
-                    { status: 200 }
-                );
+                return NextResponse.json(response);
             } else {
                 // Workflow is already installed and up-to-date or no update requested
-                return NextResponse.json(
-                    {
-                        success: false,
-                        message: "This workflow template is already installed and up-to-date",
-                        data: { existingWorkflowId: existingWorkflow.id }
-                    },
-                    { status: 409 }
-                );
+                const errorResponse: TemplateInstallationResponse = {
+                    success: false,
+                    error: "This workflow template is already installed and up-to-date",
+                    code: "CONFLICT",
+                };
+                return NextResponse.json(errorResponse, { status: 409 });
             }
         }
 
@@ -102,14 +137,14 @@ export async function POST(
             data: {
                 userId: userId as string,
                 templateId: template.id,
-                name: name || template.name,
+                name: finalName || template.name,
                 description: template.description,
-                available: true, // User can use this workflow
+                available: isActive !== undefined ? isActive : true,
                 status: 'IDLE', // Not running by default
                 canBeScheduled: template.canBeScheduled,
                 cronExpressions: [],
                 timezone: "UTC",
-                input: {},
+                input: configuration || {},
                 fields: template.fields as unknown as Prisma.InputJsonValue,
                 eventName: template.eventName,
                 requiredProviders: template.requiredProviders,
@@ -123,25 +158,30 @@ export async function POST(
             },
         });
 
-        const response = {
-            ...workflow,
-            template: template,
+        const response: TemplateInstallationResponse = {
+            success: true,
+            data: {
+                workflowId: workflow.id,
+                templateId: template.id,
+                installationStatus: 'completed',
+                requiredCredentials: template.requiredProviders?.map(provider => ({
+                    provider,
+                    scopes: [],
+                    isConfigured: false,
+                })) || [],
+                configurationSteps: [],
+            },
+            message: `Workflow template '${template.name}' installed successfully`,
         };
 
-        return NextResponse.json(
-            {
-                success: true,
-                data: response,
-                message: `Workflow template '${template.name}' installed successfully`,
-            },
-            { status: 201 }
-        );
+        return NextResponse.json(response, { status: 201 });
     } catch (error) {
         console.error('Error installing workflow template:', error);
 
-        return NextResponse.json(
-            { success: false, message: 'Error installing workflow template' },
-            { status: 500 }
-        );
+        const errorResponse: TemplateInstallationResponse = {
+            success: false,
+            error: 'Error installing workflow template',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }

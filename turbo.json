@@ -33,7 +33,8 @@
         "UPSTASH_REDIS_REST_URL",
         "UPSTASH_REDIS_REST_TOKEN",
         "INNGEST_WEBHOOK_SECRET",
-        "FRONTEND_WEBHOOK_URL"
+        "FRONTEND_WEBHOOK_URL",
+        "NODE_ENV"
       ]
     }
   }

@@ -4,5 +4,6 @@
       "mode": "auto"
     }
   ],
+  "editor.fontSize": 17,
   "kiroAgent.configureMCP": "Disabled"
 }

@@ -27,8 +27,8 @@ export const redisSubscriber = new Redis({
   },
   retryStrategy: (times) => {
     // Reconnect after this time
-    const delay = Math.min(times * 50, 2000);
-    return delay;
+
+    return Math.min(times * 50, 2000);
   },
   maxRetriesPerRequest: null
 });

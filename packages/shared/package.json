@@ -13,6 +13,10 @@
         "./types": {
             "types": "./dist/types/index.d.ts",
             "default": "./dist/types/index.js"
+        },
+        "./validation": {
+            "types": "./dist/validation/index.d.ts",
+            "default": "./dist/validation/index.js"
         }
     },
     "main": "./dist/index.js",

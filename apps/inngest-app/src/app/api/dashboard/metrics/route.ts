@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import { fetchMetricsFromDatabase } from '@/services/fetchMetricsFromDatabase';
+import type { MetricsResponse, SimplifiedMetrics } from "@duramation/shared";
 
 // Initialize Redis client for caching
 const redis = new Redis({
@@ -21,10 +22,10 @@ export function calculateTrend(current: number, previous: number): number {
   return ((current - previous) / previous) * 100;
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const authResult = await authenticateUser();
-    
+
     if (isAuthError(authResult)) {
       return authResult;
     }
@@ -35,9 +36,13 @@ export async function GET(request: NextRequest) {
 
     try {
       // Try to get cached data first
-      const cachedData = await redis.get(cacheKey);
+      const cachedData: SimplifiedMetrics | null = await redis.get(cacheKey);
       if (cachedData) {
-        return NextResponse.json(cachedData);
+        const response: MetricsResponse = {
+          success: true,
+          data: cachedData,
+        };
+        return NextResponse.json(response);
       }
     } catch (cacheError) {
       console.warn('Cache read error:', cacheError);
@@ -55,13 +60,19 @@ export async function GET(request: NextRequest) {
       // Continue without caching if Redis is unavailable
     }
 
-    return NextResponse.json(metrics);
+    const response: MetricsResponse = {
+      success: true,
+      data: metrics,
+    };
+
+    return NextResponse.json(response);
 
   } catch (error) {
     console.error('Error fetching simplified metrics:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    const errorResponse: MetricsResponse = {
+      success: false,
+      error: 'Internal server error',
+    };
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

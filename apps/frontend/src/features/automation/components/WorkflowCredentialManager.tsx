@@ -174,12 +174,12 @@ export default function WorkflowCredentialManager({
           // Use generic OAuth URL method from API client
           try {
             const response = await api.credentials.getOAuthUrl(
-              token,
+              token as string,
               provider,
               scopes,
               workflowId
             );
-            urls[provider] = response.url;
+            urls[provider] = response.data?.authorizationUrl as string;
           } catch (error) {
             console.error(`Failed to get ${provider} OAuth URL:`, error);
           }
@@ -405,7 +405,7 @@ export default function WorkflowCredentialManager({
             <FormField
               key={providerField.key}
               control={form.control}
-              name={`fields.${providerField.key}` as any}
+              name={`fields.${providerField.key}`}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>

@@ -65,7 +65,8 @@ export function BarGraph() {
           params.append('workflowId', selectedWorkflow);
         }
 
-        const data: ChartDataResponse = await dashboardApi.getChartData(token, params);
+        const dataResponse = await dashboardApi.getChartData(token, params);
+        const data: ChartDataResponse | null = dataResponse.data ? dataResponse.data : null;
         setChartData(data);
 
       } else {
@@ -174,49 +175,47 @@ export function BarGraph() {
   return (
     <Card className='@container/card'>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2">
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <CardTitle className="flex items-center gap-2 shrink-0">
               <Activity className="h-5 w-5" />
               Workflow Runs
             </CardTitle>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 text-sm font-medium">
               {getTrendIcon(chartData)}
-              <span className="text-sm font-medium">
+              <span className="whitespace-nowrap">
                 {getTrendText(chartData)}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              {chartData && chartData.availableWorkflows.length > 0 && (
-                <Select value={selectedWorkflow} onValueChange={setSelectedWorkflow}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Workflows</SelectItem>
-                    {chartData.availableWorkflows.map(workflow => (
-                      <SelectItem key={workflow.id} value={workflow.id}>
-                        {workflow.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-              <Select value={timeRange} onValueChange={(value: TimeRange) => setTimeRange(value)}>
-                <SelectTrigger className="w-32">
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
+            {chartData && chartData.availableWorkflows.length > 0 && (
+              <Select value={selectedWorkflow} onValueChange={setSelectedWorkflow}>
+                <SelectTrigger className="w-full sm:w-40">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {TIME_RANGE_OPTIONS.map(option => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  <SelectItem value="all">All Workflows</SelectItem>
+                  {chartData.availableWorkflows.map(workflow => (
+                    <SelectItem key={workflow.id} value={workflow.id}>
+                      {workflow.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            )}
+            <Select value={timeRange} onValueChange={(value: TimeRange) => setTimeRange(value)}>
+              <SelectTrigger className="w-full sm:w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {TIME_RANGE_OPTIONS.map(option => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </CardHeader>
@@ -265,7 +264,7 @@ export function BarGraph() {
                   labelFormatter={formatTooltipLabel}
                   formatter={(value) => [
                     typeof value === 'number' ? value.toLocaleString() : value,
-                    'Workflow Runs'
+                    ' Workflow Runs'
                   ]}
                 />
               }

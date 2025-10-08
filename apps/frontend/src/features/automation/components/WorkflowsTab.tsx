@@ -7,9 +7,7 @@ import { toast } from 'sonner';
 import { WorkflowInputFieldDefinition } from '@duramation/shared';
 import { WorkflowWithCredentials } from '@/types/workflow';
 import WorkflowDetailWidget from './WorkflowDetailWidget';
-import {
-  MarketplaceResponse,
-} from '@/services/api/api-client';
+import { MarketplaceResponse } from '@duramation/shared';
 
 import {
   useWorkflowStatus,
@@ -19,6 +17,7 @@ import { WorkflowCard } from '@/components/automation/WorkflowCard';
 import { BrowseMarketplaceCard } from '@/components/automation/BrowseMarketplaceCard';
 import { WorkflowCardSkeleton } from '@/components/automation/WorkflowCardSkeleton';
 import { NoWorkflowsFound } from '@/components/automation/NoWorkflowsFound';
+import { sanitizeWorkflowsForUI } from '@/utils/workflow-sanitizer';
 
 type WorkflowStatus = 'IDLE' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
 
@@ -93,20 +92,21 @@ export default function WorkflowsTab() {
         const marketplaceTemplates: MarketplaceResponse =
           await api.workflows.listTemplates(token);
         const templateMap = new Map(
-          marketplaceTemplates.data?.items.map((tpl: any) => [
+          marketplaceTemplates.data?.map((tpl) => [
             tpl.id,
             tpl.version
           ])
         );
 
-        setWorkflows(
-          workflowData.map((workflow) => ({
-            ...workflow,
-            hasNewVersion:
-              templateMap.has(workflow.templateId) &&
-              templateMap.get(workflow.templateId) !== workflow.version
-          }))
-        );
+        const workflowsWithVersionCheck = workflowData.map((workflow) => ({
+          ...workflow,
+          hasNewVersion:
+            templateMap.has(workflow.templateId) &&
+            templateMap.get(workflow.templateId) !== workflow.version
+        }));
+
+        // Sanitize workflows to remove technical data from UI
+        setWorkflows(sanitizeWorkflowsForUI(workflowsWithVersionCheck));
       } catch (error) {
         console.debug(error);
         toast.error('Failed to load workflows');

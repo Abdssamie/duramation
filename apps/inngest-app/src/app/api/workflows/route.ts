@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
+import type { WorkflowListResponse } from "@duramation/shared";
 
 
 export async function GET() {
@@ -38,6 +39,9 @@ export async function GET() {
                 requiredScopes: true,
                 createdAt: true,
                 updatedAt: true,
+                userId: true,
+                idempotencyKey: true,
+                config: true,
                 workflowCredentials: {
                     select: {
                         credential: {
@@ -54,25 +58,39 @@ export async function GET() {
             }
         });
 
-        // Keep workflowCredentials structure for frontend compatibility
+        // Transform the query result to match the expected Workflow type
         const userWorkflows = workflows.map(workflow => ({
             ...workflow,
+            // Ensure all required fields are present
+            idempotencyKey: workflow.idempotencyKey || null,
+            config: workflow.config || {},
             // Keep the original workflowCredentials structure
             workflowCredentials: workflow.workflowCredentials,
             // Also provide legacy credentials field for backward compatibility
             credentials: workflow.workflowCredentials.map(wc => wc.credential),
         }));
 
-        return NextResponse.json({
+        const response: WorkflowListResponse = {
             success: true,
             data: userWorkflows,
             message: `Found ${workflows.length} workflows`,
-        });
+            pagination: {
+                page: 1,
+                limit: userWorkflows.length,
+                total: userWorkflows.length,
+                totalPages: 1,
+                hasNext: false,
+                hasPrev: false,
+            },
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error('Error getting workflows:', error);
-        return NextResponse.json(
-            { success: false, message: 'Error getting workflows' },
-            { status: 500 }
-        );
+        const errorResponse = {
+            success: false,
+            error: 'Error getting workflows',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }

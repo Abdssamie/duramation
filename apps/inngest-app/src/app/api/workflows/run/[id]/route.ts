@@ -9,12 +9,16 @@ import { validateWorkflowInput } from "@duramation/shared";
 import { isEventKey, Events, inngest, WorkflowTriggerPayload, ScheduleStopPayload } from "@/inngest/client";
 import { z } from "zod";
 import { ClerkUserId, InternalUserId } from "@/types/user";
+import type { WorkflowRunRequest, WorkflowRunResponse } from "@duramation/shared";
 
 // Schema for validating workflow run requests
 const WorkflowRunRequestSchema = z.object({
-    input: z.record(z.string(), z.any()),
+    input: z.record(z.string(), z.any()).optional(),
+    scheduledRun: z.boolean().optional(),
+    cronExpression: z.string().optional(),
+    timezone: z.string().optional(),
     metadata: z.record(z.string(), z.any()).optional(),
-});
+}) satisfies z.ZodType<WorkflowRunRequest>;
 
 
 export async function POST(
@@ -51,8 +55,8 @@ export async function POST(
             }
         } catch (parseError) {
             return NextResponse.json(
-                { message: "Invalid JSON in request body" },
-                { status: 400 }
+              { message: `Invalid JSON in request body: ${parseError}` },
+              { status: 400 },
             );
         }
 
@@ -68,7 +72,7 @@ export async function POST(
             );
         }
 
-        const { input, metadata } = validationResult.data;
+        const { input, scheduledRun, cronExpression, timezone, metadata } = validationResult.data;
 
         const workflow = await prisma.workflow.findUnique({
             where: {
@@ -99,7 +103,7 @@ export async function POST(
 
         // Get workflow template to validate input if input is provided
         if (input !== undefined) {
-            
+
             // Validate workflow input values against template
             const validation = await validateWorkflowInput(prisma, templateId, input);
             if (!validation.valid) {
@@ -127,26 +131,40 @@ export async function POST(
             data: {
                 user_id: internalUser.id as InternalUserId,
                 input: input || workflow.input,
-                scheduledRun: false,
+                scheduledRun: scheduledRun || false,
                 workflowId: workflow.id,
-                cronExpression: null,
-                tz: workflow.timezone,
+                cronExpression: cronExpression || null,
+                tz: timezone || workflow.timezone,
                 metadata: metadata,
                 // Use the client-sent (or server-generated) idempotency key per run
                 idempotency_key: workflow.idempotencyKey as string
             },
         } satisfies WorkflowTriggerPayload & { name: keyof Events });
 
-        return NextResponse.json(
-            { message: "Workflow run successfully" },
-            { status: 200 }
-        );
+        // Generate a run ID for the response (in a real implementation, this would come from Inngest)
+        const runId = `run_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+
+        const response: WorkflowRunResponse = {
+            success: true,
+            data: {
+                runId,
+                workflowId: workflow.id,
+                status: 'pending',
+                startedAt: new Date().toISOString(),
+                input: input || (workflow.input as Record<string, any>) || undefined,
+                metadata,
+            },
+            message: "Workflow run successfully",
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error("Error running workflow:", error);
-        return NextResponse.json(
-            { message: "Error running workflow" },
-            { status: 500 }
-        );
+        const errorResponse: WorkflowRunResponse = {
+            success: false,
+            error: "Error running workflow",
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }
 

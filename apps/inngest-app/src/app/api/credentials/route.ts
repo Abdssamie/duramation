@@ -1,7 +1,11 @@
 import { getAllUserCredentials, storeCredential } from "@/services/credentials-store"
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { CredentialCreateRequest, validateCredentialSecret } from "@duramation/shared";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
+import type { 
+    CredentialListResponse, 
+    CredentialCreateApiResponse 
+} from "@duramation/shared";
 
 
 export async function GET() {
@@ -17,15 +21,28 @@ export async function GET() {
         const credentials = await getAllUserCredentials(internalUserId);
 
         console.log('Retrieved credentials:', JSON.stringify(credentials, null, 2));
-        return new Response(JSON.stringify(credentials), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json',
+        
+        const response: CredentialListResponse = {
+            success: true,
+            data: credentials,
+            pagination: {
+                page: 1,
+                limit: credentials.length,
+                total: credentials.length,
+                totalPages: 1,
+                hasNext: false,
+                hasPrev: false,
             },
-        });
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error('Error getting credentials:', error);
-        return new Response('Error getting credentials', { status: 500 });
+        const errorResponse = {
+            success: false,
+            error: 'Error getting credentials',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }
 
@@ -42,21 +59,41 @@ export async function POST(req: NextRequest) {
     const body: CredentialCreateRequest = await req.json();
 
     if (body.type === 'OAUTH') {
-        return new Response('OAuth credentials must be created via the OAuth flow', { status: 400 });
+        const errorResponse: CredentialCreateApiResponse = {
+            success: false,
+            error: 'OAuth credentials must be created via the OAuth flow',
+            code: 'INVALID_OPERATION',
+        };
+        return NextResponse.json(errorResponse, { status: 400 });
     }
 
     const validationResult = validateCredentialSecret(body.type, body.provider, body.secret);
     if (!validationResult.success) {
-        return new Response(JSON.stringify({ error: validationResult }), { status: 400 });
+        const errorResponse: CredentialCreateApiResponse = {
+            success: false,
+            error: 'Invalid credential secret',
+            code: 'VALIDATION_ERROR',
+        };
+        return NextResponse.json(errorResponse, { status: 400 });
     }
 
     try {
         const newCredential = await storeCredential(internalUserId, body);
         
-        return new Response(JSON.stringify(newCredential), { status: 201 });
+        const response: CredentialCreateApiResponse = {
+            success: true,
+            data: newCredential,
+            message: 'Credential created successfully',
+        };
+
+        return NextResponse.json(response, { status: 201 });
     } catch (error) {
         console.error('Error storing credentials:', error);
-        return new Response('Error storing credentials', { status: 500 });
+        const errorResponse: CredentialCreateApiResponse = {
+            success: false,
+            error: 'Error storing credentials',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }
 

@@ -4,6 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
 import { ClerkUserId } from "@/types/user";
 import { CredentialUpdateRequest, validateCredentialSecret } from "@duramation/shared";
+import type { 
+    CredentialGetResponse, 
+    CredentialUpdateApiResponse, 
+    CredentialDeleteResponse 
+} from "@duramation/shared";
 
 export async function GET({ params }: { params: Promise<{ id: string }> }) {
     const user = await auth();
@@ -11,27 +16,46 @@ export async function GET({ params }: { params: Promise<{ id: string }> }) {
     const credentialId = id;
 
     if (!user || !user.userId) {
-        return NextResponse.json(
-            { success: false, message: "Unauthorized" },
-            { status: 401 }
-        );
+        const errorResponse: CredentialGetResponse = {
+            success: false,
+            error: "Unauthorized",
+        };
+        return NextResponse.json(errorResponse, { status: 401 });
     }
 
     const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
 
     if (!internalUserId) {
-        return new Response("User not found", { status: 404 });
+        const errorResponse: CredentialGetResponse = {
+            success: false,
+            error: "User not found",
+        };
+        return NextResponse.json(errorResponse, { status: 404 });
     }
 
     try {
         const credential = await getCredential(internalUserId, credentialId);
         if (!credential) {
-            return new Response('Credential not found', { status: 404 });
+            const errorResponse: CredentialGetResponse = {
+                success: false,
+                error: 'Credential not found',
+            };
+            return NextResponse.json(errorResponse, { status: 404 });
         }
-        return new Response(JSON.stringify(credential), { status: 200 });
+
+        const response: CredentialGetResponse = {
+            success: true,
+            data: credential,
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error('Error getting credential:', error);
-        return new Response('Error getting credential', { status: 500 });
+        const errorResponse: CredentialGetResponse = {
+            success: false,
+            error: 'Error getting credential',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }
 
@@ -46,43 +70,80 @@ export async function PUT(
     const credentialId = id;
 
     if (!user || !user.userId) {
-        return new Response('Unauthorized', { status: 401 });
+        const errorResponse: CredentialUpdateApiResponse = {
+            success: false,
+            error: 'Unauthorized',
+        };
+        return NextResponse.json(errorResponse, { status: 401 });
     }
 
     const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
 
     if (!internalUserId) {
-        return new Response("User not found", { status: 404 });
+        const errorResponse: CredentialUpdateApiResponse = {
+            success: false,
+            error: "User not found",
+        };
+        return NextResponse.json(errorResponse, { status: 404 });
     }
 
     try {
         const body: CredentialUpdateRequest = await req.json();
 
         if (!body || !body.secret) {
-            return new Response('Missing credential in request body', { status: 400 });
+            const errorResponse: CredentialUpdateApiResponse = {
+                success: false,
+                error: 'Missing credential in request body',
+                code: 'VALIDATION_ERROR',
+            };
+            return NextResponse.json(errorResponse, { status: 400 });
         }
 
         const credential = await getCredential(internalUserId, credentialId);
         if (!credential) {
-            return new Response('Credential not found', { status: 404 });
+            const errorResponse: CredentialUpdateApiResponse = {
+                success: false,
+                error: 'Credential not found',
+            };
+            return NextResponse.json(errorResponse, { status: 404 });
         }
 
         if (credential.type === 'OAUTH') {
-            return new Response('OAuth credentials cannot be updated directly', { status: 400 });
+            const errorResponse: CredentialUpdateApiResponse = {
+                success: false,
+                error: 'OAuth credentials cannot be updated directly',
+                code: 'INVALID_OPERATION',
+            };
+            return NextResponse.json(errorResponse, { status: 400 });
         }
 
         const validationResult = validateCredentialSecret(credential.type, credential.provider, body.secret);
 
         if (!validationResult.success) {
-            return new Response(JSON.stringify({ error: validationResult }), { status: 400 });
+            const errorResponse: CredentialUpdateApiResponse = {
+                success: false,
+                error: 'Invalid credential secret',
+                code: 'VALIDATION_ERROR',
+            };
+            return NextResponse.json(errorResponse, { status: 400 });
         }
 
         const updatedCredential = await updateCredential(internalUserId, credentialId, body.secret);
 
-        return new Response(JSON.stringify(updatedCredential), { status: 200 });
+        const response: CredentialUpdateApiResponse = {
+            success: true,
+            data: updatedCredential,
+            message: 'Credential updated successfully',
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error('Credential update error:', error);
-        return new Response('Error updating credentials', { status: 500 });
+        const errorResponse: CredentialUpdateApiResponse = {
+            success: false,
+            error: 'Error updating credentials',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }
 
@@ -97,20 +158,39 @@ export async function DELETE(
     const credentialId = id;
 
     if (!user || !user.userId) {
-        return new Response('Unauthorized', { status: 401 });
+        const errorResponse: CredentialDeleteResponse = {
+            success: false,
+            error: 'Unauthorized',
+        };
+        return NextResponse.json(errorResponse, { status: 401 });
     }
 
     const internalUserId = await getInternalUserId(user.userId as ClerkUserId);
 
     if (!internalUserId) {
-        return new Response("User not found", { status: 404 });
+        const errorResponse: CredentialDeleteResponse = {
+            success: false,
+            error: "User not found",
+        };
+        return NextResponse.json(errorResponse, { status: 404 });
     }
 
     try {
         await deleteCredential(internalUserId, credentialId);
-        return new Response('Credentials deleted successfully', { status: 200 });
+        
+        const response: CredentialDeleteResponse = {
+            success: true,
+            data: { deleted: true },
+            message: 'Credentials deleted successfully',
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error('Error deleting credentials:', error);
-        return new Response('Error deleting credentials', { status: 500 });
+        const errorResponse: CredentialDeleteResponse = {
+            success: false,
+            error: 'Error deleting credentials',
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }

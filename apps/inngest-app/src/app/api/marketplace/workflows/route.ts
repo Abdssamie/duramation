@@ -1,27 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
-import { withErrorHandler, AppError } from "@/lib/utils/error-handler";
-import { validateQueryParams, CommonSchemas } from "@/lib/utils/validation";
 import { queryWorkflowTemplates } from "@duramation/shared";
 import prisma from "@/lib/prisma";
-import { z } from "zod";
-
-
+import type { MarketplaceResponse } from "@duramation/shared";
 export async function GET(req: NextRequest) {
     const authResult = await authenticateUser();
-    
+
     if (isAuthError(authResult)) {
-      return authResult;
+        return authResult;
     }
 
     const { userId } = authResult;
 
     try {
         if (!userId) {
-            return NextResponse.json(
-                { success: false, message: "User not found" },
-                { status: 404 }
-            );
+            const errorResponse = {
+                success: false,
+                error: "User not found",
+            };
+            return NextResponse.json(errorResponse, { status: 404 });
         }
 
         const url = new URL(req.url);
@@ -56,6 +53,15 @@ export async function GET(req: NextRequest) {
 
             return {
                 ...template,
+                // Add marketplace-specific fields
+                featured: false, // Default value, could be enhanced later
+                downloadCount: 0, // Default value, could be enhanced later
+                rating: 0, // Default value, could be enhanced later
+                reviewCount: 0, // Default value, could be enhanced later
+                author: 'Duramation', // Default value, could be enhanced later
+                lastUpdated: new Date().toISOString(),
+                compatibilityTags: [], // Default value, could be enhanced later
+                // Keep legacy fields for backward compatibility
                 isInstalled: isInstalled,
                 canInstall: !isInstalled,
                 hasNewVersion: hasNewVersion,
@@ -63,26 +69,27 @@ export async function GET(req: NextRequest) {
             };
         });
 
-        return NextResponse.json({
+        const response: MarketplaceResponse = {
             success: true,
-            data: {
-                items: enrichedTemplates,
-                pagination: {
-                    page,
-                    limit,
-                    total: totalTemplates,
-                    totalPages,
-                    hasNext: page < totalPages,
-                    hasPrev: page > 1,
-                },
+            data: enrichedTemplates,
+            pagination: {
+                page,
+                limit,
+                total: totalTemplates,
+                totalPages,
+                hasNext: page < totalPages,
+                hasPrev: page > 1,
             },
             message: `Found ${totalTemplates} workflow templates`,
-        });
+        };
+
+        return NextResponse.json(response);
     } catch (error) {
         console.error("Error getting workflow templates:", error);
-        return NextResponse.json(
-            { success: false, message: "Internal server error" },
-            { status: 500 }
-        );
+        const errorResponse = {
+            success: false,
+            error: "Internal server error",
+        };
+        return NextResponse.json(errorResponse, { status: 500 });
     }
 }

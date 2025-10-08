@@ -1,13 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import prisma from '@/lib/prisma';
-import { RunStatus } from '@duramation/db/types';
+import { getInternalUser } from "@/lib/helpers/getInternalUser";
+import { ClerkUserId } from "@/types/user";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const { userId } = await auth();
+    const { userId: clerkId } = await auth();
 
-    if (!userId) {
+    if (!clerkId) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 }
@@ -15,9 +16,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user from database
-    const user = await prisma.user.findUnique({
-      where: { clerk_id: userId },
-    });
+      const user = await getInternalUser(clerkId as ClerkUserId)
 
     if (!user) {
       return NextResponse.json(
@@ -43,9 +42,6 @@ export async function GET(request: NextRequest) {
       const totalRuns = runs.length;
       const successfulRuns = runs.filter(
         (run) => run.status === 'COMPLETED'
-      ).length;
-      const failedRuns = runs.filter(
-        (run) => run.status === 'FAILED'
       ).length;
       const runningRuns = runs.filter(
         (run) => run.status === 'RUNNING' || run.status === 'STARTED'

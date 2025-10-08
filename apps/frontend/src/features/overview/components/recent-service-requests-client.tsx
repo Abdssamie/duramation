@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -36,17 +36,24 @@ import {
 
 interface RecentServiceRequestsClientProps {
   data: ServiceRequestsResponse;
+  onDataUpdate?: (updatedData: ServiceRequestsResponse) => void;
 }
 
-export function RecentServiceRequestsClient({ data }: RecentServiceRequestsClientProps) {
+export function RecentServiceRequestsClient({ data, onDataUpdate }: RecentServiceRequestsClientProps) {
   const { getToken } = useAuth();
+  const [localData, setLocalData] = useState(data);
   
   // Sort by most recent first
-  const recentRequests = data.requests
+  const recentRequests = localData.requests
     .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
+
+  // Sync local data when props change
+  useEffect(() => {
+    setLocalData(data);
+  }, [data]);
 
   const nextRequest = () => {
     setCurrentIndex((prev) => (prev + 1) % recentRequests.length);
@@ -69,8 +76,22 @@ export function RecentServiceRequestsClient({ data }: RecentServiceRequestsClien
           status: newStatus
         });
 
-        // Refresh the page to show updated data
-        window.location.reload();
+        // Update local state immediately for better UX
+        const updatedData = {
+          ...localData,
+          requests: localData.requests.map(request =>
+            request.id === requestId
+              ? { ...request, status: newStatus, updatedAt: new Date().toISOString() }
+              : request
+          )
+        };
+        
+        setLocalData(updatedData);
+        
+        // Notify parent component if callback provided
+        if (onDataUpdate) {
+          onDataUpdate(updatedData);
+        }
       } else {
         console.error('Authentication required');
         // You could add a toast notification here
@@ -93,7 +114,12 @@ export function RecentServiceRequestsClient({ data }: RecentServiceRequestsClien
             Recent Service Requests
           </span>
           <ServiceRequestDialog
-            onSuccess={() => window.location.reload()}
+            onSuccess={() => {
+              // Optionally refresh data here instead of page reload
+              // For now, we'll keep the page reload for new requests
+              // as it's a less frequent action
+              window.location.reload();
+            }}
             trigger={
               <Button size="sm" variant="outline">
                 <Plus className="h-4 w-4 mr-1" />

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -33,7 +32,6 @@ export default function WorkflowDetailWidget({
   onUpdateAction,
   templateFields
 }: WorkflowDetailWidgetProps) {
-  const { getToken } = useAuth();
   const [activeTab, setActiveTab] = useState('input');
   const [input, setInput] = useState<Record<string, any>>({});
   const [isRunning, setIsRunning] = useState(false);

@@ -23,11 +23,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
+import { SafeCredential } from '@duramation/shared';
 
 export default function CredentialsTab() {
   const { getToken: _getToken, isLoaded, isSignedIn } = useAuth();
   const getToken = useCallback(() => _getToken(), [_getToken]);
-  const [credentials, setCredentials] = useState<any[]>([]);
+  const [credentials, setCredentials] = useState<SafeCredential[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [selectedCredentialId, setSelectedCredentialId] = useState<
@@ -49,7 +50,7 @@ export default function CredentialsTab() {
       }
 
       const credsResponse = await api.credentials.list(token);
-      setCredentials(Array.isArray(credsResponse) ? credsResponse : []);
+      setCredentials(credsResponse.data || []);
     } catch (error) {
       console.error('Failed to load credentials:', error);
       toast.error('Failed to load credentials.');

@@ -1,7 +1,40 @@
 import {
-  CredentialCreateRequest
+  // Common API types
+  ApiResponse,
+  
+  // Workflow types
+  WorkflowListResponse,
+  WorkflowGetResponse,
+  WorkflowUpdateResponse,
+  WorkflowRunRequest,
+  WorkflowRunResponse,
+  WorkflowDeleteResponse,
+  
+  // Credential types
+  CredentialCreateApiRequest,
+  CredentialCreateApiResponse,
+  CredentialUpdateApiRequest,
+  CredentialUpdateApiResponse,
+  CredentialListResponse,
+  CredentialGetResponse,
+  CredentialDeleteResponse,
+  OAuthAuthorizationResponse,
+  
+  // Dashboard types
+  MetricsResponse,
+  ServiceRequestCreateRequest,
+  ServiceRequestCreateResponse,
+  ServiceRequestListResponse,
+  ServiceRequestUpdateRequest,
+  ServiceRequestUpdateResponse,
+  ChartDataApiResponse,
+  
+  // Marketplace types
+  MarketplaceQuery,
+  MarketplaceResponse,
+  TemplateInstallationResponse
 } from '@duramation/shared';
-import { WorkflowWithCredentials } from '@/types/workflow';
+import type { WorkflowUpdateRequest } from '@duramation/shared';
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
@@ -13,7 +46,8 @@ if (process.env.NODE_ENV === 'development') {
   console.log('API Client BASE_URL:', BASE_URL);
 }
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 
 function authHeaders(token: string) {
   return {
@@ -98,20 +132,7 @@ async function request<T>(
   }
 }
 
-// Workflows
-export interface WorkflowListResponse {
-  success?: boolean;
-  data?: WorkflowWithCredentials[];
-  message?: string;
-}
-
-export interface WorkflowUpdateInput {
-  name?: string;
-  description?: string;
-  available?: boolean;
-  input?: Record<string, unknown>;
-  credentials?: { credentialId: string }[];
-}
+// Workflows - using shared types
 
 export const workflowsApi = {
   list: (token: string) =>
@@ -122,27 +143,24 @@ export const workflowsApi = {
       { token }
     ),
   get: (token: string, id: string) =>
-    request<any>(`/api/workflows/${id}`, { token }),
-  update: (token: string, id: string, data: WorkflowUpdateInput) =>
-    request<any>(`/api/workflows/${id}`, { token, method: 'PUT', body: data }),
+    request<WorkflowGetResponse>(`/api/workflows/${id}`, { token }),
+  update: (token: string, id: string, data: WorkflowUpdateRequest) =>
+    request<WorkflowUpdateResponse>(`/api/workflows/${id}`, { token, method: 'PUT', body: data }),
   remove: (token: string, id: string) =>
-    request<any>(`/api/workflows/${id}`, { token, method: 'DELETE' }),
+    request<WorkflowDeleteResponse>(`/api/workflows/${id}`, { token, method: 'DELETE' }),
 
   run: (
     token: string,
     id: string,
-    data?: {
-      input?: Record<string, unknown>;
-      metadata?: Record<string, unknown>;
-    }
+    data?: WorkflowRunRequest
   ) =>
-    request<any>(`/api/workflows/run/${id}`, {
+    request<WorkflowRunResponse>(`/api/workflows/run/${id}`, {
       token,
       method: 'POST',
       body: data || {}
     }),
   stop: (token: string, id: string) =>
-    request<any>(`/api/workflows/run/${id}`, { token, method: 'DELETE' }),
+    request<ApiResponse<any>>(`/api/workflows/run/${id}`, { token, method: 'DELETE' }),
 
   install: (
     token: string,
@@ -150,39 +168,14 @@ export const workflowsApi = {
     name?: string,
     update?: boolean
   ) =>
-    request<any>(`/api/workflows/install/${templateId}`, {
+    request<TemplateInstallationResponse>(`/api/workflows/install/${templateId}`, {
       token,
       method: 'POST',
       body: { name, update }
     })
 };
 
-// Marketplace
-export interface MarketplaceQuery {
-  page?: number;
-  limit?: number;
-  search?: string;
-  provider?: string;
-  pricing?: 'free' | 'paid';
-  category?: string;
-  featured?: boolean;
-}
-
-export interface MarketplaceResponse {
-  success?: boolean;
-  data?: {
-    items: any[];
-    pagination: {
-      page: number;
-      limit: number;
-      total: number;
-      totalPages: number;
-      hasNext: boolean;
-      hasPrev: boolean;
-    };
-  };
-  message?: string;
-}
+// Marketplace - using shared types
 
 function toQuery(params: Record<string, unknown>) {
   const sp = new URLSearchParams();
@@ -202,31 +195,25 @@ export const marketplaceApi = {
     )
 };
 
-// Using shared CredentialCreateRequest type
-
-export interface CredentialUpdateRequest {
-  name?: string;
-  secret?: unknown;
-  config?: unknown;
-}
+// Credentials - using shared types
 
 export const credentialsApi = {
-  list: (token: string) => request<any[]>(`/api/credentials`, { token }),
+  list: (token: string) => request<CredentialListResponse>(`/api/credentials`, { token }),
   get: (token: string, id: string) =>
-    request<any>(`/api/credentials/${id}`, { token }),
-  create: (token: string, data: CredentialCreateRequest) =>
-    request<any>(`/api/credentials`, { token, method: 'POST', body: data }),
-  update: (token: string, id: string, data: CredentialUpdateRequest) =>
-    request<any>(`/api/credentials/${id}`, {
+    request<CredentialGetResponse>(`/api/credentials/${id}`, { token }),
+  create: (token: string, data: CredentialCreateApiRequest) =>
+    request<CredentialCreateApiResponse>(`/api/credentials`, { token, method: 'POST', body: data }),
+  update: (token: string, id: string, data: CredentialUpdateApiRequest) =>
+    request<CredentialUpdateApiResponse>(`/api/credentials/${id}`, {
       token,
       method: 'PUT',
       body: data
     }),
   remove: (token: string, id: string) =>
-    request<any>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
+    request<CredentialDeleteResponse>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
   // Generic OAuth URL getter for any provider
   getOAuthUrl: (token: string, provider: string, scopes: string[], workflowId?: string) =>
-    request<{ url: string }>(
+    request<OAuthAuthorizationResponse>(
       `/api/credentials/oauth/auth-url${toQuery({
         provider: provider.toUpperCase(),
         scopes: scopes.join(','),
@@ -236,7 +223,7 @@ export const credentialsApi = {
     ),
   // Backwards compatibility
   getGoogleAuthUrl: (token: string, scopes: string[], workflowId: string) =>
-    request<{ url: string }>(
+    request<OAuthAuthorizationResponse>(
       `/api/credentials/google/auth-url${toQuery({
         scopes: scopes.join(','),
         ...(workflowId && { workflowId })
@@ -246,6 +233,7 @@ export const credentialsApi = {
 };
 
 // Realtime
+// Realtime - using inline types for now (could be moved to shared later)
 export interface SubscriptionTokenRequest {
   workflowId: string;
 }
@@ -256,34 +244,26 @@ export interface SubscriptionTokenResponse {
 
 export const realtimeApi = {
   getSubscriptionToken: (authToken: string, data: SubscriptionTokenRequest) =>
-    request<SubscriptionTokenResponse>(`/api/realtime/subscription-token`, {
+    request<ApiResponse<SubscriptionTokenResponse>>(`/api/realtime/subscription-token`, {
       token: authToken,
       method: 'POST',
       body: data
     })
 };
 
-export interface ServiceRequestCreateInput {
-  title: string;
-  description: string;
-  businessProcess: string;
-  desiredOutcome: string;
-  priority?: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
-  preferredMeetingDate?: string;
-  availabilityNotes?: string;
-}
+// Dashboard - using shared types
 
 export const dashboardApi = {
   getSimplifiedMetrics: (token: string) =>
-    request<any>(`/api/dashboard/metrics`, { token }),
+    request<MetricsResponse>(`/api/dashboard/metrics`, { token }),
   getServiceRequests: (token: string) =>
-    request<any>(`/api/dashboard/service-requests`, { token }),
-  createServiceRequest: (token: string, data: ServiceRequestCreateInput) =>
-    request<any>(`/api/dashboard/service-requests`, { token, method: 'POST', body: data }),
-  updateServiceRequest: (token: string, data: { id: string; status?: string; priority?: string; estimatedHours?: number }) =>
-    request<any>(`/api/dashboard/service-requests`, { token, method: 'PATCH', body: data }),
+    request<ServiceRequestListResponse>(`/api/dashboard/service-requests`, { token }),
+  createServiceRequest: (token: string, data: ServiceRequestCreateRequest) =>
+    request<ServiceRequestCreateResponse>(`/api/dashboard/service-requests`, { token, method: 'POST', body: data }),
+  updateServiceRequest: (token: string, data: ServiceRequestUpdateRequest & { id: string }) =>
+    request<ServiceRequestUpdateResponse>(`/api/dashboard/service-requests`, { token, method: 'PATCH', body: data }),
   getChartData: (token: string, params: URLSearchParams) =>
-    request<any>(`/api/dashboard/chart-data?${params.toString()}`, { token }),
+    request<ChartDataApiResponse>(`/api/dashboard/chart-data?${params.toString()}`, { token }),
 };
 
 export default {

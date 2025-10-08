@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ServiceRequestService } from "@/services/service-request.service";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
+import type { 
+    ServiceRequestListResponse, 
+    ServiceRequestCreateResponse, 
+    ServiceRequestUpdateResponse 
+} from "@duramation/shared";
 
-export async function GET(_: NextRequest) {
+export async function GET() {
   try {
     const authResult = await authenticateUser();
     
@@ -13,13 +18,20 @@ export async function GET(_: NextRequest) {
     const { userId } = authResult;
 
     const serviceRequests = await ServiceRequestService.getServiceRequests(userId);
-    return NextResponse.json(serviceRequests);
+    
+    const response: ServiceRequestListResponse = {
+      success: true,
+      data: serviceRequests,
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Error fetching service requests:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
+    const errorResponse: ServiceRequestListResponse = {
+      success: false,
+      error: "Internal server error",
+    };
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }
 
@@ -37,27 +49,40 @@ export async function POST(request: NextRequest) {
 
     // Validate payload
     if (!ServiceRequestService.validateCreatePayload(body)) {
-      return NextResponse.json(
-        {
-          error: "Missing required fields: title, description, businessProcess, desiredOutcome",
-        },
-        { status: 400 },
-      );
+      const errorResponse: ServiceRequestCreateResponse = {
+        success: false,
+        error: "Missing required fields: title, description, businessProcess, desiredOutcome",
+        code: "VALIDATION_ERROR",
+      };
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
     const serviceRequest = await ServiceRequestService.createServiceRequest(userId, body);
-    return NextResponse.json(serviceRequest, { status: 201 });
+    
+    const response: ServiceRequestCreateResponse = {
+      success: true,
+      data: serviceRequest,
+      message: "Service request created successfully",
+    };
+
+    return NextResponse.json(response, { status: 201 });
   } catch (error) {
     console.error("Error creating service request:", error);
 
     if (error instanceof Error && error.message.includes("future")) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      const errorResponse: ServiceRequestCreateResponse = {
+        success: false,
+        error: error.message,
+        code: "VALIDATION_ERROR",
+      };
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
+    const errorResponse: ServiceRequestCreateResponse = {
+      success: false,
+      error: "Internal server error",
+    };
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }
 
@@ -75,24 +100,39 @@ export async function PATCH(request: NextRequest) {
 
     // Validate payload
     if (!ServiceRequestService.validateUpdatePayload(body)) {
-      return NextResponse.json(
-        { error: "Missing required field: id" },
-        { status: 400 },
-      );
+      const errorResponse: ServiceRequestUpdateResponse = {
+        success: false,
+        error: "Missing required field: id",
+        code: "VALIDATION_ERROR",
+      };
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
     const updatedRequest = await ServiceRequestService.updateServiceRequest(userId, body);
-    return NextResponse.json(updatedRequest);
+    
+    const response: ServiceRequestUpdateResponse = {
+      success: true,
+      data: updatedRequest,
+      message: "Service request updated successfully",
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Error updating service request:", error);
 
     if (error instanceof Error && error.message.includes("not found")) {
-      return NextResponse.json({ error: error.message }, { status: 404 });
+      const errorResponse: ServiceRequestUpdateResponse = {
+        success: false,
+        error: error.message,
+        code: "NOT_FOUND",
+      };
+      return NextResponse.json(errorResponse, { status: 404 });
     }
 
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
-    );
+    const errorResponse: ServiceRequestUpdateResponse = {
+      success: false,
+      error: "Internal server error",
+    };
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

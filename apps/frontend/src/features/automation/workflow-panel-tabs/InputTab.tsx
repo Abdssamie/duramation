@@ -100,10 +100,6 @@ export default function InputTab({
               <p className='text-muted-foreground text-sm'>
                 No input configuration available for this workflow
               </p>
-              <p className='text-muted-foreground mt-2 text-xs'>
-                Template: {workflow.templateId || 'Unknown'} | Event:{' '}
-                {workflow.eventName || 'None'}
-              </p>
             </div>
           )}
 

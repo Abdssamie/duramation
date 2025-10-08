@@ -46,7 +46,7 @@ export const RandomTextLoopTemplate: WorkflowTemplate = {
   requiredScopes: {},
   fields: RandomTextLoopFields as unknown as JsonValue,
   tags: ['testing', 'random', 'text', 'loop', 'realtime', 'logging'],
-  version: '1.0.0',
+  version: '1.0.48',
 };
 
 // Input type for RandomTextLoop

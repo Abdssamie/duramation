@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { dashboardApi, ServiceRequestCreateInput } from '@/services/api/api-client';
+import { dashboardApi } from '@/services/api/api-client';
+import { ServiceRequestCreateRequest } from '@duramation/shared';
 
 interface ServiceRequestFormProps {
   onSuccess?: () => void;
@@ -23,7 +24,7 @@ export function ServiceRequestForm({ onSuccess, onCancel }: ServiceRequestFormPr
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [formData, setFormData] = useState<ServiceRequestCreateInput>({
+  const [formData, setFormData] = useState<ServiceRequestCreateRequest>({
     title: '',
     description: '',
     businessProcess: '',
@@ -31,7 +32,7 @@ export function ServiceRequestForm({ onSuccess, onCancel }: ServiceRequestFormPr
     priority: 'MEDIUM',
   });
 
-  const handleInputChange = (field: keyof ServiceRequestCreateInput, value: string) => {
+  const handleInputChange = (field: keyof ServiceRequestCreateRequest, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 

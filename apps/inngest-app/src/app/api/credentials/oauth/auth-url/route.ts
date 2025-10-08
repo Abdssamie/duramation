@@ -5,6 +5,7 @@ import {
   getServerProviderConfig,
 } from "@duramation/integrations/server";
 import { Provider } from "@duramation/db/types";
+import type { OAuthAuthorizationResponse } from "@duramation/shared";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -15,23 +16,35 @@ export async function GET(req: Request) {
   try {
     // Validate provider parameter
     if (!providerParam) {
-      return new NextResponse("Missing provider parameter", { status: 400 });
+      const errorResponse: OAuthAuthorizationResponse = {
+        success: false,
+        error: "Missing provider parameter",
+        code: "VALIDATION_ERROR",
+      };
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
     const provider = providerParam.toUpperCase() as Provider;
 
     // Check if provider exists in registry
     if (!SERVER_PROVIDER_REGISTRY[provider]) {
-      return new NextResponse(`Invalid provider: ${provider}`, { status: 400 });
+      const errorResponse: OAuthAuthorizationResponse = {
+        success: false,
+        error: `Invalid provider: ${provider}`,
+        code: "INVALID_PROVIDER",
+      };
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
     // Check if provider has an auth handler
     const { authHandler } = SERVER_PROVIDER_REGISTRY[provider];
     if (!authHandler) {
-      return new NextResponse(
-        `Provider ${provider} does not support OAuth authentication`,
-        { status: 400 }
-      );
+      const errorResponse: OAuthAuthorizationResponse = {
+        success: false,
+        error: `Provider ${provider} does not support OAuth authentication`,
+        code: "UNSUPPORTED_OPERATION",
+      };
+      return NextResponse.json(errorResponse, { status: 400 });
     }
 
     // Authenticate user
@@ -63,9 +76,21 @@ export async function GET(req: Request) {
     // Generate auth URL using the provider's auth handler
     const url = authHandler.generateAuthUrl(scopes, state);
 
-    return NextResponse.json({ url });
+    const response: OAuthAuthorizationResponse = {
+      success: true,
+      data: {
+        authorizationUrl: url,
+        state,
+      },
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Error generating OAuth Auth URL:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    const errorResponse: OAuthAuthorizationResponse = {
+      success: false,
+      error: "Internal Server Error",
+    };
+    return NextResponse.json(errorResponse, { status: 500 });
   }
 }

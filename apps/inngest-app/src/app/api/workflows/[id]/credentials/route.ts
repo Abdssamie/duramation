@@ -1,9 +1,6 @@
 import { storeCredentialForWorkflow } from "@/services/credentials-store";
-import { auth } from "@clerk/nextjs/server";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
 import { NextRequest } from "next/server";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import { ClerkUserId } from "@/types/user";
 import { CredentialCreateRequest, validateCredentialSecret } from "@duramation/shared";
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {

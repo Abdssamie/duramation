@@ -6,6 +6,16 @@ import React from 'react';
 import { ActionCards } from '@/components/dashboard/action-cards';
 import { getSimplifiedMetrics } from '@/services/api/getSimplifiedMetrics';
 
+// Helper function to format currency
+function formatCurrency(amount: number): string {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
 export default async function OverViewLayout({
   service_requests,
   workflow_chart
@@ -116,7 +126,7 @@ export default async function OverViewLayout({
             </CardHeader>
             <CardFooter className='flex-col items-start gap-1.5 text-sm'>
               <div className='line-clamp-1 flex gap-2 font-medium'>
-                {metrics.workflowFailureRate.toFixed(1)}% failure rate {metrics.workflowSuccessRate >= 95 ? <IconTrendingUp className='size-4' /> : <IconTrendingDown className='size-4' />}
+                {(100 - metrics.workflowSuccessRate).toFixed(1)}% failure rate {metrics.workflowSuccessRate >= 95 ? <IconTrendingUp className='size-4' /> : <IconTrendingDown className='size-4' />}
               </div>
               <div className='text-muted-foreground'>
                 {metrics.workflowSuccessRate >= 95 ? 'Excellent system reliability' : metrics.workflowSuccessRate >= 85 ? 'Good performance, room for improvement' : 'Consider reviewing workflow configurations'}

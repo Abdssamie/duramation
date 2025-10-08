@@ -11,7 +11,9 @@ import {
 import { formatDistanceToNow } from 'date-fns';
 import CredentialRequirementIndicator from '@/features/automation/components/CredentialRequirementIndicator';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, Sparkles } from 'lucide-react';
+import { getWorkflowStatusDisplay, getWorkflowStatusColorClass } from '@/utils/workflow-sanitizer';
+import Link from 'next/link';
 
 export const WorkflowCard = memo(function WorkflowCard({
   workflow,
@@ -30,31 +32,8 @@ export const WorkflowCard = memo(function WorkflowCard({
     : [];
   const running = String(workflow.status) === 'RUNNING';
   const scheduled = schedules.length > 0;
-  const status = String(workflow.status || '').toUpperCase();
-  const statusLabel =
-    status === 'RUNNING'
-      ? 'Running'
-      : status === 'FAILED'
-        ? 'Failed'
-        : status === 'PAUSED'
-          ? 'Paused'
-          : status === 'COMPLETED'
-            ? 'Completed'
-            : status === 'IDLE'
-              ? 'Idle'
-              : status
-                ? status.charAt(0) + status.slice(1).toLowerCase()
-                : 'Unknown';
-  const statusColorClass =
-    status === 'RUNNING'
-      ? 'text-green-600 dark:text-green-400'
-      : status === 'FAILED'
-        ? 'text-red-600 dark:text-red-400'
-        : status === 'PAUSED'
-          ? 'text-amber-600 dark:text-amber-400'
-          : status === 'COMPLETED'
-            ? 'text-emerald-600 dark:text-emerald-400'
-            : 'text-slate-600 dark:text-slate-400';
+  const statusLabel = getWorkflowStatusDisplay(workflow.status);
+  const statusColorClass = getWorkflowStatusColorClass(workflow.status);
 
   // Simple credential status calculation
   const requiredProviders = (workflow.requiredProviders as Provider[]) || [];
@@ -63,52 +42,56 @@ export const WorkflowCard = memo(function WorkflowCard({
 
   return (
     <Card
-      className='flex flex-col transition-shadow hover:shadow-md'
+      className={`flex flex-col transition-all duration-200 hover:shadow-md ${hasNewVersion ? 'ring-2 ring-blue-200 dark:ring-blue-800' : ''}`}
       role='region'
       aria-labelledby={headingId}
     >
-      <CardHeader>
-        <CardTitle id={headingId} className='flex items-center gap-2 text-base'>
-          {running ? (
+      <CardHeader className='pb-3'>
+        <div className='flex items-start justify-between gap-2'>
+          <CardTitle id={headingId} className='flex items-center gap-2 text-base flex-1 min-w-0'>
+            {running ? (
+              <span
+                className='inline-block size-2 animate-pulse rounded-full bg-green-500'
+                role='img'
+                aria-label='Running'
+                title='Running'
+              />
+            ) : scheduled ? (
+              <span
+                className='inline-block size-2 animate-pulse rounded-full bg-yellow-400'
+                role='img'
+                aria-label='Scheduled'
+                title='Scheduled'
+              />
+            ) : (
+              <span
+                className='inline-block size-2 rounded-full'
+                style={{
+                  backgroundColor:
+                    workflow.status === 'FAILED' ? '#ef4444' : '#94a3b8'
+                }}
+                role='img'
+                aria-label={workflow.status === 'FAILED' ? 'Failed' : 'Idle'}
+              />
+            )}
             <span
-              className='inline-block size-2 animate-pulse rounded-full bg-green-500'
-              role='img'
-              aria-label='Running'
-              title='Running'
-            />
-          ) : scheduled ? (
-            <span
-              className='inline-block size-2 animate-pulse rounded-full bg-yellow-400'
-              role='img'
-              aria-label='Scheduled'
-              title='Scheduled'
-            />
-          ) : (
-            <span
-              className='inline-block size-2 rounded-full'
-              style={{
-                backgroundColor:
-                  workflow.status === 'FAILED' ? '#ef4444' : '#94a3b8'
-              }}
-              role='img'
-              aria-label={workflow.status === 'FAILED' ? 'Failed' : 'Idle'}
-            />
+              className='truncate'
+              title={workflow.name || 'Untitled workflow'}
+            >
+              {workflow.name || 'Untitled workflow'}
+            </span>
+          </CardTitle>
+          
+          {hasNewVersion && (
+            <div className='flex items-center gap-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-2 py-1 rounded-full text-xs font-medium shrink-0'>
+              <Sparkles className='h-3 w-3' />
+              <span>Update</span>
+            </div>
           )}
-          <span
-            className='flex-1 truncate'
-            title={workflow.name || 'Untitled workflow'}
-          >
-            {workflow.name || 'Untitled workflow'}
-          </span>
-        </CardTitle>
+        </div>
       </CardHeader>
 
       <CardContent className='space-y-3 text-sm'>
-        {hasNewVersion && (
-          <span className='bg-primary text-primary-foreground rounded-full px-2 py-1 text-xs font-semibold'>
-            New Version Available
-          </span>
-        )}
         {workflow.description && (
           <p className='text-muted-foreground line-clamp-2'>
             {workflow.description}
@@ -166,16 +149,29 @@ export const WorkflowCard = memo(function WorkflowCard({
         )}
       </CardContent>
 
-      <CardFooter className='mt-auto'>
-        <Button
-          aria-label={`Open details for ${workflow.name || 'Untitled workflow'}`}
-          onClick={() => onOpenDetails(workflow)}
-          className='w-full'
-          variant='outline'
-        >
-          <ExternalLink className='mr-2 h-4 w-4' />
-          Open Details
-        </Button>
+      <CardFooter className='mt-auto pt-4'>
+        <div className='flex flex-col gap-3 w-full'>
+          {hasNewVersion && (
+            <Button
+              asChild
+              className='w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0'
+            >
+              <Link href='/dashboard/marketplace'>
+                <ArrowUpRight className='mr-2 h-4 w-4' />
+                Update Available
+              </Link>
+            </Button>
+          )}
+          <Button
+            aria-label={`Open details for ${workflow.name || 'Untitled workflow'}`}
+            onClick={() => onOpenDetails(workflow)}
+            className='w-full'
+            variant={hasNewVersion ? 'outline' : 'outline'}
+          >
+            <ExternalLink className='mr-2 h-4 w-4' />
+            Open Details
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );
