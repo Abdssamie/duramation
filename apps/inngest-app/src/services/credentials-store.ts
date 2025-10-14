@@ -82,6 +82,30 @@ export async function storeCredential(
       },
     });
 
+    // Auto-associate with workflow if specified in config
+    const config = credentialData.config as any;
+    if (config?.autoAssociate && config?.workflowId) {
+      try {
+        await prisma.workflowCredential.upsert({
+          where: {
+            workflowId_credentialId: {
+              workflowId: config.workflowId,
+              credentialId: credential.id,
+            },
+          },
+          update: {},
+          create: {
+            workflowId: config.workflowId,
+            credentialId: credential.id,
+          },
+        });
+        console.log(`Auto-associated credential ${credential.id} with workflow ${config.workflowId}`);
+      } catch (linkError) {
+        console.error('Failed to auto-associate credential with workflow:', linkError);
+        // Don't fail the whole operation if linking fails
+      }
+    }
+
     return {
       userId: userId,
       id: credential.id,

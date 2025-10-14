@@ -58,6 +58,7 @@ enum CredentialType {
 enum Provider {
   GOOGLE
   SLACK
+  MICROSOFT
   HUBSPOT
   FIRECRAWL
   INSTAGRAM

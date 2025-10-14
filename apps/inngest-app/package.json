@@ -19,7 +19,7 @@
     "@duramation/shared": "*",
     "@inngest/agent-kit": "^0.9.0",
     "@inngest/realtime": "^0.4.4",
-    "@prisma/client": "^6.16.2",
+    "@prisma/client": "^6.17.1",
     "@upstash/redis": "^1.35.5",
     "date-fns": "^4.1.0",
     "googleapis": "^159.0.0",

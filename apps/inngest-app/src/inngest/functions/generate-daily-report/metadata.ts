@@ -21,8 +21,8 @@ export const DailyReportFields: WorkflowInputFieldDefinition[] = [
   },
   {
     key: 'sheetName',
-    label: 'Sheet Name',
-    description: 'The name of the Google Sheet to generate report from',
+    label: 'Spreadsheet ID or URL',
+    description: 'The Google Sheets URL or spreadsheet ID (e.g., https://docs.google.com/spreadsheets/d/YOUR_ID/edit)',
     type: 'text',
     validation: {
       required: true,

@@ -15,6 +15,7 @@ export interface AuthResult {
  */
 export async function authenticateUser(): Promise<AuthResult | NextResponse> {
   const { userId: clerkUserId } = await auth();
+  console.log(clerkUserId)
   
   if (!clerkUserId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

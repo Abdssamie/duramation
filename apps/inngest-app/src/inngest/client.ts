@@ -1,8 +1,11 @@
-import { EventSchemas, Inngest  } from 'inngest';
+import { EventSchemas, Inngest } from 'inngest';
 import { User } from '@duramation/db/types';
 import logger from '@/services/logging';
 import { WorkflowDailyReportInput } from '@/inngest/functions/generate-daily-report/metadata';
 import { WorkflowRandomTextLoopInput } from '@/inngest/functions/random-text-loop/metadata';
+import { WorkflowPostToSlackInput } from '@/inngest/functions/post-to-slack/metadata';
+import { WorkflowScrapeWebsiteInput } from '@/inngest/functions/scrape-website/metadata';
+import { WorkflowSendOutlookEmailInput } from '@/inngest/functions/send-outlook-email/metadata';
 import { InternalUserId } from '@/types/user';
 import { credentialMiddleware } from '@/inngest/middleware/credential';
 import { workflowStatusMiddleware } from '@/inngest/middleware/workflow-status-middleware';
@@ -60,6 +63,9 @@ export type Events = {
   'workflow/stop': ScheduleStopPayload;
   'workflow/report.requested': WorkflowTriggerPayload<WorkflowDailyReportInput>;
   'workflow/random.text.loop': WorkflowTriggerPayload<WorkflowRandomTextLoopInput>;
+  'workflow/slack.post': WorkflowTriggerPayload<WorkflowPostToSlackInput>;
+  'workflow/scrape.website': WorkflowTriggerPayload<WorkflowScrapeWebsiteInput>;
+  'workflow/microsoft.send-email': WorkflowTriggerPayload<WorkflowSendOutlookEmailInput>;
 
   // Automation metrics events
   'automation/metrics.aggregate': {
@@ -102,6 +108,9 @@ const eventKeys = [
   'internal/user/new.google.signup',
   'workflow/report.requested',
   'workflow/random.text.loop',
+  'workflow/slack.post',
+  'workflow/scrape.website',
+  'workflow/microsoft.send-email',
   'workflow/stop',
   'automation/metrics.aggregate',
   'automation/metrics.updated',

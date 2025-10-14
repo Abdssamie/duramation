@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs/server';
 import api from '@/services/api/api-client';
 import MarketplaceClient from '@/features/marketplace/marketplace-client';
+import PageContainer from '@/components/layout/page-container';
 
 export default async function MarketplacePage({
   searchParams
@@ -13,7 +14,11 @@ export default async function MarketplacePage({
   const params = await searchParams;
 
   if (!token) {
-    return <div className='p-6'>Please sign in to browse the marketplace.</div>;
+    return (
+      <PageContainer>
+        <div className='p-6'>Please sign in to browse the marketplace.</div>
+      </PageContainer>
+    );
   }
 
   const page = Number(params?.page ?? 1);
@@ -28,21 +33,23 @@ export default async function MarketplacePage({
   const pagination = data?.pagination;
 
   return (
-    <div className='space-y-6 p-6'>
-      <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-        <div>
-          <h1 className='text-2xl font-bold'>Workflow Marketplace</h1>
-          <p className='text-muted-foreground mt-1'>
-            Discover and install pre-built automation workflows
-          </p>
+    <PageContainer scrollable={true}>
+      <div className='w-full space-y-6'>
+        <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+          <div>
+            <h1 className='text-2xl font-bold'>Workflow Marketplace</h1>
+            <p className='text-muted-foreground mt-1'>
+              Discover and install pre-built automation workflows
+            </p>
+          </div>
         </div>
-      </div>
 
-      <MarketplaceClient 
-        items={items} 
-        pagination={pagination} 
-        limit={limit} 
-      />
-    </div>
+        <MarketplaceClient 
+          items={items} 
+          pagination={pagination} 
+          limit={limit} 
+        />
+      </div>
+    </PageContainer>
   );
 }

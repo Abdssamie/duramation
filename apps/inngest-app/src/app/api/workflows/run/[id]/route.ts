@@ -10,6 +10,7 @@ import { isEventKey, Events, inngest, WorkflowTriggerPayload, ScheduleStopPayloa
 import { z } from "zod";
 import { ClerkUserId, InternalUserId } from "@/types/user";
 import type { WorkflowRunRequest, WorkflowRunResponse } from "@duramation/shared";
+import { v4 as uuidv4 } from "uuid";
 
 // Schema for validating workflow run requests
 const WorkflowRunRequestSchema = z.object({
@@ -121,8 +122,11 @@ export async function POST(
             );
         }
 
+        // Generate a fresh idempotency key for each manual run
+        const runIdempotencyKey = uuidv4();
+        
         logger.info(`Running workflow ${workflow.id} for user ${internalUser.id}`);
-        logger.info(`idempotency_key: ${workflow.idempotencyKey}`);
+        logger.info(`idempotency_key: ${runIdempotencyKey}`);
 
         // Send an event to Inngest to trigger the workflow
         await inngest.send({
@@ -136,8 +140,8 @@ export async function POST(
                 cronExpression: cronExpression || null,
                 tz: timezone || workflow.timezone,
                 metadata: metadata,
-                // Use the client-sent (or server-generated) idempotency key per run
-                idempotency_key: workflow.idempotencyKey as string
+                // Use a fresh idempotency key for each manual run
+                idempotency_key: runIdempotencyKey
             },
         } satisfies WorkflowTriggerPayload & { name: keyof Events });
 
@@ -149,6 +153,7 @@ export async function POST(
             data: {
                 runId,
                 workflowId: workflow.id,
+                workflowName: workflow.eventName,
                 status: 'pending',
                 startedAt: new Date().toISOString(),
                 input: input || (workflow.input as Record<string, any>) || undefined,

@@ -18,14 +18,14 @@
     "./types": "./dist/types.d.ts"
   },
   "dependencies": {
-    "@prisma/client": "6.16.2",
+    "@prisma/client": "^6.17.1",
     "@prisma/extension-accelerate": "^2.0.2",
     "prisma-field-encryption": "^1.6.0"
   },
   "devDependencies": {
     "@duramation/typescript-config": "*",
     "@types/node": "^24.5.2",
-    "prisma": "6.16.2",
+    "prisma": "6.17.1",
     "typescript": "^5.9.2"
   }
 }
