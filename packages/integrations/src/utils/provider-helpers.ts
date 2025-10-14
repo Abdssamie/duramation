@@ -43,6 +43,7 @@ export function getProviderColors(provider: Provider): { color: string; bgColor:
     const colorMap: Record<Provider, { color: string; bgColor: string }> = {
         GOOGLE: { color: 'text-blue-600', bgColor: 'bg-blue-50' },
         SLACK: { color: 'text-purple-600', bgColor: 'bg-purple-50' },
+        MICROSOFT: { color: 'text-blue-500', bgColor: 'bg-blue-100' },
         HUBSPOT: { color: 'text-orange-600', bgColor: 'bg-orange-50' },
         FIRECRAWL: { color: 'text-red-600', bgColor: 'bg-red-50' },
         INSTAGRAM: { color: 'text-pink-600', bgColor: 'bg-pink-50' },

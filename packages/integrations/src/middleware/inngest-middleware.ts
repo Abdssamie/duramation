@@ -11,27 +11,25 @@ export const integrationMiddleware = new InngestMiddleware({
   name: "Integration Middleware",
   init() {
     return {
-      async onFunctionRun() {
+      async onFunctionRun({ ctx }) {
+        const { event } = ctx;
+
+        // Extract workflow information from the event
+        const workflowId = event.data?.workflowId;
+        const userId = event.data?.user_id;
+
+        if (!workflowId  || !userId) {
+          console.log(`[Integration Middleware] No workflowId or userId found in event`);
+          return {};
+        }
+
         return {
-          async transformInput({ ctx }) {
-            const { event } = ctx;
-
-            // Extract workflow information from the event
-            const workflowId = event.data?.workflowId;
-            const userId = event.data?.user_id;
-
-            if (!workflowId  || !userId) {
-              // If no workflow or user ID, return empty credentials
-              return {
-                ctx: {
-                  credentials: []
-                }
-              };
-            }
-
+          async transformInput() {
             try {
               // Fetch workflow credentials from the database
+              console.log(`[Integration Middleware] Fetching credentials for workflow: ${workflowId}, user: ${userId}`);
               const credentials = await credentialStore.getWorkflowCredentials(workflowId, userId);
+              console.log(`[Integration Middleware] Found ${credentials.length} credentials:`, credentials.map(c => ({ id: c.id, name: c.name, provider: c.provider })));
 
               // Return the credentials in the context (serialize to plain objects)
               return {
@@ -50,7 +48,7 @@ export const integrationMiddleware = new InngestMiddleware({
                 }
               };
             } catch (error) {
-              console.error("Error fetching workflow credentials:", error);
+              console.error("[Integration Middleware] Error fetching workflow credentials:", error);
 
               // Return empty credentials if there's an error
               return {

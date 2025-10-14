@@ -17,3 +17,6 @@ export * from './utils/provider-helpers.js';
 // Frontend OAuth helpers (no Node.js dependencies)
 export * from './utils/frontend-oauth.js';
 
+// Provider icons (frontend components)
+export * from './components/icons/index.js';
+

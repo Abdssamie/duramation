@@ -4,13 +4,12 @@ import { useState } from 'react';
 import {
   Provider,
   getProviderConfig,
-  getProviderDisplayName,
-  getProviderColors
+  getProviderColors,
+  ProviderIcon,
+  getProviderDisplayName
 } from '@duramation/integrations';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import GoogleIcon from '@/components/icons/GoogleIcon';
-import InstagramIcon from '@/components/icons/InstagramIcon';
 
 interface IntegrationSelectorProps {
   requiredProviders: Provider[];
@@ -18,29 +17,6 @@ interface IntegrationSelectorProps {
   onClose?: () => void;
   disabled?: boolean;
 }
-
-// Icon components for providers
-const PROVIDER_ICONS = {
-  ['GOOGLE']: GoogleIcon,
-  ['SLACK']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-purple-600 text-xs font-bold text-white'>S</div>
-  ),
-  ['HUBSPOT']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-orange-600 text-xs font-bold text-white'>H</div>
-  ),
-  ['FIRECRAWL']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-red-600 text-xs font-bold text-white'>F</div>
-  ),
-  ['CUSTOM']: () => (
-    <div className='flex h-4 w-4 items-center justify-center rounded bg-gray-600 text-xs font-bold text-white'>C</div>
-  ),
-  ['INSTAGRAM']: InstagramIcon,
-};
-
-// Fallback icon for unknown providers
-const DefaultProviderIcon = () => (
-  <div className='flex h-4 w-4 items-center justify-center rounded bg-gray-400 text-xs font-bold text-white'>?</div>
-);
 
 
 export default function IntegrationSelector({
@@ -81,7 +57,6 @@ export default function IntegrationSelector({
         {providersToShow.map((provider) => {
           const config = getProviderConfig(provider);
           const colors = getProviderColors(provider);
-          const IconComponent = PROVIDER_ICONS[provider] || DefaultProviderIcon;
           const isSelected = selectedProvider === provider;
 
           return (
@@ -95,7 +70,7 @@ export default function IntegrationSelector({
               <CardHeader className='pb-2'>
                 <CardTitle className='flex items-center gap-2 text-sm'>
                   <div className={`rounded p-2 ${colors.bgColor}`}>
-                    <IconComponent className={`h-4 w-4 ${colors.color}`} />
+                    <ProviderIcon provider={provider} className={`h-4 w-4 ${colors.color}`} />
                   </div>
                   {config.displayName}
                 </CardTitle>

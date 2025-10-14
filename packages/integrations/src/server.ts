@@ -23,6 +23,7 @@ export * from './providers/server-registry.js';
 // Direct provider exports for server-side usage
 export * as Google from './providers/google/index.js';
 export * as Slack from './providers/slack/index.js';
+export * as Microsoft from './providers/microsoft/index.js';
 export * as Firecrawl from './providers/firecrawl/index.js';
 
 // Backward compatibility alias

@@ -11,6 +11,7 @@ import {
   isOAuthProvider,
   getProviderConfig,
   getProviderFields,
+  ProviderIcon,
 } from '@duramation/integrations';
 import {
   CredentialCreateRequest,
@@ -121,11 +122,17 @@ export default function WorkflowCredentialManager({
     : [];
   const schema = createCredentialSchema(providerFields);
 
+  // Create default values for all provider fields
+  const defaultFieldValues = providerFields.reduce((acc, field) => {
+    acc[field.key] = '';
+    return acc;
+  }, {} as Record<string, string>);
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
-      fields: {}
+      fields: defaultFieldValues
     }
   });
 
@@ -323,9 +330,7 @@ export default function WorkflowCredentialManager({
         <div className='space-y-4'>
           <div className='py-8 text-center'>
             <h3 className='mb-2 flex items-center justify-center gap-2 text-lg font-medium'>
-              {selectedProvider === 'GOOGLE' && <Icons.google size={24} />}
-              {selectedProvider === 'SLACK' && <Icons.slack size={24} />}
-              {selectedProvider === 'HUBSPOT' && <Icons.hubspot size={24} />}
+              <ProviderIcon provider={selectedProvider} className='h-6 w-6' />
               Connect to {providerName}
             </h3>
             <p className='text-muted-foreground mb-6'>
@@ -383,11 +388,7 @@ export default function WorkflowCredentialManager({
             render={({ field }) => (
               <FormItem>
                 <FormLabel className='flex items-center gap-2'>
-                  {selectedProvider === 'GOOGLE' && <Icons.google size={16} />}
-                  {selectedProvider === 'SLACK' && <Icons.slack size={16} />}
-                  {selectedProvider === 'HUBSPOT' && (
-                    <Icons.hubspot size={16} />
-                  )}
+                  <ProviderIcon provider={selectedProvider} className='h-4 w-4' />
                   Credential Name
                 </FormLabel>
                 <FormControl>
@@ -524,9 +525,7 @@ export default function WorkflowCredentialManager({
           )}
           {currentStep === 'form' && selectedProvider && (
             <>
-              {selectedProvider === 'GOOGLE' && <Icons.google size={20} />}
-              {selectedProvider === 'SLACK' && <Icons.slack size={20} />}
-              {selectedProvider === 'HUBSPOT' && <Icons.hubspot size={20} />}
+              <ProviderIcon provider={selectedProvider} className='h-5 w-5' />
               <span>
                 Add {getProviderDisplayName(selectedProvider)} Credential
               </span>

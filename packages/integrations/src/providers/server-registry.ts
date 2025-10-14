@@ -2,6 +2,7 @@ import { Provider } from '../types/providers.js';
 import type { ProviderFullConfig } from './types.js';
 import * as Google from './google/index.js';
 import * as Slack from './slack/index.js';
+import * as Microsoft from './microsoft/index.js';
 import * as Firecrawl from './firecrawl/index.js';
 
 // Server-side registry with auth handlers (Node.js dependencies)
@@ -18,6 +19,10 @@ export const SERVER_PROVIDER_REGISTRY: Record<Provider, ServerProviderRegistryEn
   SLACK: {
     config: Slack.SLACK_CONFIG,
     authHandler: Slack.SlackAuthHandler,
+  },
+  MICROSOFT: {
+    config: Microsoft.MICROSOFT_CONFIG,
+    authHandler: Microsoft.MicrosoftAuthHandler,
   },
   FIRECRAWL: {
     config: Firecrawl.FIRECRAWL_CONFIG,

@@ -52,6 +52,29 @@ export const PROVIDER_REGISTRY: Record<Provider, ProviderFullConfig> = {
       connectionTestAvailable: true
     }
   },
+  MICROSOFT: {
+    provider: 'MICROSOFT',
+    name: 'Microsoft',
+    displayName: 'Microsoft',
+    description: 'Connect to Microsoft services like Outlook, OneDrive, Calendar',
+    icon: 'microsoft',
+    authType: 'OAUTH',
+    oauth: {
+      authUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
+      tokenUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+      scopes: {
+        'mail': ['https://graph.microsoft.com/Mail.Read', 'https://graph.microsoft.com/Mail.Send'],
+        'calendar': ['https://graph.microsoft.com/Calendars.Read', 'https://graph.microsoft.com/Calendars.ReadWrite'],
+        'onedrive': ['https://graph.microsoft.com/Files.Read', 'https://graph.microsoft.com/Files.ReadWrite'],
+        'contacts': ['https://graph.microsoft.com/Contacts.Read']
+      },
+      defaultScopes: ['https://graph.microsoft.com/User.Read', 'offline_access']
+    },
+    ui: {
+      setupInstructions: 'Connect your Microsoft account to access Outlook, OneDrive, and Calendar',
+      connectionTestAvailable: true
+    }
+  },
   FIRECRAWL: {
     provider: 'FIRECRAWL',
     name: 'Firecrawl',

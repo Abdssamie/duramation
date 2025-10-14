@@ -27,9 +27,13 @@
         "inngest": "^3.42.3",
         "googleapis": "^159.0.0"
     },
+    "peerDependencies": {
+        "react": "^19.0.0"
+    },
     "devDependencies": {
         "@duramation/typescript-config": "*",
         "@types/node": "^24.5.2",
+        "@types/react": "^18.0.0",
         "typescript": "^5.9.2"
     }
 }

@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import GoogleIcon from '@/components/icons/GoogleIcon';
+import { ProviderIcon } from '@duramation/integrations';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,6 +24,7 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 import { SafeCredential } from '@duramation/shared';
+import { Provider } from '@duramation/db/types';
 
 export default function CredentialsTab() {
   const { getToken: _getToken, isLoaded, isSignedIn } = useAuth();
@@ -125,9 +126,7 @@ export default function CredentialsTab() {
               <Card key={c.id}>
                 <CardHeader className='pb-2'>
                   <CardTitle className='flex items-center gap-3 text-lg'>
-                    {c.provider === 'GOOGLE' && (
-                      <GoogleIcon className='h-5 w-5' />
-                    )}
+                    <ProviderIcon provider={c.provider as Provider} className='h-5 w-5' />
                     {formatProviderName(c.provider)}
                   </CardTitle>
                 </CardHeader>

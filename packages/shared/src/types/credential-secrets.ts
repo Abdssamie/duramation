@@ -28,6 +28,12 @@ export const SlackOAuthSecretSchema = BaseOAuthSecretSchema.extend({
     botUserId: z.string().optional(),
 });
 
+export const MicrosoftOAuthSecretSchema = BaseOAuthSecretSchema.extend({
+    scopes: z.array(z.string()),
+    expiresIn: z.number(),
+    refreshToken: z.string().optional(), // Optional because Microsoft may not return it on re-authorization
+});
+
 export const HubspotOAuthSecretSchema = BaseOAuthSecretSchema.extend({
     refreshToken: z.string(),
     hubId: z.string(),
@@ -43,6 +49,7 @@ export const CustomApiKeySecretSchema = BaseApiKeySecretSchema.extend({
 export const CredentialSecretSchema = z.union([
     GoogleOAuthSecretSchema,
     SlackOAuthSecretSchema,
+    MicrosoftOAuthSecretSchema,
     HubspotOAuthSecretSchema,
     FirecrawlApiKeySecretSchema,
     CustomApiKeySecretSchema,
@@ -53,6 +60,7 @@ export type BaseOAuthSecret = z.infer<typeof BaseOAuthSecretSchema>;
 export type BaseApiKeySecret = z.infer<typeof BaseApiKeySecretSchema>;
 export type GoogleOAuthSecret = z.infer<typeof GoogleOAuthSecretSchema>;
 export type SlackOAuthSecret = z.infer<typeof SlackOAuthSecretSchema>;
+export type MicrosoftOAuthSecret = z.infer<typeof MicrosoftOAuthSecretSchema>;
 export type HubspotOAuthSecret = z.infer<typeof HubspotOAuthSecretSchema>;
 export type FirecrawlApiKeySecret = z.infer<typeof FirecrawlApiKeySecretSchema>;
 export type CustomApiKeySecret = z.infer<typeof CustomApiKeySecretSchema>;
@@ -72,6 +80,8 @@ export const validateCredentialSecret = (
                     return GoogleOAuthSecretSchema.safeParse(secret);
                 case "SLACK":
                     return SlackOAuthSecretSchema.safeParse(secret);
+                case "MICROSOFT":
+                    return MicrosoftOAuthSecretSchema.safeParse(secret);
                 case "HUBSPOT":
                     return HubspotOAuthSecretSchema.safeParse(secret);
                 default:

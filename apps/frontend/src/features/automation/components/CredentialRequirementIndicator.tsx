@@ -93,15 +93,15 @@ export default function CredentialRequirementIndicator({
           return (
             <div
               key={provider}
-              className='flex items-center gap-2 rounded-md bg-green-50 p-2'
+              className='flex items-center gap-2 rounded-md bg-green-50 p-2 dark:bg-green-950'
             >
-              <ProviderIcon className='h-4 w-4 text-green-600' />
+              <ProviderIcon className='h-4 w-4 text-green-600 dark:text-green-400' />
               <div>
-                <span className='text-sm font-medium'>
+                <span className='text-sm font-medium text-green-900 dark:text-green-100'>
                   {getProviderDisplayName(provider)}
                 </span>
                 {credential && (
-                  <div className='text-muted-foreground text-xs'>
+                  <div className='text-xs text-green-700 dark:text-green-300'>
                     {credential.name}
                   </div>
                 )}
@@ -117,15 +117,15 @@ export default function CredentialRequirementIndicator({
           return (
             <div
               key={provider}
-              className='flex items-center justify-between rounded-md bg-red-50 p-2'
+              className='flex items-center justify-between rounded-md bg-red-50 p-2 dark:bg-red-950'
             >
               <div className='flex items-center gap-2'>
-                <ProviderIcon className='h-4 w-4 text-red-600' />
+                <ProviderIcon className='h-4 w-4 text-red-600 dark:text-red-400' />
                 <div>
-                  <span className='text-sm font-medium'>
+                  <span className='text-sm font-medium text-red-900 dark:text-red-100'>
                     {getProviderDisplayName(provider)}
                   </span>
-                  <div className='text-xs text-red-600'>Not connected</div>
+                  <div className='text-xs text-red-600 dark:text-red-400'>Not connected</div>
                 </div>
               </div>
               {showAddButton && onAddCredential && (
@@ -143,24 +143,6 @@ export default function CredentialRequirementIndicator({
           );
         })}
       </div>
-
-      {missingProviders.length > 0 && showAddButton && onAddCredential && (
-        <div className='border-t pt-2'>
-          <Button
-            size='sm'
-            onClick={() => {
-              const firstMissing = missingProviders[0];
-              if (firstMissing) {
-                onAddCredential(firstMissing);
-              }
-            }}
-            className='w-full'
-          >
-            <Plus className='mr-2 h-4 w-4' />
-            Connect Missing Services
-          </Button>
-        </div>
-      )}
     </div>
   );
 }
