@@ -2,19 +2,5 @@
   "buildCommand": "cd ../.. && yarn build:packages && cd apps/inngest-app && yarn build",
   "installCommand": "cd ../.. && yarn install",
   "framework": "nextjs",
-  "regions": ["iad1"],
-  "env": {
-    "DATABASE_URL": "@database-url",
-    "CLERK_SECRET_KEY": "@clerk-secret-key",
-    "CLERK_WEBHOOK_SIGNING_SECRET": "@clerk-webhook-secret",
-    "INNGEST_EVENT_KEY": "@inngest-event-key",
-    "INNGEST_SIGNING_KEY": "@inngest-signing-key",
-    "GOOGLE_OAUTH_CLIENT_ID": "@google-oauth-client-id",
-    "GOOGLE_OAUTH_CLIENT_SECRET": "@google-oauth-client-secret",
-    "SLACK_CLIENT_ID": "@slack-client-id",
-    "SLACK_CLIENT_SECRET": "@slack-client-secret",
-    "MICROSOFT_OAUTH_CLIENT_ID": "@microsoft-oauth-client-id",
-    "MICROSOFT_OAUTH_CLIENT_SECRET": "@microsoft-oauth-client-secret",
-    "FRONTEND_URL": "@frontend-url"
-  }
+  "regions": ["iad1"]
 }
