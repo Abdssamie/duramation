@@ -184,8 +184,10 @@ export default function WorkflowCredentialsTab({
           requiredProviders={missingCredentials.map((req) => req.provider)}
           requiredScopes={workflow.requiredScopes as Record<string, string[]> | null}
           onCredentialAdded={() => {
-            // Refresh workflow data - this would typically trigger a refetch
             setShowCredentialManager(false);
+            // TODO: Replace with refetchWorkflow callback passed from parent
+            // This would be more elegant than a full page reload
+            window.location.reload();
           }}
           onClose={() => setShowCredentialManager(false)}
         />
