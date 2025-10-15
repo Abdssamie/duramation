@@ -8,10 +8,19 @@ import { DailyReportTemplate } from "./../src/inngest/functions/generate-daily-r
 
 import { addWorkflowTemplatesIfNotExist } from "@duramation/shared";
 
+// Skip database operations during build if encryption key is not available
+if (!process.env.PRISMA_FIELD_ENCRYPTION_KEY) {
+  console.log('[addWorkflowTemplates] Skipping template sync - no encryption key available (build time)');
+  process.exit(0);
+}
+
 addWorkflowTemplatesIfNotExist(prisma, [
   SendOutlookEmailTemplate,
   ScrapeWebsiteTemplate,
   RandomTextLoopTemplate,
   PostToSlackTemplate,
   DailyReportTemplate
-]);
+]).catch((error) => {
+  console.error('[addWorkflowTemplates] Error syncing templates:', error);
+  process.exit(1);
+});

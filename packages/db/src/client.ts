@@ -3,13 +3,16 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { fieldEncryptionExtension } from 'prisma-field-encryption';
 
 // Instantiate the extended Prisma client to infer its type
-const extendedPrisma = new PrismaClient().$extends(withAccelerate());
+const basePrisma = new PrismaClient().$extends(withAccelerate());
 
-extendedPrisma.$extends(
-  fieldEncryptionExtension(
-    {dmmf: Prisma.dmmf}
+// Only add field encryption if the key is available
+const extendedPrisma = process.env.PRISMA_FIELD_ENCRYPTION_KEY
+  ? basePrisma.$extends(
+    fieldEncryptionExtension(
+      { dmmf: Prisma.dmmf }
+    )
   )
-);
+  : basePrisma;
 
 export type ExtendedPrismaClient = typeof extendedPrisma;
 
