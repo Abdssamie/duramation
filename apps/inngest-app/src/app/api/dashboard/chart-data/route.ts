@@ -56,13 +56,13 @@ export async function GET(request: NextRequest) {
     // Group runs by date
     const chartData = dateIntervals.map(date => {
       const dateStr = format(date, 'yyyy-MM-dd');
-      const runsForDate = workflowRuns.filter(run => 
+      const runsForDate = workflowRuns.filter((run) =>
         format(run.startedAt, 'yyyy-MM-dd') === dateStr
       );
 
       const totalRuns = runsForDate.length;
-      const successful = runsForDate.filter(run => run.status === 'COMPLETED').length;
-      const failed = runsForDate.filter(run => run.status === 'FAILED').length;
+      const successful = runsForDate.filter((run: any) => run.status === 'COMPLETED').length;
+      const failed = runsForDate.filter((run: any) => run.status === 'FAILED').length;
 
       return {
         date: dateStr,
