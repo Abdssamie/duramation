@@ -38,7 +38,6 @@ import { IconBrandGoogle, IconBrandSlack } from '@tabler/icons-react';
 import Image from 'next/image';
 
 import type { ImageProps } from 'next/image';
-import { ArrowLeft } from 'lucide-react';
 
 export type Icon = React.ComponentType<IconProps>;
 
@@ -48,14 +47,13 @@ interface HubspotIconProps
 }
 
 export const HubspotIcon: React.FC<HubspotIconProps> = ({
-  size = 24,
   ...props
 }) => (
   <Image
     src='/assets/hubspot.png'
     alt='Hubspot'
-    width={size}
-    height={size}
+    width={24}
+    height={24}
     {...props}
   />
 );

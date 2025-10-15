@@ -87,7 +87,7 @@ function InnerDialog({ children }: { children: React.ReactNode }) {
     return () => {
       document.removeEventListener("keydown", handleEscapeKeyDown);
     };
-  }, [context.innerOpen, context.setInnerOpen]);
+  }, [context, context.innerOpen, context.setInnerOpen]);
   return (
     <DialogPrimitive.Root
       open={context.innerOpen}

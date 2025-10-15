@@ -23,6 +23,9 @@ export class MicrosoftService {
     const bufferTime = 5 * 60 * 1000; // 5 minutes
 
     if (expiresIn && now >= expiresIn - bufferTime) {
+       if (!this.secret.refreshToken) {
+        throw new Error("Cannot refresh Microsoft token: Refresh token is missing or null.");
+      }
       // Token expired or about to expire, refresh it
       const refreshed = await MicrosoftAuthHandler.refreshToken(this.secret.refreshToken);
       

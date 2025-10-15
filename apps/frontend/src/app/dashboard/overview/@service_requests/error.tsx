@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useTransition } from 'react';
+import { useTransition } from 'react';
 
 interface ServiceRequestsErrorProps {
   error: Error;

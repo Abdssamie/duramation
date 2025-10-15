@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { workflowsApi } from '@/services/api/api-client';
 import type { WorkflowRunData } from '@duramation/shared';
@@ -61,8 +61,8 @@ export default function HistoryTab() {
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const fetchHistory = async (page = 1, status?: string) => {
-    try {
+const fetchHistory = useCallback(async (page = 1, status?: string) => {
+  try {
       setLoading(true);
       const token = await getToken();
       if (!token) throw new Error('No authentication token');
@@ -87,11 +87,12 @@ export default function HistoryTab() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getToken]);
+
 
   useEffect(() => {
     fetchHistory(1, statusFilter);
-  }, [statusFilter]);
+  }, [fetchHistory, statusFilter]);
 
   const handlePageChange = (page: number) => {
     fetchHistory(page, statusFilter);

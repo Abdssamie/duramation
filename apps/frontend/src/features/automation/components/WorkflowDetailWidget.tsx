@@ -36,7 +36,7 @@ export default function WorkflowDetailWidget({
   const [input, setInput] = useState<Record<string, any>>({});
   const [isRunning, setIsRunning] = useState(false);
 
-  const [timezone, setTimezone] = useState<string>('UTC');
+  const [, setTimezone] = useState<string>('UTC');
 
   useEffect(() => {
     if (workflow) {

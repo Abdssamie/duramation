@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:frontend": "turbo run build --filter=frontend...",
+    "build:backend": "turbo run build --filter=inngest-app...",
     "build:packages": "turbo run build --filter='./packages/*'",
     "dev": "turbo run dev",
     "lint": "turbo run lint",

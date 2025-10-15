@@ -1,6 +1,6 @@
 import { auth } from '@clerk/nextjs/server';
 import Redis from 'ioredis'; // Import ioredis directly
-import { getUserChannel, sendUpdateToUser } from '@/lib/redis'; // We only need the channel helper
+import { getUserChannel } from '@/lib/redis'; // We only need the channel helper
 
 export const dynamic = 'force-dynamic';
 

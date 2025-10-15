@@ -23,7 +23,7 @@ export const PostToSlackFields: WorkflowInputFieldDefinition[] = [
     key: 'message',
     label: 'Message',
     description: 'The message to post to Slack',
-    type: 'textarea',
+    type: 'text',
     validation: {
       required: true,
       min: 1,

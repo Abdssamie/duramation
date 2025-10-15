@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useTransition } from 'react';
+import { useTransition } from 'react';
 
 interface StatsErrorProps {
   error: Error;
