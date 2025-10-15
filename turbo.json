@@ -3,42 +3,108 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [
         ".next/**",
         "!.next/cache/**",
         "dist/**"
+      ],
+      "env": [
+        "NEXT_BACKEND_API_URL",
+        "INNGEST_SIGNING_KEY",
+        "GOOGLE_API_KEY",
+        "GEMINI_API_KEY",
+        "CLERK_SECRET_KEY",
+        "GOOGLE_OAUTH_CLIENT_ID",
+        "GOOGLE_OAUTH_CLIENT_SECRET",
+        "GOOGLE_OAUTH_REDIRECT_URL",
+        "CLERK_WEBHOOK_SIGNING_SECRET",
+        "ENCRYPTION_SECRET_KEY",
+        "PRISMA_FIELD_ENCRYPTION_KEY",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "CLOUDFLARE_ACCOUNT_ID",
+        "CLOUDFLARE_ENDPOINT_URL",
+        "CLOUDFLARE_ACCESS_KEY_ID",
+        "CLOUDFLARE_SECRET_ACCESS_KEY",
+        "CLOUDFLARE_BUCKET_NAME",
+        "FRONTEND_WEBHOOK_URL",
+        "FRONTEND_URL",
+        "INNGEST_WEBHOOK_SECRET",
+        "INTERNAL_API_SECRET",
+        "SLACK_CLIENT_ID",
+        "SLACK_CLIENT_SECRET",
+        "SLACK_REDIRECT_URL",
+        "MICROSOFT_OAUTH_CLIENT_ID",
+        "MICROSOFT_OAUTH_CLIENT_SECRET",
+        "MICROSOFT_OAUTH_REDIRECT_URL",
+        "INNGEST_EVENT_KEY",
+        "POSTGRES_URL",
+        "PRISMA_DATABASE_URL",
+        "DATABASE_URL",
+        "POSTGRES_PRISMA_URL",
+        "POSTGRES_URL_NON_POOLING",
+        "KV_URL",
+        "KV_REST_API_URL",
+        "KV_REST_API_TOKEN",
+        "REDIS_URL",
+        "INNGEST_APP_URL",
+        "NODE_ENV",
+        "NEXT_RUNTIME"
       ]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "check-types": {
-      "dependsOn": [
-        "^check-types"
-      ]
+      "dependsOn": ["^check-types"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
       "env": [
-  "NEXT_BACKEND_API_URL",
-  "UPSTASH_REDIS_REST_URL",
-  "UPSTASH_REDIS_REST_TOKEN",
-  "INNGEST_WEBHOOK_SECRET",
-  "FRONTEND_WEBHOOK_URL",
-  "NODE_ENV",
-  "INTERNAL_API_SECRET",
-  "REDIS_URL",
-  "NEXT_RUNTIME"
+        "NEXT_BACKEND_API_URL",
+        "INNGEST_SIGNING_KEY",
+        "GOOGLE_API_KEY",
+        "GEMINI_API_KEY",
+        "CLERK_SECRET_KEY",
+        "GOOGLE_OAUTH_CLIENT_ID",
+        "GOOGLE_OAUTH_CLIENT_SECRET",
+        "GOOGLE_OAUTH_REDIRECT_URL",
+        "CLERK_WEBHOOK_SIGNING_SECRET",
+        "ENCRYPTION_SECRET_KEY",
+        "PRISMA_FIELD_ENCRYPTION_KEY",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "CLOUDFLARE_ACCOUNT_ID",
+        "CLOUDFLARE_ENDPOINT_URL",
+        "CLOUDFLARE_ACCESS_KEY_ID",
+        "CLOUDFLARE_SECRET_ACCESS_KEY",
+        "CLOUDFLARE_BUCKET_NAME",
+        "FRONTEND_WEBHOOK_URL",
+        "FRONTEND_URL",
+        "INNGEST_WEBHOOK_SECRET",
+        "INTERNAL_API_SECRET",
+        "SLACK_CLIENT_ID",
+        "SLACK_CLIENT_SECRET",
+        "SLACK_REDIRECT_URL",
+        "MICROSOFT_OAUTH_CLIENT_ID",
+        "MICROSOFT_OAUTH_CLIENT_SECRET",
+        "MICROSOFT_OAUTH_REDIRECT_URL",
+        "INNGEST_EVENT_KEY",
+        "POSTGRES_URL",
+        "PRISMA_DATABASE_URL",
+        "DATABASE_URL",
+        "POSTGRES_PRISMA_URL",
+        "POSTGRES_URL_NON_POOLING",
+        "KV_URL",
+        "KV_REST_API_URL",
+        "KV_REST_API_TOKEN",
+        "REDIS_URL",
+        "INNGEST_APP_URL",
+        "NODE_ENV",
+        "NEXT_RUNTIME"
       ]
     }
   }
