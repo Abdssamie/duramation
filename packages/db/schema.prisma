@@ -5,8 +5,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL") // uses connection pooling
-  directUrl = env("DATABASE_URL") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_PRISMA_URL") // uses a direct connection
 }
 
 // --- Models ---
@@ -288,11 +288,11 @@ model ServiceRequest {
   status          RequestStatus   @default(SUBMITTED)
 
   // Meeting scheduling
-  meetingScheduled Boolean   @default(false)
-  meetingUrl       String?
-  meetingDate      DateTime?
+  meetingScheduled     Boolean   @default(false)
+  meetingUrl           String?
+  meetingDate          DateTime?
   preferredMeetingDate String? // New field for preferred meeting date
-  availabilityNotes String?    // New field for availability notes
+  availabilityNotes    String? // New field for availability notes
 
   // Proposal tracking
   proposalSent     Boolean  @default(false)
