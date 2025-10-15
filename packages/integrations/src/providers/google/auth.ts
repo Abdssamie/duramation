@@ -1,24 +1,30 @@
 import { google } from 'googleapis';
 import { GoogleOAuthSecret } from '@duramation/shared';
 
-const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
-const GOOGLE_OAUTH_CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
-const GOOGLE_OAUTH_REDIRECT_URL = process.env.GOOGLE_OAUTH_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/credentials/oauth/callback?provider=GOOGLE`;
+function getGoogleCredentials() {
+  const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const GOOGLE_OAUTH_CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+  const GOOGLE_OAUTH_REDIRECT_URL = process.env.GOOGLE_OAUTH_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/credentials/oauth/callback?provider=GOOGLE`;
 
-function validateGoogleCredentials() {
   if (!GOOGLE_OAUTH_CLIENT_ID || !GOOGLE_OAUTH_CLIENT_SECRET) {
     throw new Error("Google OAuth client credentials not found");
   }
+
+  return {
+    clientId: GOOGLE_OAUTH_CLIENT_ID,
+    clientSecret: GOOGLE_OAUTH_CLIENT_SECRET,
+    redirectUrl: GOOGLE_OAUTH_REDIRECT_URL,
+  };
 }
 
 export class GoogleAuthHandler {
   static generateAuthUrl(scopes: string[], state: string): string {
-    validateGoogleCredentials();
+    const { clientId, clientSecret, redirectUrl } = getGoogleCredentials();
 
     const oauth2Client = new google.auth.OAuth2(
-      GOOGLE_OAUTH_CLIENT_ID,
-      GOOGLE_OAUTH_CLIENT_SECRET,
-      GOOGLE_OAUTH_REDIRECT_URL
+      clientId,
+      clientSecret,
+      redirectUrl
     );
 
     return oauth2Client.generateAuthUrl({
@@ -30,12 +36,12 @@ export class GoogleAuthHandler {
   }
 
   static async handleCallback(code: string): Promise<GoogleOAuthSecret> {
-    validateGoogleCredentials();
+    const { clientId, clientSecret, redirectUrl } = getGoogleCredentials();
 
     const oauth2Client = new google.auth.OAuth2(
-      GOOGLE_OAUTH_CLIENT_ID,
-      GOOGLE_OAUTH_CLIENT_SECRET,
-      GOOGLE_OAUTH_REDIRECT_URL
+      clientId,
+      clientSecret,
+      redirectUrl
     );
 
     const { tokens } = await oauth2Client.getToken(code);
@@ -53,12 +59,12 @@ export class GoogleAuthHandler {
   }
 
   static async refreshToken(refreshToken: string): Promise<{ accessToken: string; expiresIn: number }> {
-    validateGoogleCredentials();
+    const { clientId, clientSecret, redirectUrl } = getGoogleCredentials();
 
     const oauth2Client = new google.auth.OAuth2(
-      GOOGLE_OAUTH_CLIENT_ID,
-      GOOGLE_OAUTH_CLIENT_SECRET,
-      GOOGLE_OAUTH_REDIRECT_URL
+      clientId,
+      clientSecret,
+      redirectUrl
     );
 
     oauth2Client.setCredentials({ refresh_token: refreshToken });

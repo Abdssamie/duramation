@@ -1,9 +1,15 @@
 import { prisma } from '@duramation/db';
+import { WorkflowCredential as DbWorkflowCredential, Credential } from '@duramation/db/types';
 
 // Types for credential management
 export interface CredentialSecret {
   [key: string]: any;
 }
+
+type DbWorkflowCredentialExtended = DbWorkflowCredential & {
+  credential: Credential
+};  
+
 
 export interface OAuthCredential {
   accessToken: string;
@@ -45,7 +51,7 @@ export class CredentialStore {
       }
     });
 
-    return workflow?.workflowCredentials.map(wc => ({
+    return workflow?.workflowCredentials.map((wc: DbWorkflowCredentialExtended) => ({
       id: wc.credential.id,
       name: wc.credential.name,
       type: wc.credential.type,

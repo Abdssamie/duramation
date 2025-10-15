@@ -1,37 +1,43 @@
 import { SlackOAuthSecret } from '@duramation/shared';
 
-const SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID;
-const SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET;
-const SLACK_REDIRECT_URL = process.env.SLACK_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/credentials/oauth/callback?provider=SLACK`;
+function getSlackCredentials() {
+  const SLACK_CLIENT_ID = process.env.SLACK_CLIENT_ID;
+  const SLACK_CLIENT_SECRET = process.env.SLACK_CLIENT_SECRET;
+  const SLACK_REDIRECT_URL = process.env.SLACK_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/credentials/oauth/callback?provider=SLACK`;
 
-function validateSlackCredentials() {
   if (!SLACK_CLIENT_ID || !SLACK_CLIENT_SECRET) {
     throw new Error("Slack OAuth client credentials not found");
   }
+
+  return {
+    clientId: SLACK_CLIENT_ID,
+    clientSecret: SLACK_CLIENT_SECRET,
+    redirectUrl: SLACK_REDIRECT_URL,
+  };
 }
 
 export class SlackAuthHandler {
   static generateAuthUrl(scopes: string[], state: string): string {
-    validateSlackCredentials();
+    const { clientId, redirectUrl } = getSlackCredentials();
     
     const params = new URLSearchParams({
-      client_id: SLACK_CLIENT_ID!,
+      client_id: clientId,
       scope: scopes.join(','),
       state: state,
-      redirect_uri: SLACK_REDIRECT_URL || '',
+      redirect_uri: redirectUrl,
     });
 
     return `https://slack.com/oauth/v2/authorize?${params.toString()}`;
   }
 
   static async handleCallback(code: string): Promise<SlackOAuthSecret> {
-    validateSlackCredentials();
+    const { clientId, clientSecret, redirectUrl } = getSlackCredentials();
     
     const params = new URLSearchParams({
-      client_id: SLACK_CLIENT_ID!,
-      client_secret: SLACK_CLIENT_SECRET!,
+      client_id: clientId,
+      client_secret: clientSecret,
       code: code,
-      redirect_uri: SLACK_REDIRECT_URL || '',
+      redirect_uri: redirectUrl,
     });
 
     const response = await fetch('https://slack.com/api/oauth.v2.access', {

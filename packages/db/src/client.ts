@@ -2,17 +2,31 @@ import { Prisma, PrismaClient } from "./generated/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { fieldEncryptionExtension } from 'prisma-field-encryption';
 
-// Instantiate the extended Prisma client to infer its type
-const basePrisma = new PrismaClient().$extends(withAccelerate());
+// Create a mock client for build time when DATABASE_URL is not available
+function createPrismaClient() {
+  if (!process.env.DATABASE_URL) {
+    console.warn('[Prisma] DATABASE_URL not found, using mock client for build time');
+    // Return a proxy that throws helpful errors if used at build time
+    return new Proxy({} as any, {
+      get: () => {
+        throw new Error('Prisma client cannot be used at build time. Ensure DATABASE_URL is available at runtime.');
+      }
+    });
+  }
 
-// Only add field encryption if the key is available
-const extendedPrisma = process.env.PRISMA_FIELD_ENCRYPTION_KEY
-  ? basePrisma.$extends(
-    fieldEncryptionExtension(
-      { dmmf: Prisma.dmmf }
+  const basePrisma = new PrismaClient().$extends(withAccelerate());
+
+  // Only add field encryption if the key is available
+  return process.env.PRISMA_FIELD_ENCRYPTION_KEY
+    ? basePrisma.$extends(
+      fieldEncryptionExtension(
+        { dmmf: Prisma.dmmf }
+      )
     )
-  )
-  : basePrisma;
+    : basePrisma;
+}
+
+const extendedPrisma = createPrismaClient();
 
 export type ExtendedPrismaClient = typeof extendedPrisma;
 

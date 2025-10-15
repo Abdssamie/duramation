@@ -1,19 +1,25 @@
 import { MicrosoftOAuthSecret } from '@duramation/shared';
 
-const MICROSOFT_OAUTH_CLIENT_ID = process.env.MICROSOFT_OAUTH_CLIENT_ID;
-const MICROSOFT_OAUTH_CLIENT_SECRET = process.env.MICROSOFT_OAUTH_CLIENT_SECRET;
-// Microsoft doesn't allow query strings in redirect URLs, so use path-based routing
-const MICROSOFT_OAUTH_REDIRECT_URL = process.env.MICROSOFT_OAUTH_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/credentials/oauth/microsoft/callback`;
+function getMicrosoftCredentials() {
+  const MICROSOFT_OAUTH_CLIENT_ID = process.env.MICROSOFT_OAUTH_CLIENT_ID;
+  const MICROSOFT_OAUTH_CLIENT_SECRET = process.env.MICROSOFT_OAUTH_CLIENT_SECRET;
+  // Microsoft doesn't allow query strings in redirect URLs, so use path-based routing
+  const MICROSOFT_OAUTH_REDIRECT_URL = process.env.MICROSOFT_OAUTH_REDIRECT_URL || `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/credentials/oauth/microsoft/callback`;
 
-function validateMicrosoftCredentials() {
   if (!MICROSOFT_OAUTH_CLIENT_ID || !MICROSOFT_OAUTH_CLIENT_SECRET) {
     throw new Error("Microsoft OAuth client credentials not found");
   }
+
+  return {
+    clientId: MICROSOFT_OAUTH_CLIENT_ID,
+    clientSecret: MICROSOFT_OAUTH_CLIENT_SECRET,
+    redirectUrl: MICROSOFT_OAUTH_REDIRECT_URL,
+  };
 }
 
 export class MicrosoftAuthHandler {
   static generateAuthUrl(scopes: string[], state: string): string {
-    validateMicrosoftCredentials();
+    const { clientId, redirectUrl } = getMicrosoftCredentials();
 
     // Ensure offline_access is always included to get refresh token
     const scopesWithOfflineAccess = scopes.includes('offline_access') 
@@ -21,9 +27,9 @@ export class MicrosoftAuthHandler {
       : [...scopes, 'offline_access'];
 
     const params = new URLSearchParams({
-      client_id: MICROSOFT_OAUTH_CLIENT_ID!,
+      client_id: clientId,
       response_type: 'code',
-      redirect_uri: MICROSOFT_OAUTH_REDIRECT_URL!,
+      redirect_uri: redirectUrl,
       response_mode: 'query',
       scope: scopesWithOfflineAccess.join(' '),
       state: state,
@@ -34,13 +40,13 @@ export class MicrosoftAuthHandler {
   }
 
   static async handleCallback(code: string): Promise<MicrosoftOAuthSecret> {
-    validateMicrosoftCredentials();
+    const { clientId, clientSecret, redirectUrl } = getMicrosoftCredentials();
 
     const params = new URLSearchParams({
-      client_id: MICROSOFT_OAUTH_CLIENT_ID!,
-      client_secret: MICROSOFT_OAUTH_CLIENT_SECRET!,
+      client_id: clientId,
+      client_secret: clientSecret,
       code: code,
-      redirect_uri: MICROSOFT_OAUTH_REDIRECT_URL!,
+      redirect_uri: redirectUrl,
       grant_type: 'authorization_code',
     });
 
@@ -78,11 +84,11 @@ export class MicrosoftAuthHandler {
   }
 
   static async refreshToken(refreshToken: string): Promise<{ accessToken: string; expiresIn: number }> {
-    validateMicrosoftCredentials();
+    const { clientId, clientSecret } = getMicrosoftCredentials();
 
     const params = new URLSearchParams({
-      client_id: MICROSOFT_OAUTH_CLIENT_ID!,
-      client_secret: MICROSOFT_OAUTH_CLIENT_SECRET!,
+      client_id: clientId,
+      client_secret: clientSecret,
       refresh_token: refreshToken,
       grant_type: 'refresh_token',
     });
