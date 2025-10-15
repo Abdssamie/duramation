@@ -13,6 +13,7 @@ import { workflowUpdateRequestSchema } from "@duramation/shared/validation";
 import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
 import { ClerkUserId } from "@/types/user";
 import { WorkflowWithCredentials } from "@/types/workflowWithCredentials";
+import { CacheInvalidationService } from "@/services/cache-invalidation";
 
 type ExtendedWorkflowUpdateRequest = WorkflowUpdateRequest & {
   available?: boolean;
@@ -220,6 +221,16 @@ export async function PUT(
           },
         },
       });
+
+    // Invalidate cache after workflow update
+    try {
+      const cacheService = new CacheInvalidationService();
+      await cacheService.invalidateAutomationMetricsCache(internalUserId, workflowId);
+      await cacheService.invalidateDashboardMetricsCache(internalUserId);
+    } catch (cacheError) {
+      console.error("Failed to invalidate cache after workflow update:", cacheError);
+      // Don't fail the request if cache invalidation fails
+    }
 
     const response: WorkflowUpdateResponse = {
       success: true,

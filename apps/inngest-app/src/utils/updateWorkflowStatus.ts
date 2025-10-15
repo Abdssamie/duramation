@@ -120,8 +120,9 @@ export async function updateStatusForWorkflow(
       await cacheService.invalidateWorkflowRunCache(
         userId,
         workflowId,
-        "updated",
+        runId
       );
+      await cacheService.invalidateDashboardMetricsCache(userId);
       logger.info("Cache invalidated successfully");
     } catch (error) {
       logger.error("Failed to invalidate cache:", error);

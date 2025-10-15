@@ -19,8 +19,10 @@ export class CacheInvalidationService {
    * Invalidates dashboard metrics cache for a specific user
    */
   async invalidateDashboardMetricsCache(userId: string): Promise<void> {
+    console.log(`[CACHE INVALIDATION] Starting dashboard metrics cache invalidation for user: ${userId}`);
+    
     const cacheKeys = [
-      `dashboard:metrics:${userId}`,
+      `dashboard_metrics:${userId}`,
       `dashboard:chart-data:${userId}:*`,
       `workflow:runs:${userId}:*`,
       `automation:metrics:${userId}:*`,
@@ -34,7 +36,7 @@ export class CacheInvalidationService {
       timestamp: new Date().toISOString(),
     });
 
-    console.log(`Invalidated dashboard metrics cache for user: ${userId}`);
+    console.log(`[CACHE INVALIDATION] Completed dashboard metrics cache invalidation for user: ${userId}`);
   }
 
   /**
@@ -144,16 +146,22 @@ export class CacheInvalidationService {
           const keys = await this.scanKeys(pattern);
           if (keys.length > 0) {
             await this.redis.del(...keys);
-            console.log(`Deleted ${keys.length} cache keys matching pattern: ${pattern}`);
+            console.log(`[CACHE INVALIDATION] Deleted ${keys.length} cache keys matching pattern: ${pattern}`);
+          } else {
+            console.log(`[CACHE INVALIDATION] No keys found matching pattern: ${pattern}`);
           }
         } else {
           // Direct key deletion
-          await this.redis.del(pattern);
-          console.log(`Deleted cache key: ${pattern}`);
+          const result = await this.redis.del(pattern);
+          if (result > 0) {
+            console.log(`[CACHE INVALIDATION] Deleted cache key: ${pattern}`);
+          } else {
+            console.log(`[CACHE INVALIDATION] Cache key not found: ${pattern}`);
+          }
         }
       }
     } catch (error) {
-      console.error('Failed to invalidate cache keys:', error);
+      console.error('[CACHE INVALIDATION ERROR] Failed to invalidate cache keys:', error);
       throw error;
     }
   }

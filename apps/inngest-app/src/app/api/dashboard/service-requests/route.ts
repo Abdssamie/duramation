@@ -17,7 +17,11 @@ export async function GET() {
 
     const { userId } = authResult;
 
+    console.log(`[DATABASE QUERY] Fetching service requests for user ${userId}`);
+    const startTime = Date.now();
     const serviceRequests = await ServiceRequestService.getServiceRequests(userId);
+    const queryTime = Date.now() - startTime;
+    console.log(`[DATABASE QUERY] Found ${serviceRequests.length} service requests in ${queryTime}ms`);
     
     const response: ServiceRequestListResponse = {
       success: true,

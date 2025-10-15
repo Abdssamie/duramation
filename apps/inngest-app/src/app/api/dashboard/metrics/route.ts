@@ -38,25 +38,32 @@ export async function GET() {
       // Try to get cached data first
       const cachedData: SimplifiedMetrics | null = await redis.get(cacheKey);
       if (cachedData) {
+        console.log(`[CACHE HIT] Dashboard metrics for user ${userId} - served from cache`);
         const response: MetricsResponse = {
           success: true,
           data: cachedData,
         };
         return NextResponse.json(response);
       }
+      console.log(`[CACHE MISS] Dashboard metrics for user ${userId} - cache key not found`);
     } catch (cacheError) {
-      console.warn('Cache read error:', cacheError);
+      console.warn('[CACHE ERROR] Cache read error:', cacheError);
       // Continue without cache if Redis is unavailable
     }
 
     // Fetch fresh data from database
+    console.log(`[DATABASE QUERY] Fetching dashboard metrics from database for user ${userId}`);
+    const startTime = Date.now();
     const metrics = await fetchMetricsFromDatabase(userId);
+    const queryTime = Date.now() - startTime;
+    console.log(`[DATABASE QUERY] Completed in ${queryTime}ms`);
 
     try {
       // Cache the result for 5 minutes
       await redis.setex(cacheKey, CACHE_TTL, JSON.stringify(metrics));
+      console.log(`[CACHE WRITE] Cached dashboard metrics for user ${userId} (TTL: ${CACHE_TTL}s)`);
     } catch (cacheError) {
-      console.warn('Cache write error:', cacheError);
+      console.warn('[CACHE ERROR] Cache write error:', cacheError);
       // Continue without caching if Redis is unavailable
     }
 

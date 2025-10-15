@@ -38,6 +38,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Get workflow runs for the user in the date range (optionally filtered by workflow)
+    console.log(`[DATABASE QUERY] Fetching chart data for user ${userId}, timeRange: ${timeRange}, workflowId: ${workflowId || 'all'}`);
+    const startTime = Date.now();
     const workflowRuns = await prisma.workflowRun.findMany({
       where: whereClause,
       select: {
@@ -49,6 +51,8 @@ export async function GET(request: NextRequest) {
         startedAt: 'asc',
       },
     });
+    const queryTime = Date.now() - startTime;
+    console.log(`[DATABASE QUERY] Found ${workflowRuns.length} workflow runs in ${queryTime}ms`);
 
     // Create date intervals
     const dateIntervals = eachDayOfInterval({ start: startDate, end: endDate });
@@ -88,6 +92,7 @@ export async function GET(request: NextRequest) {
     const trendPercentage = firstHalfAvg > 0 ? ((secondHalfAvg - firstHalfAvg) / firstHalfAvg) * 100 : 0;
 
     // Get available workflows for the user
+    const workflowsStartTime = Date.now();
     const workflows = await prisma.workflow.findMany({
       where: { userId },
       select: {
@@ -96,6 +101,7 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { name: 'asc' },
     });
+    console.log(`[DATABASE QUERY] Found ${workflows.length} workflows in ${Date.now() - workflowsStartTime}ms`);
 
     // Transform data to match ChartDataPoint interface
     const transformedData = chartData.map(day => ({

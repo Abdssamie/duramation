@@ -6,6 +6,7 @@ import { Prisma } from "@duramation/db";
 import { InputJsonValue } from "@prisma/client/runtime/library";
 import type { TemplateInstallationRequest, TemplateInstallationResponse } from "@duramation/shared";
 import { z } from "zod";
+import { CacheInvalidationService } from "@/services/cache-invalidation";
 
 
 export async function POST(
@@ -104,6 +105,16 @@ export async function POST(
                     },
                 });
 
+                // Invalidate cache after workflow update
+                try {
+                    const cacheService = new CacheInvalidationService();
+                    await cacheService.invalidateDashboardMetricsCache(userId);
+                    await cacheService.invalidateAutomationMetricsCache(userId, updatedWorkflow.id);
+                } catch (cacheError) {
+                    console.error("Failed to invalidate cache after workflow update:", cacheError);
+                    // Don't fail the request if cache invalidation fails
+                }
+
                 const response: TemplateInstallationResponse = {
                     success: true,
                     data: {
@@ -157,6 +168,16 @@ export async function POST(
                 }
             },
         });
+
+        // Invalidate cache after workflow installation
+        try {
+            const cacheService = new CacheInvalidationService();
+            await cacheService.invalidateDashboardMetricsCache(userId);
+            await cacheService.invalidateAutomationMetricsCache(userId);
+        } catch (cacheError) {
+            console.error("Failed to invalidate cache after workflow installation:", cacheError);
+            // Don't fail the request if cache invalidation fails
+        }
 
         const response: TemplateInstallationResponse = {
             success: true,
