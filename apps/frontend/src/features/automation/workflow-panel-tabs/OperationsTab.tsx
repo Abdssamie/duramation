@@ -73,9 +73,28 @@ export default function OperationsTab({
       onUpdateAction(workflow.id, { status: 'RUNNING', input: parsedInput });
       setIsRunningAction(true);
       toast.success('Workflow started');
-    } catch (error) {
+    } catch (error: any) {
       console.debug(error);
-      toast.error('Failed to run workflow');
+      const errorMessage = error?.response?.data?.message || error?.message || 'Failed to run workflow';
+      
+      // Check if error might be related to invalid input
+      const isInputError = errorMessage.toLowerCase().includes('input') || 
+                          errorMessage.toLowerCase().includes('validation') ||
+                          errorMessage.toLowerCase().includes('required') ||
+                          errorMessage.toLowerCase().includes('invalid');
+      
+      if (isInputError) {
+        toast.error(
+          <div className="space-y-1">
+            <div className="font-semibold">Failed to start workflow</div>
+            <div className="text-sm">{errorMessage}</div>
+            <div className="text-xs text-muted-foreground">Check the Input tab for validation errors</div>
+          </div>,
+          { duration: 5000 }
+        );
+      } else {
+        toast.error(errorMessage);
+      }
     } finally {
       setIsRequestPending(false);
     }

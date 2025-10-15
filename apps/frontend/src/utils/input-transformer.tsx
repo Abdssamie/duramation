@@ -18,9 +18,10 @@ type Props = {
   fields: WorkflowInputFieldDefinition[];
   values: Record<string, any>;
   setValues: (val: Record<string, any>) => void;
+  validationErrors?: Record<string, string>;
 };
 
-export function WorkflowInputForm({ fields, values, setValues }: Props) {
+export function WorkflowInputForm({ fields, values, setValues, validationErrors = {} }: Props) {
   const handleChange = (key: string, val: any) => {
     setValues({ ...values, [key]: val });
   };
@@ -44,12 +45,37 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
           <div key={field.key} className='space-y-1'>
             <Label htmlFor={field.key} className='text-xs'>
               {field.label}
+              {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
             </Label>
             <Input
               type={field.type === 'number' ? 'number' : field.type}
               placeholder={field.description}
+              className={validationErrors[field.key] ? 'border-destructive' : ''}
               {...commonProps}
             />
+            {validationErrors[field.key] && (
+              <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+            )}
+          </div>
+        );
+
+      case 'textarea':
+        return (
+          <div key={field.key} className='space-y-1'>
+            <Label htmlFor={field.key} className='text-xs'>
+              {field.label}
+              {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
+            </Label>
+            <Textarea
+              placeholder={field.description || `Enter ${field.label.toLowerCase()}`}
+              className={`resize-y min-h-[100px] ${validationErrors[field.key] ? 'border-destructive' : ''}`}
+              rows={4}
+              value={values[field.key] ?? field.defaultValue ?? ''}
+              onChange={(e) => handleChange(field.key, e.target.value)}
+            />
+            {validationErrors[field.key] && (
+              <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+            )}
           </div>
         );
 
@@ -72,14 +98,18 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
           <div key={field.key} className='space-y-1'>
             <Label htmlFor={field.key} className='text-xs'>
               {field.label}
+              {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
             </Label>
             <Textarea
               placeholder={field.description || '{"key":"value"}'}
-              className='resize-none font-mono text-xs'
+              className={`resize-none font-mono text-xs ${validationErrors[field.key] ? 'border-destructive' : ''}`}
               rows={6}
               value={values[field.key] ?? ''}
               onChange={(e) => handleChange(field.key, e.target.value)}
             />
+            {validationErrors[field.key] && (
+              <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+            )}
           </div>
         );
 
@@ -88,12 +118,13 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
           <div key={field.key} className='space-y-1'>
             <Label htmlFor={field.key} className='text-xs'>
               {field.label}
+              {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
             </Label>
             <Select
               onValueChange={(val) => handleChange(field.key, val)}
               value={values[field.key] ?? ''}
             >
-              <SelectTrigger className='w-full'>
+              <SelectTrigger className={`w-full ${validationErrors[field.key] ? 'border-destructive' : ''}`}>
                 <SelectValue
                   placeholder={field.description || 'Select option'}
                 />
@@ -106,6 +137,9 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
                 ))}
               </SelectContent>
             </Select>
+            {validationErrors[field.key] && (
+              <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+            )}
           </div>
         );
 
@@ -117,7 +151,10 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
         ) {
           return (
             <div key={field.key} className='space-y-2'>
-              <Label className='text-xs'>{field.label}</Label>
+              <Label className='text-xs'>
+                {field.label}
+                {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
+              </Label>
               <div className='flex flex-wrap gap-1'>
                 {field.validation?.options?.map((opt: string) => {
                   const selected = values[field.key]?.includes(opt);
@@ -139,13 +176,19 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
                   );
                 })}
               </div>
+              {validationErrors[field.key] && (
+                <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+              )}
             </div>
           );
         }
         // Otherwise, fall back to TagInput for free-form entry
         return (
           <div key={field.key} className='space-y-2'>
-            <Label className='text-xs'>{field.label}</Label>
+            <Label className='text-xs'>
+              {field.label}
+              {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
+            </Label>
             <TagInput
               value={values[field.key] ?? []}
               onChange={(newValues) => handleChange(field.key, newValues)}
@@ -153,13 +196,19 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
                 field.description || `Enter values for ${field.label}`
               }
             />
+            {validationErrors[field.key] && (
+              <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+            )}
           </div>
         );
 
       case 'list':
         return (
           <div key={field.key} className='space-y-2'>
-            <Label className='text-xs'>{field.label}</Label>
+            <Label className='text-xs'>
+              {field.label}
+              {field.validation?.required && <span className='text-destructive ml-1'>*</span>}
+            </Label>
             <TagInput
               value={values[field.key] ?? []}
               onChange={(newValues) => handleChange(field.key, newValues)}
@@ -168,6 +217,9 @@ export function WorkflowInputForm({ fields, values, setValues }: Props) {
               }
               validationPattern={field.validation?.pattern}
             />
+            {validationErrors[field.key] && (
+              <p className='text-destructive text-xs'>{validationErrors[field.key]}</p>
+            )}
           </div>
         );
 

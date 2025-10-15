@@ -10,7 +10,7 @@ export interface WorkflowInputFieldDefinition {
   key: string;
   label: string;
   description?: string;
-  type: 'text' | 'number' | 'boolean' | 'json' | 'credential' | 'email' | 'url' | 'date' | 'time' | 'file' | 'select' | 'multiselect' | 'list';
+  type: 'text' | 'textarea' | 'number' | 'boolean' | 'json' | 'credential' | 'email' | 'url' | 'date' | 'time' | 'file' | 'select' | 'multiselect' | 'list';
   defaultValue?: any;
   validation?: {
     required?: boolean;
@@ -25,7 +25,7 @@ export const WorkflowInputFieldSchema = z.object({
   key: z.string().min(1, "Field key is required"),
   label: z.string().min(1, "Field label is required"),
   description: z.string().optional(),
-  type: z.enum(['text', 'number', 'boolean', 'json', 'credential', 'email', 'url', 'date', 'time', 'file', 'select', 'multiselect', 'list']),
+  type: z.enum(['text', 'textarea', 'number', 'boolean', 'json', 'credential', 'email', 'url', 'date', 'time', 'file', 'select', 'multiselect', 'list']),
   defaultValue: z.any().optional(),
   validation: z.object({
     required: z.boolean().optional(),

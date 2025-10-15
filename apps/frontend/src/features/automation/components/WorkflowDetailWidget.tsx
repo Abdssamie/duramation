@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X, Play, Key, Settings, Activity } from 'lucide-react';
 import { WorkflowInputFieldDefinition } from '@duramation/shared';
 import { WorkflowWithCredentials } from '@/types/workflow';
+import { toast } from 'sonner';
 
 import OperationsTab from '../workflow-panel-tabs/OperationsTab';
 import WorkflowCredentialsTab from '../workflow-panel-tabs/WorkflowCredentialsTab';
@@ -40,11 +41,27 @@ export default function WorkflowDetailWidget({
 
   useEffect(() => {
     if (workflow) {
+      const wasRunning = isRunning;
+      const newIsRunning = workflow.status === 'RUNNING';
+      
       setInput((workflow.input as Record<string, any>) || {});
       setTimezone(workflow.timezone || 'UTC');
-      setIsRunning(workflow.status === 'RUNNING');
+      setIsRunning(newIsRunning);
+      
+      // Show error toast if workflow just failed
+      if (wasRunning && workflow.status === 'FAILED') {
+        toast.error(
+          <div className="space-y-1">
+            <div className="font-semibold">Workflow execution failed</div>
+            <div className="text-xs text-muted-foreground">
+              This might be due to invalid input configuration. Check the Input tab and Logs for details.
+            </div>
+          </div>,
+          { duration: 6000 }
+        );
+      }
     }
-  }, [workflow]);
+  }, [workflow, isRunning]);
 
   if (!workflow) {
     return null;

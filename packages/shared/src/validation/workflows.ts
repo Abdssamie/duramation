@@ -15,14 +15,16 @@ import { apiResponseSchema, paginatedResponseSchema } from './api.js';
 export const workflowInputFieldSchema = z.object({
   key: nonEmptyStringSchema,
   label: nonEmptyStringSchema,
-  type: z.enum(['string', 'number', 'boolean', 'date', 'select', 'multiselect', 'file']),
+  type: z.enum(['text', 'textarea', 'number', 'boolean', 'json', 'credential', 'email', 'url', 'date', 'time', 'file', 'select', 'multiselect', 'list']),
   required: z.boolean().default(false),
   defaultValue: z.any().optional(),
   options: z.array(z.string()).optional(), // For select/multiselect types
   validation: z.object({
+    required: z.boolean().optional(),
     min: z.number().optional(),
     max: z.number().optional(),
     pattern: z.string().optional(),
+    options: z.array(z.string()).optional(),
     message: z.string().optional(),
   }).optional(),
 });

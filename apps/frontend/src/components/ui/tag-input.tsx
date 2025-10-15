@@ -43,11 +43,17 @@ export function TagInput({
         {value.map((tag) => {
           const isValid = validateTag(tag);
           return (
-            <Badge key={tag} variant={isValid ? 'secondary' : 'destructive'}>
-              {tag}
+            <Badge 
+              key={tag} 
+              variant={isValid ? 'secondary' : 'destructive'}
+              className='max-w-full'
+            >
+              <span className='truncate max-w-[200px]' title={tag}>
+                {tag}
+              </span>
               <button
                 type='button'
-                className='hover:bg-muted ml-1 rounded-full outline-none'
+                className='hover:bg-muted ml-1 rounded-full outline-none flex-shrink-0'
                 onClick={() => removeTag(tag)}
               >
                 <X className='h-3 w-3' />
