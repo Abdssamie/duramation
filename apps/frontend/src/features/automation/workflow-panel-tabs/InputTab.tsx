@@ -210,7 +210,7 @@ export default function InputTab({
         <Alert>
           <AlertCircle className='h-4 w-4' />
           <AlertDescription>
-            You have unsaved changes. Don't forget to save your configuration.
+            You have unsaved changes. Don&apos;t forget to save your configuration.
           </AlertDescription>
         </Alert>
       )}
