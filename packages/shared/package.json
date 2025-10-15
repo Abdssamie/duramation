@@ -24,6 +24,9 @@
     "type": "module",
     "author": "abdessamie",
     "license": "MIT",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "rimraf dist && tsc",
         "dev": "tsc --watch"

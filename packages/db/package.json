@@ -5,6 +5,10 @@
   "author": "abdessamie.elmoubarki@gmail.com",
   "license": "MIT",
   "private": true,
+  "files": [
+    "dist",
+    "schema.prisma"
+  ],
   "scripts": {
     "build": "yarn db:generate && rimraf dist && tsc && cp -R src/generated dist",
     "dev": "tsc --watch",
