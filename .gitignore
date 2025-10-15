@@ -42,3 +42,6 @@ yarn-error.log*
 *.pem
 
 .idea/vcs.xml
+
+# Prisma generated client
+packages/db/src/generated

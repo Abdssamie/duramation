@@ -40,7 +40,7 @@ export interface WorkflowCredential {
 // Credential store using Prisma
 export class CredentialStore {
   async getWorkflowCredentials(workflowId: string, userId: string): Promise<WorkflowCredential[]> {
-    const workflow = await prisma.workflow.findUnique({
+    const workflow: { workflowCredentials: DbWorkflowCredentialExtended[] | null } | null  = await prisma.workflow.findUnique({
       where: { id: workflowId, userId: userId },
       include: {
         workflowCredentials: {
@@ -51,7 +51,7 @@ export class CredentialStore {
       }
     });
 
-    return workflow?.workflowCredentials.map((wc: DbWorkflowCredentialExtended) => ({
+    return workflow?.workflowCredentials?.map((wc) => ({
       id: wc.credential.id,
       name: wc.credential.name,
       type: wc.credential.type,

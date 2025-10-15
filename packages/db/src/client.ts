@@ -4,16 +4,22 @@ import { fieldEncryptionExtension } from 'prisma-field-encryption';
 
 // Create a mock client for build time when DATABASE_URL is not available
 function createPrismaClient() {
-  const basePrisma = new PrismaClient().$extends(withAccelerate());
+  // Get encryption key from environment
+  const encryptionKey = process.env.PRISMA_FIELD_ENCRYPTION_KEY;
 
-  // Only add field encryption if the key is available
-  return process.env.PRISMA_FIELD_ENCRYPTION_KEY
-    ? basePrisma.$extends(
-      fieldEncryptionExtension(
-        { dmmf: Prisma.dmmf }
-      )
-    )
-    : basePrisma;
+  if (!encryptionKey) {
+    throw new Error('[Prisma] PRISMA_FIELD_ENCRYPTION_KEY environment variable is required for field encryption');
+  }
+
+  const basePrisma = new PrismaClient().$extends(
+    fieldEncryptionExtension({
+      encryptionKey: encryptionKey,
+      dmmf: Prisma.dmmf,
+    })
+  ).$extends(withAccelerate());
+
+  
+  return basePrisma
 }
 
 const extendedPrisma = createPrismaClient();

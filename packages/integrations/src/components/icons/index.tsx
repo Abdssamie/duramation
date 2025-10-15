@@ -18,7 +18,7 @@ export const LetterIcon = ({
   bgColor?: string;
   className?: string;
 }) => (
-  <div className={`flex ${className} items-center justify-center rounded ${bgColor} text-xs font-bold text-white`}>
+  <div className={`flex ${className} items-center justify-center rounded ${bgColor} text-lg font-bold text-black dark:text-white`}>
     {letter}
   </div>
 );
@@ -40,7 +40,7 @@ export const PROVIDER_LETTER_ICONS: Record<Provider, { letter: string; bgColor: 
   SLACK: { letter: 'S', bgColor: 'bg-purple-600' },
   MICROSOFT: { letter: 'M', bgColor: 'bg-blue-500' },
   HUBSPOT: { letter: 'H', bgColor: 'bg-orange-600' },
-  FIRECRAWL: { letter: 'F', bgColor: 'bg-red-600' },
+  FIRECRAWL: { letter: 'F', bgColor: 'bg-purple-600' },
   INSTAGRAM: { letter: 'I', bgColor: 'bg-pink-600' },
   CUSTOM: { letter: 'C', bgColor: 'bg-gray-600' },
 };
