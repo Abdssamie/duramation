@@ -22,6 +22,13 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
   Clock,
   CheckCircle,
   XCircle,
@@ -60,6 +67,8 @@ export default function HistoryTab() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
+  const [selectedRun, setSelectedRun] = useState<WorkflowRunData | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 const fetchHistory = useCallback(async (page = 1, status?: string) => {
   try {
@@ -188,29 +197,33 @@ const fetchHistory = useCallback(async (page = 1, status?: string) => {
             <TableHeader>
               <TableRow className="bg-muted/50">
                 <TableHead className="w-12"></TableHead>
-                <TableHead className="w-1/4 font-semibold">Workflow</TableHead>
+                <TableHead className="w-1/5 font-semibold">Workflow</TableHead>
                 <TableHead className="w-1/6 font-semibold">Started</TableHead>
-                <TableHead className="w-1/6 font-semibold">Duration</TableHead>
-                <TableHead className="w-1/6 font-semibold">Status</TableHead>
-                <TableHead className="w-1/4 font-semibold">Error</TableHead>
+                <TableHead className="w-[100px] font-semibold">Duration</TableHead>
+                <TableHead className="w-[110px] font-semibold">Status</TableHead>
+                <TableHead className="font-semibold">Result</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {runs.map((run) => {
                 const StatusIcon = statusIcons[run.status] || Play;
+                const hasOutput = run.output && Object.keys(run.output).length > 0;
+                const successMessage = hasOutput 
+                  ? (run.output?.message || run.output?.success || 'Workflow completed successfully')
+                  : null;
 
                 return (
                   <TableRow key={run.runId} className="hover:bg-muted/30">
                     <TableCell>
                       <StatusIcon className={`h-4 w-4 ${run.status === 'running' ? 'animate-spin' : ''}`} />
                     </TableCell>
-                    <TableCell className="font-medium">
+                    <TableCell className="font-medium truncate" title={run.workflowName}>
                       {run.workflowName}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">
+                    <TableCell className="text-muted-foreground text-sm">
                       {formatDistanceToNow(new Date(run.startedAt), { addSuffix: true })}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">
+                    <TableCell className="text-muted-foreground text-sm">
                       {formatDuration(run.startedAt, run.completedAt)}
                     </TableCell>
                     <TableCell>
@@ -221,13 +234,36 @@ const fetchHistory = useCallback(async (page = 1, status?: string) => {
                         {run.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="truncate">
+                    <TableCell 
+                      className={run.error || (run.status === 'completed' && successMessage) ? 'cursor-pointer hover:bg-muted/50' : ''}
+                      onClick={() => {
+                        if (run.error || (run.status === 'completed' && successMessage)) {
+                          setSelectedRun(run);
+                          setIsDialogOpen(true);
+                        }
+                      }}
+                    >
                       {run.error ? (
-                        <span className="text-sm text-red-600 truncate block">
-                          {run.error}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
+                          <span className="text-sm text-red-600 truncate block max-w-[300px]">
+                            {run.error}
+                          </span>
+                        </div>
+                      ) : run.status === 'completed' ? (
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
+                          <span className="text-sm text-green-700 truncate block max-w-[300px]">
+                            {successMessage || 'Workflow ran successfully'}
+                          </span>
+                        </div>
+                      ) : run.status === 'running' ? (
+                        <div className="flex items-center gap-2">
+                          <RefreshCw className="h-4 w-4 text-blue-500 animate-spin flex-shrink-0" />
+                          <span className="text-sm text-blue-600">Running...</span>
+                        </div>
                       ) : (
-                        <span className="text-muted-foreground">-</span>
+                        <span className="text-muted-foreground text-sm">-</span>
                       )}
                     </TableCell>
                   </TableRow>
@@ -268,6 +304,93 @@ const fetchHistory = useCallback(async (page = 1, status?: string) => {
           </div>
         </div>
       )}
+
+      {/* Result Details Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              {selectedRun?.error ? (
+                <>
+                  <XCircle className="h-5 w-5" />
+                  Workflow Error Details
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="h-5 w-5" />
+                  Workflow Success Details
+                </>
+              )}
+            </DialogTitle>
+            <DialogDescription>
+              {selectedRun?.workflowName} • Run ID: {selectedRun?.runId}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            {/* Execution Info */}
+            <div className="grid grid-cols-2 gap-4 rounded-lg border p-4">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Started</p>
+                <p className="text-sm font-medium">
+                  {selectedRun?.startedAt && new Date(selectedRun.startedAt).toLocaleString()}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Duration</p>
+                <p className="text-sm font-medium">
+                  {selectedRun && formatDuration(selectedRun.startedAt, selectedRun.completedAt)}
+                </p>
+              </div>
+            </div>
+
+            {/* Error or Success Message */}
+            {selectedRun?.error ? (
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold">Error Message</h4>
+                <div className="rounded-lg border p-4">
+                  <pre className="text-sm text-destructive whitespace-pre-wrap break-words font-mono">
+                    {selectedRun.error}
+                  </pre>
+                </div>
+              </div>
+            ) : selectedRun?.output ? (
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold">Success Message</h4>
+                <div className="rounded-lg border p-4">
+                  <p className="text-sm">
+                    {selectedRun.output?.message || selectedRun.output?.success || 'Workflow completed successfully'}
+                  </p>
+                </div>
+
+                {/* Output Data */}
+                {Object.keys(selectedRun.output).length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold mb-2">Output Data</h4>
+                    <div className="rounded-lg border p-4">
+                      <pre className="text-xs whitespace-pre-wrap break-words font-mono">
+                        {JSON.stringify(selectedRun.output, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : null}
+
+            {/* Input Data */}
+            {selectedRun?.input && Object.keys(selectedRun.input).length > 0 && (
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold">Input Parameters</h4>
+                <div className="rounded-lg border p-4">
+                  <pre className="text-xs whitespace-pre-wrap break-words font-mono">
+                    {JSON.stringify(selectedRun.input, null, 2)}
+                  </pre>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
