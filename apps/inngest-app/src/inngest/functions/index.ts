@@ -4,6 +4,7 @@ import { randomTextLoopWorkflow } from "./random-text-loop/function";
 import { postToSlackWorkflow } from "./post-to-slack/function";
 import { scrapeWebsiteWorkflow } from "./scrape-website/function";
 import { sendOutlookEmailWorkflow } from "./send-outlook-email/function";
+import { testRealtimeLogsWorkflow } from "./test-realtime-logs/function";
 import { workflowStatusHandler } from "./system/workflow-status-handler";
 import { automationMetricsAggregation, manualMetricsAggregation } from "./automation-metrics-aggregation";
 import { 
@@ -19,6 +20,7 @@ export const workflowFunctions = [
     postToSlackWorkflow,
     scrapeWebsiteWorkflow,
     sendOutlookEmailWorkflow,
+    testRealtimeLogsWorkflow,
 ];
 
 export const systemFunctions = [

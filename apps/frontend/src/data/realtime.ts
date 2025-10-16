@@ -27,7 +27,7 @@ export const workflowChannel = channel(
 
 export type WorkflowToken = Realtime.Token<
   typeof workflowChannel,
-  ['ai-stream', 'updates']
+  ['updates', 'ai-stream']
 >;
 
 // select only the first type for updates, where the parameter type is "updates "

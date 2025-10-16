@@ -6,6 +6,7 @@ import { WorkflowRandomTextLoopInput } from '@/inngest/functions/random-text-loo
 import { WorkflowPostToSlackInput } from '@/inngest/functions/post-to-slack/metadata';
 import { WorkflowScrapeWebsiteInput } from '@/inngest/functions/scrape-website/metadata';
 import { WorkflowSendOutlookEmailInput } from '@/inngest/functions/send-outlook-email/metadata';
+import { WorkflowTestRealtimeLogsInput } from '@/inngest/functions/test-realtime-logs/metadata';
 import { InternalUserId } from '@/types/user';
 import { credentialMiddleware } from '@/inngest/middleware/credential';
 import { workflowStatusMiddleware } from '@/inngest/middleware/workflow-status-middleware';
@@ -66,6 +67,7 @@ export type Events = {
   'workflow/slack.post': WorkflowTriggerPayload<WorkflowPostToSlackInput>;
   'workflow/scrape.website': WorkflowTriggerPayload<WorkflowScrapeWebsiteInput>;
   'workflow/microsoft.send-email': WorkflowTriggerPayload<WorkflowSendOutlookEmailInput>;
+  'workflow/test.realtime.logs': WorkflowTriggerPayload<WorkflowTestRealtimeLogsInput>;
 
   // Automation metrics events
   'automation/metrics.aggregate': {
@@ -111,6 +113,7 @@ const eventKeys = [
   'workflow/slack.post',
   'workflow/scrape.website',
   'workflow/microsoft.send-email',
+  'workflow/test.realtime.logs',
   'workflow/stop',
   'automation/metrics.aggregate',
   'automation/metrics.updated',
