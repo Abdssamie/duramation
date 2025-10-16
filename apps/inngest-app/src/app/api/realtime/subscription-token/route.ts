@@ -10,22 +10,31 @@ import { ClerkUserId } from "@/types/user";
 export async function POST(req: NextRequest) {
   try {
     const { userId: clerkUserId } = await auth();
-    
+
     if (!clerkUserId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "Unauthorized" 
+      }, { status: 401 });
     }
 
     const { workflowId } = await req.json();
 
     if (!workflowId) {
-      return NextResponse.json({ error: "workflowId is required" }, { status: 400 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "workflowId is required" 
+      }, { status: 400 });
     }
 
     // Get internal user id
     const internalUserId = await getInternalUserId(clerkUserId as ClerkUserId);
 
     if (!internalUserId) {
-      return NextResponse.json({ error: "Internal user not found" }, { status: 404 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "Internal user not found" 
+      }, { status: 404 });
     }
 
     // Get user from database
@@ -34,7 +43,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "User not found" 
+      }, { status: 404 });
     }
 
     // Verify user owns the workflow
@@ -46,7 +58,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!workflow) {
-      return NextResponse.json({ error: "Workflow not found or access denied" }, { status: 404 });
+      return NextResponse.json({ 
+        success: false, 
+        error: "Workflow not found or access denied" 
+      }, { status: 404 });
     }
 
     // Generate subscription token for this specific workflow
@@ -61,11 +76,17 @@ export async function POST(req: NextRequest) {
 
     console.log('[subscription-token] Token generated successfully');
 
-    return NextResponse.json({ token });
+    return NextResponse.json({ 
+      success: true, 
+      data: { token } 
+    });
   } catch (error) {
     console.error("Error generating subscription token:", error);
     return NextResponse.json(
-      { error: "Failed to generate subscription token" },
+      { 
+        success: false, 
+        error: "Failed to generate subscription token" 
+      },
       { status: 500 }
     );
   }
