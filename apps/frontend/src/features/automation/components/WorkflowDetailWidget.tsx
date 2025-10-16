@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { InngestSubscriptionState } from '@inngest/realtime/hooks';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -40,7 +39,7 @@ export default function WorkflowDetailWidget({
   onRealtimeDataChange
 }: WorkflowDetailWidgetProps) {
   const [activeTab, setActiveTab] = useState('input');
-  const [input, setInput] = useState<Record<string, any>>({});
+  const [input, setInput] = useState<Record<string, unknown>>({});
   const [isRunning, setIsRunning] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -81,10 +80,10 @@ export default function WorkflowDetailWidget({
   // Reset state when workflow changes
   useEffect(() => {
     // Reset state when workflow changes to prevent stale data
-    setInput((workflow.input as Record<string, any>) || {});
+    setInput((workflow.input as Record<string, unknown>) || {});
     setTimezone(workflow.timezone || 'UTC');
     setActiveTab('input'); // Reset to input tab when workflow changes
-  }, [workflow.id]); // Only trigger when workflow ID changes
+  }, [workflow.id, workflow.input, workflow.timezone]); // Only trigger when workflow ID changes
 
   // Handle workflow status changes
   useEffect(() => {

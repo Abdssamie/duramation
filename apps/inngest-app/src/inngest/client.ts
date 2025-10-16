@@ -6,18 +6,11 @@ import { WorkflowRandomTextLoopInput } from '@/inngest/functions/random-text-loo
 import { WorkflowPostToSlackInput } from '@/inngest/functions/post-to-slack/metadata';
 import { WorkflowScrapeWebsiteInput } from '@/inngest/functions/scrape-website/metadata';
 import { WorkflowSendOutlookEmailInput } from '@/inngest/functions/send-outlook-email/metadata';
-import { WorkflowTestRealtimeLogsInput } from '@/inngest/functions/test-realtime-logs/metadata';
 import { InternalUserId } from '@/types/user';
 import { credentialMiddleware } from '@/inngest/middleware/credential';
 import { workflowStatusMiddleware } from '@/inngest/middleware/workflow-status-middleware';
-import { workflowRunTrackingMiddleware } from '@/inngest/middleware/workflow-run-tracking';
 import { realtimeMiddleware } from './middleware/realtime';
 
-// Basic scheduler input schema (defined inline in templates)
-export type BasicSchedulerInput = {
-  taskName: string;
-  description?: string;
-};
 
 // Allow extending with optional fields via a generic
 type UserEventPayload<T extends object = object> = {
@@ -67,7 +60,6 @@ export type Events = {
   'workflow/slack.post': WorkflowTriggerPayload<WorkflowPostToSlackInput>;
   'workflow/scrape.website': WorkflowTriggerPayload<WorkflowScrapeWebsiteInput>;
   'workflow/microsoft.send-email': WorkflowTriggerPayload<WorkflowSendOutlookEmailInput>;
-  'workflow/test.realtime.logs': WorkflowTriggerPayload<WorkflowTestRealtimeLogsInput>;
 
   // Automation metrics events
   'automation/metrics.aggregate': {
@@ -103,35 +95,6 @@ export type Events = {
   };
 
 };
-
-// Array of the event keys for runtime check
-const eventKeys = [
-  'internal/user/new.signup',
-  'internal/user/new.google.signup',
-  'workflow/report.requested',
-  'workflow/random.text.loop',
-  'workflow/slack.post',
-  'workflow/scrape.website',
-  'workflow/microsoft.send-email',
-  'workflow/test.realtime.logs',
-  'workflow/stop',
-  'automation/metrics.aggregate',
-  'automation/metrics.updated',
-  'service-request/status.changed',
-  'service-request/created',
-  'blog-post.updated',
-  'invoice/data.submitted',
-] as const;
-
-// Create a union type of all the keys from the Events type
-type EventKeys = keyof Events;
-
-export type EventFor<K extends keyof Events> = { name: K } & Events[K];
-
-// Type guard function to check if the input string is a valid event key
-export function isEventKey(str: string): str is EventKeys {
-  return (eventKeys as readonly string[]).includes(str);
-}
 
 
 // Create a client to send and receive events

@@ -30,10 +30,10 @@ type Props = {
   workflow: WorkflowWithCredentials;
   input: Record<string, unknown>;
   fields: WorkflowInputFieldDefinition[] | null;
-  setInputAction: Dispatch<SetStateAction<Record<string, any>>>;
+  setInputAction: Dispatch<SetStateAction<Record<string, unknown>>>;
   onUpdateAction: (
     id: string,
-    uworkflowTemplateUtilspdate: Partial<WorkflowWithCredentials>
+    workflowTemplateUtilsUpdate: Partial<WorkflowWithCredentials>
   ) => void;
 };
 

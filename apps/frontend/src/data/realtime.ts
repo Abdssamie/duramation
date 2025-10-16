@@ -64,6 +64,8 @@ const ErrorDataSchema = z.object({
   stepId: z.string().optional(),
   stepName: z.string().optional(),
   stack: z.string().optional(),
+  attemptNumber: z.number().optional(),
+  maxAttempts: z.number().optional(),
 }).optional();
 
 // Create discriminated union for type-safe data

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { InngestSubscriptionState, useInngestSubscription } from "@inngest/realtime/hooks";
 import { fetchRealtimeSubscriptionToken } from "@/actions/realtime";
 import type {Realtime} from "@inngest/realtime";
@@ -196,20 +196,15 @@ export function useWorkflowRealtime({
 }: UseWorkflowRealtimeProps): WorkflowRealtimeData {
   console.log(`[useWorkflowRealtime] Hook initialized with:`, { workflowId, enabled, bufferInterval });
 
-  const validWorkflow = Boolean(workflowId && workflowId.trim() !== "");
-
   const refreshToken = useCallback(async () => {
-    console.log(`[useWorkflowRealtime] ⚡ refreshToken callback CALLED! workflowId=${workflowId}`);
     try {
       const token: Realtime.Token<typeof workflowChannel, ["updates", "ai-stream"]> | undefined = await fetchRealtimeSubscriptionToken(workflowId);
       if (!token) {
-        console.error(`[useWorkflowRealtime] No subscription token received for workflow ${workflowId}`);
         throw new Error('No subscription token received');
       }
-      console.log(`[useWorkflowRealtime] ✅ Successfully fetched token for workflow ${workflowId}`, token);
       return token;
     } catch (error) {
-      console.error(`[useWorkflowRealtime] ❌ Failed to get subscription token for workflow ${workflowId}:`, error);
+        console.error(error)
       throw error;
     }
   }, [workflowId]);

@@ -21,7 +21,7 @@ export async function GET() {
     const startTime = Date.now();
     const serviceRequests = await ServiceRequestService.getServiceRequests(userId);
     const queryTime = Date.now() - startTime;
-    console.log(`[DATABASE QUERY] Found ${serviceRequests.length} service requests in ${queryTime}ms`);
+    console.log(`[DATABASE QUERY] Found ${serviceRequests.requests.length} service requests in ${queryTime}ms`);
     
     const response: ServiceRequestListResponse = {
       success: true,

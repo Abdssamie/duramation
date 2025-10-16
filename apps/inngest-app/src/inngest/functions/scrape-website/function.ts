@@ -1,6 +1,6 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
-import { workflowChannel, createWorkflowUpdate } from "@/lib/realtime-channels";
+import { workflowChannel, createWorkflowUpdate, createErrorUpdate } from "@/lib/realtime-channels";
 
 export const scrapeWebsiteWorkflow = inngest.createFunction(
     {
@@ -43,41 +43,74 @@ export const scrapeWebsiteWorkflow = inngest.createFunction(
 
         // Scrape the website
         const scrapedData = await step.run("scrape-url", async () => {
-            await publish(
-                workflowChannel(user_id, workflowId).updates(
-                    createWorkflowUpdate("progress", `Scraping ${url}`)
-                )
-            );
-
-            const { apiKey } = firecrawlCredential.secret as { apiKey: string };
-
-            const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    url,
-                    formats: formats,
-                })
-            });
-
-            if (!response.ok) {
-                const error = await response.text();
-                logger.error({ status: response.status, error }, "Failed to scrape website");
-                throw new Error(`Failed to scrape website: ${response.status} - ${error}`);
-            }
-
-            const data = await response.json();
+            const stepName = 'scrape-url';
             
-            await publish(
-                workflowChannel(user_id, workflowId).updates(
-                    createWorkflowUpdate("log", `Successfully scraped ${url}`)
-                )
-            );
+            try {
+                await publish(
+                    workflowChannel(user_id, workflowId).updates(
+                        createWorkflowUpdate("progress", `Scraping ${url}`)
+                    )
+                );
 
-            return data;
+                const { apiKey } = firecrawlCredential.secret as { apiKey: string };
+
+                const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        url,
+                        formats: formats,
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    logger.error({ status: response.status, error: errorText }, "Failed to scrape website");
+                    
+                    const error = new Error(`Failed to scrape website: ${response.status} - ${errorText}`);
+                    
+                    await publish(
+                        workflowChannel(user_id, workflowId).updates(
+                            createErrorUpdate(`Failed to scrape ${url}`, {
+                                error: error.message,
+                                code: `HTTP_${response.status}`,
+                                stepName,
+                                stack: error.stack
+                            })
+                        )
+                    );
+                    
+                    throw error;
+                }
+
+                const data = await response.json();
+                
+                await publish(
+                    workflowChannel(user_id, workflowId).updates(
+                        createWorkflowUpdate("log", `Successfully scraped ${url}`)
+                    )
+                );
+
+                return data;
+            } catch (error) {
+                logger.error({ error }, "Error in scrape-url step");
+                
+                await publish(
+                    workflowChannel(user_id, workflowId).updates(
+                        createErrorUpdate(`Error scraping website`, {
+                            error: error instanceof Error ? error.message : String(error),
+                            code: 'SCRAPE_ERROR',
+                            stepName,
+                            stack: error instanceof Error ? error.stack : undefined
+                        })
+                    )
+                );
+                
+                throw error;
+            }
         });
 
         // Final success update

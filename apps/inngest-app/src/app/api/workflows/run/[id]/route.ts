@@ -6,7 +6,7 @@ import { getInternalUser } from "@/lib/helpers/getInternalUser";
 import logger from "@/services/logging";
 
 import { validateWorkflowInput } from "@duramation/shared";
-import { isEventKey, Events, inngest, WorkflowTriggerPayload, ScheduleStopPayload } from "@/inngest/client";
+import { Events, inngest, WorkflowTriggerPayload, ScheduleStopPayload } from "@/inngest/client";
 import { z } from "zod";
 import { ClerkUserId, InternalUserId } from "@/types/user";
 import type { WorkflowRunRequest, WorkflowRunResponse } from "@duramation/shared";
@@ -113,13 +113,6 @@ export async function POST(
                     { status: 400 }
                 );
             }
-        }
-
-        if (!isEventKey(workflow.eventName)) {
-            return NextResponse.json(
-                { message: "Invalid workflow event name" },
-                { status: 500 }
-            );
         }
 
         // Generate a fresh idempotency key for each manual run

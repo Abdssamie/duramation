@@ -1,5 +1,4 @@
 // AUTO-GENERATED FILE
-import { TestRealtimeLogsTemplate } from "@/inngest/functions/test-realtime-logs/metadata";
 import prisma from "@/lib/prisma";
 import { SendOutlookEmailTemplate } from "@/inngest/functions/send-outlook-email/metadata";
 import { ScrapeWebsiteTemplate } from "@/inngest/functions/scrape-website/metadata";
@@ -10,7 +9,6 @@ import { DailyReportTemplate } from "@/inngest/functions/generate-daily-report/m
 import { addWorkflowTemplatesIfNotExist } from "@duramation/shared";
 
 addWorkflowTemplatesIfNotExist(prisma, [
-  TestRealtimeLogsTemplate,
   SendOutlookEmailTemplate,
   ScrapeWebsiteTemplate,
   RandomTextLoopTemplate,
