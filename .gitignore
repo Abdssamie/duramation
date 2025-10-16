@@ -12,8 +12,14 @@ node_modules
 .env.test.local
 .env.production.local
 
+apps/inngest-app/*.log
+apps/inngest-app/combined.log
+
 # Testing
 coverage
+
+.kiro
+.vscode
 
 # Turbo
 .turbo
@@ -45,3 +51,5 @@ yarn-error.log*
 
 # Prisma generated client
 packages/db/src/generated
+/apps/frontend/src/config/env.ts
+/apps/inngest-app/src/config/env.ts

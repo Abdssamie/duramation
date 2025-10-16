@@ -1,6 +1,14 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
-import { workflowChannel, createWorkflowUpdate } from "@/lib/realtime-channels";
+import { 
+  workflowChannel, 
+  createStatusUpdate,
+  createProgressUpdate,
+  createLogUpdate,
+  createResultUpdate,
+  createErrorUpdate,
+  
+} from "@/lib/realtime-channels";
 
 
 export const randomTextLoopWorkflow = inngest.createFunction(
@@ -34,12 +42,18 @@ export const randomTextLoopWorkflow = inngest.createFunction(
                 }, "Scheduled run detected");
                 
                 await publish(channel.updates(
-                    createWorkflowUpdate("log", "📅 Scheduled run detected")
+                    createLogUpdate("📅 Scheduled run detected", {
+                        level: 'info',
+                        context: { cronExpression, tz, scheduledRun }
+                    })
                 ));
             }
 
             await publish(channel.updates(
-                createWorkflowUpdate("status", "🚀 Starting workflow: Random Text Loop")
+                createStatusUpdate("🚀 Starting workflow: Random Text Loop", {
+                    status: 'started',
+                    stepName: 'initialize-workflow'
+                })
             ));
         });        
 
@@ -47,12 +61,19 @@ export const randomTextLoopWorkflow = inngest.createFunction(
             logger.info({ runId, functionId, workflowId, userId: user_id }, "Starting random text loop");
             
             await publish(channel.updates(
-                createWorkflowUpdate("log", "🔄 Validating input parameters")
+                createLogUpdate("🔄 Validating input parameters", {
+                    level: 'info',
+                    stepName: 'start-random-text-loop'
+                })
             ));
 
             if (!input) {
                 await publish(channel.updates(
-                    createWorkflowUpdate("log", "❌ Error: Random text loop input is required")
+                    createErrorUpdate("❌ Error: Random text loop input is required", {
+                        error: "Random text loop input is required",
+                        code: "MISSING_INPUT",
+                        stepName: 'start-random-text-loop'
+                    })
                 ));
                 const err = new NonRetriableError("Random text loop input is required");
                 logger.error({ runId, functionId, workflowId, userId: user_id, error: err.message }, "Missing input");
@@ -82,7 +103,10 @@ export const randomTextLoopWorkflow = inngest.createFunction(
 
         // Publish loop configuration
         await publish(channel.updates(
-            createWorkflowUpdate("status", `🔄 Starting loop with ${iterations} iterations, ${delaySeconds} second delays`)
+            createStatusUpdate(`🔄 Starting loop with ${iterations} iterations, ${delaySeconds} second delays`, {
+                status: 'running',
+                stepName: 'text-generation-loop'
+            })
         ));
 
 
@@ -96,21 +120,26 @@ export const randomTextLoopWorkflow = inngest.createFunction(
             
             // Publish realtime log update
             await publish(channel.updates(
-                createWorkflowUpdate("log", logMessage, { 
-                    iteration: i, 
-                    totalIterations: iterations, 
-                    timestamp,
-                    generatedText: randomText 
+                createLogUpdate(logMessage, {
+                    level: 'info',
+                    stepName: 'text-generation-loop',
+                    context: { 
+                        iteration: i, 
+                        totalIterations: iterations, 
+                        timestamp,
+                        generatedText: randomText 
+                    }
                 })
             ));
 
             // Update progress
             const progressPercent = Math.round((i / iterations) * 100);
             await publish(channel.updates(
-                createWorkflowUpdate("progress", `Progress: ${progressPercent}% (${i}/${iterations})`, {
-                    percent: progressPercent,
+                createProgressUpdate(`Progress: ${progressPercent}% (${i}/${iterations})`, {
                     current: i,
-                    total: iterations
+                    total: iterations,
+                    percentage: progressPercent,
+                    stepName: 'text-generation-loop'
                 })
             ));
 
@@ -124,10 +153,14 @@ export const randomTextLoopWorkflow = inngest.createFunction(
 
         // Publish completion status
         await publish(channel.updates(
-            createWorkflowUpdate("result", "✅ Completed workflow: Random Text Loop", {
-                totalIterations: iterations,
-                delaySeconds,
-                completedAt: new Date().toISOString()
+            createResultUpdate("✅ Completed workflow: Random Text Loop", {
+                success: true,
+                output: {
+                    totalIterations: iterations,
+                    delaySeconds,
+                    completedAt: new Date().toISOString()
+                },
+                stepName: 'text-generation-loop'
             })
         ));
     }
