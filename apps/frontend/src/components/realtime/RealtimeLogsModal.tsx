@@ -45,33 +45,33 @@ const getLogTypeInfo = (type: WorkflowLogType) => {
   switch (type) {
     case 'error':
       return { 
-        color: 'text-red-600 dark:text-red-400 border-red-600 dark:border-red-400', 
-        bgColor: 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800',
+        color: 'text-red-400', 
+        bgColor: 'bg-red-500/10 border-red-500/20',
         progressColor: 'bg-red-500'
       };
     case 'progress':
       return { 
-        color: 'text-purple-600 dark:text-purple-400 border-purple-600 dark:border-purple-400', 
-        bgColor: 'bg-purple-50 dark:bg-purple-950/30 border-purple-200 dark:border-purple-800',
+        color: 'text-purple-400', 
+        bgColor: 'bg-purple-500/10 border-purple-500/20',
         progressColor: 'bg-purple-500'
       };
     case 'status':
       return { 
-        color: 'text-green-600 dark:text-green-400 border-green-600 dark:border-green-400', 
-        bgColor: 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800',
+        color: 'text-green-600 dark:text-green-400', 
+        bgColor: 'bg-green-500/10 border-green-500/20',
         progressColor: 'bg-green-500'
       };
     case 'result':
       return { 
-        color: 'text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400', 
-        bgColor: 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800',
+        color: 'text-blue-600 dark:text-blue-400', 
+        bgColor: 'bg-blue-500/10 border-blue-500/20',
         progressColor: 'bg-blue-500'
       };
     default:
       return { 
-        color: 'text-yellow-600 dark:text-yellow-400 border-yellow-600 dark:border-yellow-400', 
-        bgColor: 'bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-800',
-        progressColor: 'bg-yellow-500'
+        color: 'text-muted-foreground', 
+        bgColor: 'bg-muted/50 border-border',
+        progressColor: 'bg-primary'
       };
   }
 };
@@ -190,18 +190,18 @@ export function RealtimeLogsModal({
         </VisuallyHidden>
         <div className="flex-1 min-h-0 px-8 pb-6">
           <Tabs defaultValue="logs" className="h-full flex flex-col">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="logs" className="flex items-center gap-2">
-                <Activity className="h-4 w-4" />
-                Logs ({validLogs.length})
+            <TabsList className="grid w-full grid-cols-3 h-auto">
+              <TabsTrigger value="logs" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap">
+                <Activity className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="truncate">Logs ({validLogs.length})</span>
               </TabsTrigger>
-              <TabsTrigger value="streams" className="flex items-center gap-2">
-                <Zap className="h-4 w-4" />
-                AI Streams ({validAiStreams.length})
+              <TabsTrigger value="streams" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap">
+                <Zap className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="truncate">AI ({validAiStreams.length})</span>
               </TabsTrigger>
-              <TabsTrigger value="debug" className="flex items-center gap-2">
-                <Database className="h-4 w-4" />
-                Debug Data
+              <TabsTrigger value="debug" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap">
+                <Database className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="truncate">Debug</span>
               </TabsTrigger>
             </TabsList>
 
@@ -272,7 +272,7 @@ export function RealtimeLogsModal({
                                   {log.type.toUpperCase()}
                                 </Badge>
                                 <span className='text-xs text-muted-foreground font-mono'>
-                                  {format(log.timestamp, 'HH:mm:ss.SSS')}
+                                  {format(log.timestamp, 'HH:mm:ss')}
                                 </span>
                               </div>
                               <p className="text-sm mb-2 break-words leading-relaxed overflow-wrap-anywhere">
@@ -280,13 +280,6 @@ export function RealtimeLogsModal({
                               </p>
                               {log.type === 'progress' && log.data && 'percentage' in log.data && (
                                 <ProgressBar data={log.data} progressColor={typeInfo.progressColor} />
-                              )}
-                              {log.type === 'status' && log.data && 'status' in log.data && (
-                                <div className="mt-2">
-                                  <Badge variant="outline" className={cn('text-xs', typeInfo.color)}>
-                                    Status: {log.data.status}
-                                  </Badge>
-                                </div>
                               )}
                               {log.data && Object.keys(log.data).length > 0 && (
                                 <details className="mt-2">
@@ -343,7 +336,7 @@ export function RealtimeLogsModal({
                                 AI-STREAM
                               </Badge>
                               <span className='text-xs text-muted-foreground font-mono'>
-                                {format(stream.timestamp, 'HH:mm:ss.SSS')}
+                                {format(stream.timestamp, 'HH:mm:ss')}
                               </span>
                               {stream.data.isComplete && (
                                 <Badge variant="outline" className="text-xs text-green-600 border-green-600">
@@ -427,7 +420,7 @@ export function RealtimeLogsModal({
                               {transformedLatestData.topic}
                             </Badge>
                             <span className="text-xs text-muted-foreground font-mono">
-                              {format(transformedLatestData.timestamp, 'HH:mm:ss.SSS')}
+                              {format(transformedLatestData.timestamp, 'HH:mm:ss')}
                             </span>
                           </div>
                           <p className="text-sm mb-2">{transformedLatestData.message}</p>

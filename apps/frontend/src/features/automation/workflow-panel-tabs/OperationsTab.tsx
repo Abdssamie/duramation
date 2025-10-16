@@ -24,6 +24,7 @@ type Props = {
   input: Record<string, unknown>;
   isRunning: boolean;
   setIsRunningAction: Dispatch<SetStateAction<boolean>>;
+  onWorkflowStart?: () => void;
 };
 
 export default function OperationsTab({
@@ -32,7 +33,8 @@ export default function OperationsTab({
   schedules,
   input,
   isRunning,
-  setIsRunningAction
+  setIsRunningAction,
+  onWorkflowStart
 }: Props) {
   const { getToken } = useAuth();
   const [isRequestPending, setIsRequestPending] = useState(false);
@@ -45,16 +47,17 @@ export default function OperationsTab({
   const handleRun = async () => {
     if (!workflow) return;
     if (isRunning || isRequestPending) {
-      // Avoid duplicate clicks while running or pending
       toast.info('Workflow is already running');
       return;
     }
     setIsRequestPending(true);
+    setIsRunningAction(true); // Set to "Starting" state immediately
 
     try {
       const freshToken = await getToken();
       if (!freshToken) {
         toast.error('Authentication failed. Please refresh the page.');
+        setIsRunningAction(false);
         return;
       }
 
@@ -64,6 +67,7 @@ export default function OperationsTab({
       } catch (e) {
         console.debug(e);
         toast.error('Invalid input JSON');
+        setIsRunningAction(false);
         return;
       }
 
@@ -71,13 +75,13 @@ export default function OperationsTab({
         input: parsedInput
       });
       onUpdateAction(workflow.id, { status: 'RUNNING', input: parsedInput });
-      setIsRunningAction(true);
       toast.success('Workflow started');
+      onWorkflowStart?.(); // Switch to logs tab
     } catch (error: any) {
       console.debug(error);
+      setIsRunningAction(false); // Reset on error
       const errorMessage = error?.response?.data?.message || error?.message || 'Failed to run workflow';
       
-      // Check if error might be related to invalid input
       const isInputError = errorMessage.toLowerCase().includes('input') || 
                           errorMessage.toLowerCase().includes('validation') ||
                           errorMessage.toLowerCase().includes('required') ||
@@ -101,7 +105,9 @@ export default function OperationsTab({
   };
 
   const handleStop = async () => {
-    if (!workflow) return;
+    if (!workflow || isRequestPending) return;
+    
+    setIsRequestPending(true);
 
     try {
       const freshToken = await getToken();
@@ -117,6 +123,8 @@ export default function OperationsTab({
     } catch (error) {
       console.debug(error);
       toast.error('Failed to stop workflow');
+    } finally {
+      setIsRequestPending(false);
     }
   };
 
@@ -150,16 +158,16 @@ export default function OperationsTab({
               }
             >
               <Play className='mr-1 h-4 w-4' />
-              {isRunning || isRequestPending ? 'Running...' : 'Run Now'}
+              {isRequestPending && !workflow.status.includes('RUNNING') ? 'Starting...' : isRunning ? 'Running...' : 'Run Now'}
             </Button>
             <Button
               onClick={handleStop}
               variant='outline'
-              disabled={!isRunning}
+              disabled={!isRunning || isRequestPending}
               className='flex-1'
             >
               <Square className='mr-1 h-4 w-4' />
-              Stop
+              {isRequestPending && isRunning ? 'Stopping...' : 'Stop'}
             </Button>
           </div>
 

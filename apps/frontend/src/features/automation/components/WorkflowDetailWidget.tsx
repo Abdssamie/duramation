@@ -20,7 +20,7 @@ import InputTab from '@/features/automation/workflow-panel-tabs/InputTab';
 import LogsTab from '@/features/automation/workflow-panel-tabs/LogTab';
 
 interface WorkflowDetailWidgetProps {
-  workflow: WorkflowWithCredentials | null;
+  workflow: WorkflowWithCredentials;
   isOpen: boolean;
   onCloseAction: () => void;
   onUpdateAction: (
@@ -28,6 +28,7 @@ interface WorkflowDetailWidgetProps {
     update: Partial<WorkflowWithCredentials>
   ) => void;
   templateFields: WorkflowInputFieldDefinition[] | null;
+  onRealtimeDataChange?: (hasData: boolean) => void;
 }
 
 export default function WorkflowDetailWidget({
@@ -35,7 +36,8 @@ export default function WorkflowDetailWidget({
   isOpen,
   onCloseAction,
   onUpdateAction,
-  templateFields
+  templateFields,
+  onRealtimeDataChange
 }: WorkflowDetailWidgetProps) {
   const [activeTab, setActiveTab] = useState('input');
   const [input, setInput] = useState<Record<string, any>>({});
@@ -45,80 +47,68 @@ export default function WorkflowDetailWidget({
   const [, setTimezone] = useState<string>('UTC');
 
   // Move realtime hook to parent to persist data across tab switches
-  // Only call the hook when we have a valid workflow
-  const realtimeData = workflow ? useWorkflowRealtime({
+  // Always call the hook, enabled must always be true (bug in useInngestSubscription)
+  const realtimeData = useWorkflowRealtime({
     workflowId: workflow.id,
     enabled: true,
     bufferInterval: 2000,
-  }) : {
-    logs: [],
-    aiStreams: [],
-    freshLogs: [],
-    freshAiStreams: [],
-    latestMessage: null,
-    latestLog: null,
-    latestAiStream: null,
-    error: null,
-    state: 'closed' as InngestSubscriptionState,
-    isConnected: false,
-    hasErrors: false,
-    isComplete: false,
-    currentProgress: null,
-    currentStatus: null,
-    rawData: [],
-    freshData: [],
-    latestData: null,
-  };
+  });
+
+  // Notify parent when realtime data changes
+  useEffect(() => {
+    const hasData = realtimeData.logs.length > 0 || realtimeData.aiStreams.length > 0;
+    onRealtimeDataChange?.(hasData);
+  }, [realtimeData.logs.length, realtimeData.aiStreams.length, onRealtimeDataChange]);
 
   // Debug logging for realtime connection
   useEffect(() => {
     console.log('[WorkflowDetailWidget] Realtime state:', {
-      workflowId: workflow?.id,
-      workflowStatus: workflow?.status,
+      workflowId: workflow.id,
+      workflowStatus: workflow.status,
       isRunning,
-      enabled: isRunning && !!workflow?.id,
       realtimeState: realtimeData.state,
       isConnected: realtimeData.isConnected,
       logsCount: realtimeData.logs.length
     });
-  }, [workflow?.id, workflow?.status, isRunning, realtimeData.state, realtimeData.isConnected, realtimeData.logs.length]);
+  }, [workflow.id, workflow.status, isRunning, realtimeData.state, realtimeData.isConnected, realtimeData.logs.length]);
 
   // Update running state when workflow status changes
   useEffect(() => {
-    if (workflow) {
-      const newIsRunning = workflow.status === 'RUNNING';
-      setIsRunning(newIsRunning);
-    }
-  }, [workflow, workflow?.status]);
+    const newIsRunning = workflow.status === 'RUNNING';
+    setIsRunning(newIsRunning);
+  }, [workflow.status]);
 
   // Reset state when workflow changes
   useEffect(() => {
-    if (workflow) {
-      const wasRunning = isRunning;
+    // Reset state when workflow changes to prevent stale data
+    setInput((workflow.input as Record<string, any>) || {});
+    setTimezone(workflow.timezone || 'UTC');
+    setActiveTab('input'); // Reset to input tab when workflow changes
+  }, [workflow.id]); // Only trigger when workflow ID changes
 
-      // Reset state when workflow changes to prevent stale data
-      setInput((workflow.input as Record<string, any>) || {});
-      setTimezone(workflow.timezone || 'UTC');
-      setActiveTab('input'); // Reset to input tab when workflow changes
+  // Handle workflow status changes
+  useEffect(() => {
+    const wasRunning = isRunning;
+    const isNowRunning = workflow.status === 'RUNNING';
 
-      // Show error toast if workflow just failed
-      if (wasRunning && workflow.status === 'FAILED') {
-        toast.error(
-          <div className="space-y-1">
-            <div className="font-semibold">Workflow execution failed</div>
-            <div className="text-xs text-muted-foreground">
-              This might be due to invalid input configuration. Check the Input tab and Logs for details.
-            </div>
-          </div>,
-          { duration: 6000 }
-        );
-      }
+    // Switch to logs tab when workflow starts
+    if (!wasRunning && isNowRunning) {
+      setActiveTab('logs');
     }
-  }, [isRunning, workflow, workflow?.id]); // Only trigger when workflow ID changes
 
-  if (!workflow) {
-    return null;
-  }
+    // Show error toast if workflow just failed
+    if (wasRunning && workflow.status === 'FAILED') {
+      toast.error(
+        <div className="space-y-1">
+          <div className="font-semibold">Workflow execution failed</div>
+          <div className="text-xs text-muted-foreground">
+            This might be due to invalid input configuration. Check the Input tab and Logs for details.
+          </div>
+        </div>,
+        { duration: 6000 }
+      );
+    }
+  }, [workflow.status, isRunning]);
 
   const schedules = Array.isArray(workflow.cronExpressions)
     ? workflow.cronExpressions
@@ -243,6 +233,7 @@ export default function WorkflowDetailWidget({
                       input={input}
                       setIsRunningAction={setIsRunning}
                       isRunning={isRunning}
+                      onWorkflowStart={() => setActiveTab('logs')}
                     />
                   </TabsContent>
 
@@ -266,7 +257,7 @@ export default function WorkflowDetailWidget({
 
       {/* Expanded Modal View */}
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
-        <DialogContent className="!max-w-[65vw] !h-[95vh] p-0 flex flex-col" hideClose>
+        <DialogContent className="!max-w-[90vw] sm:!max-w-[80vw] md:!max-w-[70vw] lg:!max-w-[60vw] !h-[95vh] p-0 flex flex-col" hideClose>
           <VisuallyHidden>
             <DialogTitle>{workflow.name} - Workflow Details</DialogTitle>
           </VisuallyHidden>
@@ -279,21 +270,21 @@ export default function WorkflowDetailWidget({
               className='flex h-full flex-col px-6'
             >
               <TabsList className='!mt-4 !grid !w-full !max-w-md mx-auto grid-cols-4'>
-                <TabsTrigger value='input'>
-                  <Settings className='mr-2 h-4 w-4' />
-                  Input
+                <TabsTrigger value='input' className='flex items-center justify-center gap-1 sm:gap-2' title='Input'>
+                  <Settings className='h-4 w-4 flex-shrink-0' />
+                  <span className='hidden sm:inline truncate'>Input</span>
                 </TabsTrigger>
-                <TabsTrigger value='operations'>
-                  <Play className='mr-2 h-4 w-4' />
-                  Run
+                <TabsTrigger value='operations' className='flex items-center justify-center gap-1 sm:gap-2' title='Run'>
+                  <Play className='h-4 w-4 flex-shrink-0' />
+                  <span className='hidden sm:inline truncate'>Run</span>
                 </TabsTrigger>
-                <TabsTrigger value='credentials'>
-                  <Key className='mr-2 h-4 w-4' />
-                  Credentials
+                <TabsTrigger value='credentials' className='flex items-center justify-center gap-1 sm:gap-2' title='Credentials'>
+                  <Key className='h-4 w-4 flex-shrink-0' />
+                  <span className='hidden sm:inline'>Credentials</span>
                 </TabsTrigger>
-                <TabsTrigger value='logs'>
-                  <Activity className='mr-2 h-4 w-4' />
-                  Logs
+                <TabsTrigger value='logs' className='flex items-center justify-center gap-1 sm:gap-2' title='Logs'>
+                  <Activity className='h-4 w-4 flex-shrink-0' />
+                  <span className='hidden sm:inline truncate'>Logs</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -318,6 +309,7 @@ export default function WorkflowDetailWidget({
                         input={input}
                         setIsRunningAction={setIsRunning}
                         isRunning={isRunning}
+                        onWorkflowStart={() => setActiveTab('logs')}
                       />
                     </TabsContent>
 

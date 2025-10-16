@@ -37,6 +37,11 @@ export default function WorkflowsTab() {
   const [selectedWorkflowTemplateFields, setSelectedWorkflowTemplateFields] =
     useState<WorkflowInputFieldDefinition[] | null>(null);
 
+  // Track if current workflow has realtime data
+  const [hasRealtimeData, setHasRealtimeData] = useState(false);
+
+
+
   const handleRealtimeUpdate = useCallback((data: WorkflowStatusUpdate) => {
     // Handle case where status might be undefined
     if (!data.status) {
@@ -137,8 +142,20 @@ export default function WorkflowsTab() {
 
   const handleOpenDetails = useCallback(
     async (workflow: WorkflowWithCredentials) => {
+      // Check if switching to a different workflow with realtime data
+      if (selectedWorkflow && selectedWorkflow.id !== workflow.id && hasRealtimeData) {
+        const confirmed = window.confirm(
+          'Switching workflows will clear the current realtime logs. Are you sure you want to continue?'
+        );
+        if (!confirmed) {
+          return; // User cancelled, don't switch
+        }
+      }
+
       setSelectedWorkflow(workflow);
       setIsWidgetOpen(true);
+      setHasRealtimeData(false); // Reset for new workflow
+      
       if (workflow.templateId) {
         setSelectedWorkflowTemplateFields(
           workflow.fields as unknown as WorkflowInputFieldDefinition[]
@@ -147,12 +164,23 @@ export default function WorkflowsTab() {
         setSelectedWorkflowTemplateFields(null);
       }
     },
-    []
+    [selectedWorkflow, hasRealtimeData]
   );
 
   const handleCloseWidget = () => {
+    // Check if closing with realtime data
+    if (hasRealtimeData) {
+      const confirmed = window.confirm(
+        'Closing the panel will clear the current realtime logs. Are you sure you want to continue?'
+      );
+      if (!confirmed) {
+        return; // User cancelled, don't close
+      }
+    }
+
     setIsWidgetOpen(false);
     setSelectedWorkflow(null);
+    setHasRealtimeData(false);
   };
 
   if (loading) {
@@ -192,14 +220,19 @@ export default function WorkflowsTab() {
         </div>
       </div>
 
-      {/* Workflow Detail Widget */}
-      <WorkflowDetailWidget
-        workflow={selectedWorkflow}
-        isOpen={isWidgetOpen}
-        onCloseAction={handleCloseWidget}
-        onUpdateAction={handleWorkflowUpdate}
-        templateFields={selectedWorkflowTemplateFields}
-      />
+      {/* Workflow Detail Widget - only render when a workflow is selected */}
+      {/* Key by workflow.id to force remount when switching workflows, clearing realtime data */}
+      {selectedWorkflow && (
+        <WorkflowDetailWidget
+          key={selectedWorkflow.id}
+          workflow={selectedWorkflow}
+          isOpen={isWidgetOpen}
+          onCloseAction={handleCloseWidget}
+          onUpdateAction={handleWorkflowUpdate}
+          templateFields={selectedWorkflowTemplateFields}
+          onRealtimeDataChange={setHasRealtimeData}
+        />
+      )}
     </div>
   );
 }

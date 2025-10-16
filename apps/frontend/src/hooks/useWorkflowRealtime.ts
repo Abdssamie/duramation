@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { InngestSubscriptionState, useInngestSubscription } from "@inngest/realtime/hooks";
 import { fetchRealtimeSubscriptionToken } from "@/actions/realtime";
 import type {Realtime} from "@inngest/realtime";
@@ -196,10 +196,10 @@ export function useWorkflowRealtime({
 }: UseWorkflowRealtimeProps): WorkflowRealtimeData {
   console.log(`[useWorkflowRealtime] Hook initialized with:`, { workflowId, enabled, bufferInterval });
 
+  const validWorkflow = Boolean(workflowId && workflowId.trim() !== "");
+
   const refreshToken = useCallback(async () => {
     console.log(`[useWorkflowRealtime] ⚡ refreshToken callback CALLED! workflowId=${workflowId}`);
-    
-    console.log(`[useWorkflowRealtime] Fetching subscription token for workflow ${workflowId}`);
     try {
       const token: Realtime.Token<typeof workflowChannel, ["updates", "ai-stream"]> | undefined = await fetchRealtimeSubscriptionToken(workflowId);
       if (!token) {
@@ -214,8 +214,6 @@ export function useWorkflowRealtime({
     }
   }, [workflowId]);
 
-  // WORKAROUND: useInngestSubscription doesn't call refreshToken when enabled changes from false to true
-  // So we always keep it enabled. The component should conditionally call this hook instead.
   const subscription = useInngestSubscription({
     refreshToken,
     bufferInterval,

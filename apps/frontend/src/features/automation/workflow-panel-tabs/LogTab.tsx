@@ -25,33 +25,33 @@ const getLogTypeInfo = (type: WorkflowLogType) => {
   switch (type) {
     case 'error':
       return { 
-        color: 'text-red-600 dark:text-red-400 border-red-600 dark:border-red-400', 
-        bgColor: 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800',
+        color: 'text-red-400', 
+        bgColor: 'bg-red-500/10 border-red-500/20',
         progressColor: 'bg-red-500'
       };
     case 'progress':
       return { 
-        color: 'text-purple-600 dark:text-purple-400 border-purple-600 dark:border-purple-400', 
-        bgColor: 'bg-purple-50 dark:bg-purple-950/30 border-purple-200 dark:border-purple-800',
+        color: 'text-purple-400', 
+        bgColor: 'bg-purple-500/10 border-purple-500/20',
         progressColor: 'bg-purple-500'
       };
     case 'status':
       return { 
-        color: 'text-green-600 dark:text-green-400 border-green-600 dark:border-green-400', 
-        bgColor: 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800',
+        color: 'text-green-600 dark:text-green-400', 
+        bgColor: 'bg-green-500/10 border-green-500/20',
         progressColor: 'bg-green-500'
       };
     case 'result':
       return { 
-        color: 'text-blue-600 dark:text-blue-400 border-blue-600 dark:border-blue-400', 
-        bgColor: 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800',
+        color: 'text-blue-600 dark:text-blue-400', 
+        bgColor: 'bg-blue-500/10 border-blue-500/20',
         progressColor: 'bg-blue-500'
       };
     default:
       return { 
-        color: 'text-yellow-600 dark:text-yellow-400 border-yellow-600 dark:border-yellow-400', 
-        bgColor: 'bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-800',
-        progressColor: 'bg-yellow-500'
+        color: 'text-muted-foreground', 
+        bgColor: 'bg-muted/50 border-border',
+        progressColor: 'bg-primary'
       };
   }
 };
@@ -152,15 +152,20 @@ export default function LogsTab({ workflowId, isRunning, realtimeData }: Props) 
             <CardTitle className='flex items-center justify-between text-sm'>
               <div className='flex items-center gap-2'>
                 <Activity className='h-4 w-4' />
-                Realtime Activity Log
-                {isRunning && (
-                  <span className='inline-block size-2 animate-pulse rounded-full bg-green-500' />
-                )}
-                {allMessages.length > 0 && (
-                  <Badge variant="secondary" className="text-xs">
-                    {allMessages.length}
-                  </Badge>
-                )}
+                <div className='flex flex-col'>
+                  <div className='flex items-center gap-2'>
+                    <span>Realtime Activity Log</span>
+                    {isRunning && (
+                      <span className='inline-block size-2 animate-pulse rounded-full bg-green-500' />
+                    )}
+                    {allMessages.length > 0 && (
+                      <Badge variant="secondary" className="text-xs">
+                        {allMessages.length}
+                      </Badge>
+                    )}
+                  </div>
+                  <span className='text-xs font-normal text-muted-foreground'>Showing last 3 messages</span>
+                </div>
               </div>
               <div className='flex items-center gap-2'>
                 {getConnectionBadge()}
@@ -169,7 +174,7 @@ export default function LogsTab({ workflowId, isRunning, realtimeData }: Props) 
           </CardHeader>
           <CardContent className="space-y-3">
             {error && (
-              <div className='flex items-center gap-2 p-3 text-sm text-red-600 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800'>
+              <div className='flex items-center gap-2 p-3 text-sm text-red-400 bg-red-500/10 rounded-lg border border-red-500/20'>
                 <AlertCircle className='h-4 w-4' />
                 <span>Connection error: {error.message}</span>
               </div>
@@ -222,14 +227,14 @@ export default function LogsTab({ workflowId, isRunning, realtimeData }: Props) 
                         </div>
                         <div className='flex-1 min-w-0'>
                           <div className='flex items-center gap-2 mb-1'>
-                            <Badge variant="outline" className={cn('text-xs px-2 py-0.5', typeInfo.color)}>
+                            <Badge variant="outline" className={cn('text-xs px-2 py-0.5 border-0', typeInfo.color)}>
                               {log.type.toUpperCase()}
                             </Badge>
                             <span className='text-muted-foreground text-xs font-mono'>
                               {format(log.timestamp, 'HH:mm:ss')}
                             </span>
                           </div>
-                          <p className="text-sm break-words line-clamp-2">
+                          <p className="text-sm break-words line-clamp-2 text-foreground/90">
                             {log.message}
                           </p>
                           {log.type === 'progress' && <ProgressBar data={log.data} progressColor={typeInfo.progressColor} />}
