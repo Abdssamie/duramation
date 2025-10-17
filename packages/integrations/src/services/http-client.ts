@@ -60,7 +60,6 @@ export function createHttpClient(config: HttpClientConfig = {}): Got {
     headers: {
       'User-Agent': `Duramation/${packageVersion}`,
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
       ...headers
     },
     hooks: {
