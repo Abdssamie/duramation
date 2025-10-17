@@ -48,11 +48,11 @@ export class GoogleService {
 
   // Google Sheets methods
   async readSheet(spreadsheetId: string, range: string): Promise<GoogleSheetsResponse> {
-    return this.client.get(`/v4/spreadsheets/${spreadsheetId}/values/${range}`);
+    return this.client.get(`v4/spreadsheets/${spreadsheetId}/values/${range}`);
   }
 
   async writeSheet(spreadsheetId: string, range: string, values: string[][]): Promise<void> {
-    await this.client.put(`/v4/spreadsheets/${spreadsheetId}/values/${range}?valueInputOption=RAW`, {
+    await this.client.put(`v4/spreadsheets/${spreadsheetId}/values/${range}?valueInputOption=RAW`, {
       range,
       majorDimension: 'ROWS',
       values
@@ -60,7 +60,7 @@ export class GoogleService {
   }
 
   async appendToSheet(spreadsheetId: string, range: string, values: string[][]): Promise<void> {
-    await this.client.post(`/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, {
+    await this.client.post(`v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`, {
       range,
       majorDimension: 'ROWS',
       values
@@ -71,7 +71,7 @@ export class GoogleService {
   async sendEmail(message: GmailMessage): Promise<void> {
     const emailContent = this.buildEmailContent(message);
 
-    await this.client.post('/gmail/v1/users/me/messages/send', {
+    await this.client.post('gmail/v1/users/me/messages/send', {
       raw: Buffer.from(emailContent).toString('base64url')
     });
   }
@@ -94,7 +94,7 @@ export class GoogleService {
 
   // Google Calendar methods
   async createCalendarEvent(calendarId: string = 'primary', event: GoogleCalendarEvent): Promise<any> {
-    return this.client.post(`/calendar/v3/calendars/${calendarId}/events`, event);
+    return this.client.post(`calendar/v3/calendars/${calendarId}/events`, event);
   }
 
   async listCalendarEvents(calendarId: string = 'primary', options: {
@@ -108,7 +108,7 @@ export class GoogleService {
     if (options.maxResults) queryParams.append('maxResults', options.maxResults.toString());
 
     const queryString = queryParams.toString();
-    const url = `/calendar/v3/calendars/${calendarId}/events${queryString ? `?${queryString}` : ''}`;
+    const url = `calendar/v3/calendars/${calendarId}/events${queryString ? `?${queryString}` : ''}`;
 
     return this.client.get(url);
   }
@@ -124,15 +124,15 @@ export class GoogleService {
     queryParams.append('fields', options.fields || 'nextPageToken, files(id, name, mimeType, modifiedTime)');
     if (options.q) queryParams.append('q', options.q);
 
-    return this.client.get(`/drive/v3/files?${queryParams.toString()}`);
+    return this.client.get(`drive/v3/files?${queryParams.toString()}`);
   }
 
   async getFile(fileId: string): Promise<any> {
-    return this.client.get(`/drive/v3/files/${fileId}`);
+    return this.client.get(`drive/v3/files/${fileId}`);
   }
 
   async downloadFile(fileId: string): Promise<Buffer> {
-    const response = await providerClients.google({} as CredentialSecret).get(`/drive/v3/files/${fileId}?alt=media`, {
+    const response = await providerClients.google({} as CredentialSecret).get(`drive/v3/files/${fileId}?alt=media`, {
       responseType: 'buffer'
     });
     return response.body as Buffer;
