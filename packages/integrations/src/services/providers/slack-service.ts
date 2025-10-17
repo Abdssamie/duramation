@@ -158,11 +158,7 @@ export class SlackService {
     if (options.title) formData.append('title', options.title);
     if (options.initial_comment) formData.append('initial_comment', options.initial_comment);
     
-    return this.client.post('/files.upload', formData, {
-      headers: {
-        'Content-Type': undefined // Let got set the boundary
-      }
-    });
+    return this.client.post('/files.upload', formData);
   }
   
   // Workspace methods
