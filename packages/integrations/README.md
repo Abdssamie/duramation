@@ -5,7 +5,7 @@ This package provides HTTP client services and provider integrations for the Dur
 ## Features
 
 - **Shared HTTP Client**: Built on `got` for reliable HTTP requests with retry logic, timeout handling, and error logging
-- **Provider Services**: Type-safe service classes for Google, Slack, Microsoft, and Firecrawl integrations
+- **Provider Services**: Type-safe service classes for Google, Slack, Microsoft, HubSpot, and Firecrawl integrations
 - **Authentication Handling**: Automatic OAuth and API key authentication for all providers
 - **Error Handling**: Comprehensive error handling with logging and retry mechanisms
 
@@ -14,12 +14,19 @@ This package provides HTTP client services and provider integrations for the Dur
 ### Basic HTTP Client
 
 ```typescript
-import { createHttpClient, httpClient } from '@duramation/integrations/server';
+import { createHttpClient, httpClient, api, ApiClient } from '@duramation/integrations/server';
 
-// Use the default client
-const response = await httpClient.get('https://api.example.com/data');
+// Use the default client (returns parsed JSON body)
+const data = await httpClient.get('https://api.example.com/data').json();
 
-// Create a custom client
+// Or use the default ApiClient instance for automatic JSON parsing
+const data2 = await api.get('https://api.example.com/data');
+
+// Or create a custom ApiClient instance
+const customApi = new ApiClient(httpClient);
+const data3 = await customApi.get('https://api.example.com/data');
+
+// Create a custom client with specific configuration
 const customClient = createHttpClient({
   baseUrl: 'https://api.example.com',
   timeout: 10000,
@@ -93,6 +100,12 @@ export const myWorkflow = inngest.createFunction(
 - `listFiles(options)` - List OneDrive files
 - `createContact(contact)` - Create contacts
 
+### HubSpotService
+- `createContact(contact)` - Create HubSpot contacts
+- `updateContact(contactId, properties)` - Update contact properties
+- `getContact(contactId)` - Get contact details
+- `listContacts(options)` - List contacts with filtering
+
 ### FirecrawlService
 - `scrape(url, options)` - Scrape web pages
 - `crawl(url, options)` - Crawl websites
@@ -102,10 +115,11 @@ export const myWorkflow = inngest.createFunction(
 
 The HTTP client includes:
 - **Automatic retries** with exponential backoff
-- **Request/response logging** for debugging
+- **Optional request/response logging** (enable with `HTTP_CLIENT_LOG=1` environment variable)
 - **Timeout handling** (30s default)
-- **Error enhancement** with detailed context
+- **Error enhancement** with minimal metadata logging (no sensitive data)
 - **Authentication headers** automatically added per provider
+- **Dynamic User-Agent** with package version
 
 ## Error Handling
 

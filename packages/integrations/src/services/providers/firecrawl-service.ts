@@ -90,9 +90,14 @@ export class FirecrawlService {
     });
   }
   
-  async scrapeMultiple(urls: string[], options: FirecrawlScrapeOptions = {}): Promise<FirecrawlScrapeResponse[]> {
-    const promises = urls.map(url => this.scrape(url, options));
-    return Promise.all(promises);
+  async scrapeMultiple(urls: string[], options: FirecrawlScrapeOptions = {}, concurrency = 5): Promise<FirecrawlScrapeResponse[]> {
+    const results: FirecrawlScrapeResponse[] = [];
+    for (let i = 0; i < urls.length; i += concurrency) {
+      const batch = urls.slice(i, i + concurrency);
+      const batchResults = await Promise.all(batch.map(url => this.scrape(url, options)));
+      results.push(...batchResults);
+    }
+    return results;
   }
   
   // Crawl methods
@@ -197,11 +202,16 @@ export class FirecrawlService {
   async waitForCrawlCompletion(id: string, options: {
     maxWaitTime?: number;
     pollInterval?: number;
+    signal?: AbortSignal;
   } = {}): Promise<FirecrawlCrawlStatusResponse> {
     const { maxWaitTime = 300000, pollInterval = 5000 } = options; // 5 minutes max, 5 second intervals
     const startTime = Date.now();
     
     while (Date.now() - startTime < maxWaitTime) {
+      if (options.signal?.aborted) {
+        throw new Error('Crawl wait aborted');
+      }
+      
       const status = await this.getCrawlStatus(id);
       
       if (status.status === 'completed' || status.status === 'failed') {

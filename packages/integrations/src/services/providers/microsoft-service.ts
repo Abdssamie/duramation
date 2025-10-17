@@ -126,9 +126,15 @@ export class MicrosoftService {
     const queryParams = new URLSearchParams();
     queryParams.append('$top', (options.top || 50).toString());
     
+    // Use calendarView for date-ranged queries (more efficient)
     if (options.startDateTime && options.endDateTime) {
-      queryParams.append('$filter', `start/dateTime ge '${options.startDateTime}' and end/dateTime le '${options.endDateTime}'`);
-    } else if (options.filter) {
+      const start = encodeURIComponent(options.startDateTime);
+      const end = encodeURIComponent(options.endDateTime);
+      return this.client.get(`/me/calendarView?startDateTime=${start}&endDateTime=${end}&$top=${options.top || 50}`);
+    }
+    
+    // Fallback to events endpoint with filter
+    if (options.filter) {
       queryParams.append('$filter', options.filter);
     }
     
