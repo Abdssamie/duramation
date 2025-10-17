@@ -28,7 +28,8 @@
         "@duramation/shared": "*",
         "zod": "^4.1.11",
         "inngest": "^3.42.3",
-        "googleapis": "^159.0.0"
+        "googleapis": "^159.0.0",
+        "got": "^14.6.0"
     },
     "peerDependencies": {
         "react": "^19.0.0"

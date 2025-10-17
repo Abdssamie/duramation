@@ -15,6 +15,8 @@ export type {
 
 // Server-only services
 export * from './services/credential-store.js';
+export * from './services/http-client.js';
+export * from './services/providers/index.js';
 export * from './middleware/inngest-middleware.js';
 
 // Server-only provider registry with auth handlers
