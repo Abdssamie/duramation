@@ -1,162 +1,116 @@
-# @duramation/integrations
+# Duramation Integrations Package
 
-Centralized integration package for managing third-party service connections.
+This package provides HTTP client services and provider integrations for the Duramation workflow automation platform.
 
-## Structure
+## Features
 
-```
-src/
-├── providers/              # Provider-specific implementations
-│   ├── google/
-│   │   ├── config.ts      # Metadata, scopes, UI configuration
-│   │   ├── auth.ts        # OAuth flow handlers
-│   │   ├── services/      # Runtime service classes
-│   │   │   ├── base.ts    # Base Google service with token refresh
-│   │   │   └── sheets.ts  # Google Sheets specific methods
-│   │   └── index.ts       # Public exports
-│   ├── slack/
-│   │   ├── config.ts
-│   │   ├── auth.ts
-│   │   ├── services/
-│   │   │   └── slack.ts
-│   │   └── index.ts
-│   ├── firecrawl/
-│   │   ├── config.ts
-│   │   ├── auth.ts
-│   │   ├── services/
-│   │   │   └── firecrawl.ts
-│   │   └── index.ts
-│   └── registry.ts        # Central provider registry
-├── middleware/            # Inngest middleware
-│   └── inngest-middleware.ts
-├── services/              # Core services
-│   └── credential-store.ts
-├── types/                 # Shared types
-│   └── providers.ts
-└── index.ts              # Public API
-
-```
-
-## Architecture
-
-### Two-Layer Design
-
-**Layer 1: Frontend (UI)**
-- Workflow shows required credentials
-- UI renders provider-specific setup forms
-- Credentials registered to database
-
-**Layer 2: Runtime (Inngest)**
-- Middleware automatically retrieves credentials
-- Functions use credentials to initialize services
-- Services handle token refresh automatically
-
-### Adding a New Provider
-
-1. **Create provider directory**: `src/providers/your-provider/`
-
-2. **Define configuration** (`config.ts`):
-```typescript
-export const YOUR_PROVIDER_CONFIG = {
-  provider: 'YOUR_PROVIDER',
-  name: 'Your Provider',
-  description: '...',
-  authType: 'oauth' | 'API_KEY',
-  oauth: { ... } // or apiKey: { ... }
-  ui: { ... }
-};
-```
-
-3. **Implement auth handler** (`auth.ts`):
-```typescript
-export class YourProviderAuthHandler {
-  static generateAuthUrl(scopes: string[], state: string): string { ... }
-  static async handleCallback(code: string): Promise<YourProviderSecret> { ... }
-}
-```
-
-4. **Create service classes** (`services/your-service.ts`):
-```typescript
-export class YourProviderService {
-  constructor(credentialPayload: YourProviderSecret) { ... }
-  async someMethod() { ... }
-}
-```
-
-5. **Register in registry** (`providers/registry.ts`):
-```typescript
-export const PROVIDER_REGISTRY: Record<Provider, ProviderRegistryEntry> = {
-  YOUR_PROVIDER: {
-    config: YourProvider.YOUR_PROVIDER_CONFIG,
-    authHandler: YourProvider.YourProviderAuthHandler,
-    serviceClasses: {
-      main: YourProvider.YourProviderService,
-    },
-  },
-  // ...
-};
-```
+- **Shared HTTP Client**: Built on `got` for reliable HTTP requests with retry logic, timeout handling, and error logging
+- **Provider Services**: Type-safe service classes for Google, Slack, Microsoft, and Firecrawl integrations
+- **Authentication Handling**: Automatic OAuth and API key authentication for all providers
+- **Error Handling**: Comprehensive error handling with logging and retry mechanisms
 
 ## Usage
 
-### Frontend: Setup Credentials
+### Basic HTTP Client
 
 ```typescript
-import { getProviderRegistryConfig, getAuthHandler } from '@duramation/integrations';
+import { createHttpClient, httpClient } from '@duramation/integrations/server';
 
-// Get provider metadata for UI
-const config = getProviderRegistryConfig('GOOGLE');
+// Use the default client
+const response = await httpClient.get('https://api.example.com/data');
 
-// Generate OAuth URL
-const authHandler = getAuthHandler('GOOGLE');
-const authUrl = authHandler.generateAuthUrl(config.oauth.defaultScopes, state);
-
-// Handle callback
-const secret = await authHandler.handleCallback(code);
-// Save to database...
+// Create a custom client
+const customClient = createHttpClient({
+  baseUrl: 'https://api.example.com',
+  timeout: 10000,
+  retries: 5
+});
 ```
 
-### Runtime: Use in Inngest Functions
+### Provider Services
 
 ```typescript
-import { integrationMiddleware, Google } from '@duramation/integrations';
+import { GoogleService, SlackService, ProviderServiceFactory } from '@duramation/integrations/server';
+
+// Create services directly
+const googleService = new GoogleService(credentials);
+const slackService = new SlackService(credentials);
+
+// Or use the factory
+const service = ProviderServiceFactory.createService('GOOGLE', credentials);
+
+// Test connections
+const isConnected = await ProviderServiceFactory.testConnection('SLACK', credentials);
+```
+
+### In Workflows
+
+```typescript
+import { GoogleService, SlackService } from '@duramation/integrations/server';
 
 export const myWorkflow = inngest.createFunction(
-  { id: "my-workflow" },
-  { event: "my/event" },
-  async ({ event, credentials }) => {
-    // Find the credential you need
-    const googleCred = credentials.find(c => c.provider === 'GOOGLE');
+  { id: 'my-workflow' },
+  { event: 'workflow/my-workflow' },
+  async ({ event, step, logger }) => {
+    const credentials = await getCredentialsForWorkflow(workflowId, ['GOOGLE', 'SLACK']);
     
-    // Initialize service
-    const sheets = new Google.GoogleSheetsService(
-      event.user.id,
-      googleCred.id,
-      googleCred.secret
-    );
+    // Read from Google Sheets
+    const sheetData = await step.run('read-sheets', async () => {
+      const googleService = new GoogleService(credentials.GOOGLE);
+      return await googleService.readSheet(spreadsheetId, 'A1:Z100');
+    });
     
-    // Use service (token refresh handled automatically)
-    const data = await sheets.getSheetData(spreadsheetId, 'Sheet1!A1:Z100');
-    
-    return { data };
+    // Send to Slack
+    await step.run('send-slack', async () => {
+      const slackService = new SlackService(credentials.SLACK);
+      return await slackService.sendMessage({
+        channel: '#general',
+        text: `Found ${sheetData.values.length} rows`
+      });
+    });
   }
 );
 ```
 
-## Available Providers
+## Available Services
 
-- **Google**: OAuth, Gmail, Sheets, Calendar, Drive
-- **Slack**: OAuth, messaging, channels, users
-- **Firecrawl**: API Key, web scraping, crawling
-- **HubSpot**: Coming soon
-- **Custom**: API Key, custom integrations
+### GoogleService
+- `readSheet(spreadsheetId, range)` - Read data from Google Sheets
+- `writeSheet(spreadsheetId, range, values)` - Write data to Google Sheets
+- `sendEmail(message)` - Send email via Gmail
+- `createCalendarEvent(calendarId, event)` - Create calendar events
+- `listFiles(options)` - List Google Drive files
 
-## Key Features
+### SlackService
+- `sendMessage(message)` - Send messages to channels
+- `listChannels(options)` - List workspace channels
+- `getUserInfo(userId)` - Get user information
+- `uploadFile(options)` - Upload files to Slack
 
-- ✅ Automatic OAuth token refresh
-- ✅ Type-safe service classes
-- ✅ Centralized provider registry
-- ✅ UI metadata for frontend rendering
-- ✅ Database-backed credential storage
-- ✅ Inngest middleware integration
-- ✅ Extensible architecture
+### MicrosoftService
+- `sendEmail(email)` - Send email via Outlook
+- `createCalendarEvent(event)` - Create calendar events
+- `listFiles(options)` - List OneDrive files
+- `createContact(contact)` - Create contacts
+
+### FirecrawlService
+- `scrape(url, options)` - Scrape web pages
+- `crawl(url, options)` - Crawl websites
+- `search(query, options)` - Search the web
+
+## Configuration
+
+The HTTP client includes:
+- **Automatic retries** with exponential backoff
+- **Request/response logging** for debugging
+- **Timeout handling** (30s default)
+- **Error enhancement** with detailed context
+- **Authentication headers** automatically added per provider
+
+## Error Handling
+
+All services include comprehensive error handling:
+- Connection failures are logged and retried
+- Authentication errors are clearly identified
+- Rate limiting is handled automatically
+- Detailed error context is provided for debugging
