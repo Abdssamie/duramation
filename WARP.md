@@ -36,7 +36,7 @@ This is a Turborepo monorepo using Yarn workspaces with the following key comman
 ## Architecture Overview
 
 ### Monorepo Structure
-```
+```text
 ├── apps/
 │   ├── frontend/          # Next.js 15 frontend with React 19
 │   └── inngest-app/       # Next.js backend for Inngest workflows
@@ -102,9 +102,10 @@ This is a Turborepo monorepo using Yarn workspaces with the following key comman
 - Server-side integration utilities in `packages/integrations/server`
 
 #### Environment Setup:
-- Requires extensive environment variables (see turbo.json)
+- Requires extensive environment variables (see `apps/frontend/env.example.txt` for complete list)
 - Database connection, OAuth secrets, API keys for integrations
 - Separate environments for frontend and inngest-app
+- Key variables include: `DATABASE_URL`, `CLERK_SECRET_KEY`, `INNGEST_SIGNING_KEY`, provider OAuth credentials
 
 #### Testing:
 - No specific test commands found - may need to be added

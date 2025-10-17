@@ -41,11 +41,11 @@ export class SlackService {
   
   // Message methods
   async sendMessage(message: SlackMessage): Promise<any> {
-    return this.client.post('/chat.postMessage', message);
+    return this.client.post('chat.postMessage', message);
   }
   
   async updateMessage(channel: string, ts: string, message: Partial<SlackMessage>): Promise<any> {
-    return this.client.post('/chat.update', {
+    return this.client.post('chat.update', {
       channel,
       ts,
       ...message
@@ -53,7 +53,7 @@ export class SlackService {
   }
   
   async deleteMessage(channel: string, ts: string): Promise<any> {
-    return this.client.post('/chat.delete', {
+    return this.client.post('chat.delete', {
       channel,
       ts
     });
@@ -72,7 +72,7 @@ export class SlackService {
     if (options.oldest) queryParams.append('oldest', options.oldest);
     if (options.cursor) queryParams.append('cursor', options.cursor);
     
-    return this.client.get(`/conversations.history?${queryParams.toString()}`);
+    return this.client.get(`conversations.history?${queryParams.toString()}`);
   }
   
   // Channel methods
@@ -88,28 +88,28 @@ export class SlackService {
     queryParams.append('limit', (options.limit || 200).toString());
     if (options.cursor) queryParams.append('cursor', options.cursor);
     
-    return this.client.get(`/conversations.list?${queryParams.toString()}`);
+    return this.client.get(`conversations.list?${queryParams.toString()}`);
   }
   
   async getChannelInfo(channel: string): Promise<{ channel: SlackChannel }> {
-    return this.client.get(`/conversations.info?channel=${encodeURIComponent(channel)}`);
+    return this.client.get(`conversations.info?channel=${encodeURIComponent(channel)}`);
   }
   
   async createChannel(name: string, isPrivate: boolean = false): Promise<{ channel: SlackChannel }> {
-    return this.client.post('/conversations.create', {
+    return this.client.post('conversations.create', {
       name,
       is_private: isPrivate
     });
   }
   
   async joinChannel(channel: string): Promise<any> {
-    return this.client.post('/conversations.join', {
+    return this.client.post('conversations.join', {
       channel
     });
   }
   
   async leaveChannel(channel: string): Promise<any> {
-    return this.client.post('/conversations.leave', {
+    return this.client.post('conversations.leave', {
       channel
     });
   }
@@ -123,15 +123,15 @@ export class SlackService {
     queryParams.append('limit', (options.limit || 200).toString());
     if (options.cursor) queryParams.append('cursor', options.cursor);
     
-    return this.client.get(`/users.list?${queryParams.toString()}`);
+    return this.client.get(`users.list?${queryParams.toString()}`);
   }
   
   async getUserInfo(user: string): Promise<{ user: SlackUser }> {
-    return this.client.get(`/users.info?user=${encodeURIComponent(user)}`);
+    return this.client.get(`users.info?user=${encodeURIComponent(user)}`);
   }
   
   async getUserByEmail(email: string): Promise<{ user: SlackUser }> {
-    return this.client.get(`/users.lookupByEmail?email=${encodeURIComponent(email)}`);
+    return this.client.get(`users.lookupByEmail?email=${encodeURIComponent(email)}`);
   }
   
   // File methods
@@ -158,20 +158,16 @@ export class SlackService {
     if (options.title) formData.append('title', options.title);
     if (options.initial_comment) formData.append('initial_comment', options.initial_comment);
     
-    return this.client.post('/files.upload', formData, {
-      headers: {
-        'Content-Type': undefined // Let got set the boundary
-      }
-    });
+    return this.client.post('files.upload', formData);
   }
   
   // Workspace methods
   async getTeamInfo(): Promise<any> {
-    return this.client.get('/team.info');
+    return this.client.get('team.info');
   }
   
   async testAuth(): Promise<any> {
-    return this.client.get('/auth.test');
+    return this.client.get('auth.test');
   }
   
   // Utility methods

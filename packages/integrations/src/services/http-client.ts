@@ -1,6 +1,22 @@
-import got, { Got, Options, Response, BeforeRequestHook, AfterResponseHook, BeforeErrorHook } from 'got';
+import got, { Got, Options, OptionsOfJSONResponseBody, Response, BeforeRequestHook, AfterResponseHook, BeforeErrorHook } from 'got';
 import type { Provider } from '../types/providers.js';
 import type { CredentialSecret } from '@duramation/shared/types';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Get package version dynamically
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+let packageVersion = '1.0.0';
+try {
+  const packageJson = JSON.parse(
+    readFileSync(join(__dirname, '../../package.json'), 'utf-8')
+  );
+  packageVersion = packageJson.version;
+} catch {
+  // Fallback to default version if package.json can't be read
+}
 
 export interface HttpClientConfig {
   baseUrl?: string;
@@ -42,35 +58,39 @@ export function createHttpClient(config: HttpClientConfig = {}): Got {
       statusCodes: [408, 413, 429, 500, 502, 503, 504, 521, 522, 524]
     },
     headers: {
-      'User-Agent': 'Duramation/1.0',
+      'User-Agent': `Duramation/${packageVersion}`,
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
       ...headers
     },
     hooks: {
       beforeRequest: [
         (options) => {
-          // Add request logging
-          console.log(`[HTTP] ${options.method} ${options.url}`);
+          // Optional request logging (enable with HTTP_CLIENT_LOG=1)
+          if (process.env.HTTP_CLIENT_LOG === '1') {
+            const url = String(options.url ?? '');
+            // Strip query params to avoid logging sensitive data
+            console.log(`[HTTP] ${options.method} ${url.split('?')[0]}`);
+          }
         },
         ...(hooks.beforeRequest || [])
       ],
       afterResponse: [
         (response) => {
-          // Add response logging
-          console.log(`[HTTP] ${response.statusCode} ${response.request.options.method} ${response.url}`);
+          // Optional response logging (enable with HTTP_CLIENT_LOG=1)
+          if (process.env.HTTP_CLIENT_LOG === '1') {
+            console.log(`[HTTP] ${response.statusCode} ${response.request.options.method} ${response.request.requestUrl}`);
+          }
           return response;
         },
         ...(hooks.afterResponse || [])
       ],
       beforeError: [
         (error) => {
-          // Enhanced error logging
+          // Log minimal metadata to avoid leaking sensitive data
           console.error(`[HTTP Error] ${error.message}`, {
             url: error.request?.requestUrl,
             method: error.request?.options?.method,
             statusCode: error.response?.statusCode,
-            body: error.response?.body
           });
           return error;
         },
@@ -200,6 +220,8 @@ export const providerClients = {
  */
 export const httpClient = createHttpClient();
 
+
+
 /**
  * Utility function to handle common API patterns
  */
@@ -211,8 +233,8 @@ export class ApiClient {
     return response.body;
   }
   
-  async post<T = any>(url: string, data?: any, options?: Partial<Options>): Promise<T> {
-    const requestOptions: Partial<Options> = {
+  async post<T = any>(url: string, data?: any, options?: Partial<OptionsOfJSONResponseBody>): Promise<T> {
+    const requestOptions: Partial<OptionsOfJSONResponseBody> = {
       ...options
     };
     
@@ -232,8 +254,8 @@ export class ApiClient {
     return response.body;
   }
   
-  async put<T = any>(url: string, data?: any, options?: Partial<Options>): Promise<T> {
-    const requestOptions: Partial<Options> = {
+  async put<T = any>(url: string, data?: any, options?: Partial<OptionsOfJSONResponseBody>): Promise<T> {
+    const requestOptions: Partial<OptionsOfJSONResponseBody> = {
       ...options
     };
     
@@ -258,8 +280,8 @@ export class ApiClient {
     return response.body;
   }
   
-  async patch<T = any>(url: string, data?: any, options?: Partial<Options>): Promise<T> {
-    const requestOptions: Partial<Options> = {
+  async patch<T = any>(url: string, data?: any, options?: Partial<OptionsOfJSONResponseBody>): Promise<T> {
+    const requestOptions: Partial<OptionsOfJSONResponseBody> = {
       ...options
     };
     
@@ -279,3 +301,8 @@ export class ApiClient {
     return response.body;
   }
 }
+
+/**
+ * Default API client instance for convenience
+ */
+export const api = new ApiClient(httpClient);
