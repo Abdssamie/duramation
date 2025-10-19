@@ -46,6 +46,9 @@ model User {
   // Service requests from this user
   serviceRequests ServiceRequest[]
 
+  // API keys for external workflow triggering
+  apiKeys ApiKey[]
+
   @@map("users")
 }
 
@@ -331,4 +334,24 @@ model AutomationMetrics {
   @@index([workflowId])
   @@index([date])
   @@map("automation_metrics")
+}
+
+// API keys for external workflow triggering
+model ApiKey {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name       String // User-friendly name for the key
+  key        String    @unique /// @encrypted - The actual API key (hashed)
+  lastUsedAt DateTime?
+  expiresAt  DateTime? // Optional expiration
+  isActive   Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([key])
+  @@map("api_keys")
 }

@@ -21,6 +21,7 @@
     "@inngest/realtime": "^0.4.4",
     "@prisma/client": "^6.17.1",
     "@upstash/redis": "^1.35.5",
+    "crypto": "^1.0.1",
     "date-fns": "^4.1.0",
     "googleapis": "^159.0.0",
     "inngest": "^3.42.3",

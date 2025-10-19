@@ -31,7 +31,8 @@ import {
   IconX,
   IconLayoutKanban,
   IconBrandGithub,
-  IconArrowLeft
+  IconArrowLeft,
+  IconKey
 } from '@tabler/icons-react';
 import { AutomationIcon } from './icons/automation-icon';
 import { IconBrandGoogle, IconBrandSlack } from '@tabler/icons-react';
@@ -95,5 +96,6 @@ export const Icons = {
   marketplace: IconShoppingBag,
   google: IconBrandGoogle,
   slack: IconBrandSlack,
-  hubspot: HubspotIcon
+  hubspot: HubspotIcon,
+  key: IconKey
 };

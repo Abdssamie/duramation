@@ -7,6 +7,8 @@
     "build:backend": "turbo run build --filter=inngest-app...",
     "build:packages": "turbo run build --filter='./packages/*'",
     "dev": "turbo run dev",
+    "dev:frontend": "cd apps/frontend && yarn dev",
+    "dev:backend": "cd apps/inngest-app && yarn dev",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

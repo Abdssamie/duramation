@@ -38,6 +38,14 @@ export const navItems: NavItem[] = [
     items: [] // No child items
   },
   {
+    title: 'API Keys',
+    url: '/dashboard/api-keys',
+    icon: 'key',
+    shortcut: ['k', 'k'],
+    isActive: false,
+    items: [] // No child items
+  },
+  {
     title: 'Account',
     url: '/dashboard/profile',
     icon: 'billing',

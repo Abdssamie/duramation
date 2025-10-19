@@ -39,6 +39,53 @@ import {
 } from '@duramation/shared';
 import type { WorkflowUpdateRequest } from '@duramation/shared';
 
+// API Key types
+export interface ApiKey {
+  id: string;
+  name: string;
+  lastUsedAt: Date | null;
+  expiresAt: Date | null;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ApiKeyWithSecret extends ApiKey {
+  key: string; // Only available on creation
+}
+
+export interface ApiKeyCreateRequest {
+  name: string;
+  expiresAt?: string;
+}
+
+export interface ApiKeyUpdateRequest {
+  name?: string;
+  isActive?: boolean;
+}
+
+export interface ApiKeyListResponse {
+  success: boolean;
+  data: ApiKey[];
+}
+
+export interface ApiKeyCreateResponse {
+  success: boolean;
+  data: ApiKeyWithSecret;
+  message: string;
+}
+
+export interface ApiKeyUpdateResponse {
+  success: boolean;
+  data: ApiKey;
+  message: string;
+}
+
+export interface ApiKeyDeleteResponse {
+  success: boolean;
+  message: string;
+}
+
 const BASE_URL =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.NEXT_BACKEND_API_URL ||
@@ -281,10 +328,22 @@ export const dashboardApi = {
     request<ChartDataApiResponse>(`/api/dashboard/chart-data?${params.toString()}`, { token }),
 };
 
+// API Keys
+
+export const apiKeysApi = {
+  list: (token: string) =>
+    request<ApiKeyListResponse>(`/api/api-keys`, { token }),
+  create: (token: string, data: ApiKeyCreateRequest) =>
+    request<ApiKeyCreateResponse>(`/api/api-keys`, { token, method: 'POST', body: data }),
+  remove: (token: string, id: string) =>
+    request<ApiKeyDeleteResponse>(`/api/api-keys/${id}`, { token, method: 'DELETE' }),
+};
+
 export default {
   workflows: workflowsApi,
   marketplace: marketplaceApi,
   credentials: credentialsApi,
   realtime: realtimeApi,
   dashboard: dashboardApi,
+  apiKeys: apiKeysApi,
 };
