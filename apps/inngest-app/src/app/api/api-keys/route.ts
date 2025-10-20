@@ -72,6 +72,7 @@ export async function POST(request: NextRequest) {
         userId,
         name,
         key: hashedKey,
+        keyHash: hashedKey, // Store hash for searching
         expiresAt: expiresAt ? new Date(expiresAt) : null,
       },
       select: {

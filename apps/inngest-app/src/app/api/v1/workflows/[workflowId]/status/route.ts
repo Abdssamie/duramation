@@ -3,17 +3,17 @@ import prisma from '@/lib/prisma';
 import { authenticateApiKey } from '@/lib/utils/api-key';
 
 /**
- * Public API endpoint to get a specific workflow run's details
- * GET /api/v1/workflows/:workflowId/runs/:runId
+ * GET endpoint to check workflow status
+ * GET /api/v1/workflows/:workflowId/status
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { workflowId: string; runId: string } }
+  { params }: { params: Promise<{ workflowId: string }> }
 ) {
   try {
     // Extract API key from Authorization header
     const authHeader = request.headers.get('authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json(
         {
@@ -37,61 +37,37 @@ export async function GET(
       );
     }
 
-    const { workflowId, runId } = params;
+    const { workflowId } = await params;
 
-    // Get the workflow run
-    const run = await prisma.workflowRun.findFirst({
+    // Get workflow details
+    const workflow = await prisma.workflow.findFirst({
       where: {
-        id: runId,
-        workflowId,
+        id: workflowId,
         userId,
       },
       select: {
         id: true,
-        inngestRunId: true,
         status: true,
-        startedAt: true,
-        completedAt: true,
-        input: true,
-        output: true,
-        error: true,
-        version: true,
-        realtimeData: true,
-        workflow: {
-          select: {
-            id: true,
-            name: true,
-            eventName: true,
-          },
-        },
+        createdAt: true,
       },
     });
 
-    if (!run) {
+    if (!workflow) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Workflow run not found',
+          error: 'Workflow not found',
         },
         { status: 404 }
       );
     }
 
-    // Calculate duration if completed
-    let duration = null;
-    if (run.completedAt) {
-      duration = run.completedAt.getTime() - run.startedAt.getTime();
-    }
-
     return NextResponse.json({
       success: true,
-      data: {
-        ...run,
-        duration,
-      },
+      data: workflow,
     });
   } catch (error) {
-    console.error('Error fetching workflow run:', error);
+    console.error('Error fetching workflow status:', error);
     return NextResponse.json(
       {
         success: false,

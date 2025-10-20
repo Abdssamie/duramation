@@ -344,6 +344,7 @@ model ApiKey {
 
   name        String // User-friendly name for the key
   key         String @unique /// @encrypted - The actual API key (hashed)
+  keyHash     String @unique // SHA-256 hash for searching
   lastUsedAt  DateTime?
   expiresAt   DateTime? // Optional expiration
   isActive    Boolean  @default(true)
@@ -352,6 +353,6 @@ model ApiKey {
   updatedAt DateTime @updatedAt
 
   @@index([userId])
-  @@index([key])
+  @@index([keyHash])
   @@map("api_keys")
 }

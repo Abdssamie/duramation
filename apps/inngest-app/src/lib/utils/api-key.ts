@@ -32,10 +32,11 @@ export async function authenticateApiKey(apiKey: string): Promise<string | null>
   try {
     const keyRecord = await prisma.apiKey.findUnique({
       where: {
-        key: hashedKey,
+        keyHash: hashedKey,
         isActive: true,
       },
       select: {
+        id: true,
         userId: true,
         expiresAt: true,
       },
@@ -52,7 +53,7 @@ export async function authenticateApiKey(apiKey: string): Promise<string | null>
 
     // Update last used timestamp
     await prisma.apiKey.update({
-      where: { key: hashedKey },
+      where: { id: keyRecord.id },
       data: { lastUsedAt: new Date() },
     });
 

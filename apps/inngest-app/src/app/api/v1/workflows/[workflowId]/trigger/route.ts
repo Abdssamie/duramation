@@ -220,7 +220,7 @@ export async function POST(
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { workflowId: string } }
+  { params }: { params: Promise<{ workflowId: string }> }
 ) {
   try {
     // Extract API key from Authorization header
@@ -249,7 +249,7 @@ export async function GET(
       );
     }
 
-    const { workflowId } = params;
+    const { workflowId } = await params;
 
     // Get workflow details
     const workflow = await prisma.workflow.findFirst({

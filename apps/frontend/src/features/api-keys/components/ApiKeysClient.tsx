@@ -10,12 +10,13 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { apiKeysApi, type ApiKey, type ApiKeyWithSecret } from '@/services/api/api-client';
+import { apiKeysApi, workflowsApi, type ApiKey, type ApiKeyWithSecret } from '@/services/api/api-client';
 import { toast } from 'sonner';
-import { Copy, Key, Plus, Trash2, Eye, EyeOff, Check } from 'lucide-react';
+import { Copy, Key, Plus, Trash2, Eye, EyeOff, Check, Code2, Workflow as WorkflowIcon } from 'lucide-react';
 import { formatDate } from '@/lib/format';
+import type { Workflow } from '@duramation/shared';
 
-const CodeBlock = ({ code, language = 'bash' }: { code: string; language?: string }) => {
+const CodeBlock = ({ code }: { code: string }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -45,6 +46,7 @@ const CodeBlock = ({ code, language = 'bash' }: { code: string; language?: strin
 export default function ApiKeysClient() {
   const { getToken } = useAuth();
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
+  const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [loading, setLoading] = useState(true);
   const [showDevDialog, setShowDevDialog] = useState(true);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -56,6 +58,7 @@ export default function ApiKeysClient() {
 
   useEffect(() => {
     loadApiKeys();
+    loadWorkflows();
   }, []);
 
   const loadApiKeys = async () => {
@@ -72,6 +75,20 @@ export default function ApiKeysClient() {
       console.error(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadWorkflows = async () => {
+    try {
+      const token = await getToken();
+      if (!token) return;
+
+      const response = await workflowsApi.list(token);
+      if (response.success && response.data) {
+        setWorkflows(response.data);
+      }
+    } catch (error) {
+      console.error('Failed to load workflows:', error);
     }
   };
 
@@ -147,8 +164,8 @@ export default function ApiKeysClient() {
   }
 
   return (
-  <div className="w-full max-w-6xl mx-auto px-4 py-8 space-y-8">
-      {/* Developer-only dialog shown on every page load */}
+    <div className="space-y-6">
+      {/* Developer-only dialog */}
       <Dialog open={showDevDialog} onOpenChange={setShowDevDialog}>
         <DialogContent>
           <DialogHeader>
@@ -162,161 +179,270 @@ export default function ApiKeysClient() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-2 border-b border-border/30">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-primary mb-1">Duramation API</h1>
-          <p className="text-base text-muted-foreground max-w-xl">
-            Securely manage your API keys for triggering workflows from external systems. <br className="hidden md:block" />
-                      </p>
+      <div className="flex flex-col gap-4">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">API Keys</h1>
+            <p className="text-muted-foreground mt-1">
+              Manage API keys to trigger workflows from external systems
+            </p>
+          </div>
+          <Button 
+            onClick={() => setShowCreateDialog(true)} 
+            disabled={creating || apiKeys.length >= 3}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            {apiKeys.length >= 3 ? 'Limit reached' : 'Add new key'}
+          </Button>
         </div>
-        <Button onClick={() => setShowCreateDialog(true)} size="lg" disabled={creating || apiKeys.length >= 3} className="mt-4 md:mt-0 shadow-sm">
-          <Plus className="mr-2 h-5 w-5" />
-          {apiKeys.length >= 3 ? 'Limit reached' : creating ? 'Creating...' : 'Create API Key'}
-        </Button>
       </div>
 
-  {/* Main Content Layout */}
-  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Column 1: API Documentation */}
-        
-  <Card className="lg:col-span-1 border border-border/50 shadow-sm hover:shadow-md transition-all duration-200">
-    <CardHeader className="pb-4 border-b border-border/40">
-      <CardTitle className="text-lg font-semibold flex items-center gap-2">
-        🚀 Quick Start
-      </CardTitle>
-      <CardDescription className="text-sm text-muted-foreground">
-        Copy & run these <code>curl</code> examples to interact with the API.
-      </CardDescription>
-    </CardHeader>
+      <Tabs defaultValue="keys" className="w-full space-y-6">
+        <TabsList>
+          <TabsTrigger value="keys">
+            <Key className="mr-2 h-4 w-4" />
+            Secret Keys
+          </TabsTrigger>
+          <TabsTrigger value="workflows">
+            <WorkflowIcon className="mr-2 h-4 w-4" />
+            Your Workflows
+          </TabsTrigger>
+          <TabsTrigger value="docs">
+            <Code2 className="mr-2 h-4 w-4" />
+            API Reference
+          </TabsTrigger>
+        </TabsList>
 
-    <CardContent className="space-y-5">
+        {/* Secret Keys Tab */}
+        <TabsContent value="keys" className="w-full space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Secret keys</CardTitle>
+              <CardDescription>
+                Securely manage these sensitive keys. Do not share them with anyone. If you suspect a key has been compromised, delete it and create a new one.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {apiKeys.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="rounded-full bg-muted p-3 mb-4">
+                    <Key className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <h3 className="font-semibold mb-1">No API keys yet</h3>
+                  <p className="text-sm text-muted-foreground mb-4 max-w-sm">
+                    Create your first API key to start triggering workflows from external applications
+                  </p>
+                  <Button onClick={() => setShowCreateDialog(true)} size="sm">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Create your first API key
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {apiKeys.map((key) => (
+                    <div 
+                      key={key.id} 
+                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-medium truncate">{key.name}</h3>
+                          {!key.isActive && (
+                            <Badge variant="secondary" className="text-xs">Inactive</Badge>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                          <span>Created {formatDate(key.createdAt)}</span>
+                          {key.lastUsedAt && (
+                            <span>Last used {formatDate(key.lastUsedAt)}</span>
+                          )}
+                          {key.expiresAt && (
+                            <span>Expires {formatDate(key.expiresAt)}</span>
+                          )}
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteKey(key.id)}
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                        disabled={!!deletingKeyId}
+                      >
+                        {deletingKeyId === key.id ? (
+                          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                          </svg>
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-      {/* Trigger Workflow */}
-      <div className="space-y-3">
-        <h4 className="text-sm font-semibold tracking-wide text-primary">
-          Trigger a Workflow
-        </h4>
-        <CodeBlock
-          language="bash"
-          code={`curl -X POST ${baseUrl}/api/v1/workflows/<workflow_id>/trigger \\
+        {/* Your Workflows Tab */}
+        <TabsContent value="workflows" className="w-full space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Your workflows</CardTitle>
+              <CardDescription>
+                Copy workflow IDs and view field definitions for API integration. Use these field definitions to construct your API request input.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {workflows.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="rounded-full bg-muted p-3 mb-4">
+                    <WorkflowIcon className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                  <h3 className="font-semibold mb-1">No workflows installed</h3>
+                  <p className="text-sm text-muted-foreground max-w-sm">
+                    Install workflows from the marketplace to start automating your tasks
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {workflows.map((workflow) => (
+                    <div key={workflow.id} className="border-2 rounded-lg p-4 space-y-3 bg-card">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold mb-1">{workflow.name}</h3>
+                          {workflow.description && (
+                            <p className="text-sm text-muted-foreground mb-2">{workflow.description}</p>
+                          )}
+                          <div>
+                           
+                            <div className="flex items-center gap-2 inline-item">
+                           <span className="text-s text-muted-foreground block mb-1"><b>Workflow ID:</b></span>
+                             <Badge variant="outline" className="font-mono text-xs">
+                                {workflow.id}
+                              </Badge>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => copyToClipboard(workflow.id)}
+                                className="h-6 px-2"
+                              >
+                                <Copy className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {workflow.fields && (
+                        <div className="space-y-2">
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <h4 className="text-sm font-medium">Field Definitions</h4>
+                              <p className="text-xs text-muted-foreground mt-0.5">
+                                Use these field definitions to construct your API request input object
+                              </p>
+                            </div>
+                          </div>
+                          <CodeBlock
+                            code={JSON.stringify(workflow.fields, null, 2)}
+                          />
+                          <Alert>
+                            <AlertDescription className="text-xs">
+                              <p><strong>Note:</strong> This shows the field schema structure. Your actual API request should use the <code className="bg-muted px-1 py-0.5 rounded inline-block">input</code> object with key-value pairs based on these field definitions.</p>
+                            </AlertDescription>
+                          </Alert>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* API Reference Tab */}
+        <TabsContent value="docs" className="w-full space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>API Reference</CardTitle>
+              <CardDescription>
+                Base URL and example requests for the Duramation API
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Base URL */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium">Workflow API URL</Label>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 bg-muted border rounded px-3 py-2 text-sm font-mono">
+                    {baseUrl}
+                  </code>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copyToClipboard(baseUrl)}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Trigger Workflow */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold">Trigger a Workflow</h4>
+                <p className="text-xs text-muted-foreground">
+                  Replace <code className="bg-muted px-1 py-0.5 rounded">&lt;workflow_id&gt;</code> with your workflow ID from the "Your Workflows" tab
+                </p>
+                <CodeBlock
+                  code={`curl -X POST ${baseUrl}/api/v1/workflows/<workflow_id>/trigger \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer <api_key>" \\
   -d '{
     "input": {
-      "key": "value"
+      "channel": "#general",
+      "message": "Hello from API"
     },
     "metadata": {
       "source": "api"
     }
   }'`}
-        />
-      </div>
+                />
+                <Alert>
+                  <AlertDescription className="text-xs">
+                    <p><strong>Example:</strong> The <code className="bg-muted px-1 py-0.5 rounded inline">input</code> object contains key-value pairs based on your workflow's field definitions. For a Slack workflow with "channel" and "message" fields, you would provide those values as shown above.</p>
+                  </AlertDescription>
+                </Alert>
+              </div>
 
-      {/* Get Status */}
-      <div className="space-y-5">
-        <h4 className="text-sm font-semibold tracking-wide text-primary">
-          Get Workflow Status
-        </h4>
-        <CodeBlock
-          language="bash"
-          code={`curl -X GET ${baseUrl}/api/v1/workflows/<workflow_id>/status \\
+              {/* Get Status */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold">Get Workflow Status</h4>
+                <CodeBlock
+                  code={`curl -X GET ${baseUrl}/api/v1/workflows/<workflow_id>/status \\
   -H "Authorization: Bearer <api_key>"`}
-        />
-      </div>
+                />
+              </div>
 
-      {/* Example Response */}
-      <div className="space-y-3">
-        <h4 className="text-sm font-semibold tracking-wide text-primary">
-          Workflow Status Example Response
-        </h4>
-        <CodeBlock
-          language="json"
-          code={`{
+              {/* Example Response */}
+              <div className="space-y-2">
+                <h4 className="text-sm font-semibold">Example Response</h4>
+                <CodeBlock
+                  code={`{
   "id": "workflow_run_123",
   "status": "running",
   "created_at": "2025-10-19T12:45:00Z"
 }`}
-        />
-      </div>
-
-    </CardContent>
-  </Card>
-        {/* Column 2 & 3: API Keys Management */}
-        <div className="lg:col-span-2 space-y-4">
-          {apiKeys.length === 0 ? (
-            <Card className="border-dashed">
-              <CardContent className="flex flex-col items-center justify-center py-16">
-                <div className="rounded-full bg-muted p-4 mb-4">
-                  <Key className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">No API keys yet</h3>
-                <p className="text-muted-foreground text-sm mb-6 text-center max-w-sm">
-                  Create your first API key to start triggering workflows from external applications
-                </p>
-                <Button onClick={() => setShowCreateDialog(true)} size="lg">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Create your first API key
-                </Button>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="space-y-3">
-              {apiKeys.map((key) => (
-                  <Card key={key.id} className="hover:shadow-md transition-shadow">
-                    <CardContent className="p-3">{/* reduced padding */}
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-2">{/* tighter spacing */}
-                            <h3 className="font-semibold text-sm truncate">{key.name}</h3>{/* smaller font */}
-                          </div>
-                          <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">{/* smaller text */}
-                            <div>
-                              <span className="text-muted-foreground">Created:</span>
-                              <span className="ml-2 font-medium">{formatDate(key.createdAt)}</span>
-                            </div>
-                            {key.lastUsedAt && (
-                              <div>
-                                <span className="text-muted-foreground">Last used:</span>
-                                <span className="ml-2 font-medium">{formatDate(key.lastUsedAt)}</span>
-                              </div>
-                            )}
-                            {key.expiresAt && (
-                              <div>
-                                <span className="text-muted-foreground">Expires:</span>
-                                <span className="ml-2 font-medium">{formatDate(key.expiresAt)}</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex gap-2 ml-4">
-
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDeleteKey(key.id)}
-                            className="text-destructive hover:text-destructive"
-                            disabled={!!deletingKeyId}
-                          >
-                            {/* show spinner icon when deleting this key */}
-                            {deletingKeyId === key.id ? (
-                              <svg className="animate-spin h-4 w-4 text-destructive" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-                              </svg>
-                            ) : (
-                              <Trash2 className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-            </div>
-          )}
-        </div>
-      </div>
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       {/* Create Dialog */}
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
