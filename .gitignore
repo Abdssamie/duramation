@@ -15,7 +15,7 @@ node_modules
 apps/inngest-app/*.log
 apps/inngest-app/combined.log
 
-packages/db/generated
+packages/db/src/generated
 
 # Testing
 coverage
