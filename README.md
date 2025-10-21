@@ -1,135 +1,220 @@
-# Turborepo starter
+# Duramation
 
-This Turborepo starter is maintained by the Turborepo core team.
+A workflow automation platform built with Next.js, Inngest, and Turborepo.
 
-## Using this example
+## Prerequisites
 
-Run the following command:
+- Node.js >= 18
+- pnpm >= 9.0.0
 
-```sh
-npx create-turbo@latest
+Install pnpm globally:
+
+```bash
+npm install -g pnpm@9.15.4
 ```
 
-## What's inside?
+## Getting Started
 
-This Turborepo includes the following packages/apps:
+### 1. Install dependencies
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@duramation/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@duramation/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@duramation/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+pnpm install
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 2. Set up environment variables
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+Copy the example env files and fill in your credentials:
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+cp apps/frontend/.env.example apps/frontend/.env
+cp apps/inngest-app/.env.example apps/inngest-app/.env
 ```
 
-### Develop
+### 3. Set up the database
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+cd packages/db
+pnpm db:generate
+pnpm db:migrate
+cd ../..
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 4. Build packages
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+pnpm build:packages
 ```
 
-### Remote Caching
+### 5. Start development servers
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+```bash
+# Start all apps
+pnpm dev
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+# Or start individually
+pnpm dev:frontend  # Runs on port 3000
+pnpm dev:backend   # Runs on port 3001
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+duramation/
+├── apps/
+│   ├── frontend/          # Next.js user dashboard (port 3000)
+│   └── inngest-app/       # Inngest workflow engine (port 3001)
+├── packages/
+│   ├── db/               # Prisma schema and client
+│   ├── shared/           # Shared types and utilities
+│   ├── integrations/     # Provider integrations
+│   ├── eslint-config/    # ESLint configurations
+│   └── typescript-config/ # TypeScript configurations
+└── scripts/              # Build and deployment scripts
 ```
 
-## Useful Links
+## Available Scripts
 
-Learn more about the power of Turborepo:
+### Development
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```bash
+pnpm dev              # Start all apps in dev mode
+pnpm dev:frontend     # Start frontend only
+pnpm dev:backend      # Start backend only
+```
+
+### Building
+
+```bash
+pnpm build            # Build all apps and packages
+pnpm build:frontend   # Build frontend app
+pnpm build:backend    # Build backend app
+pnpm build:packages   # Build shared packages only
+```
+
+### Database
+
+```bash
+cd packages/db
+pnpm db:generate      # Generate Prisma client
+pnpm db:migrate       # Run migrations
+pnpm db:push          # Push schema changes
+pnpm db:studio        # Open Prisma Studio
+```
+
+### Workflow Development
+
+```bash
+cd apps/inngest-app
+pnpm update-templates # Sync workflow templates to database
+pnpm update-schemas   # Generate Zod schemas for workflow metadata
+```
+
+### Code Quality
+
+```bash
+pnpm lint             # Lint all packages
+pnpm typecheck        # Type check all packages
+pnpm format           # Format code with Prettier
+pnpm check-types      # Check types in all packages
+pnpm clean            # Clean build artifacts
+```
+
+### Deployment
+
+```bash
+pnpm deploy:staging   # Deploy to staging
+pnpm deploy:production # Deploy to production
+```
+
+## Tech Stack
+
+### Frontend (apps/frontend)
+- Next.js 15 with App Router
+- React 19
+- TypeScript 5.9
+- Tailwind CSS v4
+- Shadcn-ui
+- Clerk Authentication
+- Zustand for state management
+
+### Backend (apps/inngest-app)
+- Next.js 15 (API routes)
+- Inngest v3.42+ (workflow engine)
+- TypeScript 5.9
+- Winston logging
+
+### Shared Infrastructure
+- PostgreSQL with Prisma ORM
+- Upstash Redis
+- Cloudflare R2 for storage
+- Vercel for deployment
+
+## Workspace Commands
+
+```bash
+# Run command in specific workspace
+pnpm --filter frontend <command>
+pnpm --filter inngest-app <command>
+pnpm --filter @duramation/db <command>
+
+# Run command in all workspaces
+pnpm -r <command>
+
+# Add dependency to specific workspace
+pnpm --filter frontend add lodash
+pnpm --filter inngest-app add -D @types/node
+```
+
+## Environment Variables
+
+Required environment variables are defined in `turbo.json`. See `apps/frontend/env.example.txt` for a complete list.
+
+Key variables:
+- Database: `POSTGRES_PRISMA_URL`, `DATABASE_URL`
+- Redis: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+- Clerk: `CLERK_SECRET_KEY`, `CLERK_WEBHOOK_SIGNING_SECRET`
+- Inngest: `INNGEST_SIGNING_KEY`, `INNGEST_EVENT_KEY`
+- OAuth Providers: Client IDs and secrets for Google, Slack, Microsoft
+- Encryption: `ENCRYPTION_SECRET_KEY`, `PRISMA_FIELD_ENCRYPTION_KEY`
+
+## Troubleshooting
+
+### Module not found errors
+
+```bash
+pnpm clean
+rm -rf node_modules apps/*/node_modules packages/*/node_modules
+pnpm install
+pnpm build:packages
+```
+
+### Prisma client issues
+
+```bash
+cd packages/db
+pnpm db:generate
+cd ../..
+pnpm build:packages
+```
+
+### Build cache issues
+
+```bash
+pnpm clean
+pnpm build
+```
+
+## Migration from Yarn
+
+If you're migrating from Yarn, see [MIGRATION_TO_PNPM.md](./MIGRATION_TO_PNPM.md) for detailed instructions.
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Run `pnpm lint` and `pnpm typecheck`
+4. Submit a pull request
+
+## License
+
+MIT

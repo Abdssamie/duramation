@@ -26,20 +26,21 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@duramation/db": "*",
-        "@duramation/shared": "*",
-        "zod": "^4.1.11",
-        "inngest": "^3.42.3",
+        "@duramation/db": "workspace:*",
+        "@duramation/shared": "workspace:*",
+        "google-auth-library": "^10.4.1",
         "googleapis": "^159.0.0",
-        "got": "^14.6.0"
+        "got": "^14.6.0",
+        "inngest": "^3.42.3",
+        "zod": "^4.1.11"
     },
     "peerDependencies": {
         "react": "^19.0.0"
     },
     "devDependencies": {
-        "@duramation/typescript-config": "*",
+        "@duramation/typescript-config": "workspace:*",
         "@types/node": "^24.5.2",
-        "@types/react": "^18.0.0",
+        "@types/react": "^19.0.2",
         "typescript": "^5.9.2"
     }
 }

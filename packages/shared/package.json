@@ -34,11 +34,11 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@duramation/db": "*",
+        "@duramation/db": "workspace:*",
         "zod": "^4.1.11"
     },
     "devDependencies": {
-        "@duramation/typescript-config": "*",
+        "@duramation/typescript-config": "workspace:*",
         "@types/node": "^24.5.2",
         "typescript": "^5.9.2"
     }

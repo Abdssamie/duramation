@@ -10,7 +10,7 @@
     "schema.prisma"
   ],
   "scripts": {
-    "build": "yarn db:generate && tsc && cp -R src/generated dist",
+    "build": "pnpm db:generate && tsc && cp -R src/generated dist",
     "dev": "tsc --watch",
     "clean": "rimraf dist .turbo",
     "db:generate": "prisma generate --no-engine",
@@ -29,7 +29,7 @@
     "prisma-field-encryption": "^1.6.0"
   },
   "devDependencies": {
-    "@duramation/typescript-config": "*",
+    "@duramation/typescript-config": "workspace:*",
     "@types/node": "^24.5.2",
     "prisma": "6.17.1",
     "typescript": "^5.9.2"

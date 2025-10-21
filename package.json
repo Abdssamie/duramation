@@ -7,8 +7,8 @@
     "build:backend": "turbo run build --filter=inngest-app...",
     "build:packages": "turbo run build --filter='./packages/*'",
     "dev": "turbo run dev",
-    "dev:frontend": "cd apps/frontend && yarn dev",
-    "dev:backend": "cd apps/inngest-app && yarn dev",
+    "dev:frontend": "cd apps/frontend && pnpm dev",
+    "dev:backend": "cd apps/inngest-app && pnpm dev",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -25,12 +25,9 @@
     "typescript": "5.9.2",
     "vercel": "^48.2.9"
   },
-  "packageManager": "yarn@1.22.22",
+  "packageManager": "pnpm@9.15.4",
   "engines": {
-    "node": ">=18"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+    "node": ">=18",
+    "pnpm": ">=9.0.0"
+  }
 }
