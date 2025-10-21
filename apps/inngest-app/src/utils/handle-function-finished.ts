@@ -1,4 +1,3 @@
-import { Logger } from "winston";
 import { RunStatus, WorkflowStatus } from "@duramation/db";
 
 import { updateStatusForWorkflow } from "@/utils/updateWorkflowStatus";

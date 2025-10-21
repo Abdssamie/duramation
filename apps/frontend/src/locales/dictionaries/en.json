@@ -185,7 +185,8 @@
     "login": "Login",
     "kanban": "Kanban",
     "billing": "Billing",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "api keys": "API Keys"
   },
   "navProjects": {
     "projects": "Projects",

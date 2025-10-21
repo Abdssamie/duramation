@@ -4465,3 +4465,32 @@
 {"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Sending webhook to: http://localhost:3000/api/realtime/notify","runID":"01K7PYZ5R62M46EN4X9E61KY1W","service":"user-service"}
 {"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Webhook sent successfully to: http://localhost:3000/api/realtime/notify","runID":"01K7PYZ5R62M46EN4X9E61KY1W","service":"user-service"}
 {"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Workflow and run status update complete","runID":"01K7PYZ5R62M46EN4X9E61KY1W","service":"user-service"}
+{"level":"info","message":"Running workflow cmgrxcz0e000720eab19al9zc for user cmgrxbohs000020ea6m9na5ln via API key","service":"user-service"}
+{"level":"info","message":"idempotency_key: e15c2aef-6415-4e62-88e0-a28d5ae5d26b","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"eventName":"workflow/random.text.loop","functionName":"random-text-loop","level":"info","message":{"functionId":"random-text-loop","runId":"01K81TR45DB60NTAAX1CNCXJ78","userId":"cmgrxbohs000020ea6m9na5ln","workflowId":"cmgrxcz0e000720eab19al9zc"},"runID":"01K81TR45DB60NTAAX1CNCXJ78","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"level":"info","message":"Workflow cmgrxcz0e000720eab19al9zc status set to RUNNING","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"--------------------------------\n","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"duramation-random-text-loop","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"--------------------------------\n","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"cmgrxcz0e000720eab19al9zc","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"cmgrxbohs000020ea6m9na5ln","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Updating workflow status","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Upserted workflow status for workflow: cmgrxcz0e000720eab19al9zc","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Updating workflow run status","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Upserted workflow run status for run: 01K81TR45DB60NTAAX1CNCXJ78","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Cache invalidated successfully","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Sending webhook to: http://localhost:3000/api/realtime/notify","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Webhook sent successfully to: http://localhost:3000/api/realtime/notify","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}
+{"eventName":"inngest/function.finished","functionName":"workflow-status-handler","level":"info","message":"Workflow and run status update complete","runID":"01K81TRYM5GSHR4D2XWJTR0RTW","service":"user-service"}

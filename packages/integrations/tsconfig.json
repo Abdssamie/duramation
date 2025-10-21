@@ -3,13 +3,16 @@
   "compilerOptions": {
     "outDir": "dist",
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".turbo/tsbuildinfo.json"
   },
   "include": [
     "src"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    ".turbo"
   ]
 }

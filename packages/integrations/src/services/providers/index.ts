@@ -21,16 +21,23 @@ export type * from './firecrawl-service.js';
  * Service factory for creating provider-specific service instances
  */
 export class ProviderServiceFactory {
-  static createService(provider: Provider, credentials: CredentialSecret) {
+  static createService<T extends Provider>(
+    provider: T,
+    credentials: CredentialSecret
+  ): T extends 'GOOGLE' ? GoogleService
+    : T extends 'SLACK' ? SlackService
+    : T extends 'MICROSOFT' ? MicrosoftService
+    : T extends 'FIRECRAWL' ? FirecrawlService
+    : never {
     switch (provider) {
       case 'GOOGLE':
-        return new GoogleService(credentials);
+        return new GoogleService(credentials) as any;
       case 'SLACK':
-        return new SlackService(credentials);
+        return new SlackService(credentials) as any;
       case 'MICROSOFT':
-        return new MicrosoftService(credentials);
+        return new MicrosoftService(credentials) as any;
       case 'FIRECRAWL':
-        return new FirecrawlService(credentials);
+        return new FirecrawlService(credentials) as any;
       default:
         throw new Error(`Unsupported provider: ${provider}`);
     }
@@ -87,5 +94,5 @@ export function createProviderService<T extends Provider>(
   : T extends 'MICROSOFT' ? MicrosoftService
   : T extends 'FIRECRAWL' ? FirecrawlService
   : never {
-  return ProviderServiceFactory.createService(provider, credentials) as any;
+  return ProviderServiceFactory.createService(provider, credentials);
 }

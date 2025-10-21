@@ -255,6 +255,19 @@ exports.Prisma.AutomationMetricsScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ApiKeyScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  key: 'key',
+  keyHash: 'keyHash',
+  lastUsedAt: 'lastUsedAt',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -338,7 +351,8 @@ exports.Prisma.ModelName = {
   WorkflowTemplate: 'WorkflowTemplate',
   ClientBranding: 'ClientBranding',
   ServiceRequest: 'ServiceRequest',
-  AutomationMetrics: 'AutomationMetrics'
+  AutomationMetrics: 'AutomationMetrics',
+  ApiKey: 'ApiKey'
 };
 
 /**

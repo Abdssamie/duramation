@@ -21,7 +21,7 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
             throw new NonRetriableError("Email input is required");
         }
 
-        const { to, subject, body, isHtml } = input;
+        const { to, subject } = input;
 
         // Check for Microsoft credentials
         const microsoftCredential = credentials.find((cred: any) => cred.provider === 'MICROSOFT');

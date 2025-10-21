@@ -83,21 +83,26 @@ export class FirecrawlService {
   
   // Scrape methods
   async scrape(url: string, options: FirecrawlScrapeOptions = {}): Promise<FirecrawlScrapeResponse> {
-    return this.client.post('/v1/scrape', {
+    return this.client.post('v1/scrape', {
       url,
       formats: ['markdown'],
       ...options
     });
   }
   
-  async scrapeMultiple(urls: string[], options: FirecrawlScrapeOptions = {}): Promise<FirecrawlScrapeResponse[]> {
-    const promises = urls.map(url => this.scrape(url, options));
-    return Promise.all(promises);
+  async scrapeMultiple(urls: string[], options: FirecrawlScrapeOptions = {}, concurrency = 5): Promise<FirecrawlScrapeResponse[]> {
+    const results: FirecrawlScrapeResponse[] = [];
+    for (let i = 0; i < urls.length; i += concurrency) {
+      const batch = urls.slice(i, i + concurrency);
+      const batchResults = await Promise.all(batch.map(url => this.scrape(url, options)));
+      results.push(...batchResults);
+    }
+    return results;
   }
   
   // Crawl methods
   async crawl(url: string, options: FirecrawlCrawlOptions = {}): Promise<FirecrawlCrawlResponse> {
-    return this.client.post('/v1/crawl', {
+    return this.client.post('v1/crawl', {
       url,
       limit: 100,
       scrapeOptions: {
@@ -109,11 +114,11 @@ export class FirecrawlService {
   }
   
   async getCrawlStatus(id: string): Promise<FirecrawlCrawlStatusResponse> {
-    return this.client.get(`/v1/crawl/${id}`);
+    return this.client.get(`v1/crawl/${id}`);
   }
   
   async cancelCrawl(id: string): Promise<{ success: boolean }> {
-    return this.client.delete(`/v1/crawl/${id}`);
+    return this.client.delete(`v1/crawl/${id}`);
   }
   
   // Batch operations
@@ -121,7 +126,7 @@ export class FirecrawlService {
     url: string;
     options?: FirecrawlScrapeOptions;
   }>): Promise<FirecrawlScrapeResponse[]> {
-    return this.client.post('/v1/batch/scrape', {
+    return this.client.post('v1/batch/scrape', {
       urls: requests.map(req => ({
         url: req.url,
         ...req.options
@@ -136,7 +141,7 @@ export class FirecrawlService {
     includeDomains?: string[];
     excludeDomains?: string[];
   } = {}): Promise<any> {
-    return this.client.post('/v1/search', {
+    return this.client.post('v1/search', {
       query,
       limit: 10,
       searchDepth: 'basic',
@@ -151,7 +156,7 @@ export class FirecrawlService {
     includeSubdomains?: boolean;
     limit?: number;
   } = {}): Promise<any> {
-    return this.client.post('/v1/map', {
+    return this.client.post('v1/map', {
       url,
       limit: 5000,
       ...options
@@ -197,11 +202,16 @@ export class FirecrawlService {
   async waitForCrawlCompletion(id: string, options: {
     maxWaitTime?: number;
     pollInterval?: number;
+    signal?: AbortSignal;
   } = {}): Promise<FirecrawlCrawlStatusResponse> {
     const { maxWaitTime = 300000, pollInterval = 5000 } = options; // 5 minutes max, 5 second intervals
     const startTime = Date.now();
     
     while (Date.now() - startTime < maxWaitTime) {
+      if (options.signal?.aborted) {
+        throw new Error('Crawl wait aborted');
+      }
+      
       const status = await this.getCrawlStatus(id);
       
       if (status.status === 'completed' || status.status === 'failed') {

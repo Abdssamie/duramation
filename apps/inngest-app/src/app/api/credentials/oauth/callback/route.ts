@@ -11,6 +11,7 @@ import {
   getServerProviderConfig,
 } from "@duramation/integrations/server";
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 export async function GET(request: Request) {
@@ -65,7 +66,9 @@ export async function GET(request: Request) {
       // Fetch user email from Google
       const { google } = await import("googleapis");
       const oauth2Client = new google.auth.OAuth2(
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
         process.env.GOOGLE_OAUTH_CLIENT_ID,
+        // eslint-disable-next-line turbo/no-undeclared-env-vars
         process.env.GOOGLE_OAUTH_CLIENT_SECRET
       );
       oauth2Client.setCredentials({

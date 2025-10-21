@@ -6,7 +6,9 @@ import { InternalUserId } from "@/types/user";
 import { CredentialCreateRequest } from "@duramation/shared";
 import { Google } from "@duramation/integrations/server";
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const GOOGLE_OAUTH_CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 
 if (!GOOGLE_OAUTH_CLIENT_ID || !GOOGLE_OAUTH_CLIENT_SECRET) {
@@ -81,6 +83,7 @@ export async function GET(request: Request) {
     }
 
     // Redirect user back to the integrations page in the app
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
     const frontendBaseUrl = process.env.FRONTEND_URL;
     const redirectUrl = new URL("/dashboard/automation", frontendBaseUrl);
     return NextResponse.redirect(redirectUrl);

@@ -5,10 +5,7 @@ import {waterOpsAgent} from "@/services/ai/agents/water-ops-agent";
 const network = createNetwork({
     name: "main network",
     agents: [ waterOpsAgent ],
-    router: ({lastResult, callCount}) => {
-        // retrieve the last message from the output
-        const lastMessage = lastResult?.output[lastResult?.output.length - 1];
-
+    router: ({callCount}) => {
         // First call: use the water ops agent
         if (callCount === 0) {
             return waterOpsAgent;
