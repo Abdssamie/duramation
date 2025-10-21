@@ -70,7 +70,7 @@ export const DailyReportTemplate: WorkflowTemplate = {
   restrictedToUsers: ['*'],
   fields: DailyReportFields as unknown as JsonValue,
   tags: ['google-sheets', 'email', 'automation', 'reports'],
-  version: '3.190.8',
+  version: '3.191.82',
 };
 
 
