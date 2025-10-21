@@ -12535,6 +12535,7 @@ export namespace Prisma {
     userId: string | null
     name: string | null
     key: string | null
+    keyHash: string | null
     lastUsedAt: Date | null
     expiresAt: Date | null
     isActive: boolean | null
@@ -12547,6 +12548,7 @@ export namespace Prisma {
     userId: string | null
     name: string | null
     key: string | null
+    keyHash: string | null
     lastUsedAt: Date | null
     expiresAt: Date | null
     isActive: boolean | null
@@ -12559,6 +12561,7 @@ export namespace Prisma {
     userId: number
     name: number
     key: number
+    keyHash: number
     lastUsedAt: number
     expiresAt: number
     isActive: number
@@ -12573,6 +12576,7 @@ export namespace Prisma {
     userId?: true
     name?: true
     key?: true
+    keyHash?: true
     lastUsedAt?: true
     expiresAt?: true
     isActive?: true
@@ -12585,6 +12589,7 @@ export namespace Prisma {
     userId?: true
     name?: true
     key?: true
+    keyHash?: true
     lastUsedAt?: true
     expiresAt?: true
     isActive?: true
@@ -12597,6 +12602,7 @@ export namespace Prisma {
     userId?: true
     name?: true
     key?: true
+    keyHash?: true
     lastUsedAt?: true
     expiresAt?: true
     isActive?: true
@@ -12682,6 +12688,7 @@ export namespace Prisma {
     userId: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt: Date | null
     expiresAt: Date | null
     isActive: boolean
@@ -12711,6 +12718,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     key?: boolean
+    keyHash?: boolean
     lastUsedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
@@ -12724,6 +12732,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     key?: boolean
+    keyHash?: boolean
     lastUsedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
@@ -12737,6 +12746,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     key?: boolean
+    keyHash?: boolean
     lastUsedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
@@ -12750,6 +12760,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     key?: boolean
+    keyHash?: boolean
     lastUsedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
@@ -12757,7 +12768,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ApiKeyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "key" | "lastUsedAt" | "expiresAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["apiKey"]>
+  export type ApiKeyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "key" | "keyHash" | "lastUsedAt" | "expiresAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["apiKey"]>
   export type ApiKeyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -12781,6 +12792,7 @@ export namespace Prisma {
        * @encrypted - The actual API key (hashed)
        */
       key: string
+      keyHash: string
       lastUsedAt: Date | null
       expiresAt: Date | null
       isActive: boolean
@@ -13214,6 +13226,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"ApiKey", 'String'>
     readonly name: FieldRef<"ApiKey", 'String'>
     readonly key: FieldRef<"ApiKey", 'String'>
+    readonly keyHash: FieldRef<"ApiKey", 'String'>
     readonly lastUsedAt: FieldRef<"ApiKey", 'DateTime'>
     readonly expiresAt: FieldRef<"ApiKey", 'DateTime'>
     readonly isActive: FieldRef<"ApiKey", 'Boolean'>
@@ -13814,6 +13827,7 @@ export namespace Prisma {
     userId: 'userId',
     name: 'name',
     key: 'key',
+    keyHash: 'keyHash',
     lastUsedAt: 'lastUsedAt',
     expiresAt: 'expiresAt',
     isActive: 'isActive',
@@ -14910,6 +14924,7 @@ export namespace Prisma {
     userId?: StringFilter<"ApiKey"> | string
     name?: StringFilter<"ApiKey"> | string
     key?: StringFilter<"ApiKey"> | string
+    keyHash?: StringFilter<"ApiKey"> | string
     lastUsedAt?: DateTimeNullableFilter<"ApiKey"> | Date | string | null
     expiresAt?: DateTimeNullableFilter<"ApiKey"> | Date | string | null
     isActive?: BoolFilter<"ApiKey"> | boolean
@@ -14923,6 +14938,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     key?: SortOrder
+    keyHash?: SortOrder
     lastUsedAt?: SortOrderInput | SortOrder
     expiresAt?: SortOrderInput | SortOrder
     isActive?: SortOrder
@@ -14934,6 +14950,7 @@ export namespace Prisma {
   export type ApiKeyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     key?: string
+    keyHash?: string
     AND?: ApiKeyWhereInput | ApiKeyWhereInput[]
     OR?: ApiKeyWhereInput[]
     NOT?: ApiKeyWhereInput | ApiKeyWhereInput[]
@@ -14945,13 +14962,14 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ApiKey"> | Date | string
     updatedAt?: DateTimeFilter<"ApiKey"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "key">
+  }, "id" | "key" | "keyHash">
 
   export type ApiKeyOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
     key?: SortOrder
+    keyHash?: SortOrder
     lastUsedAt?: SortOrderInput | SortOrder
     expiresAt?: SortOrderInput | SortOrder
     isActive?: SortOrder
@@ -14970,6 +14988,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"ApiKey"> | string
     name?: StringWithAggregatesFilter<"ApiKey"> | string
     key?: StringWithAggregatesFilter<"ApiKey"> | string
+    keyHash?: StringWithAggregatesFilter<"ApiKey"> | string
     lastUsedAt?: DateTimeNullableWithAggregatesFilter<"ApiKey"> | Date | string | null
     expiresAt?: DateTimeNullableWithAggregatesFilter<"ApiKey"> | Date | string | null
     isActive?: BoolWithAggregatesFilter<"ApiKey"> | boolean
@@ -15958,6 +15977,7 @@ export namespace Prisma {
     id?: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt?: Date | string | null
     expiresAt?: Date | string | null
     isActive?: boolean
@@ -15971,6 +15991,7 @@ export namespace Prisma {
     userId: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt?: Date | string | null
     expiresAt?: Date | string | null
     isActive?: boolean
@@ -15982,6 +16003,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -15995,6 +16017,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -16007,6 +16030,7 @@ export namespace Prisma {
     userId: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt?: Date | string | null
     expiresAt?: Date | string | null
     isActive?: boolean
@@ -16018,6 +16042,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -16030,6 +16055,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -16961,6 +16987,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     key?: SortOrder
+    keyHash?: SortOrder
     lastUsedAt?: SortOrder
     expiresAt?: SortOrder
     isActive?: SortOrder
@@ -16973,6 +17000,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     key?: SortOrder
+    keyHash?: SortOrder
     lastUsedAt?: SortOrder
     expiresAt?: SortOrder
     isActive?: SortOrder
@@ -16985,6 +17013,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     key?: SortOrder
+    keyHash?: SortOrder
     lastUsedAt?: SortOrder
     expiresAt?: SortOrder
     isActive?: SortOrder
@@ -18259,6 +18288,7 @@ export namespace Prisma {
     id?: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt?: Date | string | null
     expiresAt?: Date | string | null
     isActive?: boolean
@@ -18270,6 +18300,7 @@ export namespace Prisma {
     id?: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt?: Date | string | null
     expiresAt?: Date | string | null
     isActive?: boolean
@@ -18496,6 +18527,7 @@ export namespace Prisma {
     userId?: StringFilter<"ApiKey"> | string
     name?: StringFilter<"ApiKey"> | string
     key?: StringFilter<"ApiKey"> | string
+    keyHash?: StringFilter<"ApiKey"> | string
     lastUsedAt?: DateTimeNullableFilter<"ApiKey"> | Date | string | null
     expiresAt?: DateTimeNullableFilter<"ApiKey"> | Date | string | null
     isActive?: BoolFilter<"ApiKey"> | boolean
@@ -19754,6 +19786,7 @@ export namespace Prisma {
     id?: string
     name: string
     key: string
+    keyHash: string
     lastUsedAt?: Date | string | null
     expiresAt?: Date | string | null
     isActive?: boolean
@@ -19995,6 +20028,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -20006,6 +20040,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -20017,6 +20052,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    keyHash?: StringFieldUpdateOperationsInput | string
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
