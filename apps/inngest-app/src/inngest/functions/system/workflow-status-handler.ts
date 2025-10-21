@@ -16,7 +16,7 @@ export const workflowStatusHandler = inngest.createFunction(
   ],
   async ({ event, step, logger }) => {
     // Extract the dynamic data from the event payload.
-    // @ts-ignore
+    // @ts-expect-error - event.data.event.data is dynamically typed
     const { workflowId, user_id } = event.data.event.data;
 
     logger.info("--------------------------------\n");

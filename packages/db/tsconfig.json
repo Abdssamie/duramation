@@ -2,12 +2,15 @@
   "extends": "@duramation/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist",
+    "incremental": true,
+    "tsBuildInfoFile": ".turbo/tsbuildinfo.json"
   },
   "include": [
     "src"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    ".turbo"
   ]
 }

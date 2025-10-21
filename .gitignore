@@ -25,6 +25,8 @@ coverage
 
 # Turbo
 .turbo
+**/.turbo
+**/tsbuildinfo.json
 
 # Vercel
 .vercel

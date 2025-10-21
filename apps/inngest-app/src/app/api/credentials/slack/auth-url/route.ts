@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
-import { auth } from "@clerk/nextjs/server";
-import { getInternalUserId } from "@/lib/helpers/getInternalUserId";
-import { ClerkUserId } from "@/types/user";
 import {
   OAuthProviderFullConfig,
   Slack,

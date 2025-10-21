@@ -10,12 +10,14 @@
     "schema.prisma"
   ],
   "scripts": {
-    "build": "yarn db:generate && rimraf dist && tsc && cp -R src/generated dist",
+    "build": "yarn db:generate && tsc && cp -R src/generated dist",
     "dev": "tsc --watch",
+    "clean": "rimraf dist .turbo",
     "db:generate": "prisma generate --no-engine",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "typecheck": "tsc --noEmit"
   },
   "exports": {
     ".": "./dist/index.js",

@@ -24,7 +24,7 @@ export interface SimplifiedMetrics {
   newWorkflowsThisMonth: number;
 }
 
-export interface SimplifiedMetricsResponse extends SimplifiedMetrics {}
+export type SimplifiedMetricsResponse = SimplifiedMetrics;
 
 export interface ServiceRequest {
   id: string;

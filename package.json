@@ -13,6 +13,7 @@
     "typecheck": "turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
+    "clean": "turbo run clean && rimraf .turbo node_modules/.cache",
     "deploy:staging": "vercel --cwd apps/frontend && vercel --cwd apps/inngest-app",
     "deploy:production": "vercel --prod --cwd apps/frontend && vercel --prod --cwd apps/inngest-app"
   },

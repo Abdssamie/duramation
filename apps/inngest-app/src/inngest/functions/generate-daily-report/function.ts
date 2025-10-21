@@ -27,7 +27,7 @@ export const generateReportSchedule = inngest.createFunction(
             throw new NonRetriableError("Daily report input is required");
         }
 
-        const { reportTitle, sheetName, emailRecipients, reportFormat } = input;
+        const { sheetName } = input;
 
         // Check for Google credentials
         const googleCredential = credentials.find((cred: any) => cred.provider === 'GOOGLE');

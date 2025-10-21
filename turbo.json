@@ -4,15 +4,24 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*",
+        "!**/*.test.ts",
+        "!**/*.test.tsx",
+        "!**/*.spec.ts",
+        "!**/*.spec.tsx"
+      ],
       "outputs": [
         ".next/**",
         "!.next/cache/**",
-        "dist/**"
+        "dist/**",
+        ".turbo/**"
       ],
       "env": [
         "NEXT_BACKEND_API_URL",
         "INNGEST_SIGNING_KEY",
+        "INNGEST_DEV",
         "GOOGLE_API_KEY",
         "GEMINI_API_KEY",
         "CLERK_SECRET_KEY",
@@ -55,10 +64,19 @@
       ]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "outputs": []
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
     },
     "dev": {
       "cache": false,
@@ -66,6 +84,7 @@
       "env": [
         "NEXT_BACKEND_API_URL",
         "INNGEST_SIGNING_KEY",
+        "INNGEST_DEV",
         "GOOGLE_API_KEY",
         "GEMINI_API_KEY",
         "CLERK_SECRET_KEY",
