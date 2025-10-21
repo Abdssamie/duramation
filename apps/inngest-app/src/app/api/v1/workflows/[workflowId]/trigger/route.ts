@@ -131,6 +131,17 @@ export async function POST(
       );
     }
 
+    // Prevent triggering if workflow is already running
+    if (workflow.status === 'RUNNING') {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Workflow is already running. Please wait for the current execution to complete.',
+        },
+        { status: 409 } // 409 Conflict
+      );
+    }
+
     // Get workflow template to validate input if input is provided
     if (input !== undefined) {
       const templateId = workflow.templateId;
