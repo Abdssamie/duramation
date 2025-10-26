@@ -61,3 +61,4 @@ yarn-error.log*
 packages/db/src/generated
 /apps/frontend/src/config/env.ts
 /apps/inngest-app/src/config/env.ts
+GIT_LEARNINGS.md
