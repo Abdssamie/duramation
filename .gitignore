@@ -20,6 +20,7 @@ apps/inngest-app/*.log
 apps/inngest-app/combined.log
 
 packages/db/src/generated
+packages/db/dist
 
 # Testing
 coverage
