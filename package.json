@@ -7,6 +7,7 @@
     "build:backend": "turbo run build --filter=inngest-app...",
     "build:packages": "turbo run build --filter='./packages/*'",
     "dev": "turbo run dev",
+    "dev:all": "turbo run dev --parallel",
     "dev:frontend": "cd apps/frontend && pnpm dev",
     "dev:backend": "cd apps/inngest-app && pnpm dev",
     "lint": "turbo run lint",
@@ -14,6 +15,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "clean": "turbo run clean && rimraf .turbo node_modules/.cache",
+    "clean:logs": "bash scripts/cleanup-logs.sh",
+    "clean:all": "pnpm clean:logs && pnpm clean",
     "deploy:staging": "vercel --cwd apps/frontend && vercel --cwd apps/inngest-app",
     "deploy:production": "vercel --prod --cwd apps/frontend && vercel --prod --cwd apps/inngest-app"
   },

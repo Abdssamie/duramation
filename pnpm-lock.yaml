@@ -331,9 +331,6 @@ importers:
       '@duramation/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@eslint/eslintrc':
-        specifier: ^3
-        version: 3.3.1
       '@types/node':
         specifier: ^24.5.2
         version: 24.9.1
