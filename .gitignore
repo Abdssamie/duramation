@@ -21,7 +21,8 @@ apps/inngest-app/combined.log
 
 packages/db/src/generated
 packages/db/dist
-
+.idea
+.idea/duramation.iml
 # Testing
 coverage
 

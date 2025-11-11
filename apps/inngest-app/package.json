@@ -4,14 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm generate:types && pnpm update-templates && next dev --turbopack -p 3001",
-    "build": "pnpm generate:types && pnpm update-templates && next build --turbopack",
+    "dev": "next dev --turbopack -p 3001",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "generate:types": "tsx scripts/generate-workflow-types.ts",
     "update-schemas": "tsx scripts/update-metadata-schemas.ts",
-    "update-templates": "tsx scripts/addWorkflowTemplates.ts",
-    "create:workflow": "tsx scripts/create-workflow.ts"
+    "update-templates": "tsx scripts/addWorkflowTemplates.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.31.6",
