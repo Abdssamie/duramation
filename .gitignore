@@ -20,7 +20,9 @@ apps/inngest-app/*.log
 apps/inngest-app/combined.log
 
 packages/db/src/generated
-
+packages/db/dist
+.idea
+.idea/duramation.iml
 # Testing
 coverage
 
@@ -61,3 +63,4 @@ yarn-error.log*
 packages/db/src/generated
 /apps/frontend/src/config/env.ts
 /apps/inngest-app/src/config/env.ts
+GIT_LEARNINGS.md
