@@ -90,7 +90,8 @@ export default function ApiKeysClient() {
   useEffect(() => {
     loadApiKeys();
     loadWorkflows();
-  }, []);
+
+  }, [loadApiKeys, loadWorkflows]);
 
   const handleCreateKey = async () => {
     if (!newKeyName.trim()) {
@@ -396,7 +397,7 @@ export default function ApiKeysClient() {
               <div className="space-y-2">
                 <h4 className="text-sm font-semibold">Trigger a Workflow</h4>
                 <p className="text-xs text-muted-foreground">
-                  Replace <code className="bg-muted px-1 py-0.5 rounded">&lt;workflow_id&gt;</code> with your workflow ID from the "Your Workflows" tab
+                  Replace <code className="bg-muted px-1 py-0.5 rounded">&lt;workflow_id&gt;</code> with your workflow ID from the &quot;Your Workflows&quot; tab
                 </p>
                 <CodeBlock
                   code={`curl -X POST ${baseUrl}/api/v1/workflows/<workflow_id>/trigger \\
@@ -414,7 +415,7 @@ export default function ApiKeysClient() {
                 />
                 <Alert>
                   <AlertDescription className="text-xs">
-                    <p><strong>Example:</strong> The <code className="bg-muted px-1 py-0.5 rounded inline">input</code> object contains key-value pairs based on your workflow's field definitions. For a Slack workflow with "channel" and "message" fields, you would provide those values as shown above.</p>
+                    <p><strong>Example:</strong> The <code className="bg-muted px-1 py-0.5 rounded inline">input</code> object contains key-value pairs based on your workflow&apos;s field definitions. For a Slack workflow with &quot;channel&quot; and &quot;message&quot; fields, you would provide those values as shown above.</p>
                   </AlertDescription>
                 </Alert>
               </div>
@@ -497,7 +498,7 @@ export default function ApiKeysClient() {
           <DialogHeader>
             <DialogTitle>API Key Created Successfully</DialogTitle>
             <DialogDescription>
-              Save this key now - you won't be able to see it again!
+              Save this key now - you won&apos;t be able to see it again!
             </DialogDescription>
           </DialogHeader>
           <Alert className="">
@@ -532,7 +533,7 @@ export default function ApiKeysClient() {
           </div>
           <DialogFooter>
             <Button onClick={() => setCreatedKey(null)} className="w-full">
-              I've saved the key securely
+              I&apos;ve saved the key securely
             </Button>
           </DialogFooter>
         </DialogContent>

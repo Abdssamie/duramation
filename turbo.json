@@ -21,6 +21,7 @@
       "env": [
         "NEXT_BACKEND_API_URL",
         "INNGEST_SIGNING_KEY",
+        "ANALYZE",
         "INNGEST_DEV",
         "GOOGLE_API_KEY",
         "GEMINI_API_KEY",

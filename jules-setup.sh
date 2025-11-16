@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Reset working tree (Jules requirement)
+git reset --hard HEAD
+
 # Verify Node.js 22
 node -v | grep -q "v22" || { echo "Error: Node.js 22 required"; exit 1; }
 
