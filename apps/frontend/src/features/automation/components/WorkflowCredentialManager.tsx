@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -75,10 +75,29 @@ interface WorkflowCredentialManagerProps {
   open?: boolean;
 }
 
-const credentialSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  fields: z.record(z.string(), z.string().optional()),
-});
+// Type for credential form data
+type CredentialFormData = {
+  name: string;
+  fields: Record<string, string | undefined>;
+};
+
+// Dynamic schema factory based on provider fields
+const createCredentialSchema = (providerFields: ProviderField[]) => {
+  const fieldsSchema: Record<string, z.ZodString | z.ZodOptional<z.ZodString>> = {};
+  
+  providerFields.forEach((field) => {
+    if (field.required) {
+      fieldsSchema[field.key] = z.string().min(1, `${field.label} is required`);
+    } else {
+      fieldsSchema[field.key] = z.string().optional();
+    }
+  });
+
+  return z.object({
+    name: z.string().min(1, 'Credential name is required'),
+    fields: z.object(fieldsSchema),
+  });
+};
 
 export default function WorkflowCredentialManager({
   workflowId,
@@ -102,10 +121,15 @@ export default function WorkflowCredentialManager({
   const [oauthUrls, setOauthUrls] = useState<Record<string, string>>({});
   const [authUrlsLoading, setAuthUrlsLoading] = useState(true);
 
-  // Initialize form with dynamic schema
+  // Get provider fields and create dynamic schema
   const providerFields = selectedProvider
     ? (getProviderFields(selectedProvider) as ProviderField[])
     : [];
+
+  const credentialSchema = useMemo(
+    () => createCredentialSchema(providerFields),
+    [providerFields]
+  );
 
   // Create default values for all provider fields
   const defaultFieldValues = providerFields.reduce((acc, field) => {
@@ -113,7 +137,7 @@ export default function WorkflowCredentialManager({
     return acc;
   }, {} as Record<string, string>);
 
-  const form = useForm<z.infer<typeof credentialSchema>>({
+  const form = useForm<CredentialFormData>({
     resolver: zodResolver(credentialSchema as any),
     defaultValues: {
       name: '',
@@ -221,35 +245,8 @@ export default function WorkflowCredentialManager({
     setCurrentStep('form');
   };
 
-  const handleFormSubmit = async (data: z.infer<typeof credentialSchema>) => {
+  const handleFormSubmit = async (data: CredentialFormData) => {
     if (!selectedProvider) return;
-
-    const providerFields = getProviderFields(
-      selectedProvider
-    ) as ProviderField[];
-    let isValid = true;
-
-    if (!data.name) {
-      form.setError('name', {
-        type: 'manual',
-        message: 'Credential name is required',
-      });
-      isValid = false;
-    }
-
-    for (const field of providerFields) {
-      if (field.required && !data.fields[field.key]) {
-        form.setError(`fields.${field.key}`, {
-          type: 'manual',
-          message: `${field.label} is required`,
-        });
-        isValid = false;
-      }
-    }
-
-    if (!isValid) {
-      return;
-    }
 
     setLoading(true);
     try {
@@ -434,11 +431,12 @@ export default function WorkflowCredentialManager({
                         placeholder={providerField.placeholder}
                         rows={3}
                         {...field}
+                        value={field.value as string}
                       />
                     ) : providerField.type === 'select' ? (
                       <Select
                         onValueChange={field.onChange}
-                        value={field.value}
+                        value={field.value as string}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder='Select...' />
@@ -460,6 +458,7 @@ export default function WorkflowCredentialManager({
                         }
                         placeholder={providerField.placeholder}
                         {...field}
+                        value={field.value as string}
                       />
                     )}
                   </FormControl>

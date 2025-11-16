@@ -15,8 +15,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "clean": "turbo run clean && rimraf .turbo node_modules/.cache",
-    "clean:logs": "bash scripts/cleanup-logs.sh",
-    "clean:all": "pnpm clean:logs && pnpm clean",
     "deploy:staging": "vercel --cwd apps/frontend && vercel --cwd apps/inngest-app",
     "deploy:production": "vercel --prod --cwd apps/frontend && vercel --prod --cwd apps/inngest-app"
   },
