@@ -90,6 +90,7 @@ export default function ApiKeysClient() {
   useEffect(() => {
     loadApiKeys();
     loadWorkflows();
+
   }, [loadApiKeys, loadWorkflows]);
 
   const handleCreateKey = async () => {
