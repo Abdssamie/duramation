@@ -5,6 +5,18 @@ node_modules
 .pnp
 .pnp.js
 
+
+.kiro
+.qodo
+.idea
+.vscode
+WARP.md
+MICROSERVICES_ARCHITECTURE.md
+
+**/generated
+**/dist
+**/dist
+
 # pnpm
 .pnpm-store
 .pnpm-debug.log

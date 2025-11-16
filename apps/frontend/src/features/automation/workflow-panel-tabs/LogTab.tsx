@@ -237,7 +237,9 @@ export default function LogsTab({ workflowId, isRunning, realtimeData }: Props) 
                           <p className="text-sm break-words line-clamp-2 text-foreground/90">
                             {log.message}
                           </p>
-                          {log.type === 'progress' && <ProgressBar data={log.data} progressColor={typeInfo.progressColor} />}
+                          {log.type === 'progress' && log.data && 'percentage' in log.data && (
+                            <ProgressBar data={log.data} progressColor={typeInfo.progressColor} />
+                          )}
                         </div>
                       </div>
                     );

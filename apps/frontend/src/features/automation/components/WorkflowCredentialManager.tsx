@@ -70,29 +70,15 @@ interface WorkflowCredentialManagerProps {
     provider: Provider;
     name: string;
   }>;
-  onCredentialAdded?: (credential: any) => void;
+  onCredentialAdded?: (credential: CredentialCreateRequest) => void;
   onClose?: () => void;
   open?: boolean;
 }
 
-// Dynamic schema creation based on provider fields
-const createCredentialSchema = (providerFields: ProviderField[]) => {
-  const fieldsSchema: Record<string, z.ZodOptional<z.ZodString> | z.ZodString> =
-    {};
-
-  providerFields.forEach((field) => {
-    if (field.required) {
-      fieldsSchema[field.key] = z.string().min(1, `${field.label} is required`);
-    } else {
-      fieldsSchema[field.key] = z.string().optional();
-    }
-  });
-
-  return z.object({
-    name: z.string().min(1, 'Credential name is required'),
-    fields: z.object(fieldsSchema)
-  });
-};
+const credentialSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  fields: z.record(z.string(), z.string().optional()),
+});
 
 export default function WorkflowCredentialManager({
   workflowId,
@@ -120,7 +106,6 @@ export default function WorkflowCredentialManager({
   const providerFields = selectedProvider
     ? (getProviderFields(selectedProvider) as ProviderField[])
     : [];
-  const schema = createCredentialSchema(providerFields);
 
   // Create default values for all provider fields
   const defaultFieldValues = providerFields.reduce((acc, field) => {
@@ -128,8 +113,8 @@ export default function WorkflowCredentialManager({
     return acc;
   }, {} as Record<string, string>);
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof credentialSchema>>({
+    resolver: zodResolver(credentialSchema as any),
     defaultValues: {
       name: '',
       fields: defaultFieldValues
@@ -141,7 +126,7 @@ export default function WorkflowCredentialManager({
     if (selectedProvider) {
       const providerDisplayName = getProviderDisplayName(selectedProvider);
       const fields = getProviderFields(selectedProvider) as ProviderField[];
-      const defaultFields: Record<string, any> = {};
+      const defaultFields: Record<string, string> = {};
       fields.forEach((field) => {
         defaultFields[field.key] = '';
       });
@@ -236,20 +221,46 @@ export default function WorkflowCredentialManager({
     setCurrentStep('form');
   };
 
-  const handleFormSubmit = async (data: z.infer<typeof schema>) => {
+  const handleFormSubmit = async (data: z.infer<typeof credentialSchema>) => {
     if (!selectedProvider) return;
+
+    const providerFields = getProviderFields(
+      selectedProvider
+    ) as ProviderField[];
+    let isValid = true;
+
+    if (!data.name) {
+      form.setError('name', {
+        type: 'manual',
+        message: 'Credential name is required',
+      });
+      isValid = false;
+    }
+
+    for (const field of providerFields) {
+      if (field.required && !data.fields[field.key]) {
+        form.setError(`fields.${field.key}`, {
+          type: 'manual',
+          message: `${field.label} is required`,
+        });
+        isValid = false;
+      }
+    }
+
+    if (!isValid) {
+      return;
+    }
 
     setLoading(true);
     try {
       const token = await getToken();
       if (!token) {
         toast.error('Authentication required');
+        setLoading(false);
         return;
       }
 
       const providerConfig = getProviderConfig(selectedProvider);
-
-      // Create the appropriate secret structure based on provider type from integrations package
       const secret: CredentialSecret = data.fields as CredentialSecret;
 
       const credentialData: CredentialCreateRequest = {
@@ -260,16 +271,18 @@ export default function WorkflowCredentialManager({
         config: {
           source: 'workflow' as const,
           workflowId,
-          requiredScopes: requiredScopes?.[selectedProvider] || 
-            (providerConfig.authType === 'OAUTH' ? providerConfig.oauth.defaultScopes : []),
-          autoAssociate: !!workflowId
-        }
+          requiredScopes:
+            requiredScopes?.[selectedProvider] ||
+            (providerConfig.authType === 'OAUTH'
+              ? providerConfig.oauth.defaultScopes
+              : []),
+          autoAssociate: !!workflowId,
+        },
       };
 
       const newCredential = await api.credentials.create(token, credentialData);
-
       toast.success('Credential added successfully');
-      onCredentialAdded?.(newCredential);
+      onCredentialAdded?.(newCredential.data as unknown as CredentialCreateRequest);
       handleClose();
     } catch (error) {
       console.error('Failed to create credential:', error);

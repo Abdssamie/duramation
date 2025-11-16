@@ -60,7 +60,7 @@ const ProfileCreateForm: React.FC<ProfileFormType> = ({ initialData }) => {
   };
 
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileSchema),
+    resolver: zodResolver(profileSchema as any),
     defaultValues,
     mode: 'onChange'
   });

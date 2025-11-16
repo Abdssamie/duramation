@@ -1,7 +1,7 @@
 'use client';
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'; 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -56,12 +56,7 @@ export default function ApiKeysClient() {
   const [creating, setCreating] = useState(false);
   const [deletingKeyId, setDeletingKeyId] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadApiKeys();
-    loadWorkflows();
-  }, []);
-
-  const loadApiKeys = async () => {
+  const loadApiKeys = useCallback(async () => {
     try {
       const token = await getToken();
       if (!token) return;
@@ -76,9 +71,9 @@ export default function ApiKeysClient() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [getToken]);
 
-  const loadWorkflows = async () => {
+  const loadWorkflows = useCallback(async () => {
     try {
       const token = await getToken();
       if (!token) return;
@@ -90,7 +85,12 @@ export default function ApiKeysClient() {
     } catch (error) {
       console.error('Failed to load workflows:', error);
     }
-  };
+  }, [getToken]);
+
+  useEffect(() => {
+    loadApiKeys();
+    loadWorkflows();
+  }, []);
 
   const handleCreateKey = async () => {
     if (!newKeyName.trim()) {

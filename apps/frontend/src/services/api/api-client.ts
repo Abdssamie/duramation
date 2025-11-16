@@ -146,7 +146,7 @@ async function request<T>(
         } else if (errorBody.error) {
           errorMessage = errorBody.error;
         }
-      } catch (e) {
+      } catch {
         // If parsing fails, use the original text
       }
       throw new Error(errorMessage);
