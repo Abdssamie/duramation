@@ -5,6 +5,10 @@ node_modules
 .pnp
 .pnp.js
 
+**/generated
+**/dist
+**/dist
+
 # pnpm
 .pnpm-store
 .pnpm-debug.log
