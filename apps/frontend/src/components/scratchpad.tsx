@@ -124,7 +124,7 @@ const Select: React.FC<SelectProps> = ({ value, onValueChange, children, placeho
   };
 
   const selectedChild = React.Children.toArray(children).find((child) => {
-    if (React.isValidElement(child) && (child.props as any).value === selectedValue) {
+    if (React.isValidElement(child) && (child.props as SelectItemProps).value === selectedValue) {
       return child;
     }
   });
@@ -139,7 +139,7 @@ const Select: React.FC<SelectProps> = ({ value, onValueChange, children, placeho
         )}
       >
         <span className={selectedValue ? "text-foreground" : "text-muted-foreground/70"}>
-          {selectedChild ? (selectedChild as any).props.children : placeholder}
+          {selectedChild ? (selectedChild as React.ReactElement<SelectItemProps>).props.children : placeholder}
         </span>
         <ChevronDown className="h-4 w-4 opacity-50" />
       </button>
@@ -149,7 +149,7 @@ const Select: React.FC<SelectProps> = ({ value, onValueChange, children, placeho
           {React.Children.map(children, (child) => {
             if (React.isValidElement(child)) {
               return React.cloneElement(child as React.ReactElement<SelectItemProps & { onClick?: () => void }>, {
-                onClick: () => handleSelect((child.props as any).value),
+                onClick: () => handleSelect((child.props as SelectItemProps).value),
               });
             }
             return child;

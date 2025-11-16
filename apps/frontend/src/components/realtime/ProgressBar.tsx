@@ -1,7 +1,17 @@
 import {Progress} from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
-export const ProgressBar = ({ data, progressColor = 'bg-purple-500' }: { data: any; progressColor?: string }) => {
+export const ProgressBar = ({
+  data,
+  progressColor = 'bg-purple-500',
+}: {
+  data: {
+    percent?: number;
+    percentage?: number;
+    progress?: number | string;
+  };
+  progressColor?: string;
+}) => {
   // Extract percentage from various possible data formats
   let percentage = 0;
 
@@ -14,7 +24,7 @@ export const ProgressBar = ({ data, progressColor = 'bg-purple-500' }: { data: a
       percentage = data.progress;
     } else if (typeof data.progress === 'string') {
       const match = data.progress.match(/(\d+)%/);
-      if (match) {
+      if (match && match[1]) {
         percentage = parseInt(match[1]);
       }
     }

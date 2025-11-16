@@ -105,6 +105,7 @@
         "FRONTEND_URL",
         "INNGEST_WEBHOOK_SECRET",
         "INTERNAL_API_SECRET",
+        "ANALYZE",
         "SLACK_CLIENT_ID",
         "SLACK_CLIENT_SECRET",
         "SLACK_REDIRECT_URL",

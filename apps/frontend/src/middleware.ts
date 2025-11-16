@@ -40,7 +40,7 @@ function getLocale(request: NextRequest): string {
     }
 
     return match(validLanguages, locales, defaultLocale);
-  } catch (error) {
+  } catch {
     return defaultLocale;
   }
 }

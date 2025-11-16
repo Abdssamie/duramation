@@ -14,16 +14,17 @@ const baseConfig: NextConfig = {
   transpilePackages: ['geist']
 };
 
-let configWithPlugins = baseConfig;
+const configWithPlugins = baseConfig;
 
 // Conditionally enable Sentry configuration
 if (!process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
-  configWithPlugins = configWithPlugins; // No Sentry integration
 }
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
+const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-})
+});
 
 const nextConfig = configWithPlugins;
-export default withBundleAnalyzer(nextConfig);
+export default bundleAnalyzer(nextConfig);
