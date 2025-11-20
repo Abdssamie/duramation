@@ -1,5 +1,6 @@
 import { ApiClient, providerClients } from '../http-client.js';
 import type { CredentialSecret } from '@duramation/shared/types';
+import { BaseProviderService } from './base-service.js';
 
 export interface MicrosoftEmail {
   subject: string;
@@ -68,18 +69,19 @@ export interface MicrosoftContact {
   companyName?: string;
 }
 
-export class MicrosoftService {
-  private client: ApiClient;
-  
+export class MicrosoftService extends BaseProviderService {
   constructor(credentials: CredentialSecret) {
-    this.client = new ApiClient(providerClients.microsoft(credentials));
+    super('MICROSOFT', credentials);
+  }
+
+  protected createClient(): ApiClient {
+    return new ApiClient(providerClients.microsoft(this.credentials));
   }
   
-  // Email methods (Outlook)
   async sendEmail(email: MicrosoftEmail): Promise<any> {
-    return this.client.post('me/sendMail', {
+    return this.executeWithRefresh(() => this.client.post('me/sendMail', {
       message: email
-    });
+    }));
   }
   
   async listEmails(options: {
@@ -94,26 +96,26 @@ export class MicrosoftService {
     if (options.orderby) queryParams.append('$orderby', options.orderby);
     if (options.skip) queryParams.append('$skip', options.skip.toString());
     
-    return this.client.get(`me/messages?${queryParams.toString()}`);
+    return this.executeWithRefresh(() => this.client.get(`me/messages?${queryParams.toString()}`));
   }
   
   async getEmail(messageId: string): Promise<any> {
-    return this.client.get(`me/messages/${messageId}`);
+    return this.executeWithRefresh(() => this.client.get(`me/messages/${messageId}`));
   }
   
   async deleteEmail(messageId: string): Promise<void> {
-    await this.client.delete(`me/messages/${messageId}`);
+    await this.executeWithRefresh(() => this.client.delete(`me/messages/${messageId}`));
   }
   
   async markEmailAsRead(messageId: string): Promise<any> {
-    return this.client.patch(`me/messages/${messageId}`, {
+    return this.executeWithRefresh(() => this.client.patch(`me/messages/${messageId}`, {
       isRead: true
-    });
+    }));
   }
   
   // Calendar methods
   async createCalendarEvent(event: MicrosoftCalendarEvent): Promise<any> {
-    return this.client.post('me/events', event);
+    return this.executeWithRefresh(() => this.client.post('me/events', event));
   }
   
   async listCalendarEvents(options: {
@@ -130,7 +132,7 @@ export class MicrosoftService {
     if (options.startDateTime && options.endDateTime) {
       const start = encodeURIComponent(options.startDateTime);
       const end = encodeURIComponent(options.endDateTime);
-      return this.client.get(`me/calendarView?startDateTime=${start}&endDateTime=${end}&$top=${options.top || 50}`);
+      return this.executeWithRefresh(() => this.client.get(`me/calendarView?startDateTime=${start}&endDateTime=${end}&$top=${options.top || 50}`));
     }
     
     // Fallback to events endpoint with filter
@@ -140,15 +142,15 @@ export class MicrosoftService {
     
     if (options.orderby) queryParams.append('$orderby', options.orderby);
     
-    return this.client.get(`me/events?${queryParams.toString()}`);
+    return this.executeWithRefresh(() => this.client.get(`me/events?${queryParams.toString()}`));
   }
   
   async getCalendarEvent(eventId: string): Promise<any> {
-    return this.client.get(`me/events/${eventId}`);
+    return this.executeWithRefresh(() => this.client.get(`me/events/${eventId}`));
   }
   
   async updateCalendarEvent(eventId: string, event: Partial<MicrosoftCalendarEvent>): Promise<any> {
-    return this.client.patch(`me/events/${eventId}`, event);
+    return this.executeWithRefresh(() => this.client.patch(`me/events/${eventId}`, event));
   }
   
   async deleteCalendarEvent(eventId: string): Promise<void> {
@@ -168,11 +170,11 @@ export class MicrosoftService {
     if (options.orderby) queryParams.append('$orderby', options.orderby);
     if (options.skip) queryParams.append('$skip', options.skip.toString());
     
-    return this.client.get(`me/drive/root/children?${queryParams.toString()}`);
+    return this.executeWithRefresh(() => this.client.get(`me/drive/root/children?${queryParams.toString()}`));
   }
   
   async getFile(fileId: string): Promise<any> {
-    return this.client.get(`me/drive/items/${fileId}`);
+    return this.executeWithRefresh(() => this.client.get(`me/drive/items/${fileId}`));
   }
   
   async downloadFile(fileId: string): Promise<Buffer> {
@@ -185,26 +187,26 @@ export class MicrosoftService {
   async uploadFile(filename: string, content: Buffer, parentId?: string): Promise<any> {
     const path = parentId ? `me/drive/items/${parentId}:/${filename}:/content` : `me/drive/root:/${filename}:/content`;
     
-    return this.client.put(path, new Uint8Array(content), {
+    return this.executeWithRefresh(() => this.client.put(path, new Uint8Array(content), {
       headers: {
         'Content-Type': 'application/octet-stream'
       }
-    });
+    }));
   }
   
   async createFolder(name: string, parentId?: string): Promise<any> {
     const path = parentId ? `me/drive/items/${parentId}/children` : 'me/drive/root/children';
     
-    return this.client.post(path, {
+    return this.executeWithRefresh(() => this.client.post(path, {
       name,
       folder: {},
       '@microsoft.graph.conflictBehavior': 'rename'
-    });
+    }));
   }
   
   // Contacts methods
   async createContact(contact: MicrosoftContact): Promise<any> {
-    return this.client.post('me/contacts', contact);
+    return this.executeWithRefresh(() => this.client.post('me/contacts', contact));
   }
   
   async listContacts(options: {
@@ -219,15 +221,15 @@ export class MicrosoftService {
     if (options.orderby) queryParams.append('$orderby', options.orderby);
     if (options.skip) queryParams.append('$skip', options.skip.toString());
     
-    return this.client.get(`me/contacts?${queryParams.toString()}`);
+    return this.executeWithRefresh(() => this.client.get(`me/contacts?${queryParams.toString()}`));
   }
   
   async getContact(contactId: string): Promise<any> {
-    return this.client.get(`me/contacts/${contactId}`);
+    return this.executeWithRefresh(() => this.client.get(`me/contacts/${contactId}`));
   }
   
   async updateContact(contactId: string, contact: Partial<MicrosoftContact>): Promise<any> {
-    return this.client.patch(`me/contacts/${contactId}`, contact);
+    return this.executeWithRefresh(() => this.client.patch(`me/contacts/${contactId}`, contact));
   }
   
   async deleteContact(contactId: string): Promise<void> {
@@ -236,7 +238,7 @@ export class MicrosoftService {
   
   // User profile methods
   async getProfile(): Promise<any> {
-    return this.client.get('me');
+    return this.executeWithRefresh(() => this.client.get('me'));
   }
   
   async getProfilePhoto(): Promise<Buffer> {

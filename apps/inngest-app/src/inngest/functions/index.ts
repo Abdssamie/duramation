@@ -12,6 +12,12 @@ import {
   automationMetricsUpdatedHandler 
 } from "./service-request-handler";
 
+// Auto-sync templates in development
+if (process.env.NODE_ENV === 'development') {
+  import('@/lib/sync-templates').then(({ syncTemplates }) => {
+    syncTemplates().catch(console.error);
+  });
+}
 
 export const workflowFunctions = [
     generateReportSchedule,
