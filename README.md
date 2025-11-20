@@ -123,11 +123,12 @@ duramation/
 │       └── src/lib/          # Utilities
 │
 ├── packages/
-│   ├── db/                   # � ️ Prisma ORM + Schema
-│   ├── shared/               # � Shatred types & utilities
-│   ├── integrations/         # � Pyrovider integrations (Google, Slack, etc.)
+│   ├── workflows/            # 🔄 Workflow definitions
+│   ├── db/                   # 🗄️ Prisma ORM + Schema
+│   ├── shared/               # 🔗 Shared types & utilities
+│   ├── integrations/         # 🔌 Provider integrations (Google, Slack, etc.)
 │   ├── eslint-config/        # 🔍 Linting rules
-│   └── typescript-config/    # � TypeScri pt configs
+│   └── typescript-config/    # 📘 TypeScript configs
 │
 └── scripts/                  # 🛠️ Build & deployment scripts
 ```
