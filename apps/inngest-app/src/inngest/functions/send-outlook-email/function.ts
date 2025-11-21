@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate, createErrorUpdate } from "@/lib/realtime-channels";
+import { HttpClient } from "@duramation/integrations/services";
 
 export const sendOutlookEmailWorkflow = inngest.createFunction(
     {
@@ -23,7 +24,6 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
 
         const { to, subject } = input;
 
-        // Check for Microsoft credentials
         const microsoftCredential = credentials.find((cred: any) => cred.provider === 'MICROSOFT');
 
         if (!microsoftCredential) {
@@ -41,13 +41,9 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
             )
         );
 
-        // Parse recipients
         const recipients = to.split(',').map((email: string) => email.trim());
 
-        // Send email via Microsoft Graph API
         await step.run("send-email", async () => {
-            const stepName = 'send-email';
-            
             try {
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
@@ -55,46 +51,26 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
                     )
                 );
 
-                // Validate Microsoft credential structure
                 const secret = microsoftCredential.secret as any;
                 const hasAccessToken = !!secret?.accessToken;
-                const hasRefreshToken = !!secret?.refreshToken;
-                const hasScopes = Array.isArray(secret?.scopes) && secret.scopes.length > 0;
-                const hasExpiry = !!secret?.expiresIn;
 
                 logger.info('Microsoft credential validation:', {
                     hasAccessToken,
-                    hasRefreshToken,
-                    hasScopes,
-                    hasExpiry,
-                    scopes: secret?.scopes || []
+                    hasRefreshToken: !!secret?.refreshToken,
+                    hasScopes: Array.isArray(secret?.scopes) && secret.scopes.length > 0,
                 });
 
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
-                        createWorkflowUpdate("log", `Microsoft credential validated: ${hasAccessToken ? '✓' : '✗'} Access Token, ${hasRefreshToken ? '✓' : '✗'} Refresh Token, ${hasScopes ? '✓' : '✗'} Scopes`)
+                        createWorkflowUpdate("log", `Microsoft credential validated: ${hasAccessToken ? '✓' : '✗'} Access Token`)
                     )
                 );
 
                 if (!hasAccessToken) {
-                    const error = new Error('Microsoft credential is missing access token');
-                    
-                    await publish(
-                        workflowChannel(user_id, workflowId).updates(
-                            createErrorUpdate('Missing access token', {
-                                error: error.message,
-                                code: 'MISSING_ACCESS_TOKEN',
-                                stepName,
-                                stack: error.stack
-                            })
-                        )
-                    );
-                    
-                    throw error;
+                    throw new Error('Microsoft credential is missing access token');
                 }
 
                 // TODO: Implement actual email sending via Microsoft Graph API
-                // For now, just simulate success
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
                         createWorkflowUpdate("log", `[PLACEHOLDER] Would send email to ${recipients.join(', ')} with subject: "${subject}"`)
@@ -110,7 +86,7 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
                         createErrorUpdate('Failed to send email', {
                             error: error instanceof Error ? error.message : String(error),
                             code: 'EMAIL_SEND_ERROR',
-                            stepName,
+                            stepName: 'send-email',
                             stack: error instanceof Error ? error.stack : undefined
                         })
                     )
@@ -120,7 +96,6 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
             }
         });
 
-        // Final success update
         await publish(
             workflowChannel(user_id, workflowId).updates(
                 createWorkflowUpdate("result", `[TEST MODE] Email prepared for ${recipients.length} recipient(s). Actual sending not yet implemented.`)
