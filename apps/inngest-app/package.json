@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "update-schemas": "tsx scripts/update-metadata-schemas.ts",
-    "update-templates": "tsx scripts/addWorkflowTemplates.ts"
+    "update-templates": "tsx scripts/addWorkflowTemplates.ts",
+    "workflow:create": "tsx scripts/create-workflow.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.31.6",

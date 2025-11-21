@@ -1,5 +1,6 @@
 import { ApiClient, providerClients } from '../http-client.js';
 import type { CredentialSecret } from '@duramation/shared/types';
+import { BaseProviderService } from './base-service.js';
 
 export interface FirecrawlScrapeOptions {
   formats?: ('markdown' | 'html' | 'rawHtml' | 'links' | 'screenshot')[];
@@ -74,20 +75,22 @@ export interface FirecrawlCrawlStatusResponse {
   error?: string;
 }
 
-export class FirecrawlService {
-  private client: ApiClient;
-  
+export class FirecrawlService extends BaseProviderService {
   constructor(credentials: CredentialSecret) {
-    this.client = new ApiClient(providerClients.firecrawl(credentials));
+    super('FIRECRAWL', credentials);
+  }
+
+  protected createClient(): ApiClient {
+    return new ApiClient(providerClients.firecrawl(this.credentials));
   }
   
   // Scrape methods
   async scrape(url: string, options: FirecrawlScrapeOptions = {}): Promise<FirecrawlScrapeResponse> {
-    return this.client.post('v1/scrape', {
+    return this.executeWithRefresh(() => this.client.post('v1/scrape', {
       url,
       formats: ['markdown'],
       ...options
-    });
+    }));
   }
   
   async scrapeMultiple(urls: string[], options: FirecrawlScrapeOptions = {}, concurrency = 5): Promise<FirecrawlScrapeResponse[]> {
@@ -102,7 +105,7 @@ export class FirecrawlService {
   
   // Crawl methods
   async crawl(url: string, options: FirecrawlCrawlOptions = {}): Promise<FirecrawlCrawlResponse> {
-    return this.client.post('v1/crawl', {
+    return this.executeWithRefresh(() => this.client.post('v1/crawl', {
       url,
       limit: 100,
       scrapeOptions: {
@@ -110,15 +113,15 @@ export class FirecrawlService {
         ...options.scrapeOptions
       },
       ...options
-    });
+    }));
   }
   
   async getCrawlStatus(id: string): Promise<FirecrawlCrawlStatusResponse> {
-    return this.client.get(`v1/crawl/${id}`);
+    return this.executeWithRefresh(() => this.client.get(`v1/crawl/${id}`));
   }
   
   async cancelCrawl(id: string): Promise<{ success: boolean }> {
-    return this.client.delete(`v1/crawl/${id}`);
+    return this.executeWithRefresh(() => this.client.delete(`v1/crawl/${id}`));
   }
   
   // Batch operations
@@ -126,12 +129,12 @@ export class FirecrawlService {
     url: string;
     options?: FirecrawlScrapeOptions;
   }>): Promise<FirecrawlScrapeResponse[]> {
-    return this.client.post('v1/batch/scrape', {
+    return this.executeWithRefresh(() => this.client.post('v1/batch/scrape', {
       urls: requests.map(req => ({
         url: req.url,
         ...req.options
       }))
-    });
+    }));
   }
   
   // Search methods (if available)
@@ -141,12 +144,12 @@ export class FirecrawlService {
     includeDomains?: string[];
     excludeDomains?: string[];
   } = {}): Promise<any> {
-    return this.client.post('v1/search', {
+    return this.executeWithRefresh(() => this.client.post('v1/search', {
       query,
       limit: 10,
       searchDepth: 'basic',
       ...options
-    });
+    }));
   }
   
   // Map methods
@@ -156,11 +159,11 @@ export class FirecrawlService {
     includeSubdomains?: boolean;
     limit?: number;
   } = {}): Promise<any> {
-    return this.client.post('v1/map', {
+    return this.executeWithRefresh(() => this.client.post('v1/map', {
       url,
       limit: 5000,
       ...options
-    });
+    }));
   }
   
   // Utility methods
