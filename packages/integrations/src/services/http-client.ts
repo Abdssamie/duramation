@@ -236,7 +236,7 @@ function getAuthHeaders(provider: Provider, credentials: CredentialSecret): Reco
  * 
  * // Slack API
  * const slackClient = providerClients.slack({ accessToken: 'xoxb-token' });
- * await slackClient.post('api/chat.postMessage', { 
+ * await slackClient.post('chat.postMessage', { 
  *   json: { channel: 'general', text: 'Hello!' }
  * });
  * ```
