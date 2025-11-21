@@ -1,16 +1,4 @@
-// Array of all workflow functions for easy registration
-import { generateReportSchedule } from "./generate-daily-report/function";
-import { randomTextLoopWorkflow } from "./random-text-loop/function";
-import { postToSlackWorkflow } from "./post-to-slack/function";
-import { scrapeWebsiteWorkflow } from "./scrape-website/function";
-import { sendOutlookEmailWorkflow } from "./send-outlook-email/function";
-import { workflowStatusHandler } from "./system/workflow-status-handler";
-import { automationMetricsAggregation, manualMetricsAggregation } from "./automation-metrics-aggregation";
-import { 
-  serviceRequestStatusHandler, 
-  serviceRequestCreatedHandler, 
-  automationMetricsUpdatedHandler 
-} from "./service-request-handler";
+import { workflowRegistry } from '@/lib/workflow-registry';
 
 // Auto-sync templates in development
 if (process.env.NODE_ENV === 'development') {
@@ -19,25 +7,38 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-export const workflowFunctions = [
-    generateReportSchedule,
-    randomTextLoopWorkflow,
-    postToSlackWorkflow,
-    scrapeWebsiteWorkflow,
-    sendOutlookEmailWorkflow
-];
+// Legacy exports for backward compatibility
+export { generateReportSchedule } from "./generate-daily-report/function";
+export { randomTextLoopWorkflow } from "./random-text-loop/function";
+export { postToSlackWorkflow } from "./post-to-slack/function";
+export { scrapeWebsiteWorkflow } from "./scrape-website/function";
+export { sendOutlookEmailWorkflow } from "./send-outlook-email/function";
+export { workflowStatusHandler } from "./system/workflow-status-handler";
+export { automationMetricsAggregation, manualMetricsAggregation } from "./automation-metrics-aggregation";
+export { 
+  serviceRequestStatusHandler, 
+  serviceRequestCreatedHandler, 
+  automationMetricsUpdatedHandler 
+} from "./service-request-handler";
 
-export const systemFunctions = [
-    workflowStatusHandler,
-    automationMetricsAggregation,
-    manualMetricsAggregation,
-    serviceRequestStatusHandler,
-    serviceRequestCreatedHandler,
-    automationMetricsUpdatedHandler,
-];
+// Dynamic function discovery
+let cachedFunctions: any[] | null = null;
 
+export async function getAllFunctions(): Promise<any[]> {
+  if (cachedFunctions) {
+    return cachedFunctions;
+  }
 
-export const allFunctions = [
-    ...workflowFunctions,
-    ...systemFunctions,
-];
+  cachedFunctions = await workflowRegistry.getAllFunctions();
+  console.log(`Discovered ${cachedFunctions.length} workflow functions`);
+  
+  return cachedFunctions;
+}
+
+// For immediate use (will be populated on first call)
+export const allFunctions: any[] = [];
+
+// Initialize on module load
+getAllFunctions().then((functions) => {
+  allFunctions.push(...functions);
+}).catch(console.error);
