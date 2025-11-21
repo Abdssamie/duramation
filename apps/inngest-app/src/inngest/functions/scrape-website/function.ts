@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate, createErrorUpdate } from "@/lib/realtime-channels";
+import { HttpClient } from "@duramation/integrations/services";
 
 export const scrapeWebsiteWorkflow = inngest.createFunction(
     {
@@ -23,7 +24,6 @@ export const scrapeWebsiteWorkflow = inngest.createFunction(
 
         const { url, formats } = input;
 
-        // Check for Firecrawl credentials
         const firecrawlCredential = credentials.find((cred: any) => cred.provider === 'FIRECRAWL');
 
         if (!firecrawlCredential) {
@@ -41,10 +41,7 @@ export const scrapeWebsiteWorkflow = inngest.createFunction(
             )
         );
 
-        // Scrape the website
         const scrapedData = await step.run("scrape-url", async () => {
-            const stepName = 'scrape-url';
-            
             try {
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
@@ -52,42 +49,16 @@ export const scrapeWebsiteWorkflow = inngest.createFunction(
                     )
                 );
 
-                const { apiKey } = firecrawlCredential.secret as { apiKey: string };
-
-                const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        url,
-                        formats: formats,
-                    })
+                const httpClient = new HttpClient({
+                    provider: 'FIRECRAWL',
+                    credentials: firecrawlCredential.secret,
+                    baseUrl: 'https://api.firecrawl.dev/v1',
                 });
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    logger.error({ status: response.status, error: errorText }, "Failed to scrape website");
-                    
-                    const error = new Error(`Failed to scrape website: ${response.status} - ${errorText}`);
-                    
-                    await publish(
-                        workflowChannel(user_id, workflowId).updates(
-                            createErrorUpdate(`Failed to scrape ${url}`, {
-                                error: error.message,
-                                code: `HTTP_${response.status}`,
-                                stepName,
-                                stack: error.stack
-                            })
-                        )
-                    );
-                    
-                    throw error;
-                }
+                const data = await httpClient.post('/scrape', {
+                    json: { url, formats },
+                }).json();
 
-                const data = await response.json();
-                
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
                         createWorkflowUpdate("log", `Successfully scraped ${url}`)
@@ -103,7 +74,7 @@ export const scrapeWebsiteWorkflow = inngest.createFunction(
                         createErrorUpdate(`Error scraping website`, {
                             error: error instanceof Error ? error.message : String(error),
                             code: 'SCRAPE_ERROR',
-                            stepName,
+                            stepName: 'scrape-url',
                             stack: error instanceof Error ? error.stack : undefined
                         })
                     )
@@ -113,7 +84,6 @@ export const scrapeWebsiteWorkflow = inngest.createFunction(
             }
         });
 
-        // Final success update
         await publish(
             workflowChannel(user_id, workflowId).updates(
                 createWorkflowUpdate("result", `Successfully scraped website: ${url}`)
