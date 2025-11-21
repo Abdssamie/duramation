@@ -14,9 +14,8 @@ import {
 
 // Auto-sync templates in development
 if (process.env.NODE_ENV === 'development') {
-  import('@/lib/sync-templates').then(({ syncTemplates }) => {
-    syncTemplates().catch(console.error);
-  });
+  const { syncTemplates } = await import('@/lib/sync-templates');
+  await syncTemplates().catch(console.error);
 }
 
 export const workflowFunctions = [
