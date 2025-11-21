@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate } from "@/lib/realtime-channels";
+import { HttpClient } from "@duramation/integrations/services";
 
 export const postToSlackWorkflow = inngest.createFunction(
     {
@@ -23,7 +24,6 @@ export const postToSlackWorkflow = inngest.createFunction(
 
         const { channel, message } = input;
 
-        // Check for Slack credentials
         const slackCredential = credentials.find((cred: any) => cred.provider === 'SLACK');
 
         if (!slackCredential) {
@@ -41,7 +41,6 @@ export const postToSlackWorkflow = inngest.createFunction(
             )
         );
 
-        // Post message to Slack
         const result = await step.run("post-message", async () => {
             await publish(
                 workflowChannel(user_id, workflowId).updates(
@@ -49,30 +48,17 @@ export const postToSlackWorkflow = inngest.createFunction(
                 )
             );
 
-            const { accessToken } = slackCredential.secret as { accessToken: string };
-
-            const response = await fetch('https://slack.com/api/chat.postMessage', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    channel: channel,
-                    text: message,
-                })
+            const httpClient = new HttpClient({
+                provider: 'SLACK',
+                credentials: slackCredential.secret,
+                baseUrl: 'https://slack.com/api',
             });
 
-            if (!response.ok) {
-                const error = await response.text();
-                logger.error({ status: response.status, error }, "Failed to post to Slack");
-                throw new Error(`Failed to post to Slack: ${response.status} - ${error}`);
-            }
+            const data = await httpClient.post('/chat.postMessage', {
+                json: { channel, text: message },
+            }).json();
 
-            const data = await response.json();
-            
             if (!data.ok) {
-                logger.error({ error: data.error }, "Slack API returned error");
                 throw new Error(`Slack API error: ${data.error}`);
             }
 
@@ -85,7 +71,6 @@ export const postToSlackWorkflow = inngest.createFunction(
             return data;
         });
 
-        // Final success update
         await publish(
             workflowChannel(user_id, workflowId).updates(
                 createWorkflowUpdate("result", `Successfully posted message to ${channel}`)
