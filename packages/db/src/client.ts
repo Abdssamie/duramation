@@ -11,15 +11,19 @@ function createPrismaClient() {
     throw new Error('[Prisma] PRISMA_FIELD_ENCRYPTION_KEY environment variable is required for field encryption');
   }
 
-  const basePrisma = new PrismaClient().$extends(
+  let basePrisma = new PrismaClient().$extends(
     fieldEncryptionExtension({
       encryptionKey: encryptionKey,
       dmmf: Prisma.dmmf,
     })
-  ).$extends(withAccelerate());
+  );
 
-  
-  return basePrisma
+  // Only apply Accelerate extension in production
+  if (process.env.NODE_ENV === "production") {
+    basePrisma = basePrisma.$extends(withAccelerate());
+  }
+
+  return basePrisma;
 }
 
 const extendedPrisma = createPrismaClient();
