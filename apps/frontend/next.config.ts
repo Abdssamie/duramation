@@ -11,7 +11,8 @@ const baseConfig: NextConfig = {
       }
     ]
   },
-  transpilePackages: ['geist']
+  transpilePackages: ['geist'],
+  allowedDevOrigins: ['firm-tahr-enjoyed.ngrok-free.app']
 };
 
 const configWithPlugins = baseConfig;

@@ -1,3 +1,14 @@
 packages:
-  - 'apps/*'
-  - 'packages/*'
+  - apps/*
+  - packages/*
+
+ignoredBuiltDependencies:
+  - '@clerk/shared'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@vercel/speed-insights'
+  - esbuild
+  - prisma
+  - protobufjs
+  - sharp
+  - unrs-resolver

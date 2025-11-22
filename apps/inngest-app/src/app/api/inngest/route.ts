@@ -1,25 +1,15 @@
 import { serve } from "inngest/next";
 import { inngest } from "@/inngest/client";
-import { getAllFunctions } from "@/inngest/functions";
+import * as functions from "@/inngest/functions";
 
-// Load functions dynamically
-let functionsPromise: Promise<any[]> | null = null;
+// Extract all exported functions
+const allFunctions = Object.values(functions).filter(
+  (fn) => fn && typeof fn === 'object' && 'id' in fn
+);
 
-function getFunctions(): Promise<any[]> {
-  if (!functionsPromise) {
-    functionsPromise = getAllFunctions();
-  }
-  return functionsPromise;
-}
-
-// Inngest serve expects synchronous functions array, so we initialize on module load
-let loadedFunctions: any[] = [];
-
-getFunctions().then((functions) => {
-  loadedFunctions = functions;
-}).catch(console.error);
+console.log(`[Inngest] Registering ${allFunctions.length} functions`);
 
 export const { GET, POST, PUT } = serve({
   client: inngest,
-  functions: loadedFunctions,
+  functions: allFunctions,
 });
