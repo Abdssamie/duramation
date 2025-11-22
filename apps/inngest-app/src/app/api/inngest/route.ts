@@ -1,11 +1,6 @@
 import { serve } from "inngest/next";
 import { inngest } from "@/inngest/client";
-import * as functions from "@/inngest/functions";
-
-// Extract all exported functions
-const allFunctions = Object.values(functions).filter(
-  (fn) => fn && typeof fn === 'object' && 'id' in fn
-);
+import { allFunctions } from "@/inngest/functions";
 
 console.log(`[Inngest] Registering ${allFunctions.length} functions`);
 
