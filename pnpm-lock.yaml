@@ -152,6 +152,9 @@ importers:
       '@upstash/redis':
         specifier: ^1.35.3
         version: 1.35.6
+      '@vercel/speed-insights':
+        specifier: ^1.2.0
+        version: 1.2.0(next@15.5.0(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -3152,6 +3155,29 @@ packages:
 
   '@vercel/ruby@2.2.1':
     resolution: {integrity: sha512-DsmTCggOa/Uvt/9JkafXx9U+Bz5eNIb6Bs422EOQo2zKwcxW88ITSh8mM5m0dQ0+B4k02X/moVim6iFa4sjazg==}
+
+  '@vercel/speed-insights@1.2.0':
+    resolution: {integrity: sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==}
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@vercel/static-build@2.7.26':
     resolution: {integrity: sha512-JnENZPF0J8fUucQkJDKt9eZjq3MyMS23Cr6fMhmzJ29bVD67517FQSQF12TsUZ5SRvjoP89+u/Xu3cRbXQo75w==}
@@ -9838,6 +9864,11 @@ snapshots:
       - supports-color
 
   '@vercel/ruby@2.2.1': {}
+
+  '@vercel/speed-insights@1.2.0(next@15.5.0(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)':
+    optionalDependencies:
+      next: 15.5.0(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react: 19.0.0
 
   '@vercel/static-build@2.7.26':
     dependencies:
