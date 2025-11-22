@@ -2,24 +2,33 @@ import { Prisma, PrismaClient } from "./generated/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { fieldEncryptionExtension } from 'prisma-field-encryption';
 
-// Create a mock client for build time when DATABASE_URL is not available
 function createPrismaClient() {
-  // Get encryption key from environment
+  if (!process.env.DATABASE_URL) {
+    throw new Error('[Prisma] DATABASE_URL environment variable is required');
+  }
+
   const encryptionKey = process.env.PRISMA_FIELD_ENCRYPTION_KEY;
 
   if (!encryptionKey) {
     throw new Error('[Prisma] PRISMA_FIELD_ENCRYPTION_KEY environment variable is required for field encryption');
   }
 
-  const basePrisma = new PrismaClient().$extends(
+  let basePrisma = new PrismaClient().$extends(
     fieldEncryptionExtension({
       encryptionKey: encryptionKey,
       dmmf: Prisma.dmmf,
     })
-  ).$extends(withAccelerate());
+  );
 
-  
-  return basePrisma
+  // Only apply Accelerate extension in production
+  if (process.env.NODE_ENV === "production") {
+    console.log("Accelerate extension applied to prisma client");
+    basePrisma = basePrisma.$extends(withAccelerate());
+  } else {
+    console.log("Accelerate extension not applied to prisma client");
+  }
+
+  return basePrisma;
 }
 
 const extendedPrisma = createPrismaClient();

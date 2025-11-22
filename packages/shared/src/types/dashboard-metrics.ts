@@ -53,7 +53,6 @@ export interface ChartDataResponse {
   trendPercentage: number; // Overall trend for the period
 }
 
-export interface SimplifiedMetricsResponse extends SimplifiedMetrics {}
 export interface ServiceRequest {
   id: string;
   title: string;

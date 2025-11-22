@@ -46,10 +46,10 @@ export default function WorkflowDetailWidget({
   const [, setTimezone] = useState<string>('UTC');
 
   // Move realtime hook to parent to persist data across tab switches
-  // Always call the hook, enabled must always be true (bug in useInngestSubscription)
+  // Only enable when workflow is actually running to reduce token refresh calls
   const realtimeData = useWorkflowRealtime({
     workflowId: workflow.id,
-    enabled: true,
+    enabled: workflow.status === 'RUNNING' || isRunning,
     bufferInterval: 2000,
   });
 
