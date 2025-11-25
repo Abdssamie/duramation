@@ -47,6 +47,7 @@ export const workflowStatusMiddleware = new InngestMiddleware({
                   eventName: event.name,
                   status: WorkflowStatus.RUNNING,
                   lastRunAt: new Date(),
+                  canBeScheduled: false,
                 },
               });
 

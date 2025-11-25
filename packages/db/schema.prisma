@@ -119,19 +119,17 @@ model Workflow {
   description String?
 
   // Whether the workflow instance is available for use by the user
-  available Boolean @default(true)
+  available      Boolean @default(true)
+  canBeScheduled Boolean
 
   // Current status of the workflow
   status WorkflowStatus @default(IDLE)
 
-  canBeScheduled Boolean @default(false)
-
   idempotencyKey String? @default(cuid())
 
-  cronExpressions String[]  @default([]) // Multiple schedules  e.g., ["0 9 * * *", "0 12 * * *"]
-  timezone        String?   @default("UTC") // e.g., "America/New_York"
-  lastRunAt       DateTime?
-  nextRunAt       DateTime?
+  timezone  String?   @default("UTC") // e.g., "America/New_York"
+  lastRunAt DateTime?
+  nextRunAt DateTime?
 
   fields Json?
   input  Json?
@@ -341,12 +339,12 @@ model ApiKey {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  name        String // User-friendly name for the key
-  key         String @unique /// @encrypted - The actual API key (hashed)
-  keyHash     String @unique // SHA-256 hash for searching
-  lastUsedAt  DateTime?
-  expiresAt   DateTime? // Optional expiration
-  isActive    Boolean  @default(true)
+  name       String // User-friendly name for the key
+  key        String    @unique /// @encrypted - The actual API key (hashed)
+  keyHash    String    @unique // SHA-256 hash for searching
+  lastUsedAt DateTime?
+  expiresAt  DateTime? // Optional expiration
+  isActive   Boolean   @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

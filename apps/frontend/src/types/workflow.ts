@@ -31,7 +31,6 @@ export interface WorkflowWithCredentials {
   available: boolean;
   canBeScheduled: boolean;
   eventName: string;
-  cronExpressions: string[];
   timezone: string | null;
   nextRunAt: Date | null;
   lastRunAt: Date | null;

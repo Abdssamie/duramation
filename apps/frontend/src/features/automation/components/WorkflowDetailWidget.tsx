@@ -109,10 +109,7 @@ export default function WorkflowDetailWidget({
     }
   }, [workflow.status, isRunning]);
 
-  const schedules = Array.isArray(workflow.cronExpressions)
-    ? workflow.cronExpressions
-    : [];
-  const scheduled = schedules.length > 0;
+  const scheduled = workflow.canBeScheduled;
 
   const handleClose = () => {
     setIsExpanded(false);
@@ -228,7 +225,6 @@ export default function WorkflowDetailWidget({
                     <OperationsTab
                       workflow={workflow}
                       onUpdateAction={onUpdateAction}
-                      schedules={schedules}
                       input={input}
                       setIsRunningAction={setIsRunning}
                       isRunning={isRunning}
@@ -304,7 +300,6 @@ export default function WorkflowDetailWidget({
                       <OperationsTab
                         workflow={workflow}
                         onUpdateAction={onUpdateAction}
-                        schedules={schedules}
                         input={input}
                         setIsRunningAction={setIsRunning}
                         isRunning={isRunning}
