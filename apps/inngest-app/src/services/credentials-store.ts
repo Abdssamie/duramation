@@ -113,22 +113,22 @@ export async function storeCredential(
     }
 
     const credential = await upsertCredentialInternal(userId, { ...credentialData, secret: sanitizedSecret }, nangoConnectionId);
-    if (config?.autoAssociate && config?.workflowId) {
+    if (credentialData.config?.autoAssociate && credentialData.config?.workflowId) {
       try {
         await prisma.workflowCredential.upsert({
           where: {
             workflowId_credentialId: {
-              workflowId: config.workflowId,
+              workflowId: credentialData.config.workflowId,
               credentialId: credential.id,
             },
           },
           update: {},
           create: {
-            workflowId: config.workflowId,
+            workflowId: credentialData.config.workflowId,
             credentialId: credential.id,
           },
         });
-        console.log(`Auto-associated credential ${credential.id} with workflow ${config.workflowId}`);
+        console.log(`Auto-associated credential ${credential.id} with workflow ${credentialData.config.workflowId}`);
       } catch (linkError) {
         console.error('Failed to auto-associate credential with workflow:', linkError);
         // Don't fail the whole operation if linking fails
@@ -381,7 +381,7 @@ export const credentialStore: CredentialStore = {
     }
   },
 
-  async retrieve(credentialId: string, userId: InternalId): Promise<CredentialWithSecret | null> {
+  async retrieve(credentialId: string, userId: InternalUserId): Promise<CredentialWithSecret | null> {
     try {
       const credential = await prisma.credential.findUnique({
         where: { id: credentialId, userId: userId, },
