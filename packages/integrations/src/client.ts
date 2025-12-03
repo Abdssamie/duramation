@@ -23,7 +23,10 @@ export class IntegrationClient {
     if (!secretKey) {
       throw new Error('NANGO_SECRET_KEY is not defined. Please set the environment variable.');
     }
-    this.nango = new Nango({ secretKey });
+    this.nango = new Nango({ 
+      secretKey,
+      ...(process.env.NANGO_BASE_URL && { host: process.env.NANGO_BASE_URL })
+    });
   }
 
   /**
