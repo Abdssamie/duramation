@@ -49,7 +49,7 @@ export function BarGraph() {
   const [timeRange, setTimeRange] = React.useState<TimeRange>('30d');
   const [selectedWorkflow, setSelectedWorkflow] = React.useState<string>('all');
 
-  const fetchChartData = useCallback(async () => {
+  const fetchChartData = useCallback(async (retryCount = 0) => {
     try {
       setLoading(true);
       setError(null);
@@ -69,6 +69,10 @@ export function BarGraph() {
         const data: ChartDataResponse | null = dataResponse.data ? dataResponse.data : null;
         setChartData(data);
 
+      } else if (retryCount < 3) {
+        // Retry after delay for new signups (race condition with webhook)
+        setTimeout(() => fetchChartData(retryCount + 1), 1000 * (retryCount + 1));
+        return;
       } else {
         setError('Authentication Error');
       }
@@ -133,7 +137,7 @@ export function BarGraph() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={fetchChartData}
+                onClick={() => fetchChartData()}
                 className="ml-2"
               >
                 Retry

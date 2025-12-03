@@ -14,6 +14,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint src --fix && pnpm format",
     "lint:strict": "eslint --max-warnings=0 src",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier -c -w .",
     "prepare": "husky"
@@ -32,6 +33,7 @@
     "@formatjs/intl-localematcher": "^0.6.1",
     "@hookform/resolvers": "^5.2.2",
     "@inngest/realtime": "^0.4.4",
+    "@nangohq/frontend": "^0.69.14",
     "@next/bundle-analyzer": "^15.5.4",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",

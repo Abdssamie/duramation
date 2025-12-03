@@ -234,7 +234,14 @@ export const workflowsApi = {
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
   } = {}) =>
-    request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token })
+    request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token }),
+
+  associateCredential: (token: string, workflowId: string, credentialId?: string, credentialIds?: string[]) =>
+    request<ApiResponse<{ success: boolean; results?: any[] }>>(`/api/workflows/${workflowId}/credentials`, {
+      token,
+      method: 'POST',
+      body: credentialIds ? { credentialIds } : { credentialId }
+    })
 };
 
 // Marketplace - using shared types
@@ -273,25 +280,17 @@ export const credentialsApi = {
     }),
   remove: (token: string, id: string) =>
     request<CredentialDeleteResponse>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
-  // Generic OAuth URL getter for any provider
-  getOAuthUrl: (token: string, provider: string, scopes: string[], workflowId?: string) =>
-    request<OAuthAuthorizationResponse>(
-      `/api/credentials/oauth/auth-url${toQuery({
-        provider: provider.toUpperCase(),
-        scopes: scopes.join(','),
+  
+  // Nango Session Token
+  createConnectSession: (token: string, providerConfigKeys: string | string[], workflowId?: string) =>
+    request<{ token: string; connectionId: string }>(`/api/integrations/nango/session`, {
+      token,
+      method: 'POST',
+      body: { 
+        provider_config_key: Array.isArray(providerConfigKeys) ? providerConfigKeys : [providerConfigKeys],
         ...(workflowId && { workflowId })
-      })}`,
-      { token }
-    ),
-  // Backwards compatibility
-  getGoogleAuthUrl: (token: string, scopes: string[], workflowId: string) =>
-    request<OAuthAuthorizationResponse>(
-      `/api/credentials/google/auth-url${toQuery({
-        scopes: scopes.join(','),
-        ...(workflowId && { workflowId })
-      })}`,
-      { token }
-    )
+      }
+    })
 };
 
 // Realtime

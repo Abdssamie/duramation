@@ -34,16 +34,16 @@ export default async function OverViewLayout({
         {/* Header */}
         <div className='flex items-center'>
           <h2 className='text-2xl font-bold tracking-tight'>
-            Hi, Welcome back 👋
+            Content Creation Dashboard 🎬
           </h2>
         </div>
 
         {/* Metrics Cards */}
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
-          {/* 1. Total Automations Executed */}
+          {/* 1. Total Content Workflows Executed */}
           <Card className='@container/card'>
             <CardHeader>
-              <CardDescription>Total Automations</CardDescription>
+              <CardDescription>Content Workflows</CardDescription>
               <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
                 {metrics.totalAutomationsExecuted.toLocaleString()}
               </CardTitle>
@@ -56,18 +56,18 @@ export default async function OverViewLayout({
             </CardHeader>
             <CardFooter className='flex-col items-start gap-1.5 text-sm'>
               <div className='line-clamp-1 flex gap-2 font-medium'>
-                Since account creation <IconTrendingUp className='size-4' />
+                Content pieces created <IconTrendingUp className='size-4' />
               </div>
               <div className='text-muted-foreground'>
-                {metrics.totalAutomationsExecuted > 1000 ? 'Excellent automation adoption' : metrics.totalAutomationsExecuted > 100 ? 'Good progress on automation' : 'Just getting started with automation'}
+                {metrics.totalAutomationsExecuted > 1000 ? 'Prolific content production' : metrics.totalAutomationsExecuted > 100 ? 'Growing content library' : 'Building your content portfolio'}
               </div>
             </CardFooter>
           </Card>
 
-          {/* 2. Cost Savings */}
+          {/* 2. Production Time Saved */}
           <Card className='@container/card'>
             <CardHeader>
-              <CardDescription>Total Cost Savings</CardDescription>
+              <CardDescription>Production Time Saved</CardDescription>
               <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
                 {formatCurrency(metrics.estimatedSavings.costUSD)}
               </CardTitle>
@@ -80,18 +80,18 @@ export default async function OverViewLayout({
             </CardHeader>
             <CardFooter className='flex-col items-start gap-1.5 text-sm'>
               <div className='line-clamp-1 flex gap-2 font-medium'>
-                Strong ROI performance <IconTrendingUp className='size-4' />
+                Streamlined content creation <IconTrendingUp className='size-4' />
               </div>
               <div className='text-muted-foreground'>
-                {metrics.estimatedSavings.costUSD > 10000 ? 'Significant ROI achieved' : metrics.estimatedSavings.costUSD > 1000 ? 'Strong cost reduction impact' : 'Building towards meaningful savings'}
+                {metrics.estimatedSavings.costUSD > 10000 ? 'Massive efficiency gains' : metrics.estimatedSavings.costUSD > 1000 ? 'Strong time optimization' : 'Building production efficiency'}
               </div>
             </CardFooter>
           </Card>
 
-          {/* 3. Active Workflows */}
+          {/* 3. Active Content Workflows */}
           <Card className='@container/card'>
             <CardHeader>
-              <CardDescription>Active Workflows</CardDescription>
+              <CardDescription>Active Content Workflows</CardDescription>
               <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
                 {metrics.activeWorkflows.total}
               </CardTitle>
@@ -104,10 +104,10 @@ export default async function OverViewLayout({
             </CardHeader>
             <CardFooter className='flex-col items-start gap-1.5 text-sm'>
               <div className='line-clamp-1 flex gap-2 font-medium'>
-                {metrics.activeWorkflows.scheduled} scheduled, {metrics.activeWorkflows.direct} direct <IconTrendingUp className='size-4' />
+                {metrics.activeWorkflows.scheduled} scheduled, {metrics.activeWorkflows.direct} on-demand <IconTrendingUp className='size-4' />
               </div>
               <div className='text-muted-foreground'>
-                {metrics.activeWorkflows.total > 10 ? 'Well-established automation suite' : metrics.activeWorkflows.total > 3 ? 'Growing automation portfolio' : 'Consider adding more workflows'}
+                {metrics.activeWorkflows.total > 10 ? 'Diverse content pipeline' : metrics.activeWorkflows.total > 3 ? 'Expanding content operations' : 'Start with more content workflows'}
               </div>
             </CardFooter>
           </Card>
@@ -115,7 +115,7 @@ export default async function OverViewLayout({
           {/* 4. Success Rate */}
           <Card className='@container/card'>
             <CardHeader>
-              <CardDescription>Success Rate</CardDescription>
+              <CardDescription>Workflow Success Rate</CardDescription>
               <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
                 {metrics.workflowSuccessRate.toFixed(1)}%
               </CardTitle>
@@ -131,7 +131,7 @@ export default async function OverViewLayout({
                 {(100 - metrics.workflowSuccessRate).toFixed(1)}% failure rate {metrics.workflowSuccessRate >= 95 ? <IconTrendingUp className='size-4' /> : <IconTrendingDown className='size-4' />}
               </div>
               <div className='text-muted-foreground'>
-                {metrics.workflowSuccessRate >= 95 ? 'Excellent system reliability' : metrics.workflowSuccessRate >= 85 ? 'Good performance, room for improvement' : 'Consider reviewing workflow configurations'}
+                {metrics.workflowSuccessRate >= 95 ? 'Reliable content production' : metrics.workflowSuccessRate >= 85 ? 'Good reliability, optimize further' : 'Review workflow configurations'}
               </div>
             </CardFooter>
           </Card>

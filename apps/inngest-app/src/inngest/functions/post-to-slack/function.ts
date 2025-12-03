@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate } from "@/lib/realtime-channels";
+import { integrationClient } from "@duramation/integrations/server";
 
 export const postToSlackWorkflow = inngest.createFunction(
     {
@@ -24,7 +25,7 @@ export const postToSlackWorkflow = inngest.createFunction(
         const { channel, message } = input;
 
         // Check for Slack credentials
-        const slackCredential = credentials.find((cred: any) => cred.provider === 'SLACK');
+        const slackCredential = credentials.find((cred: any) => cred.provider === 'slack' || cred.provider === 'SLACK_LEGACY');
 
         if (!slackCredential) {
             await publish(
@@ -49,7 +50,13 @@ export const postToSlackWorkflow = inngest.createFunction(
                 )
             );
 
-            const { accessToken } = slackCredential.secret as { accessToken: string };
+            const nangoConnectionId = slackCredential.nangoConnectionId;
+            if (!nangoConnectionId) {
+                 throw new NonRetriableError("Missing Nango Connection ID on credential. Please reconnect your Slack account.");
+            }
+
+            // Use the provider from the credential directly, which should match Nango key
+            const accessToken = await integrationClient.getAccessToken(slackCredential.provider, nangoConnectionId);
 
             const response = await fetch('https://slack.com/api/chat.postMessage', {
                 method: 'POST',

@@ -77,13 +77,16 @@ export type CredentialType = (typeof CredentialType)[keyof typeof CredentialType
 
 
 export const Provider: {
-  GOOGLE: 'GOOGLE',
-  SLACK: 'SLACK',
-  MICROSOFT: 'MICROSOFT',
-  HUBSPOT: 'HUBSPOT',
-  FIRECRAWL: 'FIRECRAWL',
-  INSTAGRAM: 'INSTAGRAM',
-  CUSTOM: 'CUSTOM'
+  google_mail: 'google_mail',
+  google_calendar: 'google_calendar',
+  google_sheets: 'google_sheets',
+  slack: 'slack',
+  microsoft_mail: 'microsoft_mail',
+  microsoft_calendar: 'microsoft_calendar',
+  hubspot: 'hubspot',
+  firecrawl: 'firecrawl',
+  instagram: 'instagram',
+  custom_api: 'custom_api'
 };
 
 export type Provider = (typeof Provider)[keyof typeof Provider]
@@ -3210,6 +3213,7 @@ export namespace Prisma {
     type: $Enums.CredentialType | null
     provider: $Enums.Provider | null
     secret: string | null
+    nangoConnectionId: string | null
     expiresIn: Date | null
     userId: string | null
     createdAt: Date | null
@@ -3222,6 +3226,7 @@ export namespace Prisma {
     type: $Enums.CredentialType | null
     provider: $Enums.Provider | null
     secret: string | null
+    nangoConnectionId: string | null
     expiresIn: Date | null
     userId: string | null
     createdAt: Date | null
@@ -3234,6 +3239,7 @@ export namespace Prisma {
     type: number
     provider: number
     secret: number
+    nangoConnectionId: number
     config: number
     expiresIn: number
     userId: number
@@ -3249,6 +3255,7 @@ export namespace Prisma {
     type?: true
     provider?: true
     secret?: true
+    nangoConnectionId?: true
     expiresIn?: true
     userId?: true
     createdAt?: true
@@ -3261,6 +3268,7 @@ export namespace Prisma {
     type?: true
     provider?: true
     secret?: true
+    nangoConnectionId?: true
     expiresIn?: true
     userId?: true
     createdAt?: true
@@ -3273,6 +3281,7 @@ export namespace Prisma {
     type?: true
     provider?: true
     secret?: true
+    nangoConnectionId?: true
     config?: true
     expiresIn?: true
     userId?: true
@@ -3359,6 +3368,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret: string | null
+    nangoConnectionId: string | null
     config: JsonValue | null
     expiresIn: Date | null
     userId: string
@@ -3389,6 +3399,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3405,6 +3416,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3419,6 +3431,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3433,6 +3446,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3440,7 +3454,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CredentialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "secret" | "config" | "expiresIn" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
+  export type CredentialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "secret" | "nangoConnectionId" | "config" | "expiresIn" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
   export type CredentialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     workflowCredentials?: boolean | Credential$workflowCredentialsArgs<ExtArgs>
@@ -3465,9 +3479,10 @@ export namespace Prisma {
       type: $Enums.CredentialType
       provider: $Enums.Provider
       /**
-       * @encrypted - Stored as encrypted JSON string
+       * @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId)
        */
       secret: string | null
+      nangoConnectionId: string | null
       config: Prisma.JsonValue | null
       expiresIn: Date | null
       userId: string
@@ -3903,6 +3918,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Credential", 'CredentialType'>
     readonly provider: FieldRef<"Credential", 'Provider'>
     readonly secret: FieldRef<"Credential", 'String'>
+    readonly nangoConnectionId: FieldRef<"Credential", 'String'>
     readonly config: FieldRef<"Credential", 'Json'>
     readonly expiresIn: FieldRef<"Credential", 'DateTime'>
     readonly userId: FieldRef<"Credential", 'String'>
@@ -4362,8 +4378,8 @@ export namespace Prisma {
     templateId: string | null
     description: string | null
     available: boolean | null
-    status: $Enums.WorkflowStatus | null
     canBeScheduled: boolean | null
+    status: $Enums.WorkflowStatus | null
     idempotencyKey: string | null
     timezone: string | null
     lastRunAt: Date | null
@@ -4381,8 +4397,8 @@ export namespace Prisma {
     templateId: string | null
     description: string | null
     available: boolean | null
-    status: $Enums.WorkflowStatus | null
     canBeScheduled: boolean | null
+    status: $Enums.WorkflowStatus | null
     idempotencyKey: string | null
     timezone: string | null
     lastRunAt: Date | null
@@ -4400,10 +4416,9 @@ export namespace Prisma {
     templateId: number
     description: number
     available: number
-    status: number
     canBeScheduled: number
+    status: number
     idempotencyKey: number
-    cronExpressions: number
     timezone: number
     lastRunAt: number
     nextRunAt: number
@@ -4427,8 +4442,8 @@ export namespace Prisma {
     templateId?: true
     description?: true
     available?: true
-    status?: true
     canBeScheduled?: true
+    status?: true
     idempotencyKey?: true
     timezone?: true
     lastRunAt?: true
@@ -4446,8 +4461,8 @@ export namespace Prisma {
     templateId?: true
     description?: true
     available?: true
-    status?: true
     canBeScheduled?: true
+    status?: true
     idempotencyKey?: true
     timezone?: true
     lastRunAt?: true
@@ -4465,10 +4480,9 @@ export namespace Prisma {
     templateId?: true
     description?: true
     available?: true
-    status?: true
     canBeScheduled?: true
+    status?: true
     idempotencyKey?: true
-    cronExpressions?: true
     timezone?: true
     lastRunAt?: true
     nextRunAt?: true
@@ -4563,10 +4577,9 @@ export namespace Prisma {
     templateId: string
     description: string | null
     available: boolean
-    status: $Enums.WorkflowStatus
     canBeScheduled: boolean
+    status: $Enums.WorkflowStatus
     idempotencyKey: string | null
-    cronExpressions: string[]
     timezone: string | null
     lastRunAt: Date | null
     nextRunAt: Date | null
@@ -4605,10 +4618,9 @@ export namespace Prisma {
     templateId?: boolean
     description?: boolean
     available?: boolean
-    status?: boolean
     canBeScheduled?: boolean
+    status?: boolean
     idempotencyKey?: boolean
-    cronExpressions?: boolean
     timezone?: boolean
     lastRunAt?: boolean
     nextRunAt?: boolean
@@ -4635,10 +4647,9 @@ export namespace Prisma {
     templateId?: boolean
     description?: boolean
     available?: boolean
-    status?: boolean
     canBeScheduled?: boolean
+    status?: boolean
     idempotencyKey?: boolean
-    cronExpressions?: boolean
     timezone?: boolean
     lastRunAt?: boolean
     nextRunAt?: boolean
@@ -4661,10 +4672,9 @@ export namespace Prisma {
     templateId?: boolean
     description?: boolean
     available?: boolean
-    status?: boolean
     canBeScheduled?: boolean
+    status?: boolean
     idempotencyKey?: boolean
-    cronExpressions?: boolean
     timezone?: boolean
     lastRunAt?: boolean
     nextRunAt?: boolean
@@ -4687,10 +4697,9 @@ export namespace Prisma {
     templateId?: boolean
     description?: boolean
     available?: boolean
-    status?: boolean
     canBeScheduled?: boolean
+    status?: boolean
     idempotencyKey?: boolean
-    cronExpressions?: boolean
     timezone?: boolean
     lastRunAt?: boolean
     nextRunAt?: boolean
@@ -4706,7 +4715,7 @@ export namespace Prisma {
     config?: boolean
   }
 
-  export type WorkflowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "templateId" | "description" | "available" | "status" | "canBeScheduled" | "idempotencyKey" | "cronExpressions" | "timezone" | "lastRunAt" | "nextRunAt" | "fields" | "input" | "eventName" | "createdAt" | "updatedAt" | "userId" | "requiredProviders" | "requiredScopes" | "version" | "config", ExtArgs["result"]["workflow"]>
+  export type WorkflowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "templateId" | "description" | "available" | "canBeScheduled" | "status" | "idempotencyKey" | "timezone" | "lastRunAt" | "nextRunAt" | "fields" | "input" | "eventName" | "createdAt" | "updatedAt" | "userId" | "requiredProviders" | "requiredScopes" | "version" | "config", ExtArgs["result"]["workflow"]>
   export type WorkflowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     workflowCredentials?: boolean | Workflow$workflowCredentialsArgs<ExtArgs>
@@ -4735,10 +4744,9 @@ export namespace Prisma {
       templateId: string
       description: string | null
       available: boolean
-      status: $Enums.WorkflowStatus
       canBeScheduled: boolean
+      status: $Enums.WorkflowStatus
       idempotencyKey: string | null
-      cronExpressions: string[]
       timezone: string | null
       lastRunAt: Date | null
       nextRunAt: Date | null
@@ -5184,10 +5192,9 @@ export namespace Prisma {
     readonly templateId: FieldRef<"Workflow", 'String'>
     readonly description: FieldRef<"Workflow", 'String'>
     readonly available: FieldRef<"Workflow", 'Boolean'>
-    readonly status: FieldRef<"Workflow", 'WorkflowStatus'>
     readonly canBeScheduled: FieldRef<"Workflow", 'Boolean'>
+    readonly status: FieldRef<"Workflow", 'WorkflowStatus'>
     readonly idempotencyKey: FieldRef<"Workflow", 'String'>
-    readonly cronExpressions: FieldRef<"Workflow", 'String[]'>
     readonly timezone: FieldRef<"Workflow", 'String'>
     readonly lastRunAt: FieldRef<"Workflow", 'DateTime'>
     readonly nextRunAt: FieldRef<"Workflow", 'DateTime'>
@@ -13682,6 +13689,7 @@ export namespace Prisma {
     type: 'type',
     provider: 'provider',
     secret: 'secret',
+    nangoConnectionId: 'nangoConnectionId',
     config: 'config',
     expiresIn: 'expiresIn',
     userId: 'userId',
@@ -13698,10 +13706,9 @@ export namespace Prisma {
     templateId: 'templateId',
     description: 'description',
     available: 'available',
-    status: 'status',
     canBeScheduled: 'canBeScheduled',
+    status: 'status',
     idempotencyKey: 'idempotencyKey',
-    cronExpressions: 'cronExpressions',
     timezone: 'timezone',
     lastRunAt: 'lastRunAt',
     nextRunAt: 'nextRunAt',
@@ -14173,6 +14180,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
     expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
@@ -14188,6 +14196,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrderInput | SortOrder
+    nangoConnectionId?: SortOrderInput | SortOrder
     config?: SortOrderInput | SortOrder
     expiresIn?: SortOrderInput | SortOrder
     userId?: SortOrder
@@ -14207,6 +14216,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
     expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
@@ -14222,6 +14232,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrderInput | SortOrder
+    nangoConnectionId?: SortOrderInput | SortOrder
     config?: SortOrderInput | SortOrder
     expiresIn?: SortOrderInput | SortOrder
     userId?: SortOrder
@@ -14241,6 +14252,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeWithAggregatesFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderWithAggregatesFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableWithAggregatesFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableWithAggregatesFilter<"Credential"> | string | null
     config?: JsonNullableWithAggregatesFilter<"Credential">
     expiresIn?: DateTimeNullableWithAggregatesFilter<"Credential"> | Date | string | null
     userId?: StringWithAggregatesFilter<"Credential"> | string
@@ -14257,10 +14269,9 @@ export namespace Prisma {
     templateId?: StringFilter<"Workflow"> | string
     description?: StringNullableFilter<"Workflow"> | string | null
     available?: BoolFilter<"Workflow"> | boolean
-    status?: EnumWorkflowStatusFilter<"Workflow"> | $Enums.WorkflowStatus
     canBeScheduled?: BoolFilter<"Workflow"> | boolean
+    status?: EnumWorkflowStatusFilter<"Workflow"> | $Enums.WorkflowStatus
     idempotencyKey?: StringNullableFilter<"Workflow"> | string | null
-    cronExpressions?: StringNullableListFilter<"Workflow">
     timezone?: StringNullableFilter<"Workflow"> | string | null
     lastRunAt?: DateTimeNullableFilter<"Workflow"> | Date | string | null
     nextRunAt?: DateTimeNullableFilter<"Workflow"> | Date | string | null
@@ -14286,10 +14297,9 @@ export namespace Prisma {
     templateId?: SortOrder
     description?: SortOrderInput | SortOrder
     available?: SortOrder
-    status?: SortOrder
     canBeScheduled?: SortOrder
+    status?: SortOrder
     idempotencyKey?: SortOrderInput | SortOrder
-    cronExpressions?: SortOrder
     timezone?: SortOrderInput | SortOrder
     lastRunAt?: SortOrderInput | SortOrder
     nextRunAt?: SortOrderInput | SortOrder
@@ -14318,10 +14328,9 @@ export namespace Prisma {
     templateId?: StringFilter<"Workflow"> | string
     description?: StringNullableFilter<"Workflow"> | string | null
     available?: BoolFilter<"Workflow"> | boolean
-    status?: EnumWorkflowStatusFilter<"Workflow"> | $Enums.WorkflowStatus
     canBeScheduled?: BoolFilter<"Workflow"> | boolean
+    status?: EnumWorkflowStatusFilter<"Workflow"> | $Enums.WorkflowStatus
     idempotencyKey?: StringNullableFilter<"Workflow"> | string | null
-    cronExpressions?: StringNullableListFilter<"Workflow">
     timezone?: StringNullableFilter<"Workflow"> | string | null
     lastRunAt?: DateTimeNullableFilter<"Workflow"> | Date | string | null
     nextRunAt?: DateTimeNullableFilter<"Workflow"> | Date | string | null
@@ -14347,10 +14356,9 @@ export namespace Prisma {
     templateId?: SortOrder
     description?: SortOrderInput | SortOrder
     available?: SortOrder
-    status?: SortOrder
     canBeScheduled?: SortOrder
+    status?: SortOrder
     idempotencyKey?: SortOrderInput | SortOrder
-    cronExpressions?: SortOrder
     timezone?: SortOrderInput | SortOrder
     lastRunAt?: SortOrderInput | SortOrder
     nextRunAt?: SortOrderInput | SortOrder
@@ -14378,10 +14386,9 @@ export namespace Prisma {
     templateId?: StringWithAggregatesFilter<"Workflow"> | string
     description?: StringNullableWithAggregatesFilter<"Workflow"> | string | null
     available?: BoolWithAggregatesFilter<"Workflow"> | boolean
-    status?: EnumWorkflowStatusWithAggregatesFilter<"Workflow"> | $Enums.WorkflowStatus
     canBeScheduled?: BoolWithAggregatesFilter<"Workflow"> | boolean
+    status?: EnumWorkflowStatusWithAggregatesFilter<"Workflow"> | $Enums.WorkflowStatus
     idempotencyKey?: StringNullableWithAggregatesFilter<"Workflow"> | string | null
-    cronExpressions?: StringNullableListFilter<"Workflow">
     timezone?: StringNullableWithAggregatesFilter<"Workflow"> | string | null
     lastRunAt?: DateTimeNullableWithAggregatesFilter<"Workflow"> | Date | string | null
     nextRunAt?: DateTimeNullableWithAggregatesFilter<"Workflow"> | Date | string | null
@@ -15117,6 +15124,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -15131,6 +15139,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     userId: string
@@ -15145,6 +15154,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15159,6 +15169,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -15173,6 +15184,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     userId: string
@@ -15186,6 +15198,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15198,6 +15211,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -15211,10 +15225,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -15239,10 +15252,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -15267,10 +15279,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15295,10 +15306,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15323,10 +15333,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -15348,10 +15357,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15372,10 +15380,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16340,6 +16347,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrder
+    nangoConnectionId?: SortOrder
     config?: SortOrder
     expiresIn?: SortOrder
     userId?: SortOrder
@@ -16353,6 +16361,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrder
+    nangoConnectionId?: SortOrder
     expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -16365,6 +16374,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrder
+    nangoConnectionId?: SortOrder
     expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -16438,14 +16448,6 @@ export namespace Prisma {
     not?: NestedEnumWorkflowStatusFilter<$PrismaModel> | $Enums.WorkflowStatus
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type EnumProviderNullableListFilter<$PrismaModel = never> = {
     equals?: $Enums.Provider[] | ListEnumProviderFieldRefInput<$PrismaModel> | null
     has?: $Enums.Provider | EnumProviderFieldRefInput<$PrismaModel> | null
@@ -16470,10 +16472,9 @@ export namespace Prisma {
     templateId?: SortOrder
     description?: SortOrder
     available?: SortOrder
-    status?: SortOrder
     canBeScheduled?: SortOrder
+    status?: SortOrder
     idempotencyKey?: SortOrder
-    cronExpressions?: SortOrder
     timezone?: SortOrder
     lastRunAt?: SortOrder
     nextRunAt?: SortOrder
@@ -16495,8 +16496,8 @@ export namespace Prisma {
     templateId?: SortOrder
     description?: SortOrder
     available?: SortOrder
-    status?: SortOrder
     canBeScheduled?: SortOrder
+    status?: SortOrder
     idempotencyKey?: SortOrder
     timezone?: SortOrder
     lastRunAt?: SortOrder
@@ -16514,8 +16515,8 @@ export namespace Prisma {
     templateId?: SortOrder
     description?: SortOrder
     available?: SortOrder
-    status?: SortOrder
     canBeScheduled?: SortOrder
+    status?: SortOrder
     idempotencyKey?: SortOrder
     timezone?: SortOrder
     lastRunAt?: SortOrder
@@ -16644,6 +16645,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRunStatusFilter<$PrismaModel>
     _max?: NestedEnumRunStatusFilter<$PrismaModel>
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
   }
 
   export type WorkflowTemplateCountOrderByAggregateInput = {
@@ -17347,10 +17356,6 @@ export namespace Prisma {
     deleteMany?: WorkflowCredentialScalarWhereInput | WorkflowCredentialScalarWhereInput[]
   }
 
-  export type WorkflowCreatecronExpressionsInput = {
-    set: string[]
-  }
-
   export type WorkflowCreaterequiredProvidersInput = {
     set: $Enums.Provider[]
   }
@@ -17405,11 +17410,6 @@ export namespace Prisma {
 
   export type EnumWorkflowStatusFieldUpdateOperationsInput = {
     set?: $Enums.WorkflowStatus
-  }
-
-  export type WorkflowUpdatecronExpressionsInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type WorkflowUpdaterequiredProvidersInput = {
@@ -18069,10 +18069,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -18096,10 +18095,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -18133,6 +18131,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -18146,6 +18145,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -18343,10 +18343,9 @@ export namespace Prisma {
     templateId?: StringFilter<"Workflow"> | string
     description?: StringNullableFilter<"Workflow"> | string | null
     available?: BoolFilter<"Workflow"> | boolean
-    status?: EnumWorkflowStatusFilter<"Workflow"> | $Enums.WorkflowStatus
     canBeScheduled?: BoolFilter<"Workflow"> | boolean
+    status?: EnumWorkflowStatusFilter<"Workflow"> | $Enums.WorkflowStatus
     idempotencyKey?: StringNullableFilter<"Workflow"> | string | null
-    cronExpressions?: StringNullableListFilter<"Workflow">
     timezone?: StringNullableFilter<"Workflow"> | string | null
     lastRunAt?: DateTimeNullableFilter<"Workflow"> | Date | string | null
     nextRunAt?: DateTimeNullableFilter<"Workflow"> | Date | string | null
@@ -18387,6 +18386,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
     expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
@@ -18922,10 +18922,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -18949,10 +18948,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -18981,6 +18979,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -18994,6 +18993,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     userId: string
@@ -19023,10 +19023,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19050,10 +19049,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19088,6 +19086,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19101,6 +19100,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -19114,10 +19114,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -19141,10 +19140,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -19225,10 +19223,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19252,10 +19249,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19502,10 +19498,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -19529,10 +19524,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -19572,10 +19566,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19599,10 +19592,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19714,10 +19706,9 @@ export namespace Prisma {
     templateId: string
     description?: string | null
     available?: boolean
+    canBeScheduled: boolean
     status?: $Enums.WorkflowStatus
-    canBeScheduled?: boolean
     idempotencyKey?: string | null
-    cronExpressions?: WorkflowCreatecronExpressionsInput | string[]
     timezone?: string | null
     lastRunAt?: Date | string | null
     nextRunAt?: Date | string | null
@@ -19738,6 +19729,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -19800,10 +19792,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19827,10 +19818,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19854,10 +19844,9 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     available?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     canBeScheduled?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumWorkflowStatusFieldUpdateOperationsInput | $Enums.WorkflowStatus
     idempotencyKey?: NullableStringFieldUpdateOperationsInput | string | null
-    cronExpressions?: WorkflowUpdatecronExpressionsInput | string[]
     timezone?: NullableStringFieldUpdateOperationsInput | string | null
     lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19878,6 +19867,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19891,6 +19881,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19904,6 +19895,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

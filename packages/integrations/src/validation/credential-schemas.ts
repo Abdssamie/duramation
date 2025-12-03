@@ -76,15 +76,18 @@ export const hubspotCredentialSchema = z.object({
  * Provider-specific credential schemas
  */
 export const credentialSchemas: Record<Provider, z.ZodSchema> = {
-  GOOGLE: googleCredentialSchema,
-  SLACK: slackCredentialSchema,
-  MICROSOFT: microsoftCredentialSchema,
-  FIRECRAWL: firecrawlCredentialSchema,
-  HUBSPOT: hubspotCredentialSchema,
-  INSTAGRAM: oauthCredentialSchema,
-  CUSTOM: z.union([oauthCredentialSchema, apiKeyCredentialSchema])
+  // New Keys                                                                                                   
+  google_mail: googleCredentialSchema,
+  google_calendar: googleCredentialSchema,
+  google_sheets: googleCredentialSchema,
+  slack: slackCredentialSchema,
+  microsoft_mail: microsoftCredentialSchema,
+  microsoft_calendar: microsoftCredentialSchema,
+  hubspot: hubspotCredentialSchema,
+  firecrawl: firecrawlCredentialSchema,
+  instagram: oauthCredentialSchema,
+  custom_api: z.union([oauthCredentialSchema, apiKeyCredentialSchema]),
 };
-
 /**
  * Validate credentials for a specific provider
  * @throws {z.ZodError} If validation fails

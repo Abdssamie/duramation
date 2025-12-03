@@ -153,7 +153,6 @@ export async function POST(
                 available: isActive !== undefined ? isActive : true,
                 status: 'IDLE', // Not running by default
                 canBeScheduled: template.canBeScheduled,
-                cronExpressions: [],
                 timezone: "UTC",
                 input: configuration || {},
                 fields: template.fields as unknown as Prisma.InputJsonValue,

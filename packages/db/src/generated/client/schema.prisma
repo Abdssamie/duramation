@@ -58,13 +58,17 @@ enum CredentialType {
 }
 
 enum Provider {
-  GOOGLE
-  SLACK
-  MICROSOFT
-  HUBSPOT
-  FIRECRAWL
-  INSTAGRAM
-  CUSTOM
+  // Nango Provider Config Keys
+  google_mail        @map("google-mail")
+  google_calendar    @map("google-calendar")
+  google_sheets      @map("google-sheets")
+  slack              @map("slack")
+  microsoft_mail     @map("microsoft-mail")
+  microsoft_calendar @map("microsoft-calendar")
+  hubspot            @map("hubspot")
+  firecrawl          @map("firecrawl")
+  instagram          @map("instagram")
+  custom_api         @map("custom-api")
 }
 
 enum WorkflowStatus {
@@ -89,9 +93,10 @@ model Credential {
   type     CredentialType
   provider Provider
 
-  secret    String? /// @encrypted - Stored as encrypted JSON string
-  config    Json? // optional extra data (endpoint, token expiry)
-  expiresIn DateTime?
+  secret            String? /// @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId)
+  nangoConnectionId String? // The Nango connection ID for this credential
+  config            Json? // optional extra data (endpoint, token expiry)
+  expiresIn         DateTime?
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -119,19 +124,17 @@ model Workflow {
   description String?
 
   // Whether the workflow instance is available for use by the user
-  available Boolean @default(true)
+  available      Boolean @default(true)
+  canBeScheduled Boolean
 
   // Current status of the workflow
   status WorkflowStatus @default(IDLE)
 
-  canBeScheduled Boolean @default(false)
-
   idempotencyKey String? @default(cuid())
 
-  cronExpressions String[]  @default([]) // Multiple schedules  e.g., ["0 9 * * *", "0 12 * * *"]
-  timezone        String?   @default("UTC") // e.g., "America/New_York"
-  lastRunAt       DateTime?
-  nextRunAt       DateTime?
+  timezone  String?   @default("UTC") // e.g., "America/New_York"
+  lastRunAt DateTime?
+  nextRunAt DateTime?
 
   fields Json?
   input  Json?

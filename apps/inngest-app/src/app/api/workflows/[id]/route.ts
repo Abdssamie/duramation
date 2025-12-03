@@ -57,7 +57,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         canBeScheduled: true,
         timezone: true,
         lastRunAt: true,
-        cronExpressions: true,
         nextRunAt: true,
         eventName: true,
         createdAt: true,

@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, ArrowUpRight, Sparkles } from 'lucide-react';
 import { getWorkflowStatusDisplay, getWorkflowStatusColorClass } from '@/utils/workflow-sanitizer';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export const WorkflowCard = memo(function WorkflowCard({
   workflow,
@@ -24,16 +25,21 @@ export const WorkflowCard = memo(function WorkflowCard({
   onOpenDetails: (workflow: WorkflowWithCredentials) => void;
   hasNewVersion?: boolean;
 }) {
-  const schedules = Array.isArray(workflow.cronExpressions)
-    ? workflow.cronExpressions
-    : [];
   const creds = Array.isArray(workflow.workflowCredentials)
     ? workflow.workflowCredentials.map((wc) => wc.credential)
     : [];
   const running = String(workflow.status) === 'RUNNING';
-  const scheduled = schedules.length > 0;
+  // Use canBeScheduled to determine if it's a cron workflow or event-based
+  const isSchedule = workflow.canBeScheduled;
+  
   const statusLabel = getWorkflowStatusDisplay(workflow.status);
   const statusColorClass = getWorkflowStatusColorClass(workflow.status);
+
+  // Trigger Logic
+  const triggerInfo = {
+    label: isSchedule ? 'Schedule' : 'Event',
+    value: workflow.eventName
+  };
 
   // Simple credential status calculation
   const requiredProviders = (workflow.requiredProviders as Provider[]) || [];
@@ -42,7 +48,11 @@ export const WorkflowCard = memo(function WorkflowCard({
 
   return (
     <Card
-      className={`flex flex-col transition-all duration-200 hover:shadow-md ${hasNewVersion ? 'ring-2 ring-blue-200 dark:ring-blue-800' : ''}`}
+      className={cn(
+        "flex flex-col transition-all duration-200 hover:shadow-md",
+        hasNewVersion && "ring-2 ring-blue-200 dark:ring-blue-800",
+        running && "border-green-500 ring-1 ring-green-500 shadow-sm"
+      )}
       role='region'
       aria-labelledby={headingId}
     >
@@ -50,19 +60,12 @@ export const WorkflowCard = memo(function WorkflowCard({
         <div className='flex items-start justify-between gap-2'>
           <CardTitle id={headingId} className='flex items-center gap-2 text-base flex-1 min-w-0'>
             {running ? (
-              <span
-                className='inline-block size-2 animate-pulse rounded-full bg-green-500'
-                role='img'
-                aria-label='Running'
-                title='Running'
-              />
-            ) : scheduled ? (
-              <span
-                className='inline-block size-2 animate-pulse rounded-full bg-yellow-400'
-                role='img'
-                aria-label='Scheduled'
-                title='Scheduled'
-              />
+               <div className="flex items-center gap-2">
+                 <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </span>
+               </div>
             ) : (
               <span
                 className='inline-block size-2 rounded-full'
@@ -75,7 +78,7 @@ export const WorkflowCard = memo(function WorkflowCard({
               />
             )}
             <span
-              className='truncate'
+              className={cn("truncate", running && "font-semibold text-green-700 dark:text-green-400")}
               title={workflow.name || 'Untitled workflow'}
             >
               {workflow.name || 'Untitled workflow'}
@@ -101,11 +104,17 @@ export const WorkflowCard = memo(function WorkflowCard({
         <div className='grid grid-cols-2 gap-3 text-xs'>
           <div>
             <div className='text-muted-foreground'>Status</div>
-            <div className={`font-medium ${statusColorClass}`}>
+            <div className={cn("font-medium", statusColorClass, running && "text-green-600 animate-pulse")}>
               {statusLabel}
             </div>
+            {isSchedule && (
+               <p className="text-[10px] text-muted-foreground/80 mt-1 leading-tight">
+                 * Always active
+               </p>
+            )}
           </div>
-          {workflow.nextRunAt && (
+          
+          {workflow.nextRunAt ? (
             <div>
               <div className='text-muted-foreground'>Next run</div>
               <div
@@ -117,11 +126,21 @@ export const WorkflowCard = memo(function WorkflowCard({
                 })}
               </div>
             </div>
+          ) : (
+             <div>
+              <div className='text-muted-foreground'>Last run</div>
+              <div className='text-xs font-medium text-muted-foreground'>
+                 {workflow.lastRunAt ? formatDistanceToNow(new Date(workflow.lastRunAt), { addSuffix: true }) : 'Never'}
+              </div>
+            </div>
           )}
-          <div>
-            <div className='text-muted-foreground'>Schedules</div>
-            <div className='font-medium'>
-              {schedules.length > 0 ? schedules.length : '—'}
+
+          <div className="col-span-2 pt-1 border-t mt-1">
+            <div className='flex items-center gap-2'>
+               <span className='text-muted-foreground'>{triggerInfo.label}:</span>
+               <code className='font-medium bg-muted px-1.5 py-0.5 rounded text-[10px] truncate max-w-[180px]' title={triggerInfo.value}>
+                  {triggerInfo.value}
+               </code>
             </div>
           </div>
         </div>

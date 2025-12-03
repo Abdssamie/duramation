@@ -58,10 +58,10 @@ export async function POST(req: NextRequest) {
 
     const body: CredentialCreateRequest = await req.json();
 
-    if (body.type === 'OAUTH') {
+    if (body.type === 'OAUTH' && !(body.secret as any).nangoConnectionId) {
         const errorResponse: CredentialCreateApiResponse = {
             success: false,
-            error: 'OAuth credentials must be created via the OAuth flow',
+            error: 'OAuth credentials must be created via the OAuth flow or Nango',
             code: 'INVALID_OPERATION',
         };
         return NextResponse.json(errorResponse, { status: 400 });
