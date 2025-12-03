@@ -104,7 +104,7 @@ export default function WorkflowCredentialsTab({
         return;
       }
 
-      const nango = new Nango({ publicKey: process.env.NEXT_PUBLIC_NANGO_PUBLIC_KEY || '' });
+      const nango = new Nango();
 
       const integrationIds = providersToConnect.map(req => req.provider.toLowerCase().replace(/_/g, '-'));
       const sessionResponse = await api.credentials.createConnectSession(token, integrationIds, workflow.id);

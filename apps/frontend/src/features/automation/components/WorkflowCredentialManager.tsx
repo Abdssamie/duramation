@@ -65,7 +65,7 @@ export default function WorkflowCredentialManager({
         }
 
         // Initialize Nango
-        const nango = new Nango({ publicKey: process.env.NEXT_PUBLIC_NANGO_PUBLIC_KEY || '' });
+        const nango = new Nango();
 
         // Get Session Token from Backend
         const integrationId = provider.toLowerCase();
