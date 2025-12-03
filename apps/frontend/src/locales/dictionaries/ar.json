@@ -336,5 +336,61 @@
     "footerLeadingBrowser": "يتصدر كروم بنسبة {{percentage}}%",
     "footerTimePeriod": "بناءً على بيانات يناير - يونيو 2024",
     "totalVisitorsLabel": "إجمالي الزوار"
+  },
+  "scratchpad": {
+    "createAccount": {
+      "title": "إنشاء حساب",
+      "subtitle": "املأ النموذج أدناه لإنشاء حسابك",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "emailAddress": "عنوان البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "country": "البلد",
+      "role": "الدور",
+      "bio": "السيرة الذاتية",
+      "enterFirstName": "أدخل اسمك الأول",
+      "enterLastName": "أدخل اسم عائلتك",
+      "enterEmail": "أدخل بريدك الإلكتروني",
+      "createPassword": "أنشئ كلمة مرور",
+      "confirmPasswordPlaceholder": "تأكيد كلمة المرور الخاصة بك",
+      "selectCountry": "اختر بلدك",
+      "selectRole": "اختر دورك",
+      "tellUsAbout": "حدثنا عن نفسك...",
+      "submit": "إنشاء حساب",
+      "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+      "signIn": "تسجيل الدخول"
+    },
+    "passwordRequirements": {
+      "atLeast8Chars": "8 أحرف على الأقل",
+      "atLeast1Number": "رقم واحد على الأقل",
+      "atLeast1Lowercase": "حرف صغير واحد على الأقل",
+      "atLeast1Uppercase": "حرف كبير واحد على الأقل",
+      "enterPassword": "أدخل كلمة مرور",
+      "weakPassword": "كلمة مرور ضعيفة",
+      "mediumPassword": "كلمة مرور متوسطة",
+      "strongPassword": "كلمة مرور قوية",
+      "mustContain": "يجب أن تحتوي على:"
+    },
+    "formValidation": {
+      "fieldRequired": "{fieldName} مطلوب",
+      "validEmail": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
+      "passwordsMismatch": "كلمات المرور غير متطابقة"
+    },
+    "countries": {
+      "us": "الولايات المتحدة",
+      "uk": "المملكة المتحدة",
+      "ca": "كندا",
+      "au": "أستراليا",
+      "de": "ألمانيا",
+      "fr": "فرنسا"
+    },
+    "roles": {
+      "developer": "مطور",
+      "designer": "مصمم",
+      "manager": "مدير",
+      "student": "طالب",
+      "other": "آخر"
+    }
   }
 }
