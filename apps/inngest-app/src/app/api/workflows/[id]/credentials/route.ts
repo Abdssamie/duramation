@@ -16,10 +16,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   try {
     const body = await req.json();
-    const { nangoConnectionId, provider: providerStr } = body;
+    const { nangoConnectionId, nangoConnectionIds, provider: providerStr } = body;
 
-    if (!nangoConnectionId) {
-      return NextResponse.json({ error: "nangoConnectionId is required" }, { status: 400 });
+    const connectionIds = nangoConnectionIds || (nangoConnectionId ? [nangoConnectionId] : []);
+
+    if (connectionIds.length === 0) {
+      return NextResponse.json({ error: "nangoConnectionId or nangoConnectionIds is required" }, { status: 400 });
     }
 
     // 1. Verify Workflow Ownership
@@ -31,64 +33,62 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       return NextResponse.json({ error: "Workflow not found" }, { status: 404 });
     }
 
-    // 2. Find the Credential by nangoConnectionId AND userId
-    let credential = await prisma.credential.findFirst({
-      where: {
-        userId,
-        nangoConnectionId,
-      },
-    });
+    const results = [];
 
-    // 2a. If not found, try to recover from Nango if provider is supplied
-    if (!credential && providerStr) {
-      const provider = providerStr as Provider;
-      try {
-        // Check if connection exists in Nango
-        // integrationClient handles the provider formatting (replacing _ with -)
-        const nangoConnection = await integrationClient.getConnection(provider, nangoConnectionId);
-        
-        if (nangoConnection) {
-            console.log(`[Auto-Recover] Found Nango connection ${nangoConnectionId}, creating DB record.`);
-            
-            // Create the credential in our DB
-            // We treat the provider string as the enum key
-            credential = await prisma.credential.create({
-                data: {
-                    name: `${provider} Integration`, // Fallback name
-                    type: 'OAUTH',
-                    provider: provider,
-                    nangoConnectionId: nangoConnectionId,
-                    userId: userId,
-                    secret: JSON.stringify({ nangoConnectionId }), // Minimal secret
-                }
-            });
+    for (const connId of connectionIds) {
+      // 2. Find the Credential by nangoConnectionId AND userId
+      let credential = await prisma.credential.findFirst({
+        where: {
+          userId,
+          nangoConnectionId: connId,
+        },
+      });
+
+      // 2a. If not found, try to recover from Nango
+      if (!credential) {
+        try {
+          // Get connection from Nango to determine provider
+          const nangoConn = await integrationClient.nango.getConnection(connId.split('-')[0], connId);
+          const provider = nangoConn.provider_config_key.toUpperCase() as Provider;
+          
+          console.log(`[Auto-Recover] Found Nango connection ${connId}, creating DB record.`);
+          
+          credential = await prisma.credential.create({
+            data: {
+              name: `${provider} Integration`,
+              type: 'OAUTH',
+              provider: provider,
+              nangoConnectionId: connId,
+              userId: userId,
+              secret: JSON.stringify({ nangoConnectionId: connId }),
+            }
+          });
+        } catch (nangoError) {
+          console.error(`Failed to recover credential ${connId} from Nango:`, nangoError);
+          results.push({ connectionId: connId, success: false, error: 'Credential not found' });
+          continue;
         }
-      } catch (nangoError) {
-        console.error("Failed to recover credential from Nango:", nangoError);
-        // Continue to error response if recovery failed
       }
-    }
 
-    if (!credential) {
-      return NextResponse.json({ error: "Credential not found. Please ensure connection was successful." }, { status: 404 });
-    }
-
-    // 3. Create the Link
-    await prisma.workflowCredential.upsert({
-      where: {
-        workflowId_credentialId: {
+      // 3. Create the Link
+      await prisma.workflowCredential.upsert({
+        where: {
+          workflowId_credentialId: {
+            workflowId,
+            credentialId: credential.id,
+          },
+        },
+        update: {},
+        create: {
           workflowId,
           credentialId: credential.id,
         },
-      },
-      update: {}, // already linked
-      create: {
-        workflowId,
-        credentialId: credential.id,
-      },
-    });
+      });
 
-    return NextResponse.json({ success: true, message: "Credential linked successfully" });
+      results.push({ connectionId: connId, success: true });
+    }
+
+    return NextResponse.json({ success: true, results });
 
   } catch (error) {
     console.error("Error linking credential:", error);

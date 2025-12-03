@@ -137,7 +137,7 @@ export function BarGraph() {
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={fetchChartData}
+                onClick={() => fetchChartData()}
                 className="ml-2"
               >
                 Retry

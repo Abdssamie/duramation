@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useAuth } from '@clerk/nextjs';
+import Nango from '@nangohq/frontend';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -19,8 +20,9 @@ import {
   getCredentialStatusText,
   calculateCredentialStatus
 } from '@/utils/workflow-credentials';
-import WorkflowCredentialManager from '@/features/automation/components/WorkflowCredentialManager';
 import { Icons } from '@/components/icons';
+import { toast } from 'sonner';
+import api from '@/services/api/api-client';
 
 interface WorkflowCredentialsTabProps {
   workflow: WorkflowWithCredentials;
@@ -29,7 +31,7 @@ interface WorkflowCredentialsTabProps {
 export default function WorkflowCredentialsTab({
   workflow
 }: WorkflowCredentialsTabProps) {
-  const [showCredentialManager, setShowCredentialManager] = useState(false);
+  const { getToken } = useAuth();
   const credentialRequirements = mapCredentialRequirements(workflow);
   const credentialStatus = calculateCredentialStatus(workflow);
   const hasRequiredCredentials = credentialRequirements.length > 0;
@@ -39,6 +41,38 @@ export default function WorkflowCredentialsTab({
   const availableCredentials = credentialRequirements.filter(
     (req) => req.available
   );
+
+  const handleAddCredentials = async () => {
+    try {
+      const token = await getToken();
+      if (!token) {
+        toast.error('Authentication required');
+        return;
+      }
+
+      const nango = new Nango({ publicKey: process.env.NEXT_PUBLIC_NANGO_PUBLIC_KEY || '' });
+
+      const integrationIds = missingCredentials.map(req => req.provider.toLowerCase().replace(/_/g, '-'));
+      const sessionResponse = await api.credentials.createConnectSession(token, integrationIds, workflow.id);
+      
+      if (!sessionResponse?.token) {
+        throw new Error('Failed to get session token');
+      }
+
+      const connect = nango.openConnectUI({
+        onEvent: async (event) => {
+          if (event.type === 'close') {
+            window.location.reload();
+          }
+        }
+      });
+
+      connect.setSessionToken(sessionResponse.token);
+    } catch (error) {
+      console.error('Failed to add credentials:', error);
+      toast.error('Failed to add credentials');
+    }
+  };
 
   const getStatusIcon = (available: boolean, provider: Provider) => {
     const ProviderIcon = Icons[provider.toLowerCase() as keyof typeof Icons];
@@ -100,7 +134,7 @@ export default function WorkflowCredentialsTab({
         {credentialStatus.status !== 'complete' && (
           <CardContent>
             <Button
-              onClick={() => setShowCredentialManager(true)}
+              onClick={handleAddCredentials}
               className='w-full'
             >
               <Plus className='mr-2 h-4 w-4' />
@@ -174,23 +208,6 @@ export default function WorkflowCredentialsTab({
             );
           })}
         </div>
-      )}
-
-      {/* Credential Manager Modal */}
-      {showCredentialManager && (
-        <WorkflowCredentialManager
-          open={showCredentialManager}
-          workflowId={workflow.id}
-          requiredProviders={missingCredentials.map((req) => req.provider)}
-          requiredScopes={workflow.requiredScopes as Record<string, string[]> | null}
-          onCredentialAdded={() => {
-            setShowCredentialManager(false);
-            // TODO: Replace with refetchWorkflow callback passed from parent
-            // This would be more elegant than a full page reload
-            window.location.reload();
-          }}
-          onClose={() => setShowCredentialManager(false)}
-        />
       )}
     </div>
   );

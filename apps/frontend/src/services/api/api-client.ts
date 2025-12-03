@@ -236,11 +236,11 @@ export const workflowsApi = {
   } = {}) =>
     request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token }),
 
-  associateCredential: (token: string, workflowId: string, nangoConnectionId: string, provider?: string) =>
-    request<ApiResponse<{ success: boolean; message: string; }>>(`/api/workflows/${workflowId}/credentials`, {
+  associateCredential: (token: string, workflowId: string, nangoConnectionId?: string, provider?: string, nangoConnectionIds?: string[]) =>
+    request<ApiResponse<{ success: boolean; results?: any[] }>>(`/api/workflows/${workflowId}/credentials`, {
       token,
       method: 'POST',
-      body: { nangoConnectionId, provider }
+      body: nangoConnectionIds ? { nangoConnectionIds } : { nangoConnectionId, provider }
     })
 };
 
@@ -282,11 +282,14 @@ export const credentialsApi = {
     request<CredentialDeleteResponse>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
   
   // Nango Session Token
-  createConnectSession: (token: string, providerConfigKey: string) =>
+  createConnectSession: (token: string, providerConfigKeys: string | string[], workflowId?: string) =>
     request<{ token: string; connectionId: string }>(`/api/integrations/nango/session`, {
       token,
       method: 'POST',
-      body: { provider_config_key: providerConfigKey }
+      body: { 
+        provider_config_key: Array.isArray(providerConfigKeys) ? providerConfigKeys : [providerConfigKeys],
+        ...(workflowId && { workflowId })
+      }
     })
 };
 
