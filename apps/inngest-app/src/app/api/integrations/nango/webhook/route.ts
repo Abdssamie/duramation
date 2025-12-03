@@ -2,10 +2,27 @@ import { NextResponse } from 'next/server';
 import { Provider } from '@duramation/db';
 import { credentialStore } from "@/services/credentials-store";
 import prisma from '@/lib/prisma';
+import Nango from '@nangohq/node';
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const signature = req.headers.get('x-nango-signature');
+    const rawBody = await req.text();
+    
+    if (!signature) {
+      console.error('[Nango Webhook] Missing signature header');
+      return NextResponse.json({ error: 'Missing signature' }, { status: 401 });
+    }
+
+    const nango = new Nango({ secretKey: process.env.NANGO_SECRET_KEY });
+    const isValid = nango.verifyWebhookSignature(signature, rawBody);
+    
+    if (!isValid) {
+      console.error('[Nango Webhook] Invalid signature');
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
+    }
+
+    const body = JSON.parse(rawBody);
     console.log('[Nango Webhook] Received payload:', JSON.stringify(body, null, 2));
 
     if (body.type === 'auth' && body.success) {
