@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "src/generated/client"
+  provider      = "prisma-client-js"
+  output        = "src/generated/client"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -93,7 +94,7 @@ model Credential {
   type     CredentialType
   provider Provider
 
-  secret            String? /// @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId)
+  secret            String? /// @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId
   nangoConnectionId String? // The Nango connection ID for this credential
   config            Json? // optional extra data (endpoint, token expiry)
   expiresIn         DateTime?

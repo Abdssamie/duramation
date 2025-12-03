@@ -3479,7 +3479,7 @@ export namespace Prisma {
       type: $Enums.CredentialType
       provider: $Enums.Provider
       /**
-       * @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId)
+       * @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId
        */
       secret: string | null
       nangoConnectionId: string | null
