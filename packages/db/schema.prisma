@@ -58,12 +58,25 @@ enum CredentialType {
 }
 
 enum Provider {
+  // Nango Provider Config Keys
+  google_mail      @map("google-mail")
+  google_calendar  @map("google-calendar")
+  google_sheets    @map("google-sheets")
+  slack            @map("slack")
+  microsoft_mail   @map("microsoft-mail")
+  microsoft_calendar @map("microsoft-calendar")
+  hubspot          @map("hubspot")
+  firecrawl        @map("firecrawl")
+  instagram        @map("instagram")
+  custom_api       @map("custom-api")
+
+  // Legacy (to be migrated/removed)
   GOOGLE
-  SLACK
+  SLACK_LEGACY     @map("SLACK")
   MICROSOFT
-  HUBSPOT
-  FIRECRAWL
-  INSTAGRAM
+  HUBSPOT_LEGACY   @map("HUBSPOT")
+  FIRECRAWL_LEGACY @map("FIRECRAWL")
+  INSTAGRAM_LEGACY @map("INSTAGRAM")
   CUSTOM
 }
 
@@ -89,7 +102,8 @@ model Credential {
   type     CredentialType
   provider Provider
 
-  secret    String? /// @encrypted - Stored as encrypted JSON string
+  secret    String? /// @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId)
+  nangoConnectionId String? // The Nango connection ID for this credential
   config    Json? // optional extra data (endpoint, token expiry)
   expiresIn DateTime?
 

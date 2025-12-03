@@ -60,9 +60,9 @@ export const DailyReportTemplate: WorkflowTemplate = {
     'Automatically generate and send daily reports from Google Sheets data',
   eventName: 'workflow/report.requested',
   canBeScheduled: true,
-  requiredProviders: [Provider.GOOGLE],
+  requiredProviders: [Provider.google_mail],
   requiredScopes: {
-    [Provider.GOOGLE]: [
+    [Provider.google_mail]: [
       'https://www.googleapis.com/auth/spreadsheets.readonly',
       'https://www.googleapis.com/auth/gmail.send',
     ],
@@ -70,7 +70,7 @@ export const DailyReportTemplate: WorkflowTemplate = {
   restrictedToUsers: ['*'],
   fields: DailyReportFields as unknown as JsonValue,
   tags: ['google-sheets', 'email', 'automation', 'reports'],
-  version: '3.191.82',
+  version: '3.191.962',
 };
 
 

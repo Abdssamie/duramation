@@ -77,12 +77,22 @@ export type CredentialType = (typeof CredentialType)[keyof typeof CredentialType
 
 
 export const Provider: {
+  google_mail: 'google_mail',
+  google_calendar: 'google_calendar',
+  google_sheets: 'google_sheets',
+  slack: 'slack',
+  microsoft_mail: 'microsoft_mail',
+  microsoft_calendar: 'microsoft_calendar',
+  hubspot: 'hubspot',
+  firecrawl: 'firecrawl',
+  instagram: 'instagram',
+  custom_api: 'custom_api',
   GOOGLE: 'GOOGLE',
-  SLACK: 'SLACK',
+  SLACK_LEGACY: 'SLACK_LEGACY',
   MICROSOFT: 'MICROSOFT',
-  HUBSPOT: 'HUBSPOT',
-  FIRECRAWL: 'FIRECRAWL',
-  INSTAGRAM: 'INSTAGRAM',
+  HUBSPOT_LEGACY: 'HUBSPOT_LEGACY',
+  FIRECRAWL_LEGACY: 'FIRECRAWL_LEGACY',
+  INSTAGRAM_LEGACY: 'INSTAGRAM_LEGACY',
   CUSTOM: 'CUSTOM'
 };
 
@@ -3210,6 +3220,7 @@ export namespace Prisma {
     type: $Enums.CredentialType | null
     provider: $Enums.Provider | null
     secret: string | null
+    nangoConnectionId: string | null
     expiresIn: Date | null
     userId: string | null
     createdAt: Date | null
@@ -3222,6 +3233,7 @@ export namespace Prisma {
     type: $Enums.CredentialType | null
     provider: $Enums.Provider | null
     secret: string | null
+    nangoConnectionId: string | null
     expiresIn: Date | null
     userId: string | null
     createdAt: Date | null
@@ -3234,6 +3246,7 @@ export namespace Prisma {
     type: number
     provider: number
     secret: number
+    nangoConnectionId: number
     config: number
     expiresIn: number
     userId: number
@@ -3249,6 +3262,7 @@ export namespace Prisma {
     type?: true
     provider?: true
     secret?: true
+    nangoConnectionId?: true
     expiresIn?: true
     userId?: true
     createdAt?: true
@@ -3261,6 +3275,7 @@ export namespace Prisma {
     type?: true
     provider?: true
     secret?: true
+    nangoConnectionId?: true
     expiresIn?: true
     userId?: true
     createdAt?: true
@@ -3273,6 +3288,7 @@ export namespace Prisma {
     type?: true
     provider?: true
     secret?: true
+    nangoConnectionId?: true
     config?: true
     expiresIn?: true
     userId?: true
@@ -3359,6 +3375,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret: string | null
+    nangoConnectionId: string | null
     config: JsonValue | null
     expiresIn: Date | null
     userId: string
@@ -3389,6 +3406,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3405,6 +3423,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3419,6 +3438,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3433,6 +3453,7 @@ export namespace Prisma {
     type?: boolean
     provider?: boolean
     secret?: boolean
+    nangoConnectionId?: boolean
     config?: boolean
     expiresIn?: boolean
     userId?: boolean
@@ -3440,7 +3461,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CredentialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "secret" | "config" | "expiresIn" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
+  export type CredentialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "secret" | "nangoConnectionId" | "config" | "expiresIn" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["credential"]>
   export type CredentialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     workflowCredentials?: boolean | Credential$workflowCredentialsArgs<ExtArgs>
@@ -3465,9 +3486,10 @@ export namespace Prisma {
       type: $Enums.CredentialType
       provider: $Enums.Provider
       /**
-       * @encrypted - Stored as encrypted JSON string
+       * @encrypted - Stored as encrypted JSON string (DEPRECATED in favor of nangoConnectionId)
        */
       secret: string | null
+      nangoConnectionId: string | null
       config: Prisma.JsonValue | null
       expiresIn: Date | null
       userId: string
@@ -3903,6 +3925,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Credential", 'CredentialType'>
     readonly provider: FieldRef<"Credential", 'Provider'>
     readonly secret: FieldRef<"Credential", 'String'>
+    readonly nangoConnectionId: FieldRef<"Credential", 'String'>
     readonly config: FieldRef<"Credential", 'Json'>
     readonly expiresIn: FieldRef<"Credential", 'DateTime'>
     readonly userId: FieldRef<"Credential", 'String'>
@@ -13673,6 +13696,7 @@ export namespace Prisma {
     type: 'type',
     provider: 'provider',
     secret: 'secret',
+    nangoConnectionId: 'nangoConnectionId',
     config: 'config',
     expiresIn: 'expiresIn',
     userId: 'userId',
@@ -14163,6 +14187,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
     expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
@@ -14178,6 +14203,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrderInput | SortOrder
+    nangoConnectionId?: SortOrderInput | SortOrder
     config?: SortOrderInput | SortOrder
     expiresIn?: SortOrderInput | SortOrder
     userId?: SortOrder
@@ -14197,6 +14223,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
     expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
@@ -14212,6 +14239,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrderInput | SortOrder
+    nangoConnectionId?: SortOrderInput | SortOrder
     config?: SortOrderInput | SortOrder
     expiresIn?: SortOrderInput | SortOrder
     userId?: SortOrder
@@ -14231,6 +14259,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeWithAggregatesFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderWithAggregatesFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableWithAggregatesFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableWithAggregatesFilter<"Credential"> | string | null
     config?: JsonNullableWithAggregatesFilter<"Credential">
     expiresIn?: DateTimeNullableWithAggregatesFilter<"Credential"> | Date | string | null
     userId?: StringWithAggregatesFilter<"Credential"> | string
@@ -15102,6 +15131,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -15116,6 +15146,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     userId: string
@@ -15130,6 +15161,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15144,6 +15176,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -15158,6 +15191,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     userId: string
@@ -15171,6 +15205,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15183,6 +15218,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -16318,6 +16354,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrder
+    nangoConnectionId?: SortOrder
     config?: SortOrder
     expiresIn?: SortOrder
     userId?: SortOrder
@@ -16331,6 +16368,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrder
+    nangoConnectionId?: SortOrder
     expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -16343,6 +16381,7 @@ export namespace Prisma {
     type?: SortOrder
     provider?: SortOrder
     secret?: SortOrder
+    nangoConnectionId?: SortOrder
     expiresIn?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -18099,6 +18138,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -18112,6 +18152,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -18352,6 +18393,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFilter<"Credential"> | $Enums.CredentialType
     provider?: EnumProviderFilter<"Credential"> | $Enums.Provider
     secret?: StringNullableFilter<"Credential"> | string | null
+    nangoConnectionId?: StringNullableFilter<"Credential"> | string | null
     config?: JsonNullableFilter<"Credential">
     expiresIn?: DateTimeNullableFilter<"Credential"> | Date | string | null
     userId?: StringFilter<"Credential"> | string
@@ -18944,6 +18986,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -18957,6 +19000,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     userId: string
@@ -19049,6 +19093,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19062,6 +19107,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
@@ -19690,6 +19736,7 @@ export namespace Prisma {
     type: $Enums.CredentialType
     provider: $Enums.Provider
     secret?: string | null
+    nangoConnectionId?: string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: Date | string | null
     createdAt?: Date | string
@@ -19827,6 +19874,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19840,6 +19888,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19853,6 +19902,7 @@ export namespace Prisma {
     type?: EnumCredentialTypeFieldUpdateOperationsInput | $Enums.CredentialType
     provider?: EnumProviderFieldUpdateOperationsInput | $Enums.Provider
     secret?: NullableStringFieldUpdateOperationsInput | string | null
+    nangoConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     config?: NullableJsonNullValueInput | InputJsonValue
     expiresIn?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

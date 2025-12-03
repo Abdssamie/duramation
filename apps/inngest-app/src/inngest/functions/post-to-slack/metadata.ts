@@ -38,9 +38,9 @@ export const PostToSlackTemplate: WorkflowTemplate = {
   description: 'Send messages to Slack channels automatically',
   eventName: 'workflow/slack.post',
   canBeScheduled: true,
-  requiredProviders: [Provider.SLACK],
+  requiredProviders: [Provider.slack],
   requiredScopes: {
-    [Provider.SLACK]: [
+    [Provider.slack]: [
       'chat:write',
       'channels:read',
     ],

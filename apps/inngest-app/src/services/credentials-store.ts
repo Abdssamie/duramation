@@ -3,18 +3,52 @@ import { InternalUserId } from "@/types/user";
 import {
   CredentialSecret,
   CredentialWithSecret,
-  OAuthCredential,
-  ApiKeyCredential,
   SafeCredential,
   CredentialCreateRequest,
+  BaseOAuthSecret
 } from "@/lib/credentials/schema";
 import type { Prisma, Provider, CredentialType } from "@duramation/db/types";
 
 // Legacy type aliases for backward compatibility
 export type SafeCredentialResponse = SafeCredential;
 
-// Note: Secret data is stored as JSON in the database and encrypted at rest.
-// The encryption/decryption is handled by the database layer.
+// Helper to safely extract nangoConnectionId
+function getNangoConnectionId(type: CredentialType, secret: CredentialSecret | object): string | null {
+  if (type === 'OAUTH' && secret && typeof secret === 'object' && 'nangoConnectionId' in secret) {
+    return (secret as BaseOAuthSecret).nangoConnectionId || null;
+  }
+  return null;
+}
+
+// Internal helper for credential upsert logic
+async function upsertCredentialInternal(
+  userId: InternalUserId,
+  credentialData: CredentialCreateRequest,
+  nangoConnectionId: string | null
+) {
+  return prisma.credential.upsert({
+    where: {
+      userId_name: {
+        userId: userId as string,
+        name: credentialData.name,
+      },
+    },
+    update: {
+      secret: JSON.stringify(credentialData.secret),
+      nangoConnectionId: nangoConnectionId,
+      config: credentialData.config as unknown as Prisma.InputJsonValue,
+    },
+    create: {
+      name: credentialData.name,
+      type: credentialData.type,
+      provider: credentialData.provider,
+      secret: JSON.stringify(credentialData.secret),
+      nangoConnectionId: nangoConnectionId,
+      userId: userId as string,
+      config: credentialData.config as unknown as Prisma.InputJsonValue,
+    },
+  });
+}
 
 interface CredentialStore {
   /**
@@ -24,7 +58,7 @@ interface CredentialStore {
     userId: InternalUserId;
     provider: Provider;
     type: CredentialType;
-    data: OAuthCredential | ApiKeyCredential;
+    data: CredentialSecret;
   }): Promise<SafeCredentialResponse>;
 
   /**
@@ -55,35 +89,15 @@ interface CredentialStore {
   delete(credentialId: string, userId: InternalUserId): Promise<void>;
 }
 
-// Legacy functions for backward compatibility
 export async function storeCredential(
   userId: InternalUserId,
   credentialData: CredentialCreateRequest,
 ): Promise<SafeCredentialResponse> {
   try {
-    const credential = await prisma.credential.upsert({
-      where: {
-        userId_name: {
-          userId: userId as string,
-          name: credentialData.name,
-        },
-      },
-      update: {
-        secret: JSON.stringify(credentialData.secret),
-        config: credentialData.config as unknown as Prisma.InputJsonValue,
-      },
-      create: {
-        name: credentialData.name,
-        type: credentialData.type,
-        provider: credentialData.provider,
-        secret: JSON.stringify(credentialData.secret),
-        userId: userId as string,
-        config: credentialData.config as unknown as Prisma.InputJsonValue,
-      },
-    });
+    const nangoConnectionId = getNangoConnectionId(credentialData.type, credentialData.secret);
+    const credential = await upsertCredentialInternal(userId, credentialData, nangoConnectionId);
 
-    // Auto-associate with workflow if specified in config
-    const config = credentialData.config as any;
+    const config = credentialData.config;
     if (config?.autoAssociate && config?.workflowId) {
       try {
         await prisma.workflowCredential.upsert({
@@ -114,11 +128,11 @@ export async function storeCredential(
       provider: credential.provider,
       createdAt: credential.createdAt.toISOString(),
       updatedAt: credential.updatedAt.toISOString(),
-      config: credential.config as unknown as Record<string, any>,
+      config: credential.config as unknown as Record<string, never>,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error storing credentials:", error);
-    throw new Error(`Error storing credentials: ${error.message || error}`);
+    throw new Error(`Error storing credentials: ${error}`);
   }
 }
 
@@ -143,27 +157,8 @@ export async function storeCredentialForWorkflow(
       throw new Error("Workflow not found or access denied");
     }
 
-    // Create the credential
-    const credential = await prisma.credential.upsert({
-      where: {
-        userId_name: {
-          userId: userId as string,
-          name: credentialData.name,
-        },
-      },
-      update: {
-        secret: JSON.stringify(credentialData.secret),
-        config: credentialData.config as unknown as Prisma.InputJsonValue,
-      },
-      create: {
-        name: credentialData.name,
-        type: credentialData.type,
-        provider: credentialData.provider,
-        secret: JSON.stringify(credentialData.secret),
-        userId: userId as string,
-        config: credentialData.config as unknown as Prisma.InputJsonValue,
-      },
-    });
+    const nangoConnectionId = getNangoConnectionId(credentialData.type, credentialData.secret);
+    const credential = await upsertCredentialInternal(userId, credentialData, nangoConnectionId);
 
     // Create the workflow-credential association
     await prisma.workflowCredential.upsert({
@@ -188,64 +183,11 @@ export async function storeCredentialForWorkflow(
       provider: credential.provider,
       createdAt: credential.createdAt.toISOString(),
       updatedAt: credential.updatedAt.toISOString(),
-      config: credential.config as unknown as Record<string, any>,
+      config: credential.config as unknown as Record<string, never>,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error storing credential for workflow:", error);
-    throw new Error(`Error storing credential for workflow: ${error.message || error}`);
-  }
-}
-
-/**
- * Associate an existing credential with a workflow
- */
-export async function associateCredentialWithWorkflow(
-  userId: InternalUserId,
-  credentialId: string,
-  workflowId: string,
-): Promise<void> {
-  try {
-    // Verify the credential belongs to the user
-    const credential = await prisma.credential.findUnique({
-      where: {
-        id: credentialId,
-        userId: userId as string,
-      },
-    });
-
-    if (!credential) {
-      throw new Error("Credential not found or access denied");
-    }
-
-    // Verify the workflow belongs to the user
-    const workflow = await prisma.workflow.findUnique({
-      where: {
-        id: workflowId,
-        userId: userId as string,
-      },
-    });
-
-    if (!workflow) {
-      throw new Error("Workflow not found or access denied");
-    }
-
-    // Create the association
-    await prisma.workflowCredential.upsert({
-      where: {
-        workflowId_credentialId: {
-          workflowId: workflowId,
-          credentialId: credentialId,
-        },
-      },
-      update: {}, // No updates needed, just ensure the relationship exists
-      create: {
-        workflowId: workflowId,
-        credentialId: credentialId,
-      },
-    });
-  } catch (error: any) {
-    console.error("Detailed error associating credential with workflow:", error);
-    throw new Error(`Error associating credential with workflow: ${error.message || error}`);
+    throw new Error(`Error storing credential for workflow: ${error}`);
   }
 }
 
@@ -255,6 +197,13 @@ export async function updateCredential(
   credentialSecret: CredentialSecret,
 ): Promise<SafeCredentialResponse> {
   try {
+    // We assume if it's being updated as a CredentialSecret, we might find the ID there
+    // Note: type is not passed here, but we can infer or check existence
+    let nangoConnectionId = null;
+    if ('nangoConnectionId' in credentialSecret) {
+         nangoConnectionId = (credentialSecret as BaseOAuthSecret).nangoConnectionId || null;
+    }
+
     const updatedCredential = await prisma.credential.update({
       where: {
         id: credentialId,
@@ -262,6 +211,7 @@ export async function updateCredential(
       },
       data: {
         secret: JSON.stringify(credentialSecret),
+        ...(nangoConnectionId && { nangoConnectionId }),
       },
     });
     return {
@@ -272,11 +222,11 @@ export async function updateCredential(
       provider: updatedCredential.provider,
       createdAt: updatedCredential.createdAt.toISOString(),
       updatedAt: updatedCredential.updatedAt.toISOString(),
-      config: updatedCredential.config as unknown as Record<string, any>,
+      config: updatedCredential.config as unknown as Record<string, never>,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error updating credentials:", error);
-    throw new Error(`Error updating credentials: ${error.message || error}`);
+    throw new Error(`Error updating credentials: ${error}`);
   }
 }
 
@@ -291,9 +241,9 @@ export async function deleteCredential(
         id: credentialId,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error deleting credentials:", error);
-    throw new Error(`Error deleting credentials: ${error.message || error}`);
+    throw new Error(`Error deleting credentials: ${error}`);
   }
 }
 
@@ -321,11 +271,11 @@ export async function getAllUserCredentials(
       ...cred,
       createdAt: cred.createdAt.toISOString(),
       updatedAt: cred.updatedAt.toISOString(),
-      config: cred.config as Record<string, any> | undefined,
+      config: cred.config as Record<string, never> | undefined,
     }));
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error getting credentials:", error);
-    throw new Error(`Error getting credentials: ${error.message || error}`);
+    throw new Error(`Error getting credentials: ${error}`);
   }
 }
 
@@ -357,11 +307,11 @@ export async function getCredential(
       ...credential,
       createdAt: credential.createdAt.toISOString(),
       updatedAt: credential.updatedAt.toISOString(),
-      config: credential.config as Record<string, any> | undefined,
+      config: credential.config as Record<string, never> | undefined,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error("Detailed error getting credentials:", error);
-    throw new Error(`Error getting credentials: ${error.message || error}`);
+    throw new Error(`Error getting credentials: ${error}`);
   }
 }
 
@@ -371,15 +321,18 @@ export const credentialStore: CredentialStore = {
     userId: string;
     provider: Provider;
     type: CredentialType;
-    data: OAuthCredential | ApiKeyCredential;
+    data: CredentialSecret;
   }): Promise<SafeCredentialResponse> {
     try {
+      const nangoConnectionId = getNangoConnectionId(credential.type, credential.data);
+
       const created = await prisma.credential.create({
         data: {
           name: `${credential.provider} Integration`,
           type: credential.type,
           provider: credential.provider,
           secret: JSON.stringify(credential.data),
+          nangoConnectionId: nangoConnectionId,
           userId: credential.userId,
           config: {},
         },
@@ -394,9 +347,9 @@ export const credentialStore: CredentialStore = {
         createdAt: created.createdAt.toISOString(),
         updatedAt: created.updatedAt.toISOString(),
       };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error storing credential:", error);
-      throw new Error(`Error storing credential: ${error.message || error}`);
+      throw new Error(`Error storing credential: ${error}`);
     }
   },
 
@@ -420,9 +373,9 @@ export const credentialStore: CredentialStore = {
         updatedAt: credential.updatedAt.toISOString(),
         secret: credential.secret ? JSON.parse(credential.secret as string) : null,
       };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error retrieving credential:", error);
-      throw new Error(`Error retrieving credential: ${error.message || error}`);
+      throw new Error(`Error retrieving credential: ${error}`);
     }
   },
 
@@ -431,16 +384,22 @@ export const credentialStore: CredentialStore = {
     data: CredentialSecret,
   ): Promise<void> {
     try {
+      let nangoConnectionId = null;
+      if ('nangoConnectionId' in data) {
+           nangoConnectionId = (data as BaseOAuthSecret).nangoConnectionId || null;
+      }
+      
       await prisma.credential.update({
         where: { id: credentialId },
         data: {
           secret: JSON.stringify(data),
+          ...(nangoConnectionId && { nangoConnectionId }),
           updatedAt: new Date(),
         },
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error updating credential:", error);
-      throw new Error(`Error updating credential: ${error.message || error}`);
+      throw new Error(`Error updating credential: ${error}`);
     }
   },
 
@@ -470,9 +429,9 @@ export const credentialStore: CredentialStore = {
         createdAt: cred.createdAt.toISOString(),
         updatedAt: cred.updatedAt.toISOString(),
       }));
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error listing credentials:", error);
-      throw new Error(`Error listing credentials: ${error.message || error}`);
+      throw new Error(`Error listing credentials: ${error}`);
     }
   },
 
@@ -481,9 +440,9 @@ export const credentialStore: CredentialStore = {
       await prisma.credential.delete({
         where: { id: credentialId, userId: userId },
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error deleting credential:", error);
-      throw new Error(`Error deleting credential: ${error.message || error}`);
+      throw new Error(`Error deleting credential: ${error}`);
     }
   },
 };

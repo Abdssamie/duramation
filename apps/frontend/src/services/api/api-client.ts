@@ -234,7 +234,14 @@ export const workflowsApi = {
     sortBy?: string;
     sortOrder?: 'asc' | 'desc';
   } = {}) =>
-    request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token })
+    request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token }),
+
+  associateCredential: (token: string, workflowId: string, nangoConnectionId: string, provider?: string) =>
+    request<ApiResponse<{ success: boolean; message: string; }>>(`/api/workflows/${workflowId}/credentials`, {
+      token,
+      method: 'POST',
+      body: { nangoConnectionId, provider }
+    })
 };
 
 // Marketplace - using shared types
@@ -273,25 +280,14 @@ export const credentialsApi = {
     }),
   remove: (token: string, id: string) =>
     request<CredentialDeleteResponse>(`/api/credentials/${id}`, { token, method: 'DELETE' }),
-  // Generic OAuth URL getter for any provider
-  getOAuthUrl: (token: string, provider: string, scopes: string[], workflowId?: string) =>
-    request<OAuthAuthorizationResponse>(
-      `/api/credentials/oauth/auth-url${toQuery({
-        provider: provider.toUpperCase(),
-        scopes: scopes.join(','),
-        ...(workflowId && { workflowId })
-      })}`,
-      { token }
-    ),
-  // Backwards compatibility
-  getGoogleAuthUrl: (token: string, scopes: string[], workflowId: string) =>
-    request<OAuthAuthorizationResponse>(
-      `/api/credentials/google/auth-url${toQuery({
-        scopes: scopes.join(','),
-        ...(workflowId && { workflowId })
-      })}`,
-      { token }
-    )
+  
+  // Nango Session Token
+  createConnectSession: (token: string, providerConfigKey: string) =>
+    request<{ token: string; connectionId: string }>(`/api/integrations/nango/session`, {
+      token,
+      method: 'POST',
+      body: { provider_config_key: providerConfigKey }
+    })
 };
 
 // Realtime

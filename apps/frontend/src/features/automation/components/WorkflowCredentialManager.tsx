@@ -1,34 +1,15 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import Nango from '@nangohq/frontend';
 import {
   Provider,
   getProviderDisplayName,
-  isOAuthProvider,
-  getProviderConfig,
-  getProviderFields,
-  ProviderIcon,
 } from '@duramation/integrations';
 import {
   CredentialCreateRequest,
-  CredentialSecret,
 } from '@duramation/shared';
-
-// Extended field type for frontend forms
-interface ProviderField {
-  key: string;
-  name: string;
-  label: string;
-  type: 'text' | 'password' | 'url' | 'textarea' | 'select';
-  required: boolean;
-  placeholder?: string;
-  description?: string;
-  options?: string[];
-}
 
 import {
   Dialog,
@@ -37,24 +18,6 @@ import {
   DialogTitle
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
 import { toast } from 'sonner';
 import api from '@/services/api/api-client';
 import IntegrationSelector from '@/components/integrations/IntegrationSelector';
@@ -75,30 +38,6 @@ interface WorkflowCredentialManagerProps {
   open?: boolean;
 }
 
-// Type for credential form data
-type CredentialFormData = {
-  name: string;
-  fields: Record<string, string | undefined>;
-};
-
-// Dynamic schema factory based on provider fields
-const createCredentialSchema = (providerFields: ProviderField[]) => {
-  const fieldsSchema: Record<string, z.ZodString | z.ZodOptional<z.ZodString>> = {};
-  
-  providerFields.forEach((field) => {
-    if (field.required) {
-      fieldsSchema[field.key] = z.string().min(1, `${field.label} is required`);
-    } else {
-      fieldsSchema[field.key] = z.string().optional();
-    }
-  });
-
-  return z.object({
-    name: z.string().min(1, 'Credential name is required'),
-    fields: z.object(fieldsSchema),
-  });
-};
-
 export default function WorkflowCredentialManager({
   workflowId,
   requiredProviders,
@@ -108,195 +47,96 @@ export default function WorkflowCredentialManager({
   onClose,
   open = false
 }: WorkflowCredentialManagerProps) {
-  const { getToken: _getToken, isLoaded, isSignedIn } = useAuth();
+  const { getToken: _getToken } = useAuth();
   const getToken = useCallback(() => _getToken(), [_getToken]);
 
-  const [currentStep, setCurrentStep] = useState<
-    'overview' | 'select' | 'form'
-  >('overview');
-  const [selectedProvider, setSelectedProvider] = useState<Provider | null>(
-    null
-  );
+  const [currentStep, setCurrentStep] = useState<'overview' | 'select'>('overview');
   const [loading, setLoading] = useState(false);
-  const [oauthUrls, setOauthUrls] = useState<Record<string, string>>({});
-  const [authUrlsLoading, setAuthUrlsLoading] = useState(true);
 
-  // Get provider fields and create dynamic schema
-  const providerFields = selectedProvider
-    ? (getProviderFields(selectedProvider) as ProviderField[])
-    : [];
-
-  const credentialSchema = useMemo(
-    () => createCredentialSchema(providerFields),
-    [providerFields]
-  );
-
-  // Create default values for all provider fields
-  const defaultFieldValues = providerFields.reduce((acc, field) => {
-    acc[field.key] = '';
-    return acc;
-  }, {} as Record<string, string>);
-
-  const form = useForm<CredentialFormData>({
-    resolver: zodResolver(credentialSchema as any),
-    defaultValues: {
-      name: '',
-      fields: defaultFieldValues
-    }
-  });
-
-  // Reset form when provider changes
-  useEffect(() => {
-    if (selectedProvider) {
-      const providerDisplayName = getProviderDisplayName(selectedProvider);
-      const fields = getProviderFields(selectedProvider) as ProviderField[];
-      const defaultFields: Record<string, string> = {};
-      fields.forEach((field) => {
-        defaultFields[field.key] = '';
-      });
-
-      form.reset({
-        name: `${providerDisplayName} Credential`,
-        fields: defaultFields
-      });
-    }
-  }, [selectedProvider, form]);
-
-  // Load OAuth URLs when component mounts - dynamically for all OAuth providers
-  useEffect(() => {
-    if (!isLoaded || !isSignedIn) {
-      setAuthUrlsLoading(false);
-      return;
-    }
-
-    const loadOAuthUrls = async () => {
-      setAuthUrlsLoading(true);
-      try {
+  const handleProviderSelect = async (provider: Provider) => {
+    // We no longer check isOAuthProvider. Nango handles everything.
+    try {
+        setLoading(true);
         const token = await getToken();
         if (!token) {
-          setAuthUrlsLoading(false);
-          return;
+            toast.error('Authentication required');
+            setLoading(false);
+            return;
         }
 
-        const oauthProviders = requiredProviders.filter(isOAuthProvider);
-        const urls: Record<string, string> = {};
+        // Initialize Nango
+        const nango = new Nango({ publicKey: process.env.NEXT_PUBLIC_NANGO_PUBLIC_KEY || '' });
 
-        for (const provider of oauthProviders) {
-          const config = getProviderConfig(provider);
-          if (config.authType !== 'OAUTH') continue;
-
-          const scopes = requiredScopes?.[provider] || config.oauth.defaultScopes;
-          
-          // Use generic OAuth URL method from API client
-          try {
-            const response = await api.credentials.getOAuthUrl(
-              token as string,
-              provider,
-              scopes,
-              workflowId
-            );
-            urls[provider] = response.data?.authorizationUrl as string;
-          } catch (error) {
-            console.error(`Failed to get ${provider} OAuth URL:`, error);
-          }
+        // Get Session Token from Backend
+        const integrationId = provider.toLowerCase();
+        const sessionResponse = await api.credentials.createConnectSession(token, integrationId);
+        
+        if (!sessionResponse?.token) {
+            throw new Error('Failed to get session token');
         }
-        setOauthUrls(urls);
-      } catch (error) {
-        console.error('Failed to get OAuth URLs:', error);
-        toast.error('Could not prepare connections. Please try again.');
-      } finally {
-        setAuthUrlsLoading(false);
-      }
-    };
 
-    loadOAuthUrls();
-  }, [
-    isLoaded,
-    isSignedIn,
-    getToken,
-    workflowId,
-    requiredProviders,
-    requiredScopes
-  ]);
+        // Close the dialog temporarily to allow Nango UI to be fully interactable
+        // if it opens as a modal/iframe. If it's a popup, this is less critical but safer.
+        handleClose();
 
-  // Refresh credentials when dialog opens (to catch OAuth returns)
+        // Open Nango Connect UI
+        const connect = nango.openConnectUI({
+            onEvent: async (event) => {
+                if (event.type === 'connect') {
+                    const { connectionId } = event.payload;
+                    
+                    try {
+                        // Get a fresh token as the previous one might have expired during the auth flow
+                        const freshToken = await getToken();
+                        if (!freshToken) {
+                           throw new Error('Authentication expired. Please refresh the page.');
+                        }
 
-  const handleProviderSelect = (provider: Provider) => {
-    setSelectedProvider(provider);
+                        await api.workflows.associateCredential(freshToken, workflowId, connectionId, provider);
+                        toast.success('Connected and linked to workflow!');
+                        
+                        // Notify parent component
+                        // Construct a partial credential object since we don't have the full DB record yet
+                        // This is enough for the UI to update optimistically or trigger a refresh
+                        const newCredential = {
+                            name: `${getProviderDisplayName(provider)}`,
+                            provider: provider,
+                            type: 'OAUTH',
+                            id: connectionId, // Using connectionId as temp ID for UI
+                        };
+                        
+                        onCredentialAdded?.(newCredential as unknown as CredentialCreateRequest);
+                        // We don't re-open the dialog here because success usually implies we are done
+                    } catch (linkError) {
+                        console.error('Failed to link credential:', linkError);
+                        toast.error('Connected, but failed to link to workflow. Please try again.');
+                        // Re-open dialog on error so user can try again? 
+                        // Or just let them click the button again.
+                    }
+                } else if (event.type === 'close') {
+                    setLoading(false);
+                    // Optionally re-open dialog if they cancelled?
+                    // For now, let's leave it closed to avoid confusion.
+                }
+            }
+        });
 
-    // For OAuth providers, redirect immediately
-    if (isOAuthProvider(provider)) {
-      if (authUrlsLoading) {
-        toast.info('Preparing connection, please wait...');
-        return;
-      }
-      const authUrl = oauthUrls[provider];
-      if (authUrl) {
-        window.location.href = authUrl;
-        return;
-      }
-      toast.error(
-        'Connection URL is not available for this provider. Please try again.'
-      );
-      return;
-    }
+        connect.setSessionToken(sessionResponse.token);
 
-    // For API key providers, show form
-    setCurrentStep('form');
-  };
-
-  const handleFormSubmit = async (data: CredentialFormData) => {
-    if (!selectedProvider) return;
-
-    setLoading(true);
-    try {
-      const token = await getToken();
-      if (!token) {
-        toast.error('Authentication required');
-        setLoading(false);
-        return;
-      }
-
-      const providerConfig = getProviderConfig(selectedProvider);
-      const secret: CredentialSecret = data.fields as CredentialSecret;
-
-      const credentialData: CredentialCreateRequest = {
-        name: data.name,
-        type: providerConfig.authType === 'OAUTH' ? 'OAUTH' : 'API_KEY',
-        provider: selectedProvider,
-        secret,
-        config: {
-          source: 'workflow' as const,
-          workflowId,
-          requiredScopes:
-            requiredScopes?.[selectedProvider] ||
-            (providerConfig.authType === 'OAUTH'
-              ? providerConfig.oauth.defaultScopes
-              : []),
-          autoAssociate: !!workflowId,
-        },
-      };
-
-      const newCredential = await api.credentials.create(token, credentialData);
-      toast.success('Credential added successfully');
-      onCredentialAdded?.(newCredential.data as unknown as CredentialCreateRequest);
-      handleClose();
     } catch (error) {
-      console.error('Failed to create credential:', error);
-      toast.error('Failed to create credential');
-    } finally {
-      setLoading(false);
+        console.error('Nango connection failed:', error);
+        toast.error('Failed to initiate connection. Please try again.');
+        setLoading(false);
     }
   };
 
   const handleClose = () => {
     setCurrentStep('overview');
-    setSelectedProvider(null);
-    form.reset({ name: '', fields: {} });
     onClose?.();
   };
 
   const handleAddCredential = (provider: Provider) => {
+    // If user clicks "Add" for a specific provider from the list, go straight to Nango
     handleProviderSelect(provider);
   };
 
@@ -328,188 +168,12 @@ export default function WorkflowCredentialManager({
     />
   );
 
-  const renderCredentialForm = () => {
-    if (!selectedProvider) return null;
-
-    const providerFields = getProviderFields(selectedProvider) as ProviderField[];
-    const providerName = getProviderDisplayName(selectedProvider);
-
-    // For OAuth providers, show sign-in button
-    if (isOAuthProvider(selectedProvider)) {
-      return (
-        <div className='space-y-4'>
-          <div className='py-8 text-center'>
-            <h3 className='mb-2 flex items-center justify-center gap-2 text-lg font-medium'>
-              <ProviderIcon provider={selectedProvider} className='h-6 w-6' />
-              Connect to {providerName}
-            </h3>
-            <p className='text-muted-foreground mb-6'>
-              You&#39;ll be redirected to {providerName} to authorize access.
-            </p>
-            <Button
-              onClick={() => handleProviderSelect(selectedProvider)}
-              className='w-full max-w-sm'
-              disabled={authUrlsLoading}
-            >
-              {authUrlsLoading ? (
-                <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-              ) : null}
-              {authUrlsLoading
-                ? 'Preparing...'
-                : `Sign in with ${providerName}`}
-            </Button>
-          </div>
-
-          {requiredScopes?.[selectedProvider] && (
-            <div className='rounded-md bg-blue-50 p-3'>
-              <h4 className='text-sm font-medium text-blue-900'>
-                Required Permissions
-              </h4>
-              <p className='mt-1 text-xs text-blue-700'>
-                This will request access to:{' '}
-                {(requiredScopes[selectedProvider] as string[]).join(', ')}
-              </p>
-            </div>
-          )}
-
-          <div className='flex justify-end gap-2 border-t pt-4'>
-            <Button
-              type='button'
-              variant='outline'
-              onClick={() => setCurrentStep('select')}
-            >
-              Back
-            </Button>
-          </div>
-        </div>
-      );
-    }
-
-    // For API key providers, show form fields
-    return (
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleFormSubmit)}
-          className='space-y-4'
-        >
-          <FormField
-            control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className='flex items-center gap-2'>
-                  <ProviderIcon provider={selectedProvider} className='h-4 w-4' />
-                  Credential Name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={`My ${providerName} Credential`}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {providerFields.map((providerField) => (
-            <FormField
-              key={providerField.key}
-              control={form.control}
-              name={`fields.${providerField.key}`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {providerField.label}
-                    {providerField.required && (
-                      <span className='ml-1 text-red-500'>*</span>
-                    )}
-                  </FormLabel>
-                  <FormControl>
-                    {providerField.type === 'textarea' ? (
-                      <Textarea
-                        placeholder={providerField.placeholder}
-                        rows={3}
-                        {...field}
-                        value={field.value as string}
-                      />
-                    ) : providerField.type === 'select' ? (
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value as string}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder='Select...' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {providerField.options?.map((option) => (
-                            <SelectItem key={option} value={option}>
-                              {option}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <Input
-                        type={
-                          providerField.type === 'password'
-                            ? 'password'
-                            : 'text'
-                        }
-                        placeholder={providerField.placeholder}
-                        {...field}
-                        value={field.value as string}
-                      />
-                    )}
-                  </FormControl>
-                  {providerField.description && (
-                    <FormDescription>
-                      {providerField.description}
-                    </FormDescription>
-                  )}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-
-          {requiredScopes?.[selectedProvider] && (
-            <div className='rounded-md bg-blue-50 p-3'>
-              <h4 className='text-sm font-medium text-blue-900'>
-                Required Permissions
-              </h4>
-              <p className='mt-1 text-xs text-blue-700'>
-                This credential will need access to:{' '}
-                {(requiredScopes[selectedProvider] as string[]).join(', ')}
-              </p>
-            </div>
-          )}
-
-          <div className='flex justify-end gap-2 border-t pt-4'>
-            <Button
-              type='button'
-              variant='outline'
-              onClick={() => setCurrentStep('select')}
-            >
-              Back
-            </Button>
-            <Button type='submit' disabled={loading}>
-              {loading ? 'Creating...' : 'Create Credential'}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    );
-  };
-
   return (
     <Dialog
       open={open}
       onOpenChange={(isOpen) => {
         if (!isOpen) {
-          handleClose(); // only reset when closing
-        } else {
-          // allow it to open normally
+          handleClose(); 
         }
       }}
     >
@@ -535,20 +199,10 @@ export default function WorkflowCredentialManager({
               Select Integration
             </>
           )}
-          {currentStep === 'form' && selectedProvider && (
-            <>
-              <ProviderIcon provider={selectedProvider} className='h-5 w-5' />
-              <span>
-                Add {getProviderDisplayName(selectedProvider)} Credential
-              </span>
-            </>
-          )}
-          {currentStep === 'form' && !selectedProvider && 'Add Credential'}
         </DialogTitle>
 
         {currentStep === 'overview' && renderOverview()}
         {currentStep === 'select' && renderIntegrationSelector()}
-        {currentStep === 'form' && renderCredentialForm()}
       </DialogContent>
     </Dialog>
   );

@@ -1,12 +1,7 @@
 import { InngestMiddleware } from "inngest";
-import { credentialStore } from '../services/credential-store.js';
+import { prisma } from '@duramation/db';
 
-// Type for the integration context that will be injected into workflows
-export interface IntegrationContext {
-  credentials: any[];
-}
 
-// Enhanced Inngest middleware for injecting credentials into workflow runs
 export const integrationMiddleware = new InngestMiddleware({
   name: "Integration Middleware",
   init() {
@@ -28,19 +23,33 @@ export const integrationMiddleware = new InngestMiddleware({
             try {
               // Fetch workflow credentials from the database
               console.log(`[Integration Middleware] Fetching credentials for workflow: ${workflowId}, user: ${userId}`);
-              const credentials = await credentialStore.getWorkflowCredentials(workflowId, userId);
-              console.log(`[Integration Middleware] Found ${credentials.length} credentials:`, credentials.map(c => ({ id: c.id, name: c.name, provider: c.provider })));
+              
+              const workflow = await prisma.workflow.findUnique({
+                where: { id: workflowId, userId: userId },
+                include: {
+                  workflowCredentials: {
+                    include: {
+                      credential: true
+                    }
+                  }
+                }
+              });
+
+              const credentials = workflow?.workflowCredentials?.map((wc) => wc.credential) || [];
+              
+              console.log(`[Integration Middleware] Found ${credentials.length} credentials:`, credentials.map((c: any) => ({ id: c.id, name: c.name, provider: c.provider })));
 
               // Return the credentials in the context (serialize to plain objects)
               return {
                 ctx: {
-                  credentials: credentials.map(cred => ({
+                  credentials: credentials.map((cred: any) => ({
                     id: cred.id,
                     name: cred.name,
                     type: cred.type,
                     provider: cred.provider,
                     userId: cred.userId,
-                    secret: cred.secret,
+                    secret: cred.secret ? JSON.parse(cred.secret as string) : null,
+                    nangoConnectionId: cred.nangoConnectionId,
                     config: cred.config,
                     createdAt: cred.createdAt,
                     updatedAt: cred.updatedAt

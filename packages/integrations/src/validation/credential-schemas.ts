@@ -76,12 +76,25 @@ export const hubspotCredentialSchema = z.object({
  * Provider-specific credential schemas
  */
 export const credentialSchemas: Record<Provider, z.ZodSchema> = {
+  // New Keys
+  google_mail: googleCredentialSchema,
+  google_calendar: googleCredentialSchema,
+  google_sheets: googleCredentialSchema,
+  slack: slackCredentialSchema,
+  microsoft_mail: microsoftCredentialSchema,
+  microsoft_calendar: microsoftCredentialSchema,
+  hubspot: hubspotCredentialSchema,
+  firecrawl: firecrawlCredentialSchema,
+  instagram: oauthCredentialSchema,
+  custom_api: z.union([oauthCredentialSchema, apiKeyCredentialSchema]),
+  
+  // Legacy
   GOOGLE: googleCredentialSchema,
-  SLACK: slackCredentialSchema,
+  SLACK_LEGACY: slackCredentialSchema,
   MICROSOFT: microsoftCredentialSchema,
-  FIRECRAWL: firecrawlCredentialSchema,
-  HUBSPOT: hubspotCredentialSchema,
-  INSTAGRAM: oauthCredentialSchema,
+  FIRECRAWL_LEGACY: firecrawlCredentialSchema,
+  HUBSPOT_LEGACY: hubspotCredentialSchema,
+  INSTAGRAM_LEGACY: oauthCredentialSchema,
   CUSTOM: z.union([oauthCredentialSchema, apiKeyCredentialSchema])
 };
 

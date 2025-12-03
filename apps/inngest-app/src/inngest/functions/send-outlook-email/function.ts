@@ -1,6 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { NonRetriableError } from "inngest";
 import { workflowChannel, createWorkflowUpdate, createErrorUpdate } from "@/lib/realtime-channels";
+import { integrationClient } from "@duramation/integrations/server";
 
 export const sendOutlookEmailWorkflow = inngest.createFunction(
     {
@@ -24,7 +25,7 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
         const { to, subject } = input;
 
         // Check for Microsoft credentials
-        const microsoftCredential = credentials.find((cred: any) => cred.provider === 'MICROSOFT');
+        const microsoftCredential = credentials.find((cred: any) => cred.provider === 'microsoft_mail' || cred.provider === 'MICROSOFT');
 
         if (!microsoftCredential) {
             await publish(
@@ -55,49 +56,25 @@ export const sendOutlookEmailWorkflow = inngest.createFunction(
                     )
                 );
 
-                // Validate Microsoft credential structure
-                const secret = microsoftCredential.secret as any;
-                const hasAccessToken = !!secret?.accessToken;
-                const hasRefreshToken = !!secret?.refreshToken;
-                const hasScopes = Array.isArray(secret?.scopes) && secret.scopes.length > 0;
-                const hasExpiry = !!secret?.expiresIn;
+                const nangoConnectionId = microsoftCredential.nangoConnectionId;
+                if (!nangoConnectionId) {
+                    throw new Error("Missing Nango Connection ID on credential. Please reconnect your Microsoft account.");
+                }
 
-                logger.info('Microsoft credential validation:', {
-                    hasAccessToken,
-                    hasRefreshToken,
-                    hasScopes,
-                    hasExpiry,
-                    scopes: secret?.scopes || []
-                });
+                // Fetch token from Nango - this validates the connection and refreshes if needed
+                const accessToken = await integrationClient.getAccessToken(microsoftCredential.provider, nangoConnectionId);
 
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
-                        createWorkflowUpdate("log", `Microsoft credential validated: ${hasAccessToken ? '✓' : '✗'} Access Token, ${hasRefreshToken ? '✓' : '✗'} Refresh Token, ${hasScopes ? '✓' : '✗'} Scopes`)
+                        createWorkflowUpdate("log", `Microsoft credential validated and token retrieved`)
                     )
                 );
-
-                if (!hasAccessToken) {
-                    const error = new Error('Microsoft credential is missing access token');
-                    
-                    await publish(
-                        workflowChannel(user_id, workflowId).updates(
-                            createErrorUpdate('Missing access token', {
-                                error: error.message,
-                                code: 'MISSING_ACCESS_TOKEN',
-                                stepName,
-                                stack: error.stack
-                            })
-                        )
-                    );
-                    
-                    throw error;
-                }
 
                 // TODO: Implement actual email sending via Microsoft Graph API
                 // For now, just simulate success
                 await publish(
                     workflowChannel(user_id, workflowId).updates(
-                        createWorkflowUpdate("log", `[PLACEHOLDER] Would send email to ${recipients.join(', ')} with subject: "${subject}"`)
+                        createWorkflowUpdate("log", `[PLACEHOLDER] Would send email to ${recipients.join(', ')} with subject: "${subject}" using token ending in ...${accessToken.slice(-5)}`)
                     )
                 );
 
