@@ -2,6 +2,20 @@ import { InngestMiddleware } from "inngest";
 import { prisma } from '@duramation/db';
 
 
+/**
+ * Safely parse JSON string, returning null if parsing fails
+ * @param jsonString - The JSON string to parse
+ * @returns Parsed object or null if parsing fails
+ */
+function safeJsonParse(jsonString: string): any | null {
+  try {
+    return JSON.parse(jsonString);
+  } catch (error) {
+    console.warn("[Integration Middleware] Failed to parse credential secret JSON:", error);
+    return null;
+  }
+}
+
 export const integrationMiddleware = new InngestMiddleware({
   name: "Integration Middleware",
   init() {
@@ -48,7 +62,7 @@ export const integrationMiddleware = new InngestMiddleware({
                     type: cred.type,
                     provider: cred.provider,
                     userId: cred.userId,
-                    secret: cred.secret ? JSON.parse(cred.secret as string) : null,
+                    secret: cred.secret ? safeJsonParse(cred.secret as string) : null,
                     nangoConnectionId: cred.nangoConnectionId,
                     config: cred.config,
                     createdAt: cred.createdAt,
