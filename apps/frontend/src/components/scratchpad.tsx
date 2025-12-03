@@ -420,7 +420,7 @@ const EnhancedForm: React.FC = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Form submitted: ", formData);
-      alert(dict.scratchpad.createAccount.submit + " " + dict.scratchpad.createAccount.success || "successfully!");
+      alert(dict.scratchpad.createAccount.submit + " successfully!");
     }
   };
 
