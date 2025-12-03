@@ -86,14 +86,7 @@ export const Provider: {
   hubspot: 'hubspot',
   firecrawl: 'firecrawl',
   instagram: 'instagram',
-  custom_api: 'custom_api',
-  GOOGLE: 'GOOGLE',
-  SLACK_LEGACY: 'SLACK_LEGACY',
-  MICROSOFT: 'MICROSOFT',
-  HUBSPOT_LEGACY: 'HUBSPOT_LEGACY',
-  FIRECRAWL_LEGACY: 'FIRECRAWL_LEGACY',
-  INSTAGRAM_LEGACY: 'INSTAGRAM_LEGACY',
-  CUSTOM: 'CUSTOM'
+  custom_api: 'custom_api'
 };
 
 export type Provider = (typeof Provider)[keyof typeof Provider]

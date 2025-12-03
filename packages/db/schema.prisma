@@ -69,15 +69,6 @@ enum Provider {
   firecrawl        @map("firecrawl")
   instagram        @map("instagram")
   custom_api       @map("custom-api")
-
-  // Legacy (to be migrated/removed)
-  GOOGLE
-  SLACK_LEGACY     @map("SLACK")
-  MICROSOFT
-  HUBSPOT_LEGACY   @map("HUBSPOT")
-  FIRECRAWL_LEGACY @map("FIRECRAWL")
-  INSTAGRAM_LEGACY @map("INSTAGRAM")
-  CUSTOM
 }
 
 enum WorkflowStatus {

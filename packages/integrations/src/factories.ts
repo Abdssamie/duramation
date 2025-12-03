@@ -1,9 +1,11 @@
 import { integrationClient } from './client.js';
 import { google } from 'googleapis';
+import { Provider } from '@duramation/db';
+
 // Add other provider SDKs as needed
 
 export const createGoogleClient = async (connectionId: string) => {
-  const accessToken = await integrationClient.getAccessToken('GOOGLE', connectionId);
+  const accessToken = await integrationClient.getAccessToken(Provider.google_mail, connectionId);
   
   const auth = new google.auth.OAuth2();
   auth.setCredentials({ access_token: accessToken });

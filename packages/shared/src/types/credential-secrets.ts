@@ -77,24 +77,18 @@ export const validateCredentialSecret = (
     switch (type) {
         case "OAUTH":
             switch (provider) {
-                case "GOOGLE":
                 case "google_mail":
                 case "google_calendar":
                 case "google_sheets":
                     return GoogleOAuthSecretSchema.safeParse(secret);
                 case "slack":
-                case "SLACK_LEGACY":
                     return SlackOAuthSecretSchema.safeParse(secret);
-                case "MICROSOFT":
                 case "microsoft_mail":
                 case "microsoft_calendar":
                     return MicrosoftOAuthSecretSchema.safeParse(secret);
                 case "hubspot":
-                case "HUBSPOT_LEGACY":
                     return HubspotOAuthSecretSchema.safeParse(secret);
                 case "instagram":
-                case "INSTAGRAM_LEGACY":
-                    // Assuming instagram uses standard OAuth secret for now
                     return BaseOAuthSecretSchema.safeParse(secret);
                 default:
                     return {success: false, error: "Unsupported OAuth provider"};
@@ -102,10 +96,8 @@ export const validateCredentialSecret = (
         case "API_KEY":
             switch (provider) {
                 case "firecrawl":
-                case "FIRECRAWL_LEGACY":
                     return FirecrawlApiKeySecretSchema.safeParse(secret);
                 case "custom_api":
-                case "CUSTOM":
                     return CustomApiKeySecretSchema.safeParse(secret);
                 default:
                     return {success: false, error: "Unsupported API Key provider"};

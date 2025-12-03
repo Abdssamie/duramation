@@ -35,14 +35,6 @@ export const PROVIDER_ICONS: Record<Provider, React.ComponentType<React.SVGProps
   firecrawl: null,
   instagram: InstagramIcon,
   custom_api: null,
-  // Legacy
-  GOOGLE: GoogleIcon,
-  SLACK_LEGACY: SlackIcon,
-  MICROSOFT: MicrosoftIcon,
-  INSTAGRAM_LEGACY: InstagramIcon,
-  HUBSPOT_LEGACY: null,
-  FIRECRAWL_LEGACY: null,
-  CUSTOM: null,
 };
 
 // Letter icons for providers without custom SVG components
@@ -57,14 +49,6 @@ export const PROVIDER_LETTER_ICONS: Record<Provider, { letter: string; bgColor: 
   firecrawl: { letter: 'F', bgColor: 'bg-purple-600' },
   instagram: { letter: 'I', bgColor: 'bg-pink-600' },
   custom_api: { letter: 'C', bgColor: 'bg-gray-600' },
-  // Legacy
-  GOOGLE: { letter: 'G', bgColor: 'bg-blue-600' },
-  SLACK_LEGACY: { letter: 'S', bgColor: 'bg-purple-600' },
-  MICROSOFT: { letter: 'M', bgColor: 'bg-blue-500' },
-  HUBSPOT_LEGACY: { letter: 'H', bgColor: 'bg-orange-600' },
-  FIRECRAWL_LEGACY: { letter: 'F', bgColor: 'bg-purple-600' },
-  INSTAGRAM_LEGACY: { letter: 'I', bgColor: 'bg-pink-600' },
-  CUSTOM: { letter: 'C', bgColor: 'bg-gray-600' },
 };
 
 // Helper component to render provider icon

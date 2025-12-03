@@ -92,14 +92,6 @@ const PROVIDER_METADATA: Record<Provider, ProviderMetadata> = {
       color: 'text-white',
     },
   },
-  // Legacy mappings to prevent immediate breakage during migration (optional, but safer)
-  GOOGLE: { displayName: 'Google (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
-  SLACK_LEGACY: { displayName: 'Slack (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
-  MICROSOFT: { displayName: 'Microsoft (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
-  HUBSPOT_LEGACY: { displayName: 'HubSpot (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
-  FIRECRAWL_LEGACY: { displayName: 'Firecrawl (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
-  INSTAGRAM_LEGACY: { displayName: 'Instagram (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
-  CUSTOM: { displayName: 'Custom (Legacy)', description: 'Deprecated', colors: { bgColor: 'bg-gray-400', color: 'text-white' } },
 };
 
 export function getProviderMetadata(provider: Provider): ProviderMetadata {
