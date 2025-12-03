@@ -236,11 +236,11 @@ export const workflowsApi = {
   } = {}) =>
     request<WorkflowHistoryResponse>(`/api/workflows/history${toQuery(params as Record<string, unknown>)}`, { token }),
 
-  associateCredential: (token: string, workflowId: string, nangoConnectionId?: string, provider?: string, nangoConnectionIds?: string[]) =>
+  associateCredential: (token: string, workflowId: string, credentialId?: string, credentialIds?: string[]) =>
     request<ApiResponse<{ success: boolean; results?: any[] }>>(`/api/workflows/${workflowId}/credentials`, {
       token,
       method: 'POST',
-      body: nangoConnectionIds ? { nangoConnectionIds } : { nangoConnectionId, provider }
+      body: credentialIds ? { credentialIds } : { credentialId }
     })
 };
 

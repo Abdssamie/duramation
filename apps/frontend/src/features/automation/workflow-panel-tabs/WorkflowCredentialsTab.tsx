@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { Plus, CheckCircle, AlertCircle, XCircle } from 'lucide-react';
+import { Plus, CheckCircle, AlertCircle, XCircle, Link } from 'lucide-react';
 import { WorkflowWithCredentials } from '@/types/workflow';
 import { Provider } from '@duramation/integrations';
 import {
@@ -23,6 +23,7 @@ import {
 import { Icons } from '@/components/icons';
 import { toast } from 'sonner';
 import api from '@/services/api/api-client';
+import { useState, useEffect } from 'react';
 
 interface WorkflowCredentialsTabProps {
   workflow: WorkflowWithCredentials;
@@ -32,6 +33,7 @@ export default function WorkflowCredentialsTab({
   workflow
 }: WorkflowCredentialsTabProps) {
   const { getToken } = useAuth();
+  const [existingCredentials, setExistingCredentials] = useState<any[]>([]);
   const credentialRequirements = mapCredentialRequirements(workflow);
   const credentialStatus = calculateCredentialStatus(workflow);
   const hasRequiredCredentials = credentialRequirements.length > 0;
@@ -42,6 +44,48 @@ export default function WorkflowCredentialsTab({
     (req) => req.available
   );
 
+  useEffect(() => {
+    const fetchExistingCredentials = async () => {
+      const token = await getToken();
+      if (!token) return;
+      
+      try {
+        const response = await api.credentials.list(token);
+        console.log('[WorkflowCredentials] Existing credentials:', response?.data);
+        setExistingCredentials(response?.data || []);
+      } catch (error) {
+        console.error('Failed to fetch credentials:', error);
+      }
+    };
+    
+    fetchExistingCredentials();
+  }, [getToken]);
+
+  const handleLinkExisting = async (provider: Provider) => {
+    try {
+      const token = await getToken();
+      if (!token) {
+        toast.error('Authentication required');
+        return;
+      }
+
+      const existingCred = existingCredentials.find(c => c.provider === provider);
+      console.log('[WorkflowCredentials] Linking credential:', { provider, existingCred, allCreds: existingCredentials });
+      
+      if (!existingCred) {
+        toast.error('Credential not found');
+        return;
+      }
+
+      await api.workflows.associateCredential(token, workflow.id, undefined, [existingCred.id]);
+      toast.success('Credential linked successfully');
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to link credential:', error);
+      toast.error('Failed to link credential');
+    }
+  };
+
   const handleAddCredentials = async () => {
     try {
       const token = await getToken();
@@ -50,9 +94,19 @@ export default function WorkflowCredentialsTab({
         return;
       }
 
+      // Only connect providers that don't have existing credentials
+      const providersToConnect = missingCredentials.filter(req => 
+        !existingCredentials.some(c => c.provider === req.provider)
+      );
+
+      if (providersToConnect.length === 0) {
+        toast.info('All required credentials already exist. Please use "Link to this workflow" button.');
+        return;
+      }
+
       const nango = new Nango({ publicKey: process.env.NEXT_PUBLIC_NANGO_PUBLIC_KEY || '' });
 
-      const integrationIds = missingCredentials.map(req => req.provider.toLowerCase().replace(/_/g, '-'));
+      const integrationIds = providersToConnect.map(req => req.provider.toLowerCase().replace(/_/g, '-'));
       const sessionResponse = await api.credentials.createConnectSession(token, integrationIds, workflow.id);
       
       if (!sessionResponse?.token) {
@@ -148,24 +202,51 @@ export default function WorkflowCredentialsTab({
       {missingCredentials.length > 0 && (
         <div className='space-y-2'>
           <h4 className='text-sm font-medium'>Missing Credentials</h4>
-          {missingCredentials.map((requirement) => (
-            <Card key={requirement.provider} className='p-3'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3 min-w-0'>
-                  {getStatusIcon(requirement.available, requirement.provider)}
-                  <div className='min-w-0'>
-                    <div className='text-sm font-medium truncate'>
-                      {getProviderDisplayName(requirement.provider)}
+          {missingCredentials.map((requirement) => {
+            const existingCred = existingCredentials.find(c => c.provider === requirement.provider);
+            console.log('[WorkflowCredentials] Checking requirement:', { 
+              provider: requirement.provider, 
+              existingCred,
+              allExisting: existingCredentials.map(c => c.provider)
+            });
+            
+            return (
+              <Card key={requirement.provider} className='p-3'>
+                <div className='flex flex-col gap-3'>
+                  <div className='flex items-center justify-between'>
+                    <div className='flex items-center gap-3 min-w-0'>
+                      {getStatusIcon(requirement.available, requirement.provider)}
+                      <div className='min-w-0'>
+                        <div className='text-sm font-medium truncate'>
+                          {getProviderDisplayName(requirement.provider)}
+                        </div>
+                        <div className='text-muted-foreground text-xs break-words'>
+                          This service needs to be connected to run this workflow.
+                        </div>
+                      </div>
                     </div>
-                    <div className='text-muted-foreground text-xs break-words'>
-                      This service needs to be connected to run this workflow.
-                    </div>
+                    {getStatusBadge(requirement.available)}
                   </div>
+                  
+                  {existingCred && (
+                    <div className='flex items-center justify-between p-2 bg-muted rounded-md'>
+                      <div className='text-xs'>
+                        <span className='font-medium'>{existingCred.name}</span> is already connected in another workflow
+                      </div>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => handleLinkExisting(requirement.provider)}
+                      >
+                        <Link className='mr-1 h-3 w-3' />
+                        Link to this workflow
+                      </Button>
+                    </div>
+                  )}
                 </div>
-                {getStatusBadge(requirement.available)}
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
       )}
 
