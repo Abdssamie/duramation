@@ -1,7 +1,7 @@
 {
   "automations": {
     "title": "Automations",
-    "description": "Create and manage automations to streamline your workflows.",
+    "description": "Créez et gérez des automatisations pour rationaliser vos flux de travail.",
     "run_button": "Exécuter",
     "export": "Exporter",
     "importAutomation": {
@@ -107,6 +107,17 @@
       "title": "Automatisations planifiées",
       "nextRun": "Prochaine exécution",
       "notScheduled": "Non planifié"
+    },
+    "requestAutomation": {
+      "title": "Demander une nouvelle automatisation",
+      "description": "Décrivez l'automatisation souhaitée. Notre équipe examinera votre demande et vous répondra.",
+      "nameLabel": "Nom de l'automatisation",
+      "namePlaceholder": "Par exemple, Intégration automatique des clients",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Expliquez brièvement ce que cette automatisation devrait faire.",
+      "useCaseLabel": "Cas d'utilisation",
+      "useCasePlaceholder": "Décrivez le scénario ou problème spécifique que cette automatisation résoudra.",
+      "submitButton": "Soumettre la demande"
     }
   },
   "dashboard": {
@@ -174,7 +185,8 @@
     "login": "Connexion",
     "kanban": "Kanban",
     "billing": "Facturation",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "api keys": "Clés API"
   },
   "navProjects": {
     "projects": "Projets",
