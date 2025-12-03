@@ -76,6 +76,16 @@ interface CredentialStore {
   ): Promise<void>;
 
   /**
+   * Upsert a credential
+   */
+  upsert(credential: {
+    userId: InternalUserId;
+    provider: Provider;
+    type: CredentialType;
+    data: CredentialSecret;
+  }): Promise<SafeCredentialResponse>;
+
+  /**
    * List credentials for a user and provider
    */
   listByUserAndProvider(
@@ -95,9 +105,14 @@ export async function storeCredential(
 ): Promise<SafeCredentialResponse> {
   try {
     const nangoConnectionId = getNangoConnectionId(credentialData.type, credentialData.secret);
-    const credential = await upsertCredentialInternal(userId, credentialData, nangoConnectionId);
 
-    const config = credentialData.config;
+    // Create a sanitized secret that does not contain nangoConnectionId, as it's stored separately
+    const sanitizedSecret: CredentialSecret = { ...credentialData.secret };
+    if (sanitizedSecret && typeof sanitizedSecret === 'object' && 'nangoConnectionId' in sanitizedSecret) {
+      delete (sanitizedSecret as Partial<BaseOAuthSecret>).nangoConnectionId;
+    }
+
+    const credential = await upsertCredentialInternal(userId, { ...credentialData, secret: sanitizedSecret }, nangoConnectionId);
     if (config?.autoAssociate && config?.workflowId) {
       try {
         await prisma.workflowCredential.upsert({
@@ -158,7 +173,14 @@ export async function storeCredentialForWorkflow(
     }
 
     const nangoConnectionId = getNangoConnectionId(credentialData.type, credentialData.secret);
-    const credential = await upsertCredentialInternal(userId, credentialData, nangoConnectionId);
+
+    // Create a sanitized secret that does not contain nangoConnectionId, as it's stored separately
+    const sanitizedSecret: CredentialSecret = { ...credentialData.secret };
+    if (sanitizedSecret && typeof sanitizedSecret === 'object' && 'nangoConnectionId' in sanitizedSecret) {
+      delete (sanitizedSecret as Partial<BaseOAuthSecret>).nangoConnectionId;
+    }
+
+    const credential = await upsertCredentialInternal(userId, { ...credentialData, secret: sanitizedSecret }, nangoConnectionId);
 
     // Create the workflow-credential association
     await prisma.workflowCredential.upsert({
@@ -326,12 +348,18 @@ export const credentialStore: CredentialStore = {
     try {
       const nangoConnectionId = getNangoConnectionId(credential.type, credential.data);
 
+      // Create a sanitized secret that does not contain nangoConnectionId, as it's stored separately
+      const sanitizedSecret: CredentialSecret = { ...credential.data };
+      if (sanitizedSecret && typeof sanitizedSecret === 'object' && 'nangoConnectionId' in sanitizedSecret) {
+        delete (sanitizedSecret as Partial<BaseOAuthSecret>).nangoConnectionId;
+      }
+
       const created = await prisma.credential.create({
         data: {
           name: `${credential.provider} Integration`,
           type: credential.type,
           provider: credential.provider,
-          secret: JSON.stringify(credential.data),
+          secret: JSON.stringify(sanitizedSecret),
           nangoConnectionId: nangoConnectionId,
           userId: credential.userId,
           config: {},
@@ -353,7 +381,7 @@ export const credentialStore: CredentialStore = {
     }
   },
 
-  async retrieve(credentialId: string, userId: InternalUserId): Promise<CredentialWithSecret | null> {
+  async retrieve(credentialId: string, userId: InternalId): Promise<CredentialWithSecret | null> {
     try {
       const credential = await prisma.credential.findUnique({
         where: { id: credentialId, userId: userId, },
@@ -444,5 +472,20 @@ export const credentialStore: CredentialStore = {
       console.error("Error deleting credential:", error);
       throw new Error(`Error deleting credential: ${error}`);
     }
+  },
+
+  async upsert(credential: {
+    userId: string;
+    provider: Provider;
+    type: CredentialType;
+    data: CredentialSecret;
+  }): Promise<SafeCredentialResponse> {
+    return storeCredential(credential.userId as InternalUserId, {
+      name: `${credential.provider} Integration`,
+      provider: credential.provider,
+      type: credential.type,
+      secret: credential.data,
+      config: {},
+    });
   },
 };

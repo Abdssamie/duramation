@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Provider } from '@duramation/db';
 import { credentialStore } from "@/services/credentials-store";
 import prisma from '@/lib/prisma';
-import Nango from '@nangohq/node';
+import { Nango } from '@nangohq/node';
 
 export async function POST(req: Request) {
   try {
@@ -12,6 +12,11 @@ export async function POST(req: Request) {
     if (!signature) {
       console.error('[Nango Webhook] Missing signature header');
       return NextResponse.json({ error: 'Missing signature' }, { status: 401 });
+    }
+
+    if (!process.env.NANGO_SECRET_KEY) {
+      console.error('[Nango Webhook] NANGO_SECRET_KEY not configured');
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
     const nango = new Nango({ secretKey: process.env.NANGO_SECRET_KEY });
@@ -50,13 +55,13 @@ export async function POST(req: Request) {
 
       console.log(`[Nango Webhook] Auth success for ${providerEnumKey} / ${userId} / ${connectionId} / workflow: ${workflowId || 'none'}`);
 
-      const credential = await credentialStore.store({
+      const credential = await credentialStore.upsert({
         userId,
         provider: providerEnumKey,
         type: 'OAUTH',
         data: {
           nangoConnectionId: connectionId,
-          accessToken: 'nango-managed',
+          accessToken: 'nango-managed', // Placeholder to satisfy potentially required fields in legacy types if any
         } as unknown as import('@duramation/shared').CredentialSecret 
       });
 
