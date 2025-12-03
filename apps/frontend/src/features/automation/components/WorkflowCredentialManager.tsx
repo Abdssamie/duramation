@@ -82,41 +82,10 @@ export default function WorkflowCredentialManager({
         // Open Nango Connect UI
         const connect = nango.openConnectUI({
             onEvent: async (event) => {
-                if (event.type === 'connect') {
-                    const { connectionId } = event.payload;
-                    
-                    try {
-                        // Get a fresh token as the previous one might have expired during the auth flow
-                        const freshToken = await getToken();
-                        if (!freshToken) {
-                           throw new Error('Authentication expired. Please refresh the page.');
-                        }
-
-                        await api.workflows.associateCredential(freshToken, workflowId, connectionId, provider);
-                        toast.success('Connected and linked to workflow!');
-                        
-                        // Notify parent component
-                        // Construct a partial credential object since we don't have the full DB record yet
-                        // This is enough for the UI to update optimistically or trigger a refresh
-                        const newCredential = {
-                            name: `${getProviderDisplayName(provider)}`,
-                            provider: provider,
-                            type: 'OAUTH',
-                            id: connectionId, // Using connectionId as temp ID for UI
-                        };
-                        
-                        onCredentialAdded?.(newCredential as unknown as CredentialCreateRequest);
-                        // We don't re-open the dialog here because success usually implies we are done
-                    } catch (linkError) {
-                        console.error('Failed to link credential:', linkError);
-                        toast.error('Connected, but failed to link to workflow. Please try again.');
-                        // Re-open dialog on error so user can try again? 
-                        // Or just let them click the button again.
-                    }
-                } else if (event.type === 'close') {
+                if (event.type === 'close') {
                     setLoading(false);
-                    // Optionally re-open dialog if they cancelled?
-                    // For now, let's leave it closed to avoid confusion.
+                    // Webhook handles credential creation and linking
+                    onCredentialAdded?.({} as unknown as CredentialCreateRequest);
                 }
             }
         });
