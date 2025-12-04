@@ -76,3 +76,11 @@ packages/db/src/generated
 /apps/frontend/src/config/env.ts
 /apps/inngest-app/src/config/env.ts
 GIT_LEARNINGS.md
+
+# Ignored files for public release
+agents.md
+JULES_README.md
+jules-setup.sh
+
+# Explicitly ignore generated Prisma client directory
+packages/db/src/generated
