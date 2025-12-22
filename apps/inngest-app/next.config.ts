@@ -2,7 +2,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["@duramation/db", "prisma", "@prisma/client"],
   async headers() {
     return [
       {

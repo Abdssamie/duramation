@@ -3,7 +3,6 @@
 import * as React from "react";
 import { useState, useId } from "react";
 import { Eye, EyeOff, Check, X, User, Mail, Lock, ChevronDown } from "lucide-react";
-import useDictionary from '@/locales/dictionary-hook';
 
 // Utility function for cn
 function cn(...classes: (string | undefined | null | false)[]): string {
@@ -193,13 +192,12 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 }) => {
   const id = useId();
   const [isVisible, setIsVisible] = useState(false);
-  const dict = useDictionary();
 
   const requirements = [
-    { regex: /.{8,}/, text: dict.scratchpad.passwordRequirements.atLeast8Chars },
-    { regex: /[0-9]/, text: dict.scratchpad.passwordRequirements.atLeast1Number },
-    { regex: /[a-z]/, text: dict.scratchpad.passwordRequirements.atLeast1Lowercase },
-    { regex: /[A-Z]/, text: dict.scratchpad.passwordRequirements.atLeast1Uppercase },
+    { regex: /.{8,}/, text: "At least 8 characters" },
+    { regex: /[0-9]/, text: "At least 1 number" },
+    { regex: /[a-z]/, text: "At least 1 lowercase letter" },
+    { regex: /[A-Z]/, text: "At least 1 uppercase letter" },
   ];
 
   const strength = requirements.map((req) => ({
@@ -218,10 +216,10 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   };
 
   const getStrengthText = (score: number) => {
-    if (score === 0) return dict.scratchpad.passwordRequirements.enterPassword;
-    if (score <= 2) return dict.scratchpad.passwordRequirements.weakPassword;
-    if (score === 3) return dict.scratchpad.passwordRequirements.mediumPassword;
-    return dict.scratchpad.passwordRequirements.strongPassword;
+    if (score === 0) return "Enter a password";
+    if (score <= 2) return "Weak password";
+    if (score === 3) return "Medium password";
+    return "Strong password";
   };
 
   return (
@@ -254,7 +252,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
             />
           </div>
           <p className="text-sm font-medium text-foreground">
-            {getStrengthText(strengthScore)}. {dict.scratchpad.passwordRequirements.mustContain}
+            {getStrengthText(strengthScore)}. Must contain:
           </p>
           <ul className="space-y-1">
             {strength.map((req, index) => (
@@ -304,83 +302,82 @@ const EnhancedForm: React.FC = () => {
   });
 
   const [errors, setErrors] = useState<FormData>({});
-  const dict = useDictionary();
 
   const fields: FormField[] = [
     {
       id: "firstName",
-      label: dict.scratchpad.createAccount.firstName,
+      label: "First Name",
       type: "text",
-      placeholder: dict.scratchpad.createAccount.enterFirstName,
+      placeholder: "Enter your first name",
       required: true,
       icon: <User size={16} />,
     },
     {
       id: "lastName",
-      label: dict.scratchpad.createAccount.lastName,
+      label: "Last Name",
       type: "text",
-      placeholder: dict.scratchpad.createAccount.enterLastName,
+      placeholder: "Enter your last name",
       required: true,
       icon: <User size={16} />,
     },
     {
       id: "email",
-      label: dict.scratchpad.createAccount.emailAddress,
+      label: "Email Address",
       type: "email",
-      placeholder: dict.scratchpad.createAccount.enterEmail,
+      placeholder: "Enter your email",
       required: true,
       icon: <Mail size={16} />,
     },
     {
       id: "password",
-      label: dict.scratchpad.createAccount.password,
+      label: "Password",
       type: "password",
-      placeholder: dict.scratchpad.createAccount.createPassword,
+      placeholder: "Create a password",
       required: true,
       icon: <Lock size={16} />,
     },
     {
       id: "confirmPassword",
-      label: dict.scratchpad.createAccount.confirmPassword,
+      label: "Confirm Password",
       type: "password",
-      placeholder: dict.scratchpad.createAccount.confirmPasswordPlaceholder,
+      placeholder: "Confirm your password",
       required: true,
       icon: <Lock size={16} />,
     },
     {
       id: "country",
-      label: dict.scratchpad.createAccount.country,
+      label: "Country",
       type: "select",
-      placeholder: dict.scratchpad.createAccount.selectCountry,
+      placeholder: "Select your country",
       required: true,
       options: [
-        { value: "us", label: dict.scratchpad.countries.us },
-        { value: "uk", label: dict.scratchpad.countries.uk },
-        { value: "ca", label: dict.scratchpad.countries.ca },
-        { value: "au", label: dict.scratchpad.countries.au },
-        { value: "de", label: dict.scratchpad.countries.de },
-        { value: "fr", label: dict.scratchpad.countries.fr },
+        { value: "us", label: "United States" },
+        { value: "uk", label: "United Kingdom" },
+        { value: "ca", label: "Canada" },
+        { value: "au", label: "Australia" },
+        { value: "de", label: "Germany" },
+        { value: "fr", label: "France" },
       ],
     },
     {
       id: "role",
-      label: dict.scratchpad.createAccount.role,
+      label: "Role",
       type: "select",
-      placeholder: dict.scratchpad.createAccount.selectRole,
+      placeholder: "Select your role",
       required: true,
       options: [
-        { value: "developer", label: dict.scratchpad.roles.developer },
-        { value: "designer", label: dict.scratchpad.roles.designer },
-        { value: "manager", label: dict.scratchpad.roles.manager },
-        { value: "student", label: dict.scratchpad.roles.student },
-        { value: "other", label: dict.scratchpad.roles.other },
+        { value: "developer", label: "Developer" },
+        { value: "designer", label: "Designer" },
+        { value: "manager", label: "Manager" },
+        { value: "student", label: "Student" },
+        { value: "other", label: "Other" },
       ],
     },
     {
       id: "bio",
-      label: dict.scratchpad.createAccount.bio,
+      label: "Bio",
       type: "textarea",
-      placeholder: dict.scratchpad.createAccount.tellUsAbout,
+      placeholder: "Tell us about yourself...",
       required: false,
     },
   ];
@@ -397,18 +394,18 @@ const EnhancedForm: React.FC = () => {
 
     fields.forEach((field) => {
       if (field.required && !formData[field.id]) {
-        newErrors[field.id] = dict.scratchpad.formValidation.fieldRequired.replace('{fieldName}', field.label);
+        newErrors[field.id] = `${field.label} is required`;
       }
 
       if (field.type === "email" && formData[field.id]) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData[field.id] || "")) {
-          newErrors[field.id] = dict.scratchpad.formValidation.validEmail;
+          newErrors[field.id] = "Please enter a valid email address";
         }
       }
 
       if (field.id === "confirmPassword" && formData.password !== formData.confirmPassword) {
-        newErrors[field.id] = dict.scratchpad.formValidation.passwordsMismatch;
+        newErrors[field.id] = "Passwords do not match";
       }
     });
 
@@ -420,7 +417,7 @@ const EnhancedForm: React.FC = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Form submitted: ", formData);
-      alert(dict.scratchpad.createAccount.submit + " successfully!");
+      alert("Form submitted successfully!");
     }
   };
 
@@ -519,9 +516,9 @@ const EnhancedForm: React.FC = () => {
   return (
     <div className="mx-auto max-w-2xl space-y-8 p-6">
       <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold tracking-tight">{dict.scratchpad.createAccount.title}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Create Account</h1>
         <p className="text-muted-foreground">
-          {dict.scratchpad.createAccount.subtitle}
+          Fill out the form below to create your account
         </p>
       </div>
 
@@ -547,14 +544,14 @@ const EnhancedForm: React.FC = () => {
         ))}
 
         <Button type="submit" className="w-full" size="lg">
-          {dict.scratchpad.createAccount.submit}
+          Create Account
         </Button>
       </form>
 
       <div className="text-center text-sm text-muted-foreground">
-        {dict.scratchpad.createAccount.alreadyHaveAccount}{" "}
+        Already have an account?{" "}
         <button className="font-medium text-primary hover:underline">
-          {dict.scratchpad.createAccount.signIn}
+          Sign in
         </button>
       </div>
     </div>

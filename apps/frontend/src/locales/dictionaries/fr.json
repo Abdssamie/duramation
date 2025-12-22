@@ -1,7 +1,7 @@
 {
   "automations": {
     "title": "Automations",
-    "description": "Créez et gérez des automatisations pour rationaliser vos flux de travail.",
+    "description": "Create and manage automations to streamline your workflows.",
     "run_button": "Exécuter",
     "export": "Exporter",
     "importAutomation": {
@@ -107,17 +107,6 @@
       "title": "Automatisations planifiées",
       "nextRun": "Prochaine exécution",
       "notScheduled": "Non planifié"
-    },
-    "requestAutomation": {
-      "title": "Demander une nouvelle automatisation",
-      "description": "Décrivez l'automatisation souhaitée. Notre équipe examinera votre demande et vous répondra.",
-      "nameLabel": "Nom de l'automatisation",
-      "namePlaceholder": "Par exemple, Intégration automatique des clients",
-      "descriptionLabel": "Description",
-      "descriptionPlaceholder": "Expliquez brièvement ce que cette automatisation devrait faire.",
-      "useCaseLabel": "Cas d'utilisation",
-      "useCasePlaceholder": "Décrivez le scénario ou problème spécifique que cette automatisation résoudra.",
-      "submitButton": "Soumettre la demande"
     }
   },
   "dashboard": {
@@ -185,8 +174,7 @@
     "login": "Connexion",
     "kanban": "Kanban",
     "billing": "Facturation",
-    "notifications": "Notifications",
-    "api keys": "Clés API"
+    "notifications": "Notifications"
   },
   "navProjects": {
     "projects": "Projets",
@@ -333,64 +321,8 @@
     "cardTitle": "Visiteurs par navigateur",
     "cardDescriptionLong": "Affichage du nombre total de visiteurs pour la période actuelle, classés par navigateur.",
     "cardDescriptionShort": "Visiteurs par navigateur.",
-    "footerLeadingBrowser": "Chrome est en tête avec {{percentage}}%",
+    "footerLeadingBrowser": "Chrome est en tête avec {{percentage}}% ",
     "footerTimePeriod": "Basé sur les données de Janvier à Juin 2024",
     "totalVisitorsLabel": "Total des Visiteurs"
-  },
-  "scratchpad": {
-    "createAccount": {
-      "title": "Créer un compte",
-      "subtitle": "Remplissez le formulaire ci-dessous pour créer votre compte",
-      "firstName": "Prénom",
-      "lastName": "Nom",
-      "emailAddress": "Adresse e-mail",
-      "password": "Mot de passe",
-      "confirmPassword": "Confirmer le mot de passe",
-      "country": "Pays",
-      "role": "Rôle",
-      "bio": "Biographie",
-      "enterFirstName": "Entrez votre prénom",
-      "enterLastName": "Entrez votre nom",
-      "enterEmail": "Entrez votre e-mail",
-      "createPassword": "Créez un mot de passe",
-      "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
-      "selectCountry": "Sélectionnez votre pays",
-      "selectRole": "Sélectionnez votre rôle",
-      "tellUsAbout": "Parlez-nous de vous...",
-      "submit": "Créer un compte",
-      "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "signIn": "Se connecter"
-    },
-    "passwordRequirements": {
-      "atLeast8Chars": "Au moins 8 caractères",
-      "atLeast1Number": "Au moins 1 chiffre",
-      "atLeast1Lowercase": "Au moins 1 lettre minuscule",
-      "atLeast1Uppercase": "Au moins 1 lettre majuscule",
-      "enterPassword": "Entrez un mot de passe",
-      "weakPassword": "Mot de passe faible",
-      "mediumPassword": "Mot de passe moyen",
-      "strongPassword": "Mot de passe fort",
-      "mustContain": "Doit contenir :"
-    },
-    "formValidation": {
-      "fieldRequired": "{fieldName} est requis",
-      "validEmail": "Veuillez entrer une adresse e-mail valide",
-      "passwordsMismatch": "Les mots de passe ne correspondent pas"
-    },
-    "countries": {
-      "us": "États-Unis",
-      "uk": "Royaume-Uni",
-      "ca": "Canada",
-      "au": "Australie",
-      "de": "Allemagne",
-      "fr": "France"
-    },
-    "roles": {
-      "developer": "Développeur",
-      "designer": "Concepteur",
-      "manager": "Directeur",
-      "student": "Étudiant",
-      "other": "Autre"
-    }
   }
 }

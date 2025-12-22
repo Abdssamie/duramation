@@ -30,6 +30,7 @@ export async function GET() {
                 fields: true,
                 canBeScheduled: true,
                 eventName: true,
+                cronExpressions: true,
                 timezone: true,
                 lastRunAt: true,
                 nextRunAt: true,

@@ -22,17 +22,17 @@ export async function POST(req: NextRequest) {
 
         if (evt.type === 'user.created') {
             console.log("Processing 'user.created' event.");
-            console.log('Email addresses array:', JSON.stringify(evt.data.email_addresses, null, 2));
 
             const name = evt.data.first_name + ' ' + evt.data.last_name;
 
-            const primaryEmail = evt.data.email_addresses?.find(
+            const primaryEmail = evt.data.email_addresses.find(
                 (e) => e.id === evt.data.primary_email_address_id
-            )?.email_address || evt.data.email_addresses?.[0]?.email_address;
-            
+            )?.email_address;
             if (!primaryEmail) {
-                console.error('No email address found in webhook payload. Full data:', JSON.stringify(evt.data, null, 2));
-                return new Response('Missing email address in webhook payload', { status: 400 });
+                console.error('Primary email address not found for user.');
+                return new Response('Primary email address not found for user', {
+                    status: 400
+                });
             }
             console.log(`Primary email found: ${primaryEmail}`);
 
@@ -45,6 +45,8 @@ export async function POST(req: NextRequest) {
                 }
               });
               console.log('Successfully created user in Database with ID:', id);
+
+              console.log('Successfully created default workflows for user with ID:', id);
 
             } catch (error) {
                 console.error(

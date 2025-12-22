@@ -40,7 +40,7 @@ export const ScrapeWebsiteTemplate: WorkflowTemplate = {
   description: 'Extract content from any website using Firecrawl',
   eventName: 'workflow/scrape.website',
   canBeScheduled: true,
-  requiredProviders: [Provider.firecrawl],
+  requiredProviders: [Provider.FIRECRAWL],
   requiredScopes: {},
   restrictedToUsers: ['*'],
   fields: ScrapeWebsiteFields as unknown as JsonValue,

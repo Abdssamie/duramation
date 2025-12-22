@@ -57,9 +57,9 @@ export const SendOutlookEmailTemplate: WorkflowTemplate = {
   description: 'Send emails via Microsoft Outlook automatically',
   eventName: 'workflow/microsoft.send-email',
   canBeScheduled: true,
-  requiredProviders: [Provider.microsoft_mail],
+  requiredProviders: [Provider.MICROSOFT],
   requiredScopes: {
-    [Provider.microsoft_mail]: [
+    [Provider.MICROSOFT]: [
       'https://graph.microsoft.com/Mail.Send',
       'https://graph.microsoft.com/User.Read',
     ],

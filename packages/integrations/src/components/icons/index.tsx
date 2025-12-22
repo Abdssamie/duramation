@@ -25,30 +25,24 @@ export const LetterIcon = ({
 
 // Provider icon registry
 export const PROVIDER_ICONS: Record<Provider, React.ComponentType<React.SVGProps<SVGSVGElement>> | null> = {
-  google_mail: GoogleIcon,
-  google_calendar: GoogleIcon,
-  google_sheets: GoogleIcon,
-  slack: SlackIcon,
-  microsoft_mail: MicrosoftIcon,
-  microsoft_calendar: MicrosoftIcon,
-  hubspot: null,
-  firecrawl: null,
-  instagram: InstagramIcon,
-  custom_api: null,
+  GOOGLE: GoogleIcon,
+  SLACK: SlackIcon,
+  MICROSOFT: MicrosoftIcon,
+  INSTAGRAM: InstagramIcon,
+  HUBSPOT: null,
+  FIRECRAWL: null,
+  CUSTOM: null,
 };
 
 // Letter icons for providers without custom SVG components
 export const PROVIDER_LETTER_ICONS: Record<Provider, { letter: string; bgColor: string }> = {
-  google_mail: { letter: 'G', bgColor: 'bg-blue-600' },
-  google_calendar: { letter: 'C', bgColor: 'bg-blue-500' },
-  google_sheets: { letter: 'S', bgColor: 'bg-green-600' },
-  slack: { letter: 'S', bgColor: 'bg-purple-600' },
-  microsoft_mail: { letter: 'M', bgColor: 'bg-blue-500' },
-  microsoft_calendar: { letter: 'C', bgColor: 'bg-blue-500' },
-  hubspot: { letter: 'H', bgColor: 'bg-orange-600' },
-  firecrawl: { letter: 'F', bgColor: 'bg-purple-600' },
-  instagram: { letter: 'I', bgColor: 'bg-pink-600' },
-  custom_api: { letter: 'C', bgColor: 'bg-gray-600' },
+  GOOGLE: { letter: 'G', bgColor: 'bg-blue-600' },
+  SLACK: { letter: 'S', bgColor: 'bg-purple-600' },
+  MICROSOFT: { letter: 'M', bgColor: 'bg-blue-500' },
+  HUBSPOT: { letter: 'H', bgColor: 'bg-orange-600' },
+  FIRECRAWL: { letter: 'F', bgColor: 'bg-purple-600' },
+  INSTAGRAM: { letter: 'I', bgColor: 'bg-pink-600' },
+  CUSTOM: { letter: 'C', bgColor: 'bg-gray-600' },
 };
 
 // Helper component to render provider icon
