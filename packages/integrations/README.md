@@ -1,40 +1,130 @@
-# packages/integrations
+# Duramation Integrations Package
 
-This package centralizes the logic and configurations for integrating with various third-party services within the Duramation platform. It leverages Nango to simplify the process of connecting to external APIs, managing authentication (OAuth, API keys), and handling data exchange.
+This package provides HTTP client services and provider integrations for the Duramation workflow automation platform.
 
-## Purpose
+## Features
 
-*   **Standardized Integrations:** Provides a consistent way to interact with different external services.
-*   **Authentication Management:** Handles OAuth flows and API key management securely, often facilitated by Nango.
-*   **Data Transformation:** Contains logic for transforming data between Duramation's internal format and external API requirements.
-*   **Modularity:** Keeps integration-specific code separate, making it easier to add new services or update existing ones without affecting core application logic.
-
-## Technologies
-
-*   **Integration Platform:** Nango
-*   **HTTP Client:** (Likely Axios or native Fetch API)
+- **Shared HTTP Client**: Built on `got` for reliable HTTP requests with retry logic, timeout handling, and error logging
+- **Provider Services**: Type-safe service classes for Google, Slack, Microsoft, HubSpot, and Firecrawl integrations
+- **Authentication Handling**: Automatic OAuth and API key authentication for all providers
+- **Error Handling**: Comprehensive error handling with logging and retry mechanisms
 
 ## Usage
 
-Modules within this package expose functions or clients that can be used by `apps/inngest-app` (and potentially `apps/frontend` for client-side interactions) to communicate with external services.
-
-Example (conceptual):
+### Basic HTTP Client
 
 ```typescript
-import { getSlackClient } from '@repo/integrations/slack';
+import { createHttpClient, httpClient, api, ApiClient } from '@duramation/integrations/server';
 
-async function postMessageToSlack(integrationId: string, channel: string, message: string) {
-  const slack = await getSlackClient(integrationId);
-  await slack.chat.postMessage({ channel, text: message });
-}
+// Use the default client (returns parsed JSON body)
+const data = await httpClient.get('https://api.example.com/data').json();
+
+// Or use the default ApiClient instance for automatic JSON parsing
+const data2 = await api.get('https://api.example.com/data');
+
+// Or create a custom ApiClient instance
+const customApi = new ApiClient(httpClient);
+const data3 = await customApi.get('https://api.example.com/data');
+
+// Create a custom client with specific configuration
+const customClient = createHttpClient({
+  baseUrl: 'https://api.example.com',
+  timeout: 10000,
+  retries: 5
+});
 ```
 
-## Adding a New Integration
+### Provider Services
 
-1.  **Configure Nango:** Set up the new service within your Nango dashboard, including OAuth credentials or API key management.
-2.  **Add Module:** Create a new module (e.g., `src/providers/new-service.ts`) within this package.
-3.  **Implement Client:** Implement the necessary functions to interact with the new service's API, utilizing Nango's capabilities for authentication.
-4.  **Expose Interface:** Export a clear interface for other parts of the monorepo to consume.
-5.  **Update Environment Variables:** Ensure any new API keys or secrets are added to the root `.env.example` and configured in your `.env` file.
+```typescript
+import { GoogleService, SlackService, ProviderServiceFactory } from '@duramation/integrations/server';
 
-For more information on Nango, refer to the [Nango Documentation](https://www.nango.dev/docs/).
+// Create services directly
+const googleService = new GoogleService(credentials);
+const slackService = new SlackService(credentials);
+
+// Or use the factory
+const service = ProviderServiceFactory.createService('GOOGLE', credentials);
+
+// Test connections
+const isConnected = await ProviderServiceFactory.testConnection('SLACK', credentials);
+```
+
+### In Workflows
+
+```typescript
+import { GoogleService, SlackService } from '@duramation/integrations/server';
+
+export const myWorkflow = inngest.createFunction(
+  { id: 'my-workflow' },
+  { event: 'workflow/my-workflow' },
+  async ({ event, step, logger }) => {
+    const credentials = await getCredentialsForWorkflow(workflowId, ['GOOGLE', 'SLACK']);
+    
+    // Read from Google Sheets
+    const sheetData = await step.run('read-sheets', async () => {
+      const googleService = new GoogleService(credentials.GOOGLE);
+      return await googleService.readSheet(spreadsheetId, 'A1:Z100');
+    });
+    
+    // Send to Slack
+    await step.run('send-slack', async () => {
+      const slackService = new SlackService(credentials.SLACK);
+      return await slackService.sendMessage({
+        channel: '#general',
+        text: `Found ${sheetData.values.length} rows`
+      });
+    });
+  }
+);
+```
+
+## Available Services
+
+### GoogleService
+- `readSheet(spreadsheetId, range)` - Read data from Google Sheets
+- `writeSheet(spreadsheetId, range, values)` - Write data to Google Sheets
+- `sendEmail(message)` - Send email via Gmail
+- `createCalendarEvent(calendarId, event)` - Create calendar events
+- `listFiles(options)` - List Google Drive files
+
+### SlackService
+- `sendMessage(message)` - Send messages to channels
+- `listChannels(options)` - List workspace channels
+- `getUserInfo(userId)` - Get user information
+- `uploadFile(options)` - Upload files to Slack
+
+### MicrosoftService
+- `sendEmail(email)` - Send email via Outlook
+- `createCalendarEvent(event)` - Create calendar events
+- `listFiles(options)` - List OneDrive files
+- `createContact(contact)` - Create contacts
+
+### HubSpotService
+- `createContact(contact)` - Create HubSpot contacts
+- `updateContact(contactId, properties)` - Update contact properties
+- `getContact(contactId)` - Get contact details
+- `listContacts(options)` - List contacts with filtering
+
+### FirecrawlService
+- `scrape(url, options)` - Scrape web pages
+- `crawl(url, options)` - Crawl websites
+- `search(query, options)` - Search the web
+
+## Configuration
+
+The HTTP client includes:
+- **Automatic retries** with exponential backoff
+- **Optional request/response logging** (enable with `HTTP_CLIENT_LOG=1` environment variable)
+- **Timeout handling** (30s default)
+- **Error enhancement** with minimal metadata logging (no sensitive data)
+- **Authentication headers** automatically added per provider
+- **Dynamic User-Agent** with package version
+
+## Error Handling
+
+All services include comprehensive error handling:
+- Connection failures are logged and retried
+- Authentication errors are clearly identified
+- Rate limiting is handled automatically
+- Detailed error context is provided for debugging

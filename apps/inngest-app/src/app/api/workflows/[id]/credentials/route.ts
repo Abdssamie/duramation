@@ -1,74 +1,35 @@
-import { NextRequest, NextResponse } from "next/server";
+import { storeCredentialForWorkflow } from "@/services/credentials-store";
 import { authenticateUser, isAuthError } from "@/lib/utils/auth";
-import prisma from "@/lib/prisma";
+import { NextRequest } from "next/server";
+import { CredentialCreateRequest, validateCredentialSecret } from "@duramation/shared";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const authResult = await authenticateUser();
-  if (isAuthError(authResult)) {
-    return authResult;
-  }
-
-  const { userId } = authResult;
-  const { id } = await params;
-  const workflowId = id;
-
-  try {
-    const body = await req.json();
-    const { credentialId, credentialIds } = body;
-
-    const ids = credentialIds || (credentialId ? [credentialId] : []);
-
-    if (ids.length === 0) {
-      return NextResponse.json({ error: "credentialId or credentialIds is required" }, { status: 400 });
+    const authResult = await authenticateUser();
+    
+    if (isAuthError(authResult)) {
+      return authResult;
     }
 
-    // Verify Workflow Ownership
-    const workflow = await prisma.workflow.findUnique({
-      where: { id: workflowId, userId },
-    });
+    const { userId } = authResult;
 
-    if (!workflow) {
-      return NextResponse.json({ error: "Workflow not found" }, { status: 404 });
+    const workflowId = (await params).id;
+    const body: CredentialCreateRequest = await req.json();
+
+    if (body.type === 'OAUTH') {
+        return new Response('OAuth credentials must be created via the OAuth flow', { status: 400 });
     }
 
-    const results = [];
-
-    for (const credId of ids) {
-      // Verify credential belongs to user
-      const credential = await prisma.credential.findFirst({
-        where: {
-          id: credId,
-          userId,
-        },
-      });
-
-      if (!credential) {
-        results.push({ credentialId: credId, success: false, error: 'Credential not found' });
-        continue;
-      }
-
-      // Link credential to workflow
-      await prisma.workflowCredential.upsert({
-        where: {
-          workflowId_credentialId: {
-            workflowId,
-            credentialId: credential.id,
-          },
-        },
-        update: {},
-        create: {
-          workflowId,
-          credentialId: credential.id,
-        },
-      });
-
-      results.push({ credentialId: credId, success: true });
+    const validationResult = validateCredentialSecret(body.type, body.provider, body.secret);
+    if (!validationResult.success) {
+        return new Response(JSON.stringify({ error: validationResult }), { status: 400 });
     }
 
-    return NextResponse.json({ success: true, results });
-
-  } catch (error) {
-    console.error("Error linking credential:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-  }
+    try {
+        const newCredential = await storeCredentialForWorkflow(userId, workflowId, body);
+        
+        return new Response(JSON.stringify(newCredential), { status: 201 });
+    } catch (error) {
+        console.error('Error storing credential for workflow:', error);
+        return new Response('Error storing credential for workflow', { status: 500 });
+    }
 }

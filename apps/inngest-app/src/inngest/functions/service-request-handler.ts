@@ -2,18 +2,6 @@ import { inngest } from "@/inngest/client";
 import { CacheInvalidationService } from "@/services/cache-invalidation";
 import prisma from "@/lib/prisma";
 
-/**
- * @function serviceRequestStatusHandler
- * @description Inngest function to handle changes in the status of a service request.
- * This function updates the service request's status in the database and then
- * invalidates relevant caches to ensure data consistency across the application.
- * @event "service-request/status.changed" - Triggered when a service request's status changes.
- * @param {object} event.data - Contains service request details:
- *   - `serviceRequestId`: ID of the service request.
- *   - `userId`: ID of the user associated with the service request.
- *   - `oldStatus`: The previous status of the service request.
- *   - `newStatus`: The new status of the service request.
- */
 export const serviceRequestStatusHandler = inngest.createFunction(
   {
     id: "service-request-status-handler",
@@ -33,7 +21,7 @@ export const serviceRequestStatusHandler = inngest.createFunction(
     const cacheService = new CacheInvalidationService();
 
     try {
-      // Step 1: Update service request in the database with the new status
+      // Update service request in database
       await step.run("update-service-request", async () => {
         const updatedRequest = await prisma.serviceRequest.update({
           where: {
@@ -41,7 +29,7 @@ export const serviceRequestStatusHandler = inngest.createFunction(
             userId: userId,
           },
           data: {
-            status: newStatus as any, // Cast to enum type to match Prisma's expected value
+            status: newStatus as any, // Cast to enum type
             updatedAt: new Date(),
           },
         });
@@ -50,7 +38,7 @@ export const serviceRequestStatusHandler = inngest.createFunction(
         return updatedRequest;
       });
 
-      // Step 2: Invalidate cache for the user's service requests to reflect the update
+      // Invalidate cache
       await step.run("invalidate-cache", async () => {
         await cacheService.invalidateServiceRequestCache(userId, 'updated');
         logger.info(`Invalidated cache for user ${userId} after service request status change`);
@@ -67,22 +55,11 @@ export const serviceRequestStatusHandler = inngest.createFunction(
 
     } catch (error) {
       logger.error("Failed to handle service request status change:", error);
-      // Re-throw the error for Inngest retry mechanisms
       throw new Error(`Service request status handler failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 );
 
-/**
- * @function serviceRequestCreatedHandler
- * @description Inngest function to handle the creation of a new service request.
- * This function primarily invalidates relevant caches to ensure that the newly
- * created service request appears in the UI and is reflected in data queries.
- * @event "service-request/created" - Triggered when a new service request is created.
- * @param {object} event.data - Contains service request details:
- *   - `serviceRequestId`: ID of the newly created service request.
- *   - `userId`: ID of the user who created the service request.
- */
 export const serviceRequestCreatedHandler = inngest.createFunction(
   {
     id: "service-request-created-handler",
@@ -100,8 +77,7 @@ export const serviceRequestCreatedHandler = inngest.createFunction(
     const cacheService = new CacheInvalidationService();
 
     try {
-      // Step 1: Invalidate cache for the user's service requests
-      // This ensures that the frontend fetches the updated list including the new request.
+      // Invalidate cache for new service request
       await step.run("invalidate-cache", async () => {
         await cacheService.invalidateServiceRequestCache(userId, 'created');
         logger.info(`Invalidated cache for user ${userId} after service request creation`);
@@ -118,23 +94,11 @@ export const serviceRequestCreatedHandler = inngest.createFunction(
 
     } catch (error) {
       logger.error("Failed to handle service request creation:", error);
-      // Re-throw the error for Inngest retry mechanisms
       throw new Error(`Service request creation handler failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 );
 
-/**
- * @function automationMetricsUpdatedHandler
- * @description Inngest function to handle updates to automation metrics.
- * This function invalidates specific caches related to automation metrics for a given
- * workflow and user, ensuring that analytics dashboards and reports reflect the latest data.
- * @event "automation/metrics.updated" - Triggered when automation metrics are updated.
- * @param {object} event.data - Contains metrics update details:
- *   - `workflowId`: ID of the workflow whose metrics were updated.
- *   - `userId`: ID of the user associated with the workflow.
- *   - `date`: The date for which metrics were updated (ISO string).
- */
 export const automationMetricsUpdatedHandler = inngest.createFunction(
   {
     id: "automation-metrics-updated-handler",
@@ -153,7 +117,7 @@ export const automationMetricsUpdatedHandler = inngest.createFunction(
     const cacheService = new CacheInvalidationService();
 
     try {
-      // Step 1: Invalidate cache specifically for the updated automation metrics
+      // Invalidate cache for updated metrics
       await step.run("invalidate-metrics-cache", async () => {
         await cacheService.invalidateAutomationMetricsCache(userId, workflowId);
         logger.info(`Invalidated metrics cache for workflow ${workflowId}`);
@@ -171,7 +135,6 @@ export const automationMetricsUpdatedHandler = inngest.createFunction(
 
     } catch (error) {
       logger.error("Failed to handle automation metrics update:", error);
-      // Re-throw the error for Inngest retry mechanisms
       throw new Error(`Automation metrics handler failed: ${error instanceof Error ? error.message : String(error)}`);
     }
   }

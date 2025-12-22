@@ -18,7 +18,8 @@ export async function fetchMetricsFromDatabase(userId: InternalUserId): Promise<
       id: true,
       canBeScheduled: true,
       available: true,
-      createdAt: true
+      createdAt: true,
+      cronExpressions: true
     }
   });
 
@@ -101,8 +102,8 @@ export async function fetchMetricsFromDatabase(userId: InternalUserId): Promise<
 
   // 5. Active/Inactive workflows
   const activeWorkflows = userWorkflows.filter(w => w.available);
-  const scheduledWorkflows = activeWorkflows.filter(w => w.canBeScheduled);
-  const directWorkflows = activeWorkflows.filter(w => !w.canBeScheduled);
+  const scheduledWorkflows = activeWorkflows.filter(w => w.canBeScheduled && w.cronExpressions.length > 0);
+  const directWorkflows = activeWorkflows.filter(w => !w.canBeScheduled || w.cronExpressions.length === 0);
   const inactiveWorkflows = userWorkflows.filter(w => !w.available).length;
 
   // 6. New workflows this month

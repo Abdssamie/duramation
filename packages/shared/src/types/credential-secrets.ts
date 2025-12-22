@@ -4,11 +4,10 @@ import z from "zod";
 
 // Base schemas
 export const BaseOAuthSecretSchema = z.object({
-    accessToken: z.string().optional(), // Made optional for Nango migration
+    accessToken: z.string(),
     refreshToken: z.string().optional(),
     expiresIn: z.number().optional(),
     scopes: z.array(z.string()).optional(),
-    nangoConnectionId: z.string().optional(), // Added for Nango
 });
 
 export const BaseApiKeySecretSchema = z.object({
@@ -77,27 +76,22 @@ export const validateCredentialSecret = (
     switch (type) {
         case "OAUTH":
             switch (provider) {
-                case "google_mail":
-                case "google_calendar":
-                case "google_sheets":
+                case "GOOGLE":
                     return GoogleOAuthSecretSchema.safeParse(secret);
-                case "slack":
+                case "SLACK":
                     return SlackOAuthSecretSchema.safeParse(secret);
-                case "microsoft_mail":
-                case "microsoft_calendar":
+                case "MICROSOFT":
                     return MicrosoftOAuthSecretSchema.safeParse(secret);
-                case "hubspot":
+                case "HUBSPOT":
                     return HubspotOAuthSecretSchema.safeParse(secret);
-                case "instagram":
-                    return BaseOAuthSecretSchema.safeParse(secret);
                 default:
                     return {success: false, error: "Unsupported OAuth provider"};
             }
         case "API_KEY":
             switch (provider) {
-                case "firecrawl":
+                case "FIRECRAWL":
                     return FirecrawlApiKeySecretSchema.safeParse(secret);
-                case "custom_api":
+                case "CUSTOM":
                     return CustomApiKeySecretSchema.safeParse(secret);
                 default:
                     return {success: false, error: "Unsupported API Key provider"};

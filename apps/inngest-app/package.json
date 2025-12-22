@@ -8,7 +8,6 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "typecheck": "tsc --noEmit",
     "update-schemas": "tsx scripts/update-metadata-schemas.ts",
     "update-templates": "tsx scripts/addWorkflowTemplates.ts",
     "workflow:create": "tsx scripts/create-workflow.ts"

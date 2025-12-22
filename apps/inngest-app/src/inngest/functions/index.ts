@@ -12,19 +12,6 @@ import {
   automationMetricsUpdatedHandler 
 } from "./service-request-handler";
 
-/**
- * @module inngest/functions/index
- * @description This module serves as a central registry for all Inngest functions
- * used within the `inngest-app`. It categorizes and exports functions for easy
- * registration with the Inngest client.
- */
-
-/**
- * @constant {Array<Function>} workflowFunctions
- * @description An array containing Inngest functions that represent user-defined
- * or core automation workflows. These are typically triggered by specific events
- * or schedules to perform various automated tasks.
- */
 export const workflowFunctions = [
     generateReportSchedule,
     randomTextLoopWorkflow,
@@ -33,13 +20,6 @@ export const workflowFunctions = [
     sendOutlookEmailWorkflow
 ];
 
-/**
- * @constant {Array<Function>} systemFunctions
- * @description An array containing Inngest functions that handle system-level
- * operations, such as status updates, metrics aggregation, and cache invalidation.
- * These functions often respond to internal events or cron schedules to maintain
- * the health and data consistency of the platform.
- */
 export const systemFunctions = [
     workflowStatusHandler,
     automationMetricsAggregation,
@@ -49,12 +29,7 @@ export const systemFunctions = [
     automationMetricsUpdatedHandler,
 ];
 
-/**
- * @constant {Array<Function>} allFunctions
- * @description A combined array of all `workflowFunctions` and `systemFunctions`.
- * This array is typically used to register all available Inngest functions
- * with the Inngest client in the main application entry point.
- */
+
 export const allFunctions = [
     ...workflowFunctions,
     ...systemFunctions,

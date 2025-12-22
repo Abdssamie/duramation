@@ -20,6 +20,7 @@ type Props = {
     update: Partial<WorkflowWithCredentials>
   ) => void;
   workflow: WorkflowWithCredentials;
+  schedules: string[]; // list of cron expressions
   input: Record<string, unknown>;
   isRunning: boolean;
   setIsRunningAction: Dispatch<SetStateAction<boolean>>;
@@ -29,6 +30,7 @@ type Props = {
 export default function OperationsTab({
   onUpdateAction,
   workflow,
+  schedules,
   input,
   isRunning,
   setIsRunningAction,
@@ -217,8 +219,8 @@ export default function OperationsTab({
               </div>
             </div>
             <div>
-              <div className='text-muted-foreground text-xs'> Trigger </div>
-              <div className='font-medium truncate max-w-[120px]' title={workflow.eventName}> {workflow.eventName} </div>
+              <div className='text-muted-foreground text-xs'> Schedules </div>
+              <div className='font-medium'> {schedules.length} </div>
             </div>
           </div>
 

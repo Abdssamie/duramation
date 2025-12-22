@@ -29,8 +29,8 @@ export const generateReportSchedule = inngest.createFunction(
 
         const { sheetName } = input;
 
-        // Check for Google credentials (using google_mail for testing)
-        const googleCredential = credentials.find((cred: any) => cred.provider === 'google_mail');
+        // Check for Google credentials
+        const googleCredential = credentials.find((cred: any) => cred.provider === 'GOOGLE');
         logger.info(`Google credential found:`, { found: !!googleCredential, googleCredential: googleCredential ? { id: googleCredential.id, name: googleCredential.name, provider: googleCredential.provider } : null });
 
         if (!googleCredential) {
