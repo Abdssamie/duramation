@@ -76,6 +76,23 @@ export class GoogleService extends BaseProviderService {
     }));
   }
 
+  async listEmails(options: {
+    maxResults?: number;
+    pageToken?: string;
+    q?: string;
+  } = {}): Promise<any> {
+    const queryParams = new URLSearchParams();
+    if (options.maxResults) queryParams.append('maxResults', options.maxResults.toString());
+    if (options.pageToken) queryParams.append('pageToken', options.pageToken);
+    if (options.q) queryParams.append('q', options.q);
+    
+    return this.executeWithRefresh(() => this.client.get(`gmail/v1/users/me/messages?${queryParams.toString()}`));
+  }
+
+  async getEmail(messageId: string): Promise<any> {
+    return this.executeWithRefresh(() => this.client.get(`gmail/v1/users/me/messages/${messageId}`));
+  }
+
   private buildEmailContent(message: GmailMessage): string {
     const { to, cc, bcc, subject, body, isHtml = false } = message;
     let content = '';
