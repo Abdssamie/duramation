@@ -77,7 +77,11 @@
     "lucide-react": "^0.476.0",
     "match-sorter": "^8.0.0",
     "negotiator": "^1.0.0",
+<<<<<<< HEAD
+    "next": "15.5.7",
+=======
     "next": "15.5.9",
+>>>>>>> 77abe2b9326cef903ced45668937c3dafd9543e1
     "next-themes": "^0.4.6",
     "nextjs-toploader": "^3.7.15",
     "nuqs": "^2.4.1",
