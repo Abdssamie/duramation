@@ -21,6 +21,7 @@
     "@inngest/agent-kit": "^0.9.0",
     "@inngest/realtime": "^0.4.4",
     "@prisma/client": "^6.17.1",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^7.2.0",
     "@upstash/redis": "^1.35.5",
     "date-fns": "^4.1.0",
     "googleapis": "^159.0.0",
