@@ -53,7 +53,12 @@ export async function GET(request: Request) {
   const stream = new ReadableStream({
     async start(controller) {
       // Create a new, dedicated ioredis client for this specific connection.
-      const subscriber = new Redis(connectionUrl);
+      // Explicitly enable TLS for Upstash
+      const subscriber = new Redis(connectionUrl, {
+        // Fail fast if we can't connect, so the frontend can try to reconnect
+        connectTimeout: 10000, 
+        retryStrategy: (times) => Math.min(times * 100, 3000),
+      });
       const userChannel = getUserChannel(internalUserId);
       const encoder = new TextEncoder();
 

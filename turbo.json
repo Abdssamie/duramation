@@ -60,6 +60,7 @@
         "KV_REST_API_TOKEN",
         "REDIS_URL",
         "INNGEST_APP_URL",
+        "NANGO_SECRET_KEY",
         "NODE_ENV",
         "NEXT_RUNTIME"
       ]
@@ -124,6 +125,7 @@
         "KV_REST_API_TOKEN",
         "REDIS_URL",
         "INNGEST_APP_URL",
+        "NANGO_SECRET_KEY",
         "NODE_ENV",
         "NEXT_RUNTIME"
       ]
