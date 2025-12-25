@@ -309,6 +309,9 @@ importers:
       '@prisma/client':
         specifier: ^6.17.1
         version: 6.17.1(prisma@6.17.1(magicast@0.3.5)(typescript@5.9.2))(typescript@5.9.2)
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^7.2.0
+        version: 7.2.0
       '@upstash/redis':
         specifier: ^1.35.5
         version: 1.35.6
@@ -1804,6 +1807,9 @@ packages:
 
   '@prisma/get-platform@6.17.1':
     resolution: {integrity: sha512-AKEn6fsfz0r482S5KRDFlIGEaq9wLNcgalD1adL+fPcFFblIKs1sD81kY/utrHdqKuVC6E1XSRpegDK3ZLL4Qg==}
+
+  '@prisma/nextjs-monorepo-workaround-plugin@7.2.0':
+    resolution: {integrity: sha512-wkUYEHR2vT/6xB9ufOT+s6pfB4+ZFf4n3qSMmiq+n2EclMXV6LcShY/iUJfagRK5Jqadc6FMdf28yDSD0Qb6/w==}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -8458,6 +8464,8 @@ snapshots:
   '@prisma/get-platform@6.17.1':
     dependencies:
       '@prisma/debug': 6.17.1
+
+  '@prisma/nextjs-monorepo-workaround-plugin@7.2.0': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
