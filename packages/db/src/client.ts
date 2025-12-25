@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "./generated/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { fieldEncryptionExtension } from 'prisma-field-encryption';
 

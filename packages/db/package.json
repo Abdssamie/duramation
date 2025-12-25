@@ -10,7 +10,7 @@
     "schema.prisma"
   ],
   "scripts": {
-    "build": "pnpm db:generate && tsc && cp -R src/generated dist",
+    "build": "pnpm db:generate && tsc --incremental false",
     "dev": "tsc --watch",
     "clean": "rimraf dist .turbo",
     "db:generate": "prisma generate",

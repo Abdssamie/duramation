@@ -1,1 +1,1 @@
-export type * from "./generated/client/index.d.ts";
+export type * from "@prisma/client";

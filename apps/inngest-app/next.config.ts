@@ -1,14 +1,8 @@
 // In the next.config.ts of your BACKEND application (the one on port 3001)
 import type { NextConfig } from "next";
-import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 
 const nextConfig: NextConfig = {
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.plugins = [...config.plugins, new PrismaPlugin()];
-    }
-    return config;
-  },
+  serverExternalPackages: ["@duramation/db"],
   async headers() {
     return [
       {
