@@ -5,6 +5,10 @@ import CopyPlugin from "copy-webpack-plugin";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@duramation/db"],
+  outputFileTracingIncludes: {
+    "/api/**/*": ["../../packages/db/src/generated/client/**/*"],
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()];
