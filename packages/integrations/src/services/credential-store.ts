@@ -63,16 +63,16 @@ export class CredentialStore {
     });
 
     const credentials = workflow?.workflowCredentials?.map((wc) => ({
-      id: wc.credential.id,
-      name: wc.credential.name,
-      type: wc.credential.type,
-      provider: wc.credential.provider,
-      userId: wc.credential.userId,
-      secret: wc.credential.secret ? JSON.parse(wc.credential.secret as string) : null,
-      config: wc.credential.config,
-      expiresIn: wc.credential.expiresIn,
-      createdAt: wc.credential.createdAt,
-      updatedAt: wc.credential.updatedAt
+      id: wc?.credential?.id,
+      name: wc?.credential?.name,
+      type: wc?.credential?.type,
+      provider: wc?.credential?.provider,
+      userId: wc?.credential?.userId,
+      secret: wc?.credential?.secret ? JSON.parse(wc?.credential?.secret as string) : null,
+      config: wc?.credential?.config,
+      expiresIn: wc?.credential?.expiresIn,
+      createdAt: wc?.credential?.createdAt,
+      updatedAt: wc?.credential?.updatedAt
     })) || [];
 
     cache.set(cacheKey, { data: credentials, expires: Date.now() + CACHE_TTL });
